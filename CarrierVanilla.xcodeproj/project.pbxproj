@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		73CBFCF4B2EF4DADBBF2BDFB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0996C26EA9F043BF83367717 /* libPods.a */; };
 		D09139831941A4C50029AE98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139821941A4C50029AE98 /* Foundation.framework */; };
 		D09139851941A4C50029AE98 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139841941A4C50029AE98 /* CoreGraphics.framework */; };
 		D09139871941A4C50029AE98 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139861941A4C50029AE98 /* UIKit.framework */; };
@@ -15,9 +16,6 @@
 		D09139911941A4C50029AE98 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D09139901941A4C50029AE98 /* main.m */; };
 		D09139951941A4C50029AE98 /* CVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D09139941941A4C50029AE98 /* CVAppDelegate.m */; };
 		D09139981941A4C50029AE98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09139961941A4C50029AE98 /* Main.storyboard */; };
-		D091399B1941A4C50029AE98 /* CarrierVanilla.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D09139991941A4C50029AE98 /* CarrierVanilla.xcdatamodeld */; };
-		D091399E1941A4C50029AE98 /* CVMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D091399D1941A4C50029AE98 /* CVMasterViewController.m */; };
-		D09139A11941A4C50029AE98 /* CVDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D09139A01941A4C50029AE98 /* CVDetailViewController.m */; };
 		D09139A31941A4C50029AE98 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D09139A21941A4C50029AE98 /* Images.xcassets */; };
 		D09139AA1941A4C50029AE98 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139A91941A4C50029AE98 /* XCTest.framework */; };
 		D09139AB1941A4C50029AE98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139821941A4C50029AE98 /* Foundation.framework */; };
@@ -25,6 +23,17 @@
 		D09139AD1941A4C50029AE98 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139881941A4C50029AE98 /* CoreData.framework */; };
 		D09139B51941A4C50029AE98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D09139B31941A4C50029AE98 /* InfoPlist.strings */; };
 		D09139B71941A4C50029AE98 /* CarrierVanillaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */; };
+		D0ABC8C31944E23E0095E59E /* CVDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C01944E23E0095E59E /* CVDetailViewController.m */; };
+		D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */; };
+		D0ABC8D31944E2990095E59E /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C61944E2990095E59E /* Address.m */; };
+		D0ABC8D41944E2990095E59E /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C81944E2990095E59E /* Item.m */; };
+		D0ABC8D51944E2990095E59E /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8CA1944E2990095E59E /* Load.m */; };
+		D0ABC8D61944E2990095E59E /* MobLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8CB1944E2990095E59E /* MobLog.xcdatamodeld */; };
+		D0ABC8D71944E2990095E59E /* Ref.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8CE1944E2990095E59E /* Ref.m */; };
+		D0ABC8D81944E2990095E59E /* Shipment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8D01944E2990095E59E /* Shipment.m */; };
+		D0ABC8D91944E2990095E59E /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8D21944E2990095E59E /* Stop.m */; };
+		D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8DC1944E3200095E59E /* CVChepClient.m */; };
+		D0B6360E1941A77400015ACA /* MobLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0B636081941A77400015ACA /* MobLog.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0996C26EA9F043BF83367717 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		21742465D60E4C8D8F007F4E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D091397F1941A4C50029AE98 /* CarrierVanilla.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarrierVanilla.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09139821941A4C50029AE98 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D09139841941A4C50029AE98 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -50,17 +61,32 @@
 		D09139931941A4C50029AE98 /* CVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVAppDelegate.h; sourceTree = "<group>"; };
 		D09139941941A4C50029AE98 /* CVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CVAppDelegate.m; sourceTree = "<group>"; };
 		D09139971941A4C50029AE98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D091399A1941A4C50029AE98 /* CarrierVanilla.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CarrierVanilla.xcdatamodel; sourceTree = "<group>"; };
-		D091399C1941A4C50029AE98 /* CVMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVMasterViewController.h; sourceTree = "<group>"; };
-		D091399D1941A4C50029AE98 /* CVMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CVMasterViewController.m; sourceTree = "<group>"; };
-		D091399F1941A4C50029AE98 /* CVDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVDetailViewController.h; sourceTree = "<group>"; };
-		D09139A01941A4C50029AE98 /* CVDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CVDetailViewController.m; sourceTree = "<group>"; };
 		D09139A21941A4C50029AE98 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D09139A81941A4C50029AE98 /* CarrierVanillaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarrierVanillaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09139A91941A4C50029AE98 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D09139B21941A4C50029AE98 /* CarrierVanillaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CarrierVanillaTests-Info.plist"; sourceTree = "<group>"; };
 		D09139B41941A4C50029AE98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarrierVanillaTests.m; sourceTree = "<group>"; };
+		D0ABC8BF1944E23E0095E59E /* CVDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVDetailViewController.h; path = Controllers/CVDetailViewController.h; sourceTree = "<group>"; };
+		D0ABC8C01944E23E0095E59E /* CVDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVDetailViewController.m; path = Controllers/CVDetailViewController.m; sourceTree = "<group>"; };
+		D0ABC8C11944E23E0095E59E /* CVMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVMasterViewController.h; path = Controllers/CVMasterViewController.h; sourceTree = "<group>"; };
+		D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVMasterViewController.m; path = Controllers/CVMasterViewController.m; sourceTree = "<group>"; };
+		D0ABC8C51944E2990095E59E /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Address.h; path = Models/Address.h; sourceTree = "<group>"; };
+		D0ABC8C61944E2990095E59E /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Address.m; path = Models/Address.m; sourceTree = "<group>"; };
+		D0ABC8C71944E2990095E59E /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Item.h; path = Models/Item.h; sourceTree = "<group>"; };
+		D0ABC8C81944E2990095E59E /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Item.m; path = Models/Item.m; sourceTree = "<group>"; };
+		D0ABC8C91944E2990095E59E /* Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Load.h; path = Models/Load.h; sourceTree = "<group>"; };
+		D0ABC8CA1944E2990095E59E /* Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Load.m; path = Models/Load.m; sourceTree = "<group>"; };
+		D0ABC8CC1944E2990095E59E /* MobLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobLog.xcdatamodel; sourceTree = "<group>"; };
+		D0ABC8CD1944E2990095E59E /* Ref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ref.h; path = Models/Ref.h; sourceTree = "<group>"; };
+		D0ABC8CE1944E2990095E59E /* Ref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Ref.m; path = Models/Ref.m; sourceTree = "<group>"; };
+		D0ABC8CF1944E2990095E59E /* Shipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shipment.h; path = Models/Shipment.h; sourceTree = "<group>"; };
+		D0ABC8D01944E2990095E59E /* Shipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Shipment.m; path = Models/Shipment.m; sourceTree = "<group>"; };
+		D0ABC8D11944E2990095E59E /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stop.h; path = Models/Stop.h; sourceTree = "<group>"; };
+		D0ABC8D21944E2990095E59E /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Stop.m; path = Models/Stop.m; sourceTree = "<group>"; };
+		D0ABC8DB1944E3200095E59E /* CVChepClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChepClient.h; path = Network/CVChepClient.h; sourceTree = "<group>"; };
+		D0ABC8DC1944E3200095E59E /* CVChepClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVChepClient.m; path = Network/CVChepClient.m; sourceTree = "<group>"; };
+		D0B636091941A77400015ACA /* MobLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobLog.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +98,7 @@
 				D09139891941A4C50029AE98 /* CoreData.framework in Frameworks */,
 				D09139871941A4C50029AE98 /* UIKit.framework in Frameworks */,
 				D09139831941A4C50029AE98 /* Foundation.framework in Frameworks */,
+				73CBFCF4B2EF4DADBBF2BDFB /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +123,7 @@
 				D09139B01941A4C50029AE98 /* CarrierVanillaTests */,
 				D09139811941A4C50029AE98 /* Frameworks */,
 				D09139801941A4C50029AE98 /* Products */,
+				21742465D60E4C8D8F007F4E /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -116,6 +144,7 @@
 				D09139861941A4C50029AE98 /* UIKit.framework */,
 				D09139881941A4C50029AE98 /* CoreData.framework */,
 				D09139A91941A4C50029AE98 /* XCTest.framework */,
+				0996C26EA9F043BF83367717 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -123,15 +152,13 @@
 		D091398A1941A4C50029AE98 /* CarrierVanilla */ = {
 			isa = PBXGroup;
 			children = (
+				D0ABC8DA1944E3170095E59E /* Network */,
+				D0ABC8BD1944E0FB0095E59E /* Models */,
 				D09139931941A4C50029AE98 /* CVAppDelegate.h */,
 				D09139941941A4C50029AE98 /* CVAppDelegate.m */,
 				D09139961941A4C50029AE98 /* Main.storyboard */,
-				D091399C1941A4C50029AE98 /* CVMasterViewController.h */,
-				D091399D1941A4C50029AE98 /* CVMasterViewController.m */,
-				D091399F1941A4C50029AE98 /* CVDetailViewController.h */,
-				D09139A01941A4C50029AE98 /* CVDetailViewController.m */,
+				D0ABC8BE1944E1D50095E59E /* Controllers */,
 				D09139A21941A4C50029AE98 /* Images.xcassets */,
-				D09139991941A4C50029AE98 /* CarrierVanilla.xcdatamodeld */,
 				D091398B1941A4C50029AE98 /* Supporting Files */,
 			);
 			path = CarrierVanilla;
@@ -166,6 +193,47 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D0ABC8BD1944E0FB0095E59E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D0ABC8C51944E2990095E59E /* Address.h */,
+				D0ABC8C61944E2990095E59E /* Address.m */,
+				D0ABC8C71944E2990095E59E /* Item.h */,
+				D0ABC8C81944E2990095E59E /* Item.m */,
+				D0ABC8C91944E2990095E59E /* Load.h */,
+				D0ABC8CA1944E2990095E59E /* Load.m */,
+				D0ABC8CB1944E2990095E59E /* MobLog.xcdatamodeld */,
+				D0ABC8CD1944E2990095E59E /* Ref.h */,
+				D0ABC8CE1944E2990095E59E /* Ref.m */,
+				D0ABC8CF1944E2990095E59E /* Shipment.h */,
+				D0ABC8D01944E2990095E59E /* Shipment.m */,
+				D0ABC8D11944E2990095E59E /* Stop.h */,
+				D0ABC8D21944E2990095E59E /* Stop.m */,
+				D0B636081941A77400015ACA /* MobLog.xcdatamodeld */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		D0ABC8BE1944E1D50095E59E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D0ABC8BF1944E23E0095E59E /* CVDetailViewController.h */,
+				D0ABC8C01944E23E0095E59E /* CVDetailViewController.m */,
+				D0ABC8C11944E23E0095E59E /* CVMasterViewController.h */,
+				D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		D0ABC8DA1944E3170095E59E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				D0ABC8DB1944E3200095E59E /* CVChepClient.h */,
+				D0ABC8DC1944E3200095E59E /* CVChepClient.m */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -173,9 +241,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D09139BA1941A4C50029AE98 /* Build configuration list for PBXNativeTarget "CarrierVanilla" */;
 			buildPhases = (
+				248FCB15A8BC4C5A9DE950C4 /* Check Pods Manifest.lock */,
 				D091397B1941A4C50029AE98 /* Sources */,
 				D091397C1941A4C50029AE98 /* Frameworks */,
 				D091397D1941A4C50029AE98 /* Resources */,
+				0C308D1767774FEF865973D4 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -259,16 +329,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0C308D1767774FEF865973D4 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		248FCB15A8BC4C5A9DE950C4 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		D091397B1941A4C50029AE98 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0ABC8D91944E2990095E59E /* Stop.m in Sources */,
+				D0ABC8D71944E2990095E59E /* Ref.m in Sources */,
+				D0ABC8D41944E2990095E59E /* Item.m in Sources */,
+				D0ABC8D61944E2990095E59E /* MobLog.xcdatamodeld in Sources */,
 				D09139911941A4C50029AE98 /* main.m in Sources */,
+				D0B6360E1941A77400015ACA /* MobLog.xcdatamodeld in Sources */,
 				D09139951941A4C50029AE98 /* CVAppDelegate.m in Sources */,
-				D091399B1941A4C50029AE98 /* CarrierVanilla.xcdatamodeld in Sources */,
-				D09139A11941A4C50029AE98 /* CVDetailViewController.m in Sources */,
-				D091399E1941A4C50029AE98 /* CVMasterViewController.m in Sources */,
+				D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */,
+				D0ABC8D31944E2990095E59E /* Address.m in Sources */,
+				D0ABC8C31944E23E0095E59E /* CVDetailViewController.m in Sources */,
+				D0ABC8D81944E2990095E59E /* Shipment.m in Sources */,
+				D0ABC8D51944E2990095E59E /* Load.m in Sources */,
+				D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +501,7 @@
 		};
 		D09139BB1941A4C50029AE98 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21742465D60E4C8D8F007F4E /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -403,6 +515,7 @@
 		};
 		D09139BC1941A4C50029AE98 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21742465D60E4C8D8F007F4E /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -473,6 +586,7 @@
 				D09139BC1941A4C50029AE98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D09139BD1941A4C50029AE98 /* Build configuration list for PBXNativeTarget "CarrierVanillaTests" */ = {
 			isa = XCConfigurationList;
@@ -481,17 +595,29 @@
 				D09139BF1941A4C50029AE98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		D09139991941A4C50029AE98 /* CarrierVanilla.xcdatamodeld */ = {
+		D0ABC8CB1944E2990095E59E /* MobLog.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				D091399A1941A4C50029AE98 /* CarrierVanilla.xcdatamodel */,
+				D0ABC8CC1944E2990095E59E /* MobLog.xcdatamodel */,
 			);
-			currentVersion = D091399A1941A4C50029AE98 /* CarrierVanilla.xcdatamodel */;
-			path = CarrierVanilla.xcdatamodeld;
+			currentVersion = D0ABC8CC1944E2990095E59E /* MobLog.xcdatamodel */;
+			name = MobLog.xcdatamodeld;
+			path = Models/MobLog.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		D0B636081941A77400015ACA /* MobLog.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D0B636091941A77400015ACA /* MobLog.xcdatamodel */,
+			);
+			currentVersion = D0B636091941A77400015ACA /* MobLog.xcdatamodel */;
+			path = MobLog.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
