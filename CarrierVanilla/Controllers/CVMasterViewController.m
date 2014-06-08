@@ -42,6 +42,7 @@
     self.navigationItem.rightBarButtonItem = addButton;
 }
 
+#define SET_IF_NOT_NULL(TARGET, VAL) if(VAL != [NSNull null]) { TARGET = VAL; }
 - (void)importArrayOfStopsIntoCoreData:(NSArray*)resultsArray
 {
     [resultsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
@@ -53,8 +54,10 @@
         NSArray *stops = [obj objectForKey:@"stops"];
         [stops enumerateObjectsUsingBlock:^(id stopobj, NSUInteger idx, BOOL *stop) {
             Stop *_stop = [NSEntityDescription insertNewObjectForEntityForName:@"Stop" inManagedObjectContext:self.managedObjectContext];
+            NSLog(@"the location name is of type: %@", [[stopobj valueForKey:@"location_name"]class]);
             //            [_stop setValuesForKeysWithDictionary:stopobj];
-            _stop.location_name = [stopobj valueForKey:@"location_name"];
+//            _stop.location_name = [stopobj valueForKey:@"location_name"];
+            SET_IF_NOT_NULL(_stop.location_name , [stopobj valueForKey:@"location_name"]);
             _stop.location_id = [stopobj valueForKey:@"location_id"];
             _stop.location_ref = [stopobj valueForKey:@"location_ref"];
             _stop.type = [stopobj valueForKey:@"type"];
@@ -146,7 +149,8 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo name];
+    int stopCount = [[sectionInfo objects]count];
+    return [NSString stringWithFormat:@"Load: %@  Stops: %i",[sectionInfo name],stopCount];
 
 };
 

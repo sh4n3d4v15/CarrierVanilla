@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		73CBFCF4B2EF4DADBBF2BDFB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0996C26EA9F043BF83367717 /* libPods.a */; };
+		D06BD1541944EE6F008DE0BC /* MobLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D06BD1521944EE6F008DE0BC /* MobLog.xcdatamodeld */; };
 		D09139831941A4C50029AE98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139821941A4C50029AE98 /* Foundation.framework */; };
 		D09139851941A4C50029AE98 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139841941A4C50029AE98 /* CoreGraphics.framework */; };
 		D09139871941A4C50029AE98 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139861941A4C50029AE98 /* UIKit.framework */; };
 		D09139891941A4C50029AE98 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139881941A4C50029AE98 /* CoreData.framework */; };
 		D091398F1941A4C50029AE98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D091398D1941A4C50029AE98 /* InfoPlist.strings */; };
 		D09139911941A4C50029AE98 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D09139901941A4C50029AE98 /* main.m */; };
-		D09139951941A4C50029AE98 /* CVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D09139941941A4C50029AE98 /* CVAppDelegate.m */; };
 		D09139981941A4C50029AE98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D09139961941A4C50029AE98 /* Main.storyboard */; };
 		D09139A31941A4C50029AE98 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D09139A21941A4C50029AE98 /* Images.xcassets */; };
 		D09139AA1941A4C50029AE98 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139A91941A4C50029AE98 /* XCTest.framework */; };
@@ -28,11 +28,11 @@
 		D0ABC8D31944E2990095E59E /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C61944E2990095E59E /* Address.m */; };
 		D0ABC8D41944E2990095E59E /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C81944E2990095E59E /* Item.m */; };
 		D0ABC8D51944E2990095E59E /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8CA1944E2990095E59E /* Load.m */; };
-		D0ABC8D61944E2990095E59E /* MobLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8CB1944E2990095E59E /* MobLog.xcdatamodeld */; };
 		D0ABC8D71944E2990095E59E /* Ref.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8CE1944E2990095E59E /* Ref.m */; };
 		D0ABC8D81944E2990095E59E /* Shipment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8D01944E2990095E59E /* Shipment.m */; };
 		D0ABC8D91944E2990095E59E /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8D21944E2990095E59E /* Stop.m */; };
 		D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8DC1944E3200095E59E /* CVChepClient.m */; };
+		D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */; };
 		D0B6360E1941A77400015ACA /* MobLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0B636081941A77400015ACA /* MobLog.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +49,7 @@
 /* Begin PBXFileReference section */
 		0996C26EA9F043BF83367717 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		21742465D60E4C8D8F007F4E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		D06BD1531944EE6F008DE0BC /* MobLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobLog.xcdatamodel; sourceTree = "<group>"; };
 		D091397F1941A4C50029AE98 /* CarrierVanilla.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarrierVanilla.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09139821941A4C50029AE98 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D09139841941A4C50029AE98 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -59,7 +60,6 @@
 		D09139901941A4C50029AE98 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D09139921941A4C50029AE98 /* CarrierVanilla-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CarrierVanilla-Prefix.pch"; sourceTree = "<group>"; };
 		D09139931941A4C50029AE98 /* CVAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CVAppDelegate.h; sourceTree = "<group>"; };
-		D09139941941A4C50029AE98 /* CVAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CVAppDelegate.m; sourceTree = "<group>"; };
 		D09139971941A4C50029AE98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D09139A21941A4C50029AE98 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D09139A81941A4C50029AE98 /* CarrierVanillaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarrierVanillaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,7 +77,6 @@
 		D0ABC8C81944E2990095E59E /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Item.m; path = Models/Item.m; sourceTree = "<group>"; };
 		D0ABC8C91944E2990095E59E /* Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Load.h; path = Models/Load.h; sourceTree = "<group>"; };
 		D0ABC8CA1944E2990095E59E /* Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Load.m; path = Models/Load.m; sourceTree = "<group>"; };
-		D0ABC8CC1944E2990095E59E /* MobLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobLog.xcdatamodel; sourceTree = "<group>"; };
 		D0ABC8CD1944E2990095E59E /* Ref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ref.h; path = Models/Ref.h; sourceTree = "<group>"; };
 		D0ABC8CE1944E2990095E59E /* Ref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Ref.m; path = Models/Ref.m; sourceTree = "<group>"; };
 		D0ABC8CF1944E2990095E59E /* Shipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shipment.h; path = Models/Shipment.h; sourceTree = "<group>"; };
@@ -86,6 +85,7 @@
 		D0ABC8D21944E2990095E59E /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Stop.m; path = Models/Stop.m; sourceTree = "<group>"; };
 		D0ABC8DB1944E3200095E59E /* CVChepClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChepClient.h; path = Network/CVChepClient.h; sourceTree = "<group>"; };
 		D0ABC8DC1944E3200095E59E /* CVChepClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVChepClient.m; path = Network/CVChepClient.m; sourceTree = "<group>"; };
+		D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVAppDelegate.m; sourceTree = "<group>"; };
 		D0B636091941A77400015ACA /* MobLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobLog.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,12 +152,14 @@
 		D091398A1941A4C50029AE98 /* CarrierVanilla */ = {
 			isa = PBXGroup;
 			children = (
-				D0ABC8DA1944E3170095E59E /* Network */,
+				D06BD1521944EE6F008DE0BC /* MobLog.xcdatamodeld */,
 				D0ABC8BD1944E0FB0095E59E /* Models */,
-				D09139931941A4C50029AE98 /* CVAppDelegate.h */,
-				D09139941941A4C50029AE98 /* CVAppDelegate.m */,
-				D09139961941A4C50029AE98 /* Main.storyboard */,
+				D0ABC8DE1944E3FA0095E59E /* Views */,
 				D0ABC8BE1944E1D50095E59E /* Controllers */,
+				D0ABC8DA1944E3170095E59E /* Network */,
+				D09139931941A4C50029AE98 /* CVAppDelegate.h */,
+				D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */,
+				D09139961941A4C50029AE98 /* Main.storyboard */,
 				D09139A21941A4C50029AE98 /* Images.xcassets */,
 				D091398B1941A4C50029AE98 /* Supporting Files */,
 			);
@@ -202,7 +204,6 @@
 				D0ABC8C81944E2990095E59E /* Item.m */,
 				D0ABC8C91944E2990095E59E /* Load.h */,
 				D0ABC8CA1944E2990095E59E /* Load.m */,
-				D0ABC8CB1944E2990095E59E /* MobLog.xcdatamodeld */,
 				D0ABC8CD1944E2990095E59E /* Ref.h */,
 				D0ABC8CE1944E2990095E59E /* Ref.m */,
 				D0ABC8CF1944E2990095E59E /* Shipment.h */,
@@ -232,6 +233,13 @@
 				D0ABC8DC1944E3200095E59E /* CVChepClient.m */,
 			);
 			name = Network;
+			sourceTree = "<group>";
+		};
+		D0ABC8DE1944E3FA0095E59E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,13 +377,13 @@
 			files = (
 				D0ABC8D91944E2990095E59E /* Stop.m in Sources */,
 				D0ABC8D71944E2990095E59E /* Ref.m in Sources */,
+				D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */,
 				D0ABC8D41944E2990095E59E /* Item.m in Sources */,
-				D0ABC8D61944E2990095E59E /* MobLog.xcdatamodeld in Sources */,
 				D09139911941A4C50029AE98 /* main.m in Sources */,
 				D0B6360E1941A77400015ACA /* MobLog.xcdatamodeld in Sources */,
-				D09139951941A4C50029AE98 /* CVAppDelegate.m in Sources */,
 				D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */,
 				D0ABC8D31944E2990095E59E /* Address.m in Sources */,
+				D06BD1541944EE6F008DE0BC /* MobLog.xcdatamodeld in Sources */,
 				D0ABC8C31944E23E0095E59E /* CVDetailViewController.m in Sources */,
 				D0ABC8D81944E2990095E59E /* Shipment.m in Sources */,
 				D0ABC8D51944E2990095E59E /* Load.m in Sources */,
@@ -600,14 +608,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		D0ABC8CB1944E2990095E59E /* MobLog.xcdatamodeld */ = {
+		D06BD1521944EE6F008DE0BC /* MobLog.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				D0ABC8CC1944E2990095E59E /* MobLog.xcdatamodel */,
+				D06BD1531944EE6F008DE0BC /* MobLog.xcdatamodel */,
 			);
-			currentVersion = D0ABC8CC1944E2990095E59E /* MobLog.xcdatamodel */;
-			name = MobLog.xcdatamodeld;
-			path = Models/MobLog.xcdatamodeld;
+			currentVersion = D06BD1531944EE6F008DE0BC /* MobLog.xcdatamodel */;
+			path = MobLog.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
