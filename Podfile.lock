@@ -18,14 +18,20 @@ PODS:
   - AFNetworking/UIKit (2.2.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - PixateFreestyle (2.1.3)
+  - pop (1.0.5)
   - SOMessaging (1.0.0)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
+  - PixateFreestyle
+  - pop (~> 1.0)
   - SOMessaging (~> 1.0.0)
 
 SPEC CHECKSUMS:
   AFNetworking: ab63e259fe91eef4519b371ef0a4955af0e73e64
+  PixateFreestyle: 0ca9f2c09d8de16db23edab49bdc7fe92e8c5e0a
+  pop: 75fa2b33934200a8a68abb449ac1726fcf7e43b9
   SOMessaging: 040111bede4ae5c48d1d0181ca746a5617a06331
 
 COCOAPODS: 0.33.1

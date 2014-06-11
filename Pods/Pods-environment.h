@@ -48,9 +48,21 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 2
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 4
 
+// PixateFreestyle
+#define COCOAPODS_POD_AVAILABLE_PixateFreestyle
+#define COCOAPODS_VERSION_MAJOR_PixateFreestyle 2
+#define COCOAPODS_VERSION_MINOR_PixateFreestyle 1
+#define COCOAPODS_VERSION_PATCH_PixateFreestyle 3
+
 // SOMessaging
 #define COCOAPODS_POD_AVAILABLE_SOMessaging
 #define COCOAPODS_VERSION_MAJOR_SOMessaging 1
 #define COCOAPODS_VERSION_MINOR_SOMessaging 0
 #define COCOAPODS_VERSION_PATCH_SOMessaging 0
+
+// pop
+#define COCOAPODS_POD_AVAILABLE_pop
+#define COCOAPODS_VERSION_MAJOR_pop 1
+#define COCOAPODS_VERSION_MINOR_pop 0
+#define COCOAPODS_VERSION_PATCH_pop 5
 

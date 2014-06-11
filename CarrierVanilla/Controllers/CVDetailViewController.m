@@ -8,6 +8,7 @@
 
 #import "CVDetailViewController.h"
 #import "Stop.h"
+#import "Shipment.h"
 @interface CVDetailViewController ()
 - (void)configureView;
 @end
@@ -16,10 +17,10 @@
 
 #pragma mark - Managing the detail item
 
-- (void)setDetailItem:(id)newDetailItem
+- (void)setDetailItem:(id)stop
 {
-    if (_detailItem != newDetailItem) {
-        _detailItem = newDetailItem;
+    if (_stop != stop) {
+        _stop = stop;
         
         // Update the view.
         [self configureView];
@@ -31,8 +32,14 @@
     // Update the user interface for the detail item.
 
     if (self.detailItem) {
-        self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"location_name"] description];
-
+        self.detailDescriptionLabel.text = [[self.stop valueForKey:@"location_name"] description];
+        NSArray *shipments = [self.detailItem valueForKey:@"shipments"];
+        [shipments enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSArray *items = [obj valueForKey:@"items"];
+            [items enumerateObjectsUsingBlock:^(id ibj, NSUInteger idx, BOOL *stop) {
+                NSLog(@"an item:: %@", [ibj valueForKey:@"pieces"] );
+            }];
+        }];
     }
 }
 

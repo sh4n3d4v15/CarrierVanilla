@@ -9,7 +9,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-PixateFreestyle.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SOMessaging.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-pop.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,17 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>16F28A99634340F59F634290</key>
+		<key>1C48C5ED08A14FD9BBF0A04E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A1783B3C68B141E2B5207B44</key>
+		<key>4A1BBB3CA52744B39BEDB100</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C07FDA9B007D401D8370F4AB</key>
+		<key>6169373BCA0147548BE738F1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>98D2494976024B67BA8F0DE3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FF6EF41829DF45D880FDDEF0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

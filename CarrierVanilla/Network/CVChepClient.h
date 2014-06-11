@@ -11,7 +11,7 @@
 @interface CVChepClient : AFHTTPSessionManager
 
 +(CVChepClient*)sharedClient;
-
+- (void)importArrayOfStopsIntoCoreData:(NSArray*)resultsArray;
 #pragma mark - Stop Requests
 - (NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:( void (^)(NSArray *results, NSError *error) )completion;
 

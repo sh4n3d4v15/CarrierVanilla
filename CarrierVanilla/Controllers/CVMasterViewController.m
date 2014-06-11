@@ -34,85 +34,11 @@
 	// Do any additional setup after loading the view, typically from a nib.
     [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
         NSLog(@"results: %@", results);
-        [self importArrayOfStopsIntoCoreData:results];
+//        [self importArrayOfStopsIntoCoreData:results];
     }];
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
 }
 
-#define SET_IF_NOT_NULL(TARGET, VAL) if(VAL != [NSNull null]) { TARGET = VAL; }
-- (void)importArrayOfStopsIntoCoreData:(NSArray*)resultsArray
-{
-    [resultsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
-        Load *load = [NSEntityDescription insertNewObjectForEntityForName:@"Load" inManagedObjectContext:self.managedObjectContext];
-        load.id = [obj valueForKey:@"id"];
-        load.load_number = [obj valueForKey:@"load_number"];
-        load.status = [obj valueForKey:@"status"];
-        
-        NSArray *stops = [obj objectForKey:@"stops"];
-        [stops enumerateObjectsUsingBlock:^(id stopobj, NSUInteger idx, BOOL *stop) {
-            Stop *_stop = [NSEntityDescription insertNewObjectForEntityForName:@"Stop" inManagedObjectContext:self.managedObjectContext];
-            NSLog(@"the location name is of type: %@", [[stopobj valueForKey:@"location_name"]class]);
-            //            [_stop setValuesForKeysWithDictionary:stopobj];
-//            _stop.location_name = [stopobj valueForKey:@"location_name"];
-            SET_IF_NOT_NULL(_stop.location_name , [stopobj valueForKey:@"location_name"]);
-            _stop.location_id = [stopobj valueForKey:@"location_id"];
-            _stop.location_ref = [stopobj valueForKey:@"location_ref"];
-            _stop.type = [stopobj valueForKey:@"type"];
-            _stop.planned_start = [stopobj valueForKey:@"planned_start"];
-            _stop.planned_end = [stopobj valueForKey:@"planned_end"];
-            _stop.weight = [stopobj valueForKey:@"weight"];
-            _stop.pallets = [stopobj valueForKey:@"pallets"];
-            _stop.pieces = [stopobj valueForKey:@"pieces"];
 
-            Address *address = [NSEntityDescription insertNewObjectForEntityForName:@"Address" inManagedObjectContext:self.managedObjectContext];
-            address.address1 = [stopobj valueForKeyPath:@"address.address1"];
-            _stop.address = address;
-
-            NSArray *shipments = [stopobj valueForKey:@"shipments"];
-            NSLog(@"Shipemnts in master %@", shipments);
-            [shipments enumerateObjectsUsingBlock:^(id shipmentObj, NSUInteger idx, BOOL *stop) {
-                Shipment *shipment = [NSEntityDescription insertNewObjectForEntityForName:@"Shipment" inManagedObjectContext:self.managedObjectContext];
-                shipment.shipment_number = shipmentObj[@"Shipment_number"];
-                shipment.comments = shipmentObj[@"comments"];
-                
-                NSArray *items = [shipmentObj valueForKey:@"items"];
-                [items enumerateObjectsUsingBlock:^(id itemObj, NSUInteger idx, BOOL *stop) {
-                    Item *item = [NSEntityDescription insertNewObjectForEntityForName:@"Item" inManagedObjectContext:self.managedObjectContext];
-                    item.line = [itemObj valueForKey:@"line"];
-                    item.product_id = [itemObj valueForKey:@"product_id"];
-                    item.product_description = [itemObj valueForKey:@"product_description"];
-                    item.commodity = [itemObj valueForKey:@"commodity"];
-                    item.weight = [itemObj valueForKey:@"weight"];
-                    item.volume = [itemObj valueForKey:@"volume"];
-                    item.pieces = [itemObj valueForKey:@"pieces"];
-                    item.lading = [itemObj valueForKey:@"lading"];
-                    [shipment addItemsObject:item];
-                }];
-                
-            [_stop addShipmentsObject:shipment];
-            [load addStopsObject:_stop];
-            }];
-        }];
-        
-        NSArray *refs = [obj valueForKey:@"refs"];
-        [refs enumerateObjectsUsingBlock:^(id refobj, NSUInteger idx, BOOL *stop) {
-            Ref *_ref = [NSEntityDescription insertNewObjectForEntityForName:@"Ref" inManagedObjectContext:self.managedObjectContext];
-            _ref.name = [refobj valueForKey:@"name"];
-            _ref.value = [refobj valueForKey:@"value"];
-            [load addRefsObject:_ref];
-        }];
-    }];
-    
-    NSError* error = nil;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Unable to save context for class");
-    } else {
-        NSLog(@"saved all records!");
-    }
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -120,25 +46,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
-{
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-    
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
-         // Replace this implementation with code to handle the error appropriately.
-         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-}
 
 #pragma mark - Table View
 
@@ -149,8 +56,7 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    int stopCount = [[sectionInfo objects]count];
-    return [NSString stringWithFormat:@"Load: %@  Stops: %i",[sectionInfo name],stopCount];
+    return [sectionInfo name];
 
 };
 
@@ -200,10 +106,9 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        Stop *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        NSLog(@"LOAD: %@",object    );
+        Stop *selectedStop = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         CVDetailViewController *dvc = (CVDetailViewController*)[segue destinationViewController];
-        [dvc setDetailItem:object];
+        [dvc setStop:selectedStop];
         dvc.delegate = self;
     }
 }
