@@ -22,6 +22,15 @@
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     CVMasterViewController *controller = (CVMasterViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
+    
+    NSString *family, *font;
+    for (family in [UIFont familyNames])
+    {
+        NSLog(@"\nFamily: %@", family);
+        
+        for (font in [UIFont fontNamesForFamilyName:family])
+            NSLog(@"\tFont: %@\n", font);
+    }
     return YES;
 }
 							

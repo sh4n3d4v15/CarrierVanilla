@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-UIColor+MLPFlatColors.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-pop.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1C48C5ED08A14FD9BBF0A04E</key>
+		<key>65758F5BF8044C34924E11E7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4A1BBB3CA52744B39BEDB100</key>
+		<key>A2999861EF0C4A6FB095E504</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6169373BCA0147548BE738F1</key>
+		<key>A86CEE610A3B41E1905866FF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>98D2494976024B67BA8F0DE3</key>
+		<key>DD57166CC66447D3B5FA28FF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FF6EF41829DF45D880FDDEF0</key>
+		<key>E77CE610BF2C4C4086419EF5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F8142C34C08F4F728D9A7AF7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

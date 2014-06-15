@@ -7,9 +7,8 @@
 //
 
 #import "CVMasterViewController.h"
-
-#import "CVDetailViewController.h"
-
+#import "CVStopDetailTableViewController.h"
+#import "CCLoginViewController.h"
 #import "CVChepClient.h"
 #import "Stop.h"
 #import "Load.h"
@@ -17,7 +16,7 @@
 #import "Ref.h"
 #import "Shipment.h"
 #import "Item.h"
-@interface CVMasterViewController ()<stopChangeDelegate>
+@interface CVMasterViewController ()<stopChangeDelegate,CCLoginViewDelegate>
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -36,6 +35,14 @@
         NSLog(@"results: %@", results);
 //        [self importArrayOfStopsIntoCoreData:results];
     }];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"userLoggedIn"];
+    
+    if( !isUserLoggedIn ){
+        [self showLoginViewAnimated:NO];
+    }
 }
 
 
@@ -103,11 +110,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+    if ([[segue identifier] isEqualToString:@"showStop"]) {
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         Stop *selectedStop = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        CVDetailViewController *dvc = (CVDetailViewController*)[segue destinationViewController];
+        CVStopDetailTableViewController *dvc = (CVStopDetailTableViewController*)[segue destinationViewController];
         [dvc setStop:selectedStop];
         dvc.delegate = self;
     }
@@ -213,8 +220,28 @@
     [self.tableView reloadData];
 }
  */
+
+#pragma mark - Custom methods
+
+-(void)showLoginViewAnimated:(BOOL)animated{
+    CCLoginViewController *lvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"loginView"];
+    lvc.delegate = self;
+    [self presentViewController:lvc animated:animated completion:nil];
+}
+
+#pragma mark Delegate methods
+
+-(void)userDidLoginWithDictionary:(NSDictionary *)userInfo{
+    
+}
+
+
 -(void)saveChangesOnContext{
-    NSLog(@"I logged this because i was told to by the detail screen");
+    NSError *error;
+    [self.managedObjectContext save:&error];
+    if (error) {
+        NSLog(@"There was an error saving the context");
+    }
 }
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {

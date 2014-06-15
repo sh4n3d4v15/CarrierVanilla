@@ -82,13 +82,17 @@
                 
                 Address *address = [NSEntityDescription insertNewObjectForEntityForName:@"Address" inManagedObjectContext:dmgr.managedObjectContext];
                 address.address1 = [stopobj valueForKeyPath:@"address.address1"];
+                address.city = [stopobj valueForKeyPath:@"address.city"];
+                address.state = [stopobj valueForKeyPath:@"address.state"];
+                address.zip = [stopobj valueForKeyPath:@"address.zip"];
+                address.country = [stopobj valueForKeyPath:@"address.country"];
                 _stop.address = address;
                 
                 NSArray *shipments = [stopobj valueForKey:@"shipments"];
                 NSLog(@"Shipemnts in master %@", shipments);
                 [shipments enumerateObjectsUsingBlock:^(id shipmentObj, NSUInteger idx, BOOL *stop) {
                     Shipment *shipment = [NSEntityDescription insertNewObjectForEntityForName:@"Shipment" inManagedObjectContext:dmgr.managedObjectContext];
-                    shipment.shipment_number = shipmentObj[@"Shipment_number"];
+                    shipment.shipment_number = shipmentObj[@"shipment_number"];
                     shipment.comments = shipmentObj[@"comments"];
                     
                     NSArray *items = [shipmentObj valueForKey:@"items"];
