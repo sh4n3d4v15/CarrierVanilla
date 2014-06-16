@@ -161,4 +161,58 @@
     }];
     return task;
 };
+
+#pragma mark - Load Note Requests
+
+-(NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSArray *, NSError *))completion{
+    NSURLSessionDataTask *task = [self GET:@"/loadnotes" parameters:@{@"loadId": loadId}
+                                   success:^(NSURLSessionDataTask *task, id responseObject) {
+                                       NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                       if (httpResponse.statusCode == 200) {
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               completion(responseObject,nil);
+                                           });
+                                       }else{
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               completion(nil,nil);
+                                               NSLog(@"Received: %@", responseObject);
+                                               NSLog(@"Received HTTP %lo", (long)httpResponse.statusCode);
+                                           });
+                                       }
+                                       
+                                   } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                           completion(nil,error);
+                                       });
+                                   }];
+    return task;
+}
+
+-(NSURLSessionDataTask *)postLoadNoteForLoad:(NSString *)loadId withNoteType:(NSString *)noteType withStopType:(NSString *)stopType withMessage:(NSString *)message completion:(void (^)(NSArray *, NSError *))completion{
+    
+    NSURLSessionDataTask *task = [self POST:@"loadnote" parameters:@{@"loadId": loadId,
+                                                                     @"noteType": noteType,
+                                                                     @"stopType":stopType,
+                                                                     @"message":message}
+                                    success:^(NSURLSessionDataTask *task, id responseObject) {
+                                        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                        if (httpResponse.statusCode == 200) {
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                completion(responseObject,nil);
+                                            });
+                                        }else{
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                completion(nil,nil);
+                                                NSLog(@"Recieved: %@",responseObject);
+                                                NSLog(@"Recieved HTTP %lo",(long)httpResponse.statusCode);
+                                            });
+                                        }
+                                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            completion(nil,error);
+                                        });
+                                    }];
+    return task;
+}
+
 @end

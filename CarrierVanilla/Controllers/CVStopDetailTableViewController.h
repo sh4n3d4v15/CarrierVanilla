@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Stop.h"
 #import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
 @protocol stopChangeDelegate
 
 -(void)saveChangesOnContext;
@@ -17,5 +18,6 @@
 
 @interface CVStopDetailTableViewController : UITableViewController<MKMapViewDelegate>
 @property (strong, nonatomic) Stop *stop;
+@property(nonatomic)MKMapView *mapView;
 @property(weak,nonatomic) id <stopChangeDelegate> delegate;
 @end

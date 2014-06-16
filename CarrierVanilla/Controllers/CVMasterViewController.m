@@ -33,7 +33,6 @@
 	// Do any additional setup after loading the view, typically from a nib.
     [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
         NSLog(@"results: %@", results);
-//        [self importArrayOfStopsIntoCoreData:results];
     }];
 }
 
@@ -43,6 +42,8 @@
     if( !isUserLoggedIn ){
         [self showLoginViewAnimated:NO];
     }
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
+
 }
 
 

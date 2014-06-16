@@ -24,7 +24,6 @@
 		D09139AD1941A4C50029AE98 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139881941A4C50029AE98 /* CoreData.framework */; };
 		D09139B51941A4C50029AE98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D09139B31941A4C50029AE98 /* InfoPlist.strings */; };
 		D09139B71941A4C50029AE98 /* CarrierVanillaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */; };
-		D0ABC8C31944E23E0095E59E /* CVDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C01944E23E0095E59E /* CVDetailViewController.m */; };
 		D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */; };
 		D0ABC8D41944E2990095E59E /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C81944E2990095E59E /* Item.m */; };
 		D0ABC8D51944E2990095E59E /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8CA1944E2990095E59E /* Load.m */; };
@@ -37,6 +36,22 @@
 		D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */; };
 		D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */; };
 		D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F367194E3F2F00452C58 /* HTAutocompleteManager.m */; };
+		D0D3F36A194EF30600452C58 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D3F369194EF30600452C58 /* CoreLocation.framework */; };
+		D0D3F36D194EF8C700452C58 /* CCMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F36C194EF8C700452C58 /* CCMessageViewController.m */; };
+		D0D3F36F194EFB8D00452C58 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0D3F36E194EFB8D00452C58 /* QuartzCore.framework */; };
+		D0D3F37E194EFD7E00452C58 /* attachment.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F371194EFD7E00452C58 /* attachment.png */; };
+		D0D3F37F194EFD7E00452C58 /* attachment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F372194EFD7E00452C58 /* attachment@2x.png */; };
+		D0D3F380194EFD7E00452C58 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F373194EFD7E00452C58 /* bubble.png */; };
+		D0D3F381194EFD7E00452C58 /* bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F374194EFD7E00452C58 /* bubble@2x.png */; };
+		D0D3F382194EFD7E00452C58 /* bubbleReceive.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F375194EFD7E00452C58 /* bubbleReceive.png */; };
+		D0D3F383194EFD7E00452C58 /* bubbleReceive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F376194EFD7E00452C58 /* bubbleReceive@2x.png */; };
+		D0D3F384194EFD7E00452C58 /* chep.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F377194EFD7E00452C58 /* chep.png */; };
+		D0D3F385194EFD7E00452C58 /* inputTextBG.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F378194EFD7E00452C58 /* inputTextBG.png */; };
+		D0D3F386194EFD7E00452C58 /* inputTextBG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F379194EFD7E00452C58 /* inputTextBG@2x.png */; };
+		D0D3F387194EFD7E00452C58 /* play_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F37A194EFD7E00452C58 /* play_button.png */; };
+		D0D3F388194EFD7E00452C58 /* play_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F37B194EFD7E00452C58 /* play_button@2x.png */; };
+		D0D3F389194EFD7E00452C58 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F37C194EFD7E00452C58 /* settings.png */; };
+		D0D3F38A194EFD7E00452C58 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F37D194EFD7E00452C58 /* settings@2x.png */; };
 		D0F7FE5F194E0EBA002CCD9F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -74,8 +89,6 @@
 		D09139B21941A4C50029AE98 /* CarrierVanillaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CarrierVanillaTests-Info.plist"; sourceTree = "<group>"; };
 		D09139B41941A4C50029AE98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarrierVanillaTests.m; sourceTree = "<group>"; };
-		D0ABC8BF1944E23E0095E59E /* CVDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVDetailViewController.h; path = Controllers/CVDetailViewController.h; sourceTree = "<group>"; };
-		D0ABC8C01944E23E0095E59E /* CVDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVDetailViewController.m; path = Controllers/CVDetailViewController.m; sourceTree = "<group>"; };
 		D0ABC8C11944E23E0095E59E /* CVMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVMasterViewController.h; path = Controllers/CVMasterViewController.h; sourceTree = "<group>"; };
 		D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVMasterViewController.m; path = Controllers/CVMasterViewController.m; sourceTree = "<group>"; };
 		D0ABC8C71944E2990095E59E /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Item.h; path = Models/Item.h; sourceTree = "<group>"; };
@@ -98,6 +111,23 @@
 		D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTAutocompleteTextField.m; sourceTree = "<group>"; };
 		D0D3F366194E3F2F00452C58 /* HTAutocompleteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTAutocompleteManager.h; sourceTree = "<group>"; };
 		D0D3F367194E3F2F00452C58 /* HTAutocompleteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTAutocompleteManager.m; sourceTree = "<group>"; };
+		D0D3F369194EF30600452C58 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D0D3F36B194EF8C700452C58 /* CCMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMessageViewController.h; sourceTree = "<group>"; };
+		D0D3F36C194EF8C700452C58 /* CCMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMessageViewController.m; sourceTree = "<group>"; };
+		D0D3F36E194EFB8D00452C58 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D0D3F371194EFD7E00452C58 /* attachment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attachment.png; sourceTree = "<group>"; };
+		D0D3F372194EFD7E00452C58 /* attachment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "attachment@2x.png"; sourceTree = "<group>"; };
+		D0D3F373194EFD7E00452C58 /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
+		D0D3F374194EFD7E00452C58 /* bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble@2x.png"; sourceTree = "<group>"; };
+		D0D3F375194EFD7E00452C58 /* bubbleReceive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbleReceive.png; sourceTree = "<group>"; };
+		D0D3F376194EFD7E00452C58 /* bubbleReceive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubbleReceive@2x.png"; sourceTree = "<group>"; };
+		D0D3F377194EFD7E00452C58 /* chep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chep.png; sourceTree = "<group>"; };
+		D0D3F378194EFD7E00452C58 /* inputTextBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inputTextBG.png; sourceTree = "<group>"; };
+		D0D3F379194EFD7E00452C58 /* inputTextBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inputTextBG@2x.png"; sourceTree = "<group>"; };
+		D0D3F37A194EFD7E00452C58 /* play_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play_button.png; sourceTree = "<group>"; };
+		D0D3F37B194EFD7E00452C58 /* play_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play_button@2x.png"; sourceTree = "<group>"; };
+		D0D3F37C194EFD7E00452C58 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		D0D3F37D194EFD7E00452C58 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
 		D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -106,6 +136,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0D3F36F194EFB8D00452C58 /* QuartzCore.framework in Frameworks */,
+				D0D3F36A194EF30600452C58 /* CoreLocation.framework in Frameworks */,
 				D0F7FE5F194E0EBA002CCD9F /* MapKit.framework in Frameworks */,
 				D09139851941A4C50029AE98 /* CoreGraphics.framework in Frameworks */,
 				D09139891941A4C50029AE98 /* CoreData.framework in Frameworks */,
@@ -152,6 +184,8 @@
 		D09139811941A4C50029AE98 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0D3F36E194EFB8D00452C58 /* QuartzCore.framework */,
+				D0D3F369194EF30600452C58 /* CoreLocation.framework */,
 				D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */,
 				D09139821941A4C50029AE98 /* Foundation.framework */,
 				D09139841941A4C50029AE98 /* CoreGraphics.framework */,
@@ -166,6 +200,7 @@
 		D091398A1941A4C50029AE98 /* CarrierVanilla */ = {
 			isa = PBXGroup;
 			children = (
+				D0D3F370194EFD6000452C58 /* Images */,
 				D0ABC8BD1944E0FB0095E59E /* Models */,
 				D0ABC8DE1944E3FA0095E59E /* Views */,
 				D0ABC8BE1944E1D50095E59E /* Controllers */,
@@ -231,14 +266,14 @@
 		D0ABC8BE1944E1D50095E59E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D0D3F36B194EF8C700452C58 /* CCMessageViewController.h */,
+				D0D3F36C194EF8C700452C58 /* CCMessageViewController.m */,
 				D0D3F366194E3F2F00452C58 /* HTAutocompleteManager.h */,
 				D0D3F367194E3F2F00452C58 /* HTAutocompleteManager.m */,
 				D0D3F35D194E39DE00452C58 /* CCLoginViewController.h */,
 				D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */,
 				D04C3312194B3D7000BF42C4 /* CVStopDetailTableViewController.h */,
 				D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */,
-				D0ABC8BF1944E23E0095E59E /* CVDetailViewController.h */,
-				D0ABC8C01944E23E0095E59E /* CVDetailViewController.m */,
 				D0ABC8C11944E23E0095E59E /* CVMasterViewController.h */,
 				D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */,
 			);
@@ -261,6 +296,26 @@
 				D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		D0D3F370194EFD6000452C58 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				D0D3F371194EFD7E00452C58 /* attachment.png */,
+				D0D3F372194EFD7E00452C58 /* attachment@2x.png */,
+				D0D3F373194EFD7E00452C58 /* bubble.png */,
+				D0D3F374194EFD7E00452C58 /* bubble@2x.png */,
+				D0D3F375194EFD7E00452C58 /* bubbleReceive.png */,
+				D0D3F376194EFD7E00452C58 /* bubbleReceive@2x.png */,
+				D0D3F377194EFD7E00452C58 /* chep.png */,
+				D0D3F378194EFD7E00452C58 /* inputTextBG.png */,
+				D0D3F379194EFD7E00452C58 /* inputTextBG@2x.png */,
+				D0D3F37A194EFD7E00452C58 /* play_button.png */,
+				D0D3F37B194EFD7E00452C58 /* play_button@2x.png */,
+				D0D3F37C194EFD7E00452C58 /* settings.png */,
+				D0D3F37D194EFD7E00452C58 /* settings@2x.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,9 +397,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0D3F387194EFD7E00452C58 /* play_button.png in Resources */,
+				D0D3F37F194EFD7E00452C58 /* attachment@2x.png in Resources */,
+				D0D3F384194EFD7E00452C58 /* chep.png in Resources */,
 				D09139A31941A4C50029AE98 /* Images.xcassets in Resources */,
+				D0D3F381194EFD7E00452C58 /* bubble@2x.png in Resources */,
+				D0D3F382194EFD7E00452C58 /* bubbleReceive.png in Resources */,
+				D0D3F389194EFD7E00452C58 /* settings.png in Resources */,
+				D0D3F383194EFD7E00452C58 /* bubbleReceive@2x.png in Resources */,
 				D091398F1941A4C50029AE98 /* InfoPlist.strings in Resources */,
+				D0D3F385194EFD7E00452C58 /* inputTextBG.png in Resources */,
+				D0D3F37E194EFD7E00452C58 /* attachment.png in Resources */,
+				D0D3F388194EFD7E00452C58 /* play_button@2x.png in Resources */,
+				D0D3F386194EFD7E00452C58 /* inputTextBG@2x.png in Resources */,
+				D0D3F38A194EFD7E00452C58 /* settings@2x.png in Resources */,
 				D09139981941A4C50029AE98 /* Main.storyboard in Resources */,
+				D0D3F380194EFD7E00452C58 /* bubble.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +467,7 @@
 				D0ABC8D91944E2990095E59E /* Stop.m in Sources */,
 				D018F8C31949EBB500E21763 /* Address.m in Sources */,
 				D0ABC8D71944E2990095E59E /* Ref.m in Sources */,
+				D0D3F36D194EF8C700452C58 /* CCMessageViewController.m in Sources */,
 				D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */,
 				D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */,
 				D0ABC8D41944E2990095E59E /* Item.m in Sources */,
@@ -406,7 +475,6 @@
 				D0B6360E1941A77400015ACA /* MobLog.xcdatamodeld in Sources */,
 				D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */,
 				D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */,
-				D0ABC8C31944E23E0095E59E /* CVDetailViewController.m in Sources */,
 				D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */,
 				D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */,
 				D0ABC8D81944E2990095E59E /* Shipment.m in Sources */,

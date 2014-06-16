@@ -11,6 +11,7 @@
 #import "Shipment.h"
 #import "Item.h"
 #import "UIColor+MLPFLatColors.h"
+#import "CCMessageViewController.h"
 
 
 @interface CVStopDetailTableViewController ()
@@ -33,6 +34,26 @@
     if (_stop != stop) {
         NSArray *shipments = [stop.shipments allObjects];
         _shipmentCount =  [shipments count];
+        CLGeocoder *geocoder = [[CLGeocoder alloc]init];
+        [geocoder geocodeAddressString:@"M33 7TA" completionHandler:^(NSArray *placemarks, NSError *error) {
+            if (error) {
+                NSLog(@"There was an error %@", error);
+            }else{
+                NSLog(@"Placemarks %@", placemarks);
+                CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                CLLocation *location = placemark.location;
+                
+                MKCoordinateRegion region;
+                MKCoordinateSpan span;
+                span.latitudeDelta = 0.005;
+                span.longitudeDelta = 0.005;
+                region.span = span;
+                region.center = location.coordinate;
+                
+                
+                [_mapView setRegion:region animated:YES];
+            }
+        }];
         _stop = stop;
     }
 }
@@ -118,10 +139,11 @@
         zipLabel.text = address.zip;
         zipLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         
-        MKMapView *mapView = [[MKMapView alloc]initWithFrame:CGRectMake(190, 10, CGRectGetHeight(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
-        mapView.delegate = self;
+
+        _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(190, 10, CGRectGetHeight(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
+        _mapView.delegate = self;
         
-        [cell addSubview:mapView];
+        [cell addSubview:_mapView];
         [cell addSubview:zipLabel];
         [cell addSubview:countryLabel];
         [cell addSubview:cityLabel];
@@ -133,7 +155,7 @@
     }else if ([indexPath section] == self.shipmentCount){
         UIButton *inButton = [UIButton buttonWithType:UIButtonTypeCustom];
         inButton.frame = CGRectMake(0, 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
-        inButton.backgroundColor = [UIColor flatRedColor];
+        inButton.backgroundColor = [UIColor flatDarkOrangeColor];
         [inButton setTitle:@"IN" forState:UIControlStateNormal];
         [inButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [inButton addTarget:self action:@selector(checkMeIn:) forControlEvents:UIControlEventTouchUpInside];
@@ -141,15 +163,16 @@
         UIButton *outButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         outButton.frame = CGRectMake(CGRectGetWidth(cell.bounds)/1.5, 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
         outButton.backgroundColor = [UIColor flatGreenColor];
-        [outButton setTitle:@"Out" forState:UIControlStateNormal];
+        [outButton setTitle:@"OUT" forState:UIControlStateNormal];
         [outButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [outButton addTarget:self action:@selector(checkMeOut:) forControlEvents:UIControlEventTouchUpInside];
         
         UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeCustom];
         messageButton.frame = CGRectMake(CGRectGetMaxX(outButton.bounds), 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
         messageButton.backgroundColor = [UIColor flatBlueColor];
-        [messageButton setTitle:@"Note" forState:UIControlStateNormal];
+        [messageButton setTitle:@"NOTE" forState:UIControlStateNormal];
         [messageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [messageButton addTarget:self action:@selector(goToMessages:) forControlEvents:UIControlEventTouchUpInside];
    
         [cell addSubview:inButton];
         [cell addSubview:outButton];
@@ -207,6 +230,10 @@
 
 -(void)checkMeOut:(id)sender{
     NSLog(@"check me out!!");
+}
+-(void)goToMessages:(id)sender{
+    CCMessageViewController *mvc = [[CCMessageViewController alloc]init];
+    [self.navigationController pushViewController:mvc animated:YES];
 }
 
 

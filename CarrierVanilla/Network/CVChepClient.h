@@ -14,6 +14,8 @@
 - (void)importArrayOfStopsIntoCoreData:(NSArray*)resultsArray;
 #pragma mark - Stop Requests
 - (NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:( void (^)(NSArray *results, NSError *error) )completion;
+-(NSURLSessionDataTask*)getLoadNotesForLoad: (NSString*)loadId completion:(void (^)(NSArray *results, NSError *error))completion;
+-(NSURLSessionDataTask*)postLoadNoteForLoad: (NSString*)loadId withNoteType:(NSString*)noteType withStopType: (NSString*)stopType withMessage: (NSString *)message completion:(void (^)(NSArray *results, NSError *error))completion;
 
 @end
 
