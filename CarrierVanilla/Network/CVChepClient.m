@@ -110,10 +110,10 @@
                         SET_IF_NOT_NULL(item.product_id,  [itemObj valueForKey:@"product_id"]);
                         SET_IF_NOT_NULL(item.product_description, [itemObj valueForKey:@"product_description"]);
                         SET_IF_NOT_NULL(item.commodity, [itemObj valueForKey:@"commodity"]);
-//                        SET_IF_NOT_NULL(item.weight, [itemObj valueForKey:@"weight"]);
-//                        SET_IF_NOT_NULL(item.volume, [itemObj valueForKey:@"volume"]);
-//                        SET_IF_NOT_NULL(item.pieces, [itemObj valueForKey:@"pieces"]);
-//                        SET_IF_NOT_NULL(item.lading, [itemObj valueForKey:@"lading"]);
+                        SET_IF_NOT_NULL(item.weight, [itemObj valueForKey:@"weight"]);
+                        SET_IF_NOT_NULL(item.volume, [itemObj valueForKey:@"volume"]);
+                        SET_IF_NOT_NULL(item.pieces, [itemObj valueForKey:@"pieces"]);
+                        SET_IF_NOT_NULL(item.lading, [itemObj valueForKey:@"lading"]);
 
                         [shipment addItemsObject:item];
                     }];

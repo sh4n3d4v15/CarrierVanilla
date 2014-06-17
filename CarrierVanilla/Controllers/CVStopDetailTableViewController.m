@@ -52,7 +52,6 @@
                 region.span = span;
                 region.center = location.coordinate;
                 
-                
                 [_mapView setRegion:region animated:YES];
             }
         }];
@@ -124,7 +123,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell" forIndexPath:indexPath];
         // Configure the cell...
     if ([indexPath section] == 0) {
-        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 300, 20)];
+        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 150, 20)];
         nameLabel.text = self.stop.location_name;
         nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
         
@@ -133,7 +132,7 @@
         
         Address *address = self.stop.address;
         
-        UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, 200, 20)];
+        UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, 150, 20)];
         addressOneLabel.text = address.address1;
         addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
         
@@ -199,7 +198,7 @@
         Shipment *shipment = [self.stop.shipments allObjects][indexPath.row];
         
         UILabel *shipNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 180, 20)];
-        shipNumLabel.text = shipment.shipment_number;
+        shipNumLabel.text = [NSString stringWithFormat:@"Ref: %@", shipment.shipment_number];
         UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, 180, 20)];
         commentsLabel.text = shipment.comments;
         shipNumLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
@@ -212,7 +211,6 @@
             label.text = productString;
             label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
             [cell addSubview:label];
-
         }];
     }
     
