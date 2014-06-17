@@ -36,6 +36,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
         NSLog(@"results: %@", results);
+        NSLog(@"error: %@", error);
     }];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"settings.png"] style:UIBarButtonItemStylePlain
                                                           target:self action:@selector(showLogin:)];

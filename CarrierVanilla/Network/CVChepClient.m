@@ -21,9 +21,13 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-        NSURL *baseUrl = [NSURL URLWithString:@"http://chepserver.eu01.aws.af.cm"];
-        _sharedClient = [[CVChepClient alloc]initWithBaseURL:baseUrl];
+        __unused NSURL *baseUrl = [NSURL URLWithString:@"http://chepserver.eu01.aws.af.cm"];
+         NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
+        _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
+        _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
+        
         [_sharedClient.requestSerializer setAuthorizationHeaderFieldWithUsername:@"MobiShipRestUser" password:@"M0b1Sh1pm3n743"];
+      //  [_sharedClient.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
         [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             NSOperationQueue *operationQueue = _sharedClient.operationQueue;
             switch (status) {
@@ -143,30 +147,73 @@
 
 #pragma mark - Stop Requests
 
+//-(NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:(void (^)(NSArray *, NSError *))completion{
+//    NSURLSessionDataTask *task = [self GET:@"loads" parameters:@{@"vehicle":vehicleId} success:^(NSURLSessionDataTask *task, id responseObject) {
+//        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+//        NSArray *loads = [responseObject valueForKey:@"loads"];
+//        if(httpResponse.statusCode == 200){
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self importArrayOfStopsIntoCoreData:loads];
+//                completion(loads,nil);
+//            });
+//        }else{
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                completion(nil,nil);
+//            });
+//            NSLog(@"Received: %@", loads);
+//            NSLog(@"Received HTTP %lo", (long)httpResponse.statusCode);
+//        }
+//        
+//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            completion(nil,error);
+//        });
+//    }];
+//    return task;
+//};
+
+
 -(NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:(void (^)(NSArray *, NSError *))completion{
-    NSURLSessionDataTask *task = [self GET:@"loads" parameters:@{@"vehicle":vehicleId} success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-        NSArray *loads = [responseObject valueForKey:@"loads"];
-        if(httpResponse.statusCode == 200){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self importArrayOfStopsIntoCoreData:loads];
-                completion(loads,nil);
-            });
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(nil,nil);
-            });
-            NSLog(@"Received: %@", loads);
-            NSLog(@"Received HTTP %lo", (long)httpResponse.statusCode);
-        }
-        
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(nil,error);
-        });
-    }];
+    NSLog(@"Calling the method::");
+        NSString *urlString = @"/shipment_tracking_rest/jsonp/loads/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu";
+        NSURLSessionDataTask *task = [self POST:urlString parameters:@{
+                                                                     @"vehicle":@"TEST123",
+                                                                     @"res":@"",
+                                                                     @"offset":@0,
+                                                                     @"limit":@50,
+                                                                     @"include_stops":@YES,
+                                                                     @"include_shipments":@YES,
+                                                                     @"pick_start_date":@"",
+                                                                     @"pick_end_date":@"",
+                                                                     @"drop_start_date":@"",
+                                                                     @"drop_end_date":@""}
+                                      
+                                        success:^(NSURLSessionDataTask *task, id responseObject) {
+                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                            NSArray *loads = [responseObject valueForKey:@"loads"];
+                                            NSLog(@"top response %@", responseObject);
+                                            if (httpResponse.statusCode == 200) {
+                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                    [self importArrayOfStopsIntoCoreData:loads];
+                                                    NSLog(@"RESONSE: %@", httpResponse);
+                                                    NSLog(@"RESONSE OBJECT: %@", responseObject);
+                                                    completion(responseObject,nil);
+                                                });
+                                            }else{
+                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                    completion(nil,nil);
+                                                    NSLog(@"Received: %@", responseObject);
+                                                    NSLog(@"Received HTTP %lo", (long)httpResponse.statusCode);
+                                                });
+                                            }
+                                        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                completion(nil,error);
+                                            });
+                                        }];
     return task;
 };
+
 
 //-(NSURLSessionDataTask *)updateStopWithId:(NSString *)id forLoad:(NSString*)loadId withQuantity:(NSString *)quantity withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate completion:(void (^)(NSArray *, NSError *))completion{
 //    NSLog(@"Update stop method fired");
