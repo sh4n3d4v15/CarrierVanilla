@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Address" representedClassName="Address" syncable="YES">
+        <attribute name="address1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="stop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stop" inverseName="address" inverseEntity="Stop" syncable="YES"/>
+    </entity>
+    <entity name="Item" representedClassName="Item" syncable="YES">
+        <attribute name="commodity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lading" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="line" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pieces" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="product_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="product_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="volume" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="weight" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="shipment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Shipment" inverseName="items" inverseEntity="Shipment" syncable="YES"/>
+    </entity>
+    <entity name="Load" representedClassName="Load" syncable="YES">
+        <attribute name="completed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="load_number" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="podData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="refs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ref" inverseName="load" inverseEntity="Ref" syncable="YES"/>
+        <relationship name="stops" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Stop" inverseName="load" inverseEntity="Stop" syncable="YES">
+            <userInfo>
+                <entry key="relatedByAttribute" value="id"/>
+            </userInfo>
+        </relationship>
+        <userInfo>
+            <entry key="relatedByAttribute" value="id"/>
+        </userInfo>
+    </entity>
+    <entity name="Ref" representedClassName="Ref" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="load" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Load" inverseName="refs" inverseEntity="Load" syncable="YES"/>
+    </entity>
+    <entity name="Shipment" representedClassName="Shipment" syncable="YES">
+        <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shipment_number" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Item" inverseName="shipment" inverseEntity="Item" syncable="YES"/>
+        <relationship name="stop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stop" inverseName="shipments" inverseEntity="Stop" syncable="YES"/>
+    </entity>
+    <entity name="Stop" representedClassName="Stop" syncable="YES">
+        <attribute name="active" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="actual_arrival" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="actual_departure" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="departure_location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eta" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location_ref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pallets" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="pieces" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="planned_end" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="planned_start" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="signatureSnapshot" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="volume" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="weight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="address" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Address" inverseName="stop" inverseEntity="Address" syncable="YES"/>
+        <relationship name="load" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Load" inverseName="stops" inverseEntity="Load" syncable="YES">
+            <userInfo>
+                <entry key="relatedByAttribute" value="id"/>
+            </userInfo>
+        </relationship>
+        <relationship name="shipments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Shipment" inverseName="stop" inverseEntity="Shipment" syncable="YES"/>
+        <userInfo>
+            <entry key="relatedByAttribute" value="id"/>
+        </userInfo>
+    </entity>
+    <elements>
+        <element name="Address" positionX="-10728" positionY="1548" width="128" height="133"/>
+        <element name="Item" positionX="-10728" positionY="1349" width="128" height="178"/>
+        <element name="Load" positionX="-10215" positionY="1916" width="128" height="148"/>
+        <element name="Ref" positionX="-10719" positionY="1872" width="128" height="88"/>
+        <element name="Shipment" positionX="-10512" positionY="1422" width="128" height="103"/>
+        <element name="Stop" positionX="-10224" positionY="1467" width="128" height="358"/>
+    </elements>
+</model>

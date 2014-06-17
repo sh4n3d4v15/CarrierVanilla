@@ -105,13 +105,14 @@
 }
 
 -(void)postMessageToServer:(SOMessage*)message{
-    [[CVChepClient sharedClient]postLoadNoteForLoad:@"loadid"
-                                     withNoteType:@"WHAT IS LOAD TYPE"
-                                     withStopType:@"PICK OR DROP"
+    [[CVChepClient sharedClient]postLoadNoteForLoad:[self.stop valueForKeyPath:@"load.id"]
+                                     withNoteType:@"MOBILE MESSAGE"
+                                     withStopType:self.stop.type
                                      withMessage:message.text completion:^(NSArray *results, NSError *error) {
-                                        NSLog(@"posted to server");
-                                        [self sendMessage:message];
+                                        NSLog(@"posted to server %@" ,[self.stop valueForKeyPath:@"load.id"]);
+                                      
                                      }];
+    [self sendMessage:message];
 }
 
 #pragma mark - UIImage Picker Delegate Methods
@@ -125,6 +126,17 @@
     photoMessage.type = SOMessageTypePhoto;
     photoMessage.media = imageData;
     photoMessage.fromMe = YES;
+    
+    [[CVChepClient sharedClient]uploadPhoto:imageData
+                                    forStopId:self.stop.id
+                                    withLoadId:[self.stop valueForKeyPath:@"load.id"]
+                                    withComment:@"UPload from mobile" completion:^(NSArray *results, NSError *error) {
+                                        if (error) {
+                                            NSLog(@"error %@", [error localizedDescription]);
+                                        }else{
+                                            NSLog(@"Good upload of photo");
+                                        }
+                                    }];
     [self postMessageToServer:photoMessage];
 }
 

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		73CBFCF4B2EF4DADBBF2BDFB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0996C26EA9F043BF83367717 /* libPods.a */; };
-		D018F8C31949EBB500E21763 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D018F8C21949EBB500E21763 /* Address.m */; };
 		D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */; };
 		D09139831941A4C50029AE98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139821941A4C50029AE98 /* Foundation.framework */; };
 		D09139851941A4C50029AE98 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139841941A4C50029AE98 /* CoreGraphics.framework */; };
@@ -25,14 +24,8 @@
 		D09139B51941A4C50029AE98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D09139B31941A4C50029AE98 /* InfoPlist.strings */; };
 		D09139B71941A4C50029AE98 /* CarrierVanillaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */; };
 		D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */; };
-		D0ABC8D41944E2990095E59E /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C81944E2990095E59E /* Item.m */; };
-		D0ABC8D51944E2990095E59E /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8CA1944E2990095E59E /* Load.m */; };
-		D0ABC8D71944E2990095E59E /* Ref.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8CE1944E2990095E59E /* Ref.m */; };
-		D0ABC8D81944E2990095E59E /* Shipment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8D01944E2990095E59E /* Shipment.m */; };
-		D0ABC8D91944E2990095E59E /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8D21944E2990095E59E /* Stop.m */; };
 		D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8DC1944E3200095E59E /* CVChepClient.m */; };
 		D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */; };
-		D0B6360E1941A77400015ACA /* MobLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0B636081941A77400015ACA /* MobLog.xcdatamodeld */; };
 		D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */; };
 		D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */; };
 		D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F367194E3F2F00452C58 /* HTAutocompleteManager.m */; };
@@ -52,6 +45,14 @@
 		D0D3F388194EFD7E00452C58 /* play_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F37B194EFD7E00452C58 /* play_button@2x.png */; };
 		D0D3F389194EFD7E00452C58 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F37C194EFD7E00452C58 /* settings.png */; };
 		D0D3F38A194EFD7E00452C58 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D3F37D194EFD7E00452C58 /* settings@2x.png */; };
+		D0D3F38D1950437D00452C58 /* CVStopTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F38C1950437D00452C58 /* CVStopTableViewCell.m */; };
+		D0D3F39D1950501C00452C58 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3901950501C00452C58 /* Address.m */; };
+		D0D3F39E1950501C00452C58 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3921950501C00452C58 /* Item.m */; };
+		D0D3F39F1950501C00452C58 /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3941950501C00452C58 /* Load.m */; };
+		D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */; };
+		D0D3F3A11950501C00452C58 /* Ref.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3981950501C00452C58 /* Ref.m */; };
+		D0D3F3A21950501C00452C58 /* Shipment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F39A1950501C00452C58 /* Shipment.m */; };
+		D0D3F3A31950501C00452C58 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F39C1950501C00452C58 /* Stop.m */; };
 		D0F7FE5F194E0EBA002CCD9F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,8 +69,6 @@
 /* Begin PBXFileReference section */
 		0996C26EA9F043BF83367717 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		21742465D60E4C8D8F007F4E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		D018F8C11949EBB500E21763 /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Address.h; path = Models/Address.h; sourceTree = "<group>"; };
-		D018F8C21949EBB500E21763 /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Address.m; path = Models/Address.m; sourceTree = "<group>"; };
 		D04C3312194B3D7000BF42C4 /* CVStopDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVStopDetailTableViewController.h; path = Controllers/CVStopDetailTableViewController.h; sourceTree = "<group>"; };
 		D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVStopDetailTableViewController.m; path = Controllers/CVStopDetailTableViewController.m; sourceTree = "<group>"; };
 		D091397F1941A4C50029AE98 /* CarrierVanilla.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarrierVanilla.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,20 +90,9 @@
 		D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarrierVanillaTests.m; sourceTree = "<group>"; };
 		D0ABC8C11944E23E0095E59E /* CVMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVMasterViewController.h; path = Controllers/CVMasterViewController.h; sourceTree = "<group>"; };
 		D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVMasterViewController.m; path = Controllers/CVMasterViewController.m; sourceTree = "<group>"; };
-		D0ABC8C71944E2990095E59E /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Item.h; path = Models/Item.h; sourceTree = "<group>"; };
-		D0ABC8C81944E2990095E59E /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Item.m; path = Models/Item.m; sourceTree = "<group>"; };
-		D0ABC8C91944E2990095E59E /* Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Load.h; path = Models/Load.h; sourceTree = "<group>"; };
-		D0ABC8CA1944E2990095E59E /* Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Load.m; path = Models/Load.m; sourceTree = "<group>"; };
-		D0ABC8CD1944E2990095E59E /* Ref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ref.h; path = Models/Ref.h; sourceTree = "<group>"; };
-		D0ABC8CE1944E2990095E59E /* Ref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Ref.m; path = Models/Ref.m; sourceTree = "<group>"; };
-		D0ABC8CF1944E2990095E59E /* Shipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shipment.h; path = Models/Shipment.h; sourceTree = "<group>"; };
-		D0ABC8D01944E2990095E59E /* Shipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Shipment.m; path = Models/Shipment.m; sourceTree = "<group>"; };
-		D0ABC8D11944E2990095E59E /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stop.h; path = Models/Stop.h; sourceTree = "<group>"; };
-		D0ABC8D21944E2990095E59E /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Stop.m; path = Models/Stop.m; sourceTree = "<group>"; };
 		D0ABC8DB1944E3200095E59E /* CVChepClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChepClient.h; path = Network/CVChepClient.h; sourceTree = "<group>"; };
 		D0ABC8DC1944E3200095E59E /* CVChepClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVChepClient.m; path = Network/CVChepClient.m; sourceTree = "<group>"; };
 		D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVAppDelegate.m; sourceTree = "<group>"; };
-		D0B636091941A77400015ACA /* MobLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobLog.xcdatamodel; sourceTree = "<group>"; };
 		D0D3F35D194E39DE00452C58 /* CCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLoginViewController.h; sourceTree = "<group>"; };
 		D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLoginViewController.m; sourceTree = "<group>"; };
 		D0D3F363194E3F1900452C58 /* HTAutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTAutocompleteTextField.h; sourceTree = "<group>"; };
@@ -128,6 +116,21 @@
 		D0D3F37B194EFD7E00452C58 /* play_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play_button@2x.png"; sourceTree = "<group>"; };
 		D0D3F37C194EFD7E00452C58 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		D0D3F37D194EFD7E00452C58 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
+		D0D3F38B1950437D00452C58 /* CVStopTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVStopTableViewCell.h; sourceTree = "<group>"; };
+		D0D3F38C1950437D00452C58 /* CVStopTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVStopTableViewCell.m; sourceTree = "<group>"; };
+		D0D3F38F1950501C00452C58 /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
+		D0D3F3901950501C00452C58 /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
+		D0D3F3911950501C00452C58 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		D0D3F3921950501C00452C58 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		D0D3F3931950501C00452C58 /* Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Load.h; sourceTree = "<group>"; };
+		D0D3F3941950501C00452C58 /* Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Load.m; sourceTree = "<group>"; };
+		D0D3F3961950501C00452C58 /* MobLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobLog.xcdatamodel; sourceTree = "<group>"; };
+		D0D3F3971950501C00452C58 /* Ref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ref.h; sourceTree = "<group>"; };
+		D0D3F3981950501C00452C58 /* Ref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ref.m; sourceTree = "<group>"; };
+		D0D3F3991950501C00452C58 /* Shipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shipment.h; sourceTree = "<group>"; };
+		D0D3F39A1950501C00452C58 /* Shipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shipment.m; sourceTree = "<group>"; };
+		D0D3F39B1950501C00452C58 /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
+		D0D3F39C1950501C00452C58 /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
 		D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -200,8 +203,10 @@
 		D091398A1941A4C50029AE98 /* CarrierVanilla */ = {
 			isa = PBXGroup;
 			children = (
+				D0D3F38E1950501C00452C58 /* Models */,
+				D0D3F38B1950437D00452C58 /* CVStopTableViewCell.h */,
+				D0D3F38C1950437D00452C58 /* CVStopTableViewCell.m */,
 				D0D3F370194EFD6000452C58 /* Images */,
-				D0ABC8BD1944E0FB0095E59E /* Models */,
 				D0ABC8DE1944E3FA0095E59E /* Views */,
 				D0ABC8BE1944E1D50095E59E /* Controllers */,
 				D0ABC8DA1944E3170095E59E /* Network */,
@@ -241,26 +246,6 @@
 				D09139B31941A4C50029AE98 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		D0ABC8BD1944E0FB0095E59E /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				D0ABC8C71944E2990095E59E /* Item.h */,
-				D0ABC8C81944E2990095E59E /* Item.m */,
-				D0ABC8C91944E2990095E59E /* Load.h */,
-				D0ABC8CA1944E2990095E59E /* Load.m */,
-				D0ABC8CD1944E2990095E59E /* Ref.h */,
-				D0ABC8CE1944E2990095E59E /* Ref.m */,
-				D0ABC8CF1944E2990095E59E /* Shipment.h */,
-				D0ABC8D01944E2990095E59E /* Shipment.m */,
-				D0ABC8D11944E2990095E59E /* Stop.h */,
-				D0ABC8D21944E2990095E59E /* Stop.m */,
-				D0B636081941A77400015ACA /* MobLog.xcdatamodeld */,
-				D018F8C11949EBB500E21763 /* Address.h */,
-				D018F8C21949EBB500E21763 /* Address.m */,
-			);
-			name = Models;
 			sourceTree = "<group>";
 		};
 		D0ABC8BE1944E1D50095E59E /* Controllers */ = {
@@ -316,6 +301,26 @@
 				D0D3F37D194EFD7E00452C58 /* settings@2x.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		D0D3F38E1950501C00452C58 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D0D3F38F1950501C00452C58 /* Address.h */,
+				D0D3F3901950501C00452C58 /* Address.m */,
+				D0D3F3911950501C00452C58 /* Item.h */,
+				D0D3F3921950501C00452C58 /* Item.m */,
+				D0D3F3931950501C00452C58 /* Load.h */,
+				D0D3F3941950501C00452C58 /* Load.m */,
+				D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */,
+				D0D3F3971950501C00452C58 /* Ref.h */,
+				D0D3F3981950501C00452C58 /* Ref.m */,
+				D0D3F3991950501C00452C58 /* Shipment.h */,
+				D0D3F39A1950501C00452C58 /* Shipment.m */,
+				D0D3F39B1950501C00452C58 /* Stop.h */,
+				D0D3F39C1950501C00452C58 /* Stop.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -464,22 +469,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0ABC8D91944E2990095E59E /* Stop.m in Sources */,
-				D018F8C31949EBB500E21763 /* Address.m in Sources */,
-				D0ABC8D71944E2990095E59E /* Ref.m in Sources */,
+				D0D3F39D1950501C00452C58 /* Address.m in Sources */,
 				D0D3F36D194EF8C700452C58 /* CCMessageViewController.m in Sources */,
+				D0D3F39F1950501C00452C58 /* Load.m in Sources */,
 				D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */,
 				D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */,
-				D0ABC8D41944E2990095E59E /* Item.m in Sources */,
 				D09139911941A4C50029AE98 /* main.m in Sources */,
-				D0B6360E1941A77400015ACA /* MobLog.xcdatamodeld in Sources */,
+				D0D3F3A21950501C00452C58 /* Shipment.m in Sources */,
+				D0D3F3A11950501C00452C58 /* Ref.m in Sources */,
 				D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */,
 				D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */,
+				D0D3F39E1950501C00452C58 /* Item.m in Sources */,
 				D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */,
 				D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */,
-				D0ABC8D81944E2990095E59E /* Shipment.m in Sources */,
-				D0ABC8D51944E2990095E59E /* Load.m in Sources */,
+				D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */,
+				D0D3F38D1950437D00452C58 /* CVStopTableViewCell.m in Sources */,
 				D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */,
+				D0D3F3A31950501C00452C58 /* Stop.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,12 +706,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		D0B636081941A77400015ACA /* MobLog.xcdatamodeld */ = {
+		D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				D0B636091941A77400015ACA /* MobLog.xcdatamodel */,
+				D0D3F3961950501C00452C58 /* MobLog.xcdatamodel */,
 			);
-			currentVersion = D0B636091941A77400015ACA /* MobLog.xcdatamodel */;
+			currentVersion = D0D3F3961950501C00452C58 /* MobLog.xcdatamodel */;
 			path = MobLog.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -46,8 +46,8 @@
         NSLog(@"the carrier id has already been set and I will hide this text box");
         self.carrierTextField.alpha = 0;
         self.carrierTextField.enabled = NO;
-        CGRect offsetRect = CGRectOffset(_containerView.frame, 0, 45.0f);
-        _containerView.frame = offsetRect;
+        //CGRect offsetRect = CGRectOffset(_containerView.frame, 0, 45.0f);
+//        _containerView.frame = offsetRect;
     }
     [_submitBtn setTitleColor:[UIColor flatDarkBlueColor] forState:UIControlStateNormal];
     _nameTextField.layer.borderColor = [UIColor flatDarkBlueColor].CGColor;

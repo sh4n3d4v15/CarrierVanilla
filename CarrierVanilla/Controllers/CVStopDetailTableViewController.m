@@ -12,6 +12,7 @@
 #import "Item.h"
 #import "UIColor+MLPFLatColors.h"
 #import "CCMessageViewController.h"
+#import "CVChepClient.h"
 
 
 @interface CVStopDetailTableViewController ()
@@ -34,6 +35,7 @@
     if (_stop != stop) {
         NSArray *shipments = [stop.shipments allObjects];
         _shipmentCount =  [shipments count];
+        NSLog(@"SHIPMENT COUNT::: %lu", (unsigned long)[shipments count]);
         CLGeocoder *geocoder = [[CLGeocoder alloc]init];
         [geocoder geocodeAddressString:@"M33 7TA" completionHandler:^(NSArray *placemarks, NSError *error) {
             if (error) {
@@ -61,6 +63,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     NSLog(@"STOP: %@", self.stop);
     
     
@@ -71,6 +74,14 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    if ([self.stop.actual_arrival length]) {
+        self.checkInButton.enabled = NO;
+    }
+    if ([self.stop.actual_departure length]) {
+        self.checkOutButton.enabled = NO;
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -83,7 +94,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return self.shipmentCount +1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -91,16 +102,16 @@
     // Return the number of rows in the section.
     if (section == 0) {
         return 1;
-    }else if (section == self.shipmentCount){
-        return 1;
+    }else if (section == 1){
+        return self.shipmentCount;
     }
-    return self.shipmentCount;
+    return 1;
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     
     if (section == 0) {
         return @"Stop info";
-    }else if (section == self.shipmentCount){
+    }else if (section == 2){
         return @"Action Buttons";
     }
     
@@ -143,6 +154,7 @@
         _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(190, 10, CGRectGetHeight(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
         _mapView.delegate = self;
         
+        cell.backgroundColor = [UIColor colorWithWhite:.9 alpha:1];
         [cell addSubview:_mapView];
         [cell addSubview:zipLabel];
         [cell addSubview:countryLabel];
@@ -152,30 +164,35 @@
         [cell addSubview:nameLabel];
         
         
-    }else if ([indexPath section] == self.shipmentCount){
-        UIButton *inButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        inButton.frame = CGRectMake(0, 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
-        inButton.backgroundColor = [UIColor flatDarkOrangeColor];
-        [inButton setTitle:@"IN" forState:UIControlStateNormal];
-        [inButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [inButton addTarget:self action:@selector(checkMeIn:) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([indexPath section] == 2){
+        self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.checkInButton.frame = CGRectMake(0, 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
+        self.checkInButton.backgroundColor = [UIColor colorWithWhite:.95 alpha:1];
+        [self.checkInButton setTitle:@"IN" forState:UIControlStateNormal];
+        [self.checkInButton setTitle:@"DONE" forState:UIControlStateDisabled];
+        [self.checkInButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.checkInButton setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
+         [self.checkInButton setBackgroundColor:[UIColor colorWithWhite:.8 alpha:1]];
+        [self.checkInButton addTarget:self action:@selector(checkMeIn:) forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *outButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        outButton.frame = CGRectMake(CGRectGetWidth(cell.bounds)/1.5, 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
-        outButton.backgroundColor = [UIColor flatGreenColor];
-        [outButton setTitle:@"OUT" forState:UIControlStateNormal];
-        [outButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [outButton addTarget:self action:@selector(checkMeOut:) forControlEvents:UIControlEventTouchUpInside];
+        self.checkOutButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        self.checkOutButton.frame = CGRectMake(CGRectGetWidth(cell.bounds)/1.5, 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
+        self.checkOutButton.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
+        [self.checkOutButton setTitle:@"OUT" forState:UIControlStateNormal];
+        [self.checkOutButton setTitle:@"DONE" forState:UIControlStateDisabled];
+        [self.checkOutButton setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:1]];
+        [self.checkOutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.checkOutButton addTarget:self action:@selector(checkMeOut:) forControlEvents:UIControlEventTouchUpInside];
         
         UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        messageButton.frame = CGRectMake(CGRectGetMaxX(outButton.bounds), 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
+        messageButton.frame = CGRectMake(CGRectGetMaxX(self.checkOutButton.bounds), 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
         messageButton.backgroundColor = [UIColor flatBlueColor];
         [messageButton setTitle:@"NOTE" forState:UIControlStateNormal];
         [messageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [messageButton addTarget:self action:@selector(goToMessages:) forControlEvents:UIControlEventTouchUpInside];
    
-        [cell addSubview:inButton];
-        [cell addSubview:outButton];
+        [cell addSubview:self.checkInButton];
+        [cell addSubview:self.checkOutButton];
         [cell addSubview:messageButton];
         
     }else{
@@ -183,17 +200,12 @@
         
         UILabel *shipNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 180, 20)];
         shipNumLabel.text = shipment.shipment_number;
-        
         UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, 180, 20)];
         commentsLabel.text = shipment.comments;
-        
         shipNumLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         commentsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        
-        
         [cell addSubview:shipNumLabel];
         [cell addSubview:commentsLabel];
-        
         [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *item, NSUInteger idx, BOOL *stop) {
             UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetWidth(cell.bounds)-120, (idx+1)*20, 150, 20)];
             NSString *productString = [NSString stringWithFormat:@"%@ pieces of %@", item.pieces, item.product_id];
@@ -216,8 +228,8 @@
     
     if ([indexPath section] == 0 ) {
         return 134;
-    }else if ([indexPath section] == self.shipmentCount){
-        return 80;
+    }else if ([indexPath section] == 1){
+        return 120;
     }
     return 100;
 }
@@ -226,16 +238,54 @@
 
 -(void)checkMeIn:(id)sender{
     NSLog(@"Check me in!!");
-}
+    self.stop.actual_arrival = [NSString stringWithFormat:@"%@", [NSDate date]];
 
+    NSString *titleString = [NSString stringWithFormat:@"Check in at %@ ?", self.stop.location_name];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
+                                                             delegate:self
+                                                    cancelButtonTitle:@"YES"
+                                               destructiveButtonTitle:@"CANCEL"
+                                                    otherButtonTitles:nil];
+    [actionSheet showInView:self.view];
+//    UIAlertView *alv = [[UIAlertView alloc]initWithTitle:@"Saved" message:@"Stop Updated" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel",nil];
+//    [alv show];
+    
+}
+//
 -(void)checkMeOut:(id)sender{
     NSLog(@"check me out!!");
+    self.stop.actual_departure = [NSString stringWithFormat:@"%@", [NSDate date]];
+    
+    NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
+                                                          dateStyle:NSDateFormatterNoStyle
+                                                          timeStyle:NSDateFormatterShortStyle];
+    NSLog(@"%@",dateString);
+
+    NSString *titleString = [NSString stringWithFormat:@"Check out from %@ ?", self.stop.location_name];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
+                                                             delegate:self
+                                                    cancelButtonTitle:@"YES"
+                                               destructiveButtonTitle:@"CANCEL"
+                                                    otherButtonTitles:nil];
+    [actionSheet showInView:self.view];
 }
 -(void)goToMessages:(id)sender{
     CCMessageViewController *mvc = [[CCMessageViewController alloc]init];
+    [mvc setStop:self.stop];
     [self.navigationController pushViewController:mvc animated:YES];
 }
 
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        NSLog(@"Action was cancelled");
+
+        [self.delegate rollbackChanges];
+    }else{
+        NSLog(@"Action was confirmed");
+        [self.delegate saveChangesOnContext];
+    }
+}
 
 /*
 // Override to support conditional editing of the table view.

@@ -7,6 +7,8 @@
 //
 
 #import "SOMessagingViewController.h"
+#import "Stop.h"
 
 @interface CCMessageViewController : SOMessagingViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@property(nonatomic)Stop *stop;
 @end

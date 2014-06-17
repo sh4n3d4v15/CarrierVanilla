@@ -7,6 +7,8 @@
 //
 
 #import "CVMasterViewController.h"
+#import "CVStopTableViewCell.h"
+
 #import "CVStopDetailTableViewController.h"
 #import "CCLoginViewController.h"
 #import "CVChepClient.h"
@@ -16,7 +18,7 @@
 #import "Ref.h"
 #import "Shipment.h"
 #import "Item.h"
-@interface CVMasterViewController ()<stopChangeDelegate,CCLoginViewDelegate>
+@interface CVMasterViewController ()<stopChangeDelegate,CCLoginViewDelegate,UIActionSheetDelegate>
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -30,10 +32,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
 	// Do any additional setup after loading the view, typically from a nib.
     [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
         NSLog(@"results: %@", results);
     }];
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"settings.png"] style:UIBarButtonItemStylePlain
+                                                          target:self action:@selector(showLogin:)];
+    self.navigationItem.rightBarButtonItem = btn;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -76,9 +82,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    CVStopTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -244,10 +254,55 @@
         NSLog(@"There was an error saving the context");
     }
 }
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+
+-(void)rollbackChanges{
+    [self.managedObjectContext rollback];
+}
+- (void)configureCell:(CVStopTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"location_name"] description];
+    Stop *stop = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.locationNameLabel.text = stop.location_name;
+    cell.addressOneLabel.text = stop.address.address1;
+    cell.cityLabel.text = stop.address.city;
+    cell.zipLabel.text = stop.address.zip;
+    if ([stop.actual_arrival length]) {
+//        cell.backgroundColor = [UIColor greenColor];
+    }
+}
+
+-(void)showLogin:(id)sender{
+    NSLog(@"login button pressed");
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"Swtich vehicle or signout carrier" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles: @"Switch Vehicle",nil, nil];
+    [actionSheet showInView:self.view];
+}
+
+#pragma mark - UIAction Sheet Delegate Methods
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"button clicked on action sheet: %li", (long)buttonIndex);
+    
+    switch (buttonIndex) {
+        case 0:
+            [self logOutAsCarrier];
+            [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"userLoggedIn"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [self showLoginViewAnimated:YES];
+            break;
+        case 1:
+            [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"userLoggedIn"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [self showLoginViewAnimated:YES];
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+}
+
+-(void)logOutAsCarrier{
+    [[NSUserDefaults standardUserDefaults]setValue:nil forKey:@"carrierID"];
 }
 
 @end
