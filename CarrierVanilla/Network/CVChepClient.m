@@ -15,6 +15,7 @@
 #import "Shipment.h"
 #import "Item.h"
 
+
 @implementation CVChepClient
 +(CVChepClient *)sharedClient{
     static CVChepClient *_sharedClient = nil;
@@ -147,31 +148,6 @@
 
 #pragma mark - Stop Requests
 
-//-(NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:(void (^)(NSArray *, NSError *))completion{
-//    NSURLSessionDataTask *task = [self GET:@"loads" parameters:@{@"vehicle":vehicleId} success:^(NSURLSessionDataTask *task, id responseObject) {
-//        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-//        NSArray *loads = [responseObject valueForKey:@"loads"];
-//        if(httpResponse.statusCode == 200){
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [self importArrayOfStopsIntoCoreData:loads];
-//                completion(loads,nil);
-//            });
-//        }else{
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                completion(nil,nil);
-//            });
-//            NSLog(@"Received: %@", loads);
-//            NSLog(@"Received HTTP %lo", (long)httpResponse.statusCode);
-//        }
-//        
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            completion(nil,error);
-//        });
-//    }];
-//    return task;
-//};
-
 
 -(NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:(void (^)(NSArray *, NSError *))completion{
     NSLog(@"Calling the method::");
@@ -214,32 +190,54 @@
     return task;
 };
 
-
-//-(NSURLSessionDataTask *)updateStopWithId:(NSString *)id forLoad:(NSString*)loadId withQuantity:(NSString *)quantity withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate completion:(void (^)(NSArray *, NSError *))completion{
-//    NSLog(@"Update stop method fired");
-//    NSString *fullUrl = [[NSString stringWithFormat:@"%@/pod/%@/%@/%@",urlString,quantity,arrivalDate ? arrivalDate : @"",departureDate ? departureDate : @""]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//    NSLog(@"FULL URL:: %@", fullUrl);
-//    NSURLSessionDataTask *task = [self POST:fullUrl parameters:@{@"name":@"shane"}
-//                                    success:^(NSURLSessionDataTask *task, id responseObject) {
-//                                        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-//                                        if (httpResponse.statusCode == 200) {
-//                                            dispatch_async(dispatch_get_main_queue(), ^{
-//                                                completion(responseObject,nil);
-//                                            });
-//                                        }else{
-//                                            dispatch_async(dispatch_get_main_queue(), ^{
-//                                                completion(nil,nil);
-//                                                NSLog(@"Received: %@", responseObject);
-//                                                NSLog(@"Received HTTP %lo", (long)httpResponse.statusCode);
-//                                            });
-//                                        }
-//                                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//                                        dispatch_async(dispatch_get_main_queue(), ^{
-//                                            completion(nil,error);
-//                                        });
-//                                    }];
-//    return task;
-//}
+#pragma mark - HOW TO BUILD MULTI-MULTIPART FROM DICTIONARY?
+-(NSURLSessionDataTask *)updateStopWithId:(NSString *)stopid forLoad:(NSString*)loadId withQuantities:(NSArray *)quantities withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate andPod: (NSData*)podData completion:(void (^)(NSDictionary *, NSError *))completion{
+    NSLog(@"Update stop method fired");
+    NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId,stopid];
+    NSLog(@"Full URL: %@", fullUrl);
+    
+    if ([quantities count]) {
+        NSLog(@"It appears that we have multiple quantities to update");
+    }
+    
+    NSDictionary *updateDict = @{@"actual_arrival_date": @"2014-03-25T23:59:00+01:00",
+                                 @"actual_departure_date": @"2014-03-25T23:59:00+01:00",
+                                 @"product_id": @"60",
+                                 @"delivery_number": @"3743620763",
+                                 @"delivery_line_item_number": @"10",
+                                 @"quantity": @20,
+                                 @"material_number": @"0000000001"
+                                 };
+    NSError *error;
+    NSData *myData = [NSJSONSerialization dataWithJSONObject:updateDict options:0 error:&error];
+    if (error) {
+        NSLog(@"There was an error JSON serializing the data: %@", [error localizedDescription]);
+    }
+    
+    NSURLSessionDataTask *task =  [self POST:fullUrl
+                                  parameters:nil
+                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                       
+                       [formData appendPartWithFormData:myData name:@"update_parameters"];
+                       
+                       [formData appendPartWithFileData:podData
+                                                   name:@"file"
+                                               fileName:@"Proof_signed.pdf"
+                                               mimeType:@"application/pdf"];
+                       
+                      
+                   }
+                                     success:^(NSURLSessionDataTask *task,
+                                               id responseObject)
+                                                {
+                                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                                    NSLog(@"Success %@" , httpResponse); }
+                                     failure:^(NSURLSessionDataTask *task,
+                                               NSError *error) { NSLog(@"error"); }];
+    
+    
+    return task;
+}
 
 #pragma mark - Documents Requests
 

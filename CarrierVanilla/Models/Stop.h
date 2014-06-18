@@ -2,7 +2,7 @@
 //  Stop.h
 //  CarrierVanilla
 //
-//  Created by shane davis on 06/06/2014.
+//  Created by shane davis on 18/06/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSNumber * active;
 @property (nonatomic, retain) NSString * actual_arrival;
 @property (nonatomic, retain) NSString * actual_departure;
-@property (nonatomic, retain) NSString * departure_location;
+@property (nonatomic, retain) NSData * departure_location;
 @property (nonatomic, retain) NSString * eta;
 @property (nonatomic, retain) NSString * href;
 @property (nonatomic, retain) NSString * id;
@@ -28,9 +28,9 @@
 @property (nonatomic, retain) NSString * planned_end;
 @property (nonatomic, retain) NSString * planned_start;
 @property (nonatomic, retain) NSData * signatureSnapshot;
+@property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSNumber * volume;
 @property (nonatomic, retain) NSNumber * weight;
-@property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) Address *address;
 @property (nonatomic, retain) Load *load;
 @property (nonatomic, retain) NSSet *shipments;

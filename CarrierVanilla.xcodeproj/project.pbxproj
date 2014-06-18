@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		73CBFCF4B2EF4DADBBF2BDFB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0996C26EA9F043BF83367717 /* libPods.a */; };
 		D029281F1950907C0061069F /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D029281E1950907C0061069F /* Item.m */; };
+		D0292822195195E70061069F /* CCSignatureDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292821195195E70061069F /* CCSignatureDrawView.m */; };
+		D0292825195197110061069F /* CCPDFWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292824195197110061069F /* CCPDFWriter.m */; };
+		D02928281951A2030061069F /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D02928271951A2030061069F /* Stop.m */; };
 		D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */; };
 		D09139831941A4C50029AE98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139821941A4C50029AE98 /* Foundation.framework */; };
 		D09139851941A4C50029AE98 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139841941A4C50029AE98 /* CoreGraphics.framework */; };
@@ -52,7 +55,6 @@
 		D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */; };
 		D0D3F3A11950501C00452C58 /* Ref.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3981950501C00452C58 /* Ref.m */; };
 		D0D3F3A21950501C00452C58 /* Shipment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F39A1950501C00452C58 /* Shipment.m */; };
-		D0D3F3A31950501C00452C58 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F39C1950501C00452C58 /* Stop.m */; };
 		D0F7FE5F194E0EBA002CCD9F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +73,12 @@
 		21742465D60E4C8D8F007F4E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		D029281D1950907C0061069F /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		D029281E1950907C0061069F /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		D0292820195195E70061069F /* CCSignatureDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSignatureDrawView.h; sourceTree = "<group>"; };
+		D0292821195195E70061069F /* CCSignatureDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSignatureDrawView.m; sourceTree = "<group>"; };
+		D0292823195197110061069F /* CCPDFWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPDFWriter.h; sourceTree = "<group>"; };
+		D0292824195197110061069F /* CCPDFWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPDFWriter.m; sourceTree = "<group>"; };
+		D02928261951A2030061069F /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
+		D02928271951A2030061069F /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
 		D04C3312194B3D7000BF42C4 /* CVStopDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVStopDetailTableViewController.h; path = Controllers/CVStopDetailTableViewController.h; sourceTree = "<group>"; };
 		D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVStopDetailTableViewController.m; path = Controllers/CVStopDetailTableViewController.m; sourceTree = "<group>"; };
 		D091397F1941A4C50029AE98 /* CarrierVanilla.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarrierVanilla.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,8 +137,6 @@
 		D0D3F3981950501C00452C58 /* Ref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ref.m; sourceTree = "<group>"; };
 		D0D3F3991950501C00452C58 /* Shipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shipment.h; sourceTree = "<group>"; };
 		D0D3F39A1950501C00452C58 /* Shipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shipment.m; sourceTree = "<group>"; };
-		D0D3F39B1950501C00452C58 /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
-		D0D3F39C1950501C00452C58 /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
 		D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -251,6 +257,8 @@
 		D0ABC8BE1944E1D50095E59E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D0292823195197110061069F /* CCPDFWriter.h */,
+				D0292824195197110061069F /* CCPDFWriter.m */,
 				D0D3F36B194EF8C700452C58 /* CCMessageViewController.h */,
 				D0D3F36C194EF8C700452C58 /* CCMessageViewController.m */,
 				D0D3F366194E3F2F00452C58 /* HTAutocompleteManager.h */,
@@ -277,6 +285,8 @@
 		D0ABC8DE1944E3FA0095E59E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D0292820195195E70061069F /* CCSignatureDrawView.h */,
+				D0292821195195E70061069F /* CCSignatureDrawView.m */,
 				D0D3F363194E3F1900452C58 /* HTAutocompleteTextField.h */,
 				D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */,
 			);
@@ -311,14 +321,14 @@
 				D0D3F3931950501C00452C58 /* Load.h */,
 				D0D3F3941950501C00452C58 /* Load.m */,
 				D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */,
+				D02928261951A2030061069F /* Stop.h */,
+				D02928271951A2030061069F /* Stop.m */,
 				D029281D1950907C0061069F /* Item.h */,
 				D029281E1950907C0061069F /* Item.m */,
 				D0D3F3971950501C00452C58 /* Ref.h */,
 				D0D3F3981950501C00452C58 /* Ref.m */,
 				D0D3F3991950501C00452C58 /* Shipment.h */,
 				D0D3F39A1950501C00452C58 /* Shipment.m */,
-				D0D3F39B1950501C00452C58 /* Stop.h */,
-				D0D3F39C1950501C00452C58 /* Stop.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -471,6 +481,7 @@
 			files = (
 				D0D3F39D1950501C00452C58 /* Address.m in Sources */,
 				D0D3F36D194EF8C700452C58 /* CCMessageViewController.m in Sources */,
+				D02928281951A2030061069F /* Stop.m in Sources */,
 				D0D3F39F1950501C00452C58 /* Load.m in Sources */,
 				D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */,
 				D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */,
@@ -485,7 +496,8 @@
 				D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */,
 				D0D3F38D1950437D00452C58 /* CVStopTableViewCell.m in Sources */,
 				D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */,
-				D0D3F3A31950501C00452C58 /* Stop.m in Sources */,
+				D0292825195197110061069F /* CCPDFWriter.m in Sources */,
+				D0292822195195E70061069F /* CCSignatureDrawView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

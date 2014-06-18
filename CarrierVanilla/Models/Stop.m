@@ -2,7 +2,7 @@
 //  Stop.m
 //  CarrierVanilla
 //
-//  Created by shane davis on 06/06/2014.
+//  Created by shane davis on 18/06/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
@@ -29,9 +29,9 @@
 @dynamic planned_end;
 @dynamic planned_start;
 @dynamic signatureSnapshot;
+@dynamic type;
 @dynamic volume;
 @dynamic weight;
-@dynamic type;
 @dynamic address;
 @dynamic load;
 @dynamic shipments;

@@ -17,7 +17,7 @@
 
 @end
 
-@interface CVStopDetailTableViewController : UITableViewController<MKMapViewDelegate,UIActionSheetDelegate>
+@interface CVStopDetailTableViewController : UITableViewController
 @property (strong, nonatomic) Stop *stop;
 @property(nonatomic)MKMapView *mapView;
 @property(weak,nonatomic) id <stopChangeDelegate> delegate;

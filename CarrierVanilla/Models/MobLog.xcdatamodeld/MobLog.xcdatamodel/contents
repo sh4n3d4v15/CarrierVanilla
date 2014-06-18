@@ -50,7 +50,7 @@
         <attribute name="active" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="actual_arrival" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="actual_departure" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="departure_location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="departure_location" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="eta" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>

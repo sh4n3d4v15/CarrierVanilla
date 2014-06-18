@@ -306,4 +306,9 @@
     [[NSUserDefaults standardUserDefaults]setValue:nil forKey:@"carrierID"];
 }
 
+
+#pragma mark throw away pdf methods
+
+
+
 @end

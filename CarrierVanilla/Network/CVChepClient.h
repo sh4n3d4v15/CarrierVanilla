@@ -14,7 +14,7 @@
 #pragma mark - Stop Requests
 - (NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:( void (^)(NSArray *results, NSError *error) )completion;
 
-//-(NSURLSessionDataTask *)updateStopWithUrlString:(NSString *)urlString withQuantity:(NSString *)quantity withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate completion:(void (^)(NSArray *, NSError *))completion;
+-(NSURLSessionDataTask *)updateStopWithId:(NSString *)stopid forLoad:(NSString*)loadId withQuantities:(NSArray *)quantities withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate andPod: (NSData*)podData completion:(void (^)(NSDictionary *, NSError *))completion;
 
 #pragma mark - Documents Requests
 -(NSURLSessionDataTask*)uploadPhoto:(NSData*)photoData forStopId:(NSString*)stopId withLoadId:(NSString*)loadId withComment:(NSString*)comment completion:(void(^)(NSArray *results,NSError *error))completion;

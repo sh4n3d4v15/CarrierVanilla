@@ -13,9 +13,11 @@
 #import "UIColor+MLPFLatColors.h"
 #import "CCMessageViewController.h"
 #import "CVChepClient.h"
+#import "CCSignatureDrawView.h"
+#import "CCPDFWriter.h"
 
 
-@interface CVStopDetailTableViewController ()
+@interface CVStopDetailTableViewController ()<MKMapViewDelegate,UIActionSheetDelegate,CCSignatureDrawViewDelegate>
 @property(nonatomic)float shipmentCount;
 @end
 
@@ -75,10 +77,10 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     if ([self.stop.actual_arrival length]) {
-        self.checkInButton.enabled = NO;
+//        self.checkInButton.enabled = NO;
     }
     if ([self.stop.actual_departure length]) {
-        self.checkOutButton.enabled = NO;
+//        self.checkOutButton.enabled = NO;
     }
 }
 
@@ -281,10 +283,57 @@
         [self.delegate rollbackChanges];
     }else{
         NSLog(@"Action was confirmed");
-        [self.delegate saveChangesOnContext];
+        [self showSignatureView];
+        //[self.delegate saveChangesOnContext];
     }
 }
 
+#pragma mark show signature view AND save singature methods
+
+-(void)showSignatureView{
+    CCSignatureDrawView *sv = [[CCSignatureDrawView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) andQuantity:@"666"];
+    sv.delegate = self;
+    sv.alpha = 0;
+    [self.view addSubview:sv];
+    self.tableView.scrollEnabled = NO;
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         sv.alpha = 1;
+                     } completion:^(BOOL finished) {
+                         NSLog(@"shown signature view");
+                     }];
+    
+    
+}
+
+-(void)saveSignatureSnapshotAsData:(NSData *)imageData andSignatureBezier:(UIBezierPath*)signatureBezierPath updateQuantity:(NSString*)quantity andDismissView:(UIView *)view{
+    self.stop.signatureSnapshot = imageData;
+    NSLog(@"I saved the image data and will dismiss the view");
+    [UIView animateWithDuration:0.25f animations:^{
+        view.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        [view removeFromSuperview];
+        //                self.signaturePic.image = [UIImage imageWithData:imageData];
+        //        if ([self.stop.load isCompletedLoad]) {
+        NSString *pdfName = @"pod.pdf";
+        
+        [CCPDFWriter createPDFfromLoad:self.stop.load saveToDocumentsWithFileName:pdfName];
+        [[CVChepClient sharedClient]updateStopWithId:@"75135140"
+                                             forLoad:self.stop.load.id
+                                      withQuantities:@[@2] withActualArrival:[NSDate date]
+                                 withActualDeparture:[NSDate date]
+                                              andPod:imageData
+                                          completion:^(NSDictionary *results, NSError *error) {
+                                              if (error) {
+                                                  NSLog(@"there was an error %@", error);
+                                              }else{
+                                                  NSLog(@"successful update %@" , results);
+                                              }
+                                          }];
+        //        }
+        [view removeFromSuperview];
+    }];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
