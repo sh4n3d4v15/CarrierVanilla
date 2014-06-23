@@ -209,7 +209,19 @@
                                  @"material_number": @"0000000001"
                                  };
     NSError *error;
-    NSData *myData = [NSJSONSerialization dataWithJSONObject:updateDict options:0 error:&error];
+    NSData *updateData = [NSJSONSerialization dataWithJSONObject:updateDict options:0 error:&error];
+    if (error) {
+        NSLog(@"There was an error JSON serializing the data: %@", [error localizedDescription]);
+    }
+    
+    NSDictionary *documentDict = @{@"document_type_id": @"1",
+                                 @"document_type_key": @"",
+                                 @"product_id": @"60",
+                                 @"comments": @"some generic comments",
+                                 @"stop_id": stopid
+                                 };
+    
+    NSData *documentData = [NSJSONSerialization dataWithJSONObject:documentDict options:0 error:&error];
     if (error) {
         NSLog(@"There was an error JSON serializing the data: %@", [error localizedDescription]);
     }
@@ -218,8 +230,9 @@
                                   parameters:nil
                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                        
-                       [formData appendPartWithFormData:myData name:@"update_parameters"];
-                       
+                       [formData appendPartWithFormData:updateData name:@"update_parameters"];
+                       [formData appendPartWithFormData:documentData name:@"document_info"];
+
                        [formData appendPartWithFileData:podData
                                                    name:@"file"
                                                fileName:@"Proof_signed.pdf"
@@ -230,10 +243,10 @@
                                      success:^(NSURLSessionDataTask *task,
                                                id responseObject)
                                                 {
-                                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-                                                    NSLog(@"Success %@" , httpResponse); }
+                                                   __unused NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                                    NSLog(@"Success %@" , responseObject); }
                                      failure:^(NSURLSessionDataTask *task,
-                                               NSError *error) { NSLog(@"error"); }];
+                                               NSError *error) { NSLog(@"error %@", task.response); }];
     
     
     return task;
@@ -269,8 +282,9 @@
 
 #pragma mark - Load Note Requests
 
--(NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSArray *, NSError *))completion{
-    NSURLSessionDataTask *task = [self GET:@"/loadnotes" parameters:@{@"loadId": loadId}
+-(NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSDictionary *, NSError *))completion{
+    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/notes/0/0/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId];
+    NSURLSessionDataTask *task = [self GET:queryString parameters:nil
                                    success:^(NSURLSessionDataTask *task, id responseObject) {
                                        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
                                        if (httpResponse.statusCode == 200) {
@@ -293,12 +307,18 @@
     return task;
 }
 
--(NSURLSessionDataTask *)postLoadNoteForLoad:(NSString *)loadId withNoteType:(NSString *)noteType withStopType:(NSString *)stopType withMessage:(NSString *)message completion:(void (^)(NSArray *, NSError *))completion{
+-(NSURLSessionDataTask *)postLoadNoteForLoad:(NSString *)loadId withNoteType:(NSString *)noteType withStopType:(NSString *)stopType withMessage:(NSString *)message completion:(void (^)(NSDictionary *, NSError *))completion{
+    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/addnote/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId];
     
-    NSURLSessionDataTask *task = [self POST:@"loadnote" parameters:@{@"loadId": loadId,
-                                                                     @"noteType": noteType,
-                                                                     @"stopType":stopType,
-                                                                     @"message":message}
+    NSURLSessionDataTask *task = [self POST:queryString parameters:@{
+                                                                     @"subject":@"Mobile Load Note",
+                                                                     @"message":@"in the land of the blind  ",
+                                                                     @"note_type_id":@"4647",
+                                                                     @"reply_note_id":@"15557762",
+                                                                     @"reply_note_thread_id":@"15557762",
+                                                                     @"emails":@"shane.davies@chep.com",
+                                                                     @"shipments":@[@{@"id":@"55789171",@"stop_type":@"Drop"}]
+                                                                     }
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
                                         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
                                         if (httpResponse.statusCode == 200) {
@@ -317,22 +337,6 @@
                                             completion(nil,error);
                                         });
                                     }];
-    return task;
-}
-#pragma mark Todo: Change this method to 'complete load'
-- (NSURLSessionDataTask *)completeStop:(Stop*)stop withDocData: (NSData*)podData completion:( void(^)(BOOL, NSError*) )completion {
-    NSURLSessionDataTask *task =  [self POST:@"/"
-                                  parameters:nil
-                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                       [formData appendPartWithFileData:podData
-                                                   name:[NSString stringWithFormat:@"%@.pdf",stop.id]
-                                               fileName:[NSString stringWithFormat:@"%@.pdf",stop.id]
-                                               mimeType:@"application/pdf"];
-                   }
-                                     success:^(NSURLSessionDataTask *task,
-                                               id responseObject) { NSLog(@"Success"); }
-                                     failure:^(NSURLSessionDataTask *task,
-                                               NSError *error) { NSLog(@"error"); }];
     return task;
 }
 

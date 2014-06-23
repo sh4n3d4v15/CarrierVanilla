@@ -31,8 +31,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Carrier ID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e3h-hd-Wvw">
-                                <rect key="frame" x="20" y="184" width="280" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Carrier ID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e3h-hd-Wvw">
+                                <rect key="frame" x="20" y="164" width="280" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -40,8 +40,8 @@
                                     <outlet property="delegate" destination="SA1-9E-FtE" id="BYX-M6-KAc"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Vehicle ID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Js7-jp-IP4">
-                                <rect key="frame" x="20" y="234" width="280" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Vehicle ID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Js7-jp-IP4">
+                                <rect key="frame" x="20" y="204" width="280" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -49,8 +49,8 @@
                                     <outlet property="delegate" destination="SA1-9E-FtE" id="VnB-A7-Y8b"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tdd-UT-noX">
-                                <rect key="frame" x="20" y="282" width="280" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tdd-UT-noX">
+                                <rect key="frame" x="20" y="267" width="280" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -62,6 +62,7 @@
                                 <rect key="frame" x="137" y="374" width="38" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -185,11 +186,48 @@
                             <outlet property="delegate" destination="lGj-pC-jJV" id="YhH-Pb-PY1"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="wih-nA-62J"/>
+                    <navigationItem key="navigationItem" id="wih-nA-62J">
+                        <barButtonItem key="rightBarButtonItem" title="msg" id="eWK-Bs-ggi">
+                            <connections>
+                                <segue destination="HlO-ZV-ap2" kind="push" id="Kew-4s-K6M"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="msgNavButton" destination="eWK-Bs-ggi" id="gcR-L8-d15"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AKJ-j2-P5Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="885" y="63"/>
+        </scene>
+        <!--Message View Controller-->
+        <scene sceneID="WOZ-u9-ZxN">
+            <objects>
+                <viewController id="HlO-ZV-ap2" customClass="CCMessageViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bnk-LE-49K"/>
+                        <viewControllerLayoutGuide type="bottom" id="3Xc-w8-u12"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bao-Qy-AU9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="I am the message screen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61a-SF-w6j">
+                                <rect key="frame" x="20" y="219" width="279" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="OkN-9U-a2v"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YGC-O6-o8y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="879" y="724"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

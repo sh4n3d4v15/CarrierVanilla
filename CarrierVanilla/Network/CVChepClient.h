@@ -20,8 +20,8 @@
 -(NSURLSessionDataTask*)uploadPhoto:(NSData*)photoData forStopId:(NSString*)stopId withLoadId:(NSString*)loadId withComment:(NSString*)comment completion:(void(^)(NSArray *results,NSError *error))completion;
 
 #pragma mark - Load Note Requests
--(NSURLSessionDataTask*)getLoadNotesForLoad: (NSString*)loadId completion:(void (^)(NSArray *results, NSError *error))completion;
+-(NSURLSessionDataTask*)getLoadNotesForLoad: (NSString*)loadId completion:(void (^)(NSDictionary *results, NSError *error))completion;
 
--(NSURLSessionDataTask*)postLoadNoteForLoad: (NSString*)loadId withNoteType:(NSString*)noteType withStopType: (NSString*)stopType withMessage: (NSString *)message completion:(void (^)(NSArray *results, NSError *error))completion;
+-(NSURLSessionDataTask*)postLoadNoteForLoad: (NSString*)loadId withNoteType:(NSString*)noteType withStopType: (NSString*)stopType withMessage: (NSString *)message completion:(void (^)(NSDictionary *results, NSError *error))completion;
 @end
 

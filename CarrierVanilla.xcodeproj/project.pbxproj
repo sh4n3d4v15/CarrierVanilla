@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		73CBFCF4B2EF4DADBBF2BDFB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0996C26EA9F043BF83367717 /* libPods.a */; };
+		D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A4521195472F400D60990 /* CVUpdateButton.m */; };
 		D029281F1950907C0061069F /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D029281E1950907C0061069F /* Item.m */; };
 		D0292822195195E70061069F /* CCSignatureDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292821195195E70061069F /* CCSignatureDrawView.m */; };
 		D0292825195197110061069F /* CCPDFWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292824195197110061069F /* CCPDFWriter.m */; };
@@ -71,6 +72,8 @@
 /* Begin PBXFileReference section */
 		0996C26EA9F043BF83367717 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		21742465D60E4C8D8F007F4E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		D01A4520195472F400D60990 /* CVUpdateButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVUpdateButton.h; sourceTree = "<group>"; };
+		D01A4521195472F400D60990 /* CVUpdateButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVUpdateButton.m; sourceTree = "<group>"; };
 		D029281D1950907C0061069F /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		D029281E1950907C0061069F /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		D0292820195195E70061069F /* CCSignatureDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSignatureDrawView.h; sourceTree = "<group>"; };
@@ -285,6 +288,8 @@
 		D0ABC8DE1944E3FA0095E59E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D01A4520195472F400D60990 /* CVUpdateButton.h */,
+				D01A4521195472F400D60990 /* CVUpdateButton.m */,
 				D0292820195195E70061069F /* CCSignatureDrawView.h */,
 				D0292821195195E70061069F /* CCSignatureDrawView.m */,
 				D0D3F363194E3F1900452C58 /* HTAutocompleteTextField.h */,
@@ -490,6 +495,7 @@
 				D0D3F3A11950501C00452C58 /* Ref.m in Sources */,
 				D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */,
 				D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */,
+				D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */,
 				D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */,
 				D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */,
 				D029281F1950907C0061069F /* Item.m in Sources */,

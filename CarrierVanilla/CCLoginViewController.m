@@ -10,6 +10,7 @@
 #import "HTAutocompleteTextField.h"
 #import "HTAutocompleteManager.h"
 #import "UIColor+MLPFLatColors.h"
+#import "Pop.h"
 
 
 @interface CCLoginViewController ()
@@ -36,9 +37,12 @@
     }
     return self;
 }
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)viewDidLoad
 {
+    
+    self.view.backgroundColor = UIColorFromRGB(0x0077ac);
     [super viewDidLoad];
     [HTAutocompleteTextField setDefaultAutocompleteDataSource:[HTAutocompleteManager sharedManager]];
 
@@ -49,7 +53,9 @@
         //CGRect offsetRect = CGRectOffset(_containerView.frame, 0, 45.0f);
 //        _containerView.frame = offsetRect;
     }
-    [_submitBtn setTitleColor:[UIColor flatDarkBlueColor] forState:UIControlStateNormal];
+    self.passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
+    self.nameTextField.borderStyle = UITextBorderStyleRoundedRect;
+    self.carrierTextField.borderStyle = UITextBorderStyleRoundedRect;
     _nameTextField.layer.borderColor = [UIColor flatDarkBlueColor].CGColor;
 
 }
@@ -69,26 +75,32 @@
 
 -(void)animationCode{
     CAShapeLayer *shapeLayer = [[CAShapeLayer alloc]init];
-    shapeLayer.strokeColor = [UIColor flatDarkBlueColor].CGColor;
+    shapeLayer.strokeColor = [UIColor whiteColor].CGColor;
     shapeLayer.fillColor = [UIColor clearColor].CGColor;
     shapeLayer.path = [self getChepBigCPath];
     [self.containerView.layer addSublayer:shapeLayer];
     
     CABasicAnimation *strokeEndMorph = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndMorph.duration = 1;
+    strokeEndMorph.duration = 0.33;
     strokeEndMorph.fillMode = kCAFillModeForwards;
     strokeEndMorph.removedOnCompletion = NO;
     strokeEndMorph.fromValue = @0;
     strokeEndMorph.toValue = @1;
     [shapeLayer addAnimation:strokeEndMorph forKey:nil];
     
-//    CABasicAnimation *colorMorph = [CABasicAnimation animationWithKeyPath:@"fillColor"];
-//    colorMorph.duration = 1.0f;
-//    colorMorph.fillMode = kCAFillModeForwards;
-//    colorMorph.removedOnCompletion = NO;
-//    colorMorph.toValue = (id)[UIColor blueColor].CGColor;
-//    [shapeLayer addAnimation:colorMorph forKey:nil];
+    CABasicAnimation *colorMorph = [CABasicAnimation animationWithKeyPath:@"fillColor"];
+    colorMorph.duration = 1.0f;
+    colorMorph.fillMode = kCAFillModeForwards;
+    colorMorph.removedOnCompletion = NO;
+    colorMorph.toValue = (id)[UIColor colorWithWhite:1 alpha:1].CGColor;
+    [shapeLayer addAnimation:colorMorph forKey:nil];
 
+//    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBackgroundColor];
+//    anim.toValue = (id)[UIColor colorWithWhite:1 alpha:1];
+//    anim.springSpeed = 10;
+//    anim.springBounciness = 20;
+//    
+//    [shapeLayer pop_addAnimation:anim forKey:@"color"];
 }
 
 -(CGPathRef)getChepBigCPath
@@ -755,21 +767,30 @@
 #pragma mark - Text Field Delegate
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
-    NSLog(@"text field editing");
-    [UIView animateWithDuration:0.15 animations:^{
-        textField.transform = CGAffineTransformMakeScale(1.05,1.05);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.15
-                         animations:^{
-                             textField.transform = CGAffineTransformIdentity;
-                         }];
-    }];
+    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
+    anim.toValue = [NSValue valueWithCGRect:CGRectInset(textField.bounds, -2, -2)];
+    anim.springBounciness = 20;
+    [textField.layer pop_addAnimation:anim forKey:@"bounds"];
 }
-
+//-(void)textFieldDidBeginEditing:(UITextField *)textField{
+//    POPSpringAnimation *anim =
+//}
 #pragma mark Todo: add validation here
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
+
     return YES;
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
+    anim.toValue = [NSValue valueWithCGRect:CGRectInset(textField.bounds, 2, 2)];
+    anim.springBounciness = 20;
+    [anim setCompletionBlock:^(POPAnimation *animation, BOOL finished) {
+        NSLog(@"animcomople");
+    }];
+    
+    [textField.layer pop_addAnimation:anim forKey:@"bounds"];
 }
 
 - (IBAction)submitButtonPressed:(id)sender {

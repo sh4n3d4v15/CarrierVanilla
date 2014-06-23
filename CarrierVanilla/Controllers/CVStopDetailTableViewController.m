@@ -15,10 +15,12 @@
 #import "CVChepClient.h"
 #import "CCSignatureDrawView.h"
 #import "CCPDFWriter.h"
+#import "Pop.h"
 
 
 @interface CVStopDetailTableViewController ()<MKMapViewDelegate,UIActionSheetDelegate,CCSignatureDrawViewDelegate>
 @property(nonatomic)float shipmentCount;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *msgNavButton;
 @end
 
 @implementation CVStopDetailTableViewController
@@ -66,8 +68,7 @@
     [super viewDidLoad];
 
     NSLog(@"STOP: %@", self.stop);
-    
-    
+        
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -95,7 +96,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -103,117 +104,123 @@
     // Return the number of rows in the section.
     if (section == 0) {
         return 1;
-    }else if (section == 1){
-        return self.shipmentCount;
     }
-    return 1;
+    return self.shipmentCount;
+
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     
     if (section == 0) {
         return @"Stop info";
-    }else if (section == 2){
-        return @"Action Buttons";
     }
-    
     return @"Shipment data";
 }
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell" forIndexPath:indexPath];
         // Configure the cell...
     if ([indexPath section] == 0) {
-        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 150, 20)];
-        nameLabel.text = self.stop.location_name;
-        nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
         
-       
-        //ADRESSS
+        _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
+        _mapView.delegate = self;
+        _mapView.layer.borderColor = [UIColor colorWithWhite:.7 alpha:.3].CGColor;
+        _mapView.layer.borderWidth = 1;
+        
+        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetHeight(_mapView.bounds)-80, CGRectGetWidth(_mapView.bounds), 80)];
+        containerView.backgroundColor = [UIColor colorWithWhite:1 alpha:.6];
+        containerView.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
+        containerView.layer.borderWidth = 3;
+        
+        CVUpdateButton *updateButton = [CVUpdateButton buttonWithType:UIButtonTypeCustom];
+        updateButton.frame = CGRectMake(CGRectGetWidth(_mapView.bounds)-70, 10, 60, 60);
+        updateButton.backgroundColor = [UIColor colorWithRed:.8 green:.1 blue:.1 alpha:.5];
+        updateButton.layer.cornerRadius = 5;
+        [updateButton addTarget:self action:@selector(checkMeIn:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [containerView addSubview:updateButton];
+        
+        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(containerView.bounds)-70, 20)];
+        nameLabel.text = self.stop.location_name;
+        nameLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
         
         Address *address = self.stop.address;
         
-        UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, 150, 20)];
+        UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10,  30, CGRectGetWidth(containerView.bounds)-90, 20)];
         addressOneLabel.text = address.address1;
-        addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+        addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
         
-        UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, 100, 20)];
+        UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, 50, 20)];
         cityLabel.text = address.city;
-        cityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        cityLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
         
         
-        UILabel *countryLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 80, 100, 20)];
+        UILabel *countryLabel = [[UILabel alloc]initWithFrame:CGRectMake(70, 50, 50, 20)];
         countryLabel.text = address.country;
-        countryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        countryLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
         
-        UILabel *zipLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 100, 100, 20)];
+        UILabel *zipLabel = [[UILabel alloc]initWithFrame:CGRectMake(90,  50, 30, 20)];
         zipLabel.text = address.zip;
-        zipLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        zipLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
         
+        [containerView addSubview:nameLabel];
+        [containerView addSubview:zipLabel];
+        [containerView addSubview:countryLabel];
+        [containerView addSubview:cityLabel];
+        [containerView addSubview:addressOneLabel];
 
-        _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(190, 10, CGRectGetHeight(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
-        _mapView.delegate = self;
         
-        cell.backgroundColor = [UIColor colorWithWhite:.9 alpha:1];
-        [cell addSubview:_mapView];
-        [cell addSubview:zipLabel];
-        [cell addSubview:countryLabel];
-        [cell addSubview:cityLabel];
-        [cell addSubview:addressOneLabel];
-        
-        [cell addSubview:nameLabel];
-        
-        
-    }else if ([indexPath section] == 2){
-        self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.checkInButton.frame = CGRectMake(0, 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
-        self.checkInButton.backgroundColor = [UIColor colorWithWhite:.95 alpha:1];
-        [self.checkInButton setTitle:@"IN" forState:UIControlStateNormal];
-        [self.checkInButton setTitle:@"DONE" forState:UIControlStateDisabled];
-        [self.checkInButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self.checkInButton setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
-         [self.checkInButton setBackgroundColor:[UIColor colorWithWhite:.8 alpha:1]];
-        [self.checkInButton addTarget:self action:@selector(checkMeIn:) forControlEvents:UIControlEventTouchUpInside];
-        
-        self.checkOutButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.checkOutButton.frame = CGRectMake(CGRectGetWidth(cell.bounds)/1.5, 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
-        self.checkOutButton.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
-        [self.checkOutButton setTitle:@"OUT" forState:UIControlStateNormal];
-        [self.checkOutButton setTitle:@"DONE" forState:UIControlStateDisabled];
-        [self.checkOutButton setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:1]];
-        [self.checkOutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.checkOutButton addTarget:self action:@selector(checkMeOut:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        messageButton.frame = CGRectMake(CGRectGetMaxX(self.checkOutButton.bounds), 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
-        messageButton.backgroundColor = [UIColor flatBlueColor];
-        [messageButton setTitle:@"NOTE" forState:UIControlStateNormal];
-        [messageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [messageButton addTarget:self action:@selector(goToMessages:) forControlEvents:UIControlEventTouchUpInside];
    
-        [cell addSubview:self.checkInButton];
-        [cell addSubview:self.checkOutButton];
-        [cell addSubview:messageButton];
+        [_mapView addSubview:containerView];
+        
+        cell.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+        [cell addSubview:_mapView];
+
+        
         
     }else{
         Shipment *shipment = [self.stop.shipments allObjects][indexPath.row];
         
-        UILabel *shipNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 180, 20)];
-        shipNumLabel.text = [NSString stringWithFormat:@"Ref: %@", shipment.shipment_number];
-        UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, 180, 20)];
-        commentsLabel.text = shipment.comments;
-        shipNumLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        commentsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        [cell addSubview:shipNumLabel];
-        [cell addSubview:commentsLabel];
+        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
+        containerView.backgroundColor = [UIColor colorWithWhite:.985 alpha:.5];
+        containerView.layer.borderColor = [UIColor colorWithWhite:.955 alpha:1].CGColor;
+        containerView.layer.borderWidth = 1;
+    
+        
+        UILabel *shipNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, CGRectGetWidth(containerView.bounds)-20, 20)];
+        shipNumLabel.text = [NSString stringWithFormat:@"Customer Reference: %@", shipment.shipment_number];
+        shipNumLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        shipNumLabel.textColor = [UIColor colorWithWhite:.333 alpha:1];
+        
+        UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 28, CGRectGetWidth(containerView.bounds), 20)];
+        commentsLabel.text = [NSString stringWithFormat:@"Instructions: %@", shipment.comments];
+        commentsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        commentsLabel.textColor = [UIColor colorWithWhite:.333 alpha:1];
+        
+        
+        [containerView addSubview:shipNumLabel];
+        [containerView addSubview:commentsLabel];
+        
         [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *item, NSUInteger idx, BOOL *stop) {
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetWidth(cell.bounds)-120, (idx+1)*20, 150, 20)];
-            NSString *productString = [NSString stringWithFormat:@"%@ pieces of %@", item.pieces, item.product_id];
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(10, (idx+1)*35+28, CGRectGetWidth(containerView.bounds)-20, 30)];
+//            view.backgroundColor = [UIColor colorWithWhite:1 alpha:.6];
+//            view.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
+//            view.layer.borderWidth = 2;
+            
+            
+            NSString *productString = [NSString stringWithFormat:@"%@ x %@ type pallets", item.pieces, item.product_id];
+            
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, CGRectGetWidth(view.bounds), 20)];
             label.text = productString;
-            label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-            [cell addSubview:label];
+            label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+            label.textColor = [UIColor colorWithWhite:.333 alpha:1];
+
+            [view addSubview:label];
+            [containerView addSubview:view];
         }];
+        [cell addSubview:containerView];
     }
     
     return cell;
@@ -227,28 +234,61 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if ([indexPath section] == 0 ) {
-        return 134;
-    }else if ([indexPath section] == 1){
-        return 120;
+        return 250;
     }
-    return 100;
+    return 200;
 }
 
 #pragma mark -UIButton actions
 
--(void)checkMeIn:(id)sender{
+-(BOOL)checkMeIn:(id)sender{
     NSLog(@"Check me in!!");
-    self.stop.actual_arrival = [NSString stringWithFormat:@"%@", [NSDate date]];
+    CVUpdateButton *button = (CVUpdateButton*)sender;
+    if (button.isUpdated) {
+        NSLog(@"THE BUTTON HAS ALREADY BEEN CLICKED");
+           POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPosition];
+            anim.toValue = [NSValue valueWithCGPoint:CGPointMake(button.layer.position.x - 300, button.layer.position.y)];
+            anim.springSpeed = 2;
+            anim.springBounciness = 10;
+        [button pop_addAnimation:anim forKey:@"position"];
+        return YES;
+    }
+    button.isUpdated = YES;
+    
+    CGRect largeFrame = CGRectInset(button.layer.frame, 10, 10);
+    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
+    anim.toValue = [NSValue valueWithCGRect:largeFrame];
+    anim.springBounciness = 20;
+    anim.springSpeed = 1;
+    [button.layer pop_addAnimation:anim forKey:@"grow"];
+    
+    POPSpringAnimation *colorAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBackgroundColor];
+    colorAnim.toValue = (id)[UIColor colorWithRed:.1 green:.8 blue:.1 alpha:.5].CGColor;
+    colorAnim.springSpeed = 6;
+    colorAnim.springBounciness = 10;
+    
+    [button.layer pop_addAnimation:colorAnim forKey:@"color"];
+    
 
-    NSString *titleString = [NSString stringWithFormat:@"Check in at %@ ?", self.stop.location_name];
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
-                                                             delegate:self
-                                                    cancelButtonTitle:@"YES"
-                                               destructiveButtonTitle:@"CANCEL"
-                                                    otherButtonTitles:nil];
-    [actionSheet showInView:self.view];
-//    UIAlertView *alv = [[UIAlertView alloc]initWithTitle:@"Saved" message:@"Stop Updated" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel",nil];
-//    [alv show];
+//
+    
+    float targetRadius = 20.0f;
+    POPSpringAnimation *cornerAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerCornerRadius];
+    cornerAnim.toValue = @(targetRadius);
+    cornerAnim.springSpeed = 6;
+    [button.layer pop_addAnimation:cornerAnim forKey:@"corner"];
+    return NO;
+    
+//
+//    self.stop.actual_arrival = [NSString stringWithFormat:@"%@", [NSDate date]];
+//
+//    NSString *titleString = [NSString stringWithFormat:@"Check in at %@ ?", self.stop.location_name];
+//    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
+//                                                             delegate:self
+//                                                    cancelButtonTitle:@"YES"
+//                                               destructiveButtonTitle:@"CANCEL"
+//                                                    otherButtonTitles:nil];
+//    [actionSheet showInView:self.view];
     
 }
 //
@@ -271,7 +311,7 @@
 }
 -(void)goToMessages:(id)sender{
     CCMessageViewController *mvc = [[CCMessageViewController alloc]init];
-    [mvc setStop:self.stop];
+    [mvc setLoad:self.stop.load];
     [self.navigationController pushViewController:mvc animated:YES];
 }
 

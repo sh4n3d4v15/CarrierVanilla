@@ -21,31 +21,41 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.dataSource = [[NSMutableArray alloc]init];
     
-     
     [self loadMessages];
 }
 
 - (void)loadMessages
 {
-    
-    [[CVChepClient sharedClient]getLoadNotesForLoad:@"theLoadId" completion:^(NSArray *results, NSError *error) {
-      
-        NSMutableArray *messageArray = [[NSMutableArray alloc]init];
-        NSDictionary *note = [[[results firstObject]objectForKey:@"notes"]firstObject];
-       
-            SOMessage *message = [[SOMessage alloc]init];
-            message.text = note[@"message"];
-            message.fromMe = NO;
-            message.type = SOMessageTypeText;
-            message.date = [NSDate date];
-            [messageArray addObject:message];
-            NSLog(@"results: %@", message.text);
-            self.dataSource = messageArray;
-            [self refreshMessages];
+    [[CVChepClient sharedClient]getLoadNotesForLoad:self.load.id completion:^(NSDictionary *results, NSError *error) {
+        if (error) {
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"ERROR" message:@"There was an error retrieving notes" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [av show];
+        }
+        NSArray *notes = [results objectForKey:@"notes"];
+        [self recursivelyCheckForRepliesAndCreateMessage:notes];
     }];
 }
 
+-(void)recursivelyCheckForRepliesAndCreateMessage:(NSArray*)messages{
+    [messages enumerateObjectsUsingBlock:^(id message, NSUInteger idx, BOOL *stop) {
+        SOMessage *soMessage = [[SOMessage alloc]init];
+        soMessage.text = message[@"message"];
+        soMessage.fromMe = NO;
+        soMessage.type = SOMessageTypeText;
+        soMessage.date = [[NSDateFormatter new]dateFromString:message[@"created_date"]];
+        [self.dataSource addObject:soMessage];
+        NSArray *replies = [message valueForKey:@"replies"];
+        if ([replies count]) {
+            [self recursivelyCheckForRepliesAndCreateMessage:replies];
+            *stop = YES;
+        }else{
+            [self refreshMessages];
+        }
+
+    }];
+}
 #pragma mark - SOMessaging data source
 - (NSMutableArray *)messages
 {
@@ -105,12 +115,18 @@
 }
 
 -(void)postMessageToServer:(SOMessage*)message{
-    [[CVChepClient sharedClient]postLoadNoteForLoad:[self.stop valueForKeyPath:@"load.id"]
+    [[CVChepClient sharedClient]postLoadNoteForLoad:self.load.id
                                      withNoteType:@"MOBILE MESSAGE"
-                                     withStopType:self.stop.type
-                                     withMessage:message.text completion:^(NSArray *results, NSError *error) {
-                                        NSLog(@"posted to server %@" ,[self.stop valueForKeyPath:@"load.id"]);
-                                      
+                                     withStopType:@"some"
+                                     withMessage:message.text completion:^(NSDictionary *results, NSError *error) {
+                                         if (error) {
+                                             NSLog(@"error, %@", error);
+                                             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Message Fail" message:@"No connection to server" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                                             [av show];
+                                             
+                                         }else{
+                                             NSLog(@"SUCCESS: %@", results);
+                                         }
                                      }];
     [self sendMessage:message];
 }
@@ -128,8 +144,8 @@
     photoMessage.fromMe = YES;
     
     [[CVChepClient sharedClient]uploadPhoto:imageData
-                                    forStopId:self.stop.id
-                                    withLoadId:[self.stop valueForKeyPath:@"load.id"]
+                                    forStopId:self.load.id
+                                    withLoadId:self.load.id
                                     withComment:@"UPload from mobile" completion:^(NSArray *results, NSError *error) {
                                         if (error) {
                                             NSLog(@"error %@", [error localizedDescription]);
