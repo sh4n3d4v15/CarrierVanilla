@@ -2,7 +2,7 @@
 //  Stop.h
 //  CarrierVanilla
 //
-//  Created by shane davis on 18/06/2014.
+//  Created by shane davis on 26/06/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
@@ -14,8 +14,8 @@
 @interface Stop : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * active;
-@property (nonatomic, retain) NSString * actual_arrival;
-@property (nonatomic, retain) NSString * actual_departure;
+@property (nonatomic, retain) NSDate * actual_arrival;
+@property (nonatomic, retain) NSDate * actual_departure;
 @property (nonatomic, retain) NSData * departure_location;
 @property (nonatomic, retain) NSString * eta;
 @property (nonatomic, retain) NSString * href;

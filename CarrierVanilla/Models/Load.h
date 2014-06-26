@@ -34,4 +34,7 @@
 - (void)addRefs:(NSSet *)values;
 - (void)removeRefs:(NSSet *)values;
 
+
+-(BOOL)isCompletedLoad;
+
 @end

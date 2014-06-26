@@ -18,6 +18,8 @@
 #import "Ref.h"
 #import "Shipment.h"
 #import "Item.h"
+
+#import "MBProgressHUD.h"
 @interface CVMasterViewController ()<stopChangeDelegate,CCLoginViewDelegate,UIActionSheetDelegate>
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
@@ -33,24 +35,71 @@
 {
     [super viewDidLoad];
     
-	// Do any additional setup after loading the view, typically from a nib.
-    [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
-        NSLog(@"results: %@", results);
-        NSLog(@"error: %@", error);
-    }];
-    UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"settings.png"] style:UIBarButtonItemStylePlain
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    
+    // Configure Refresh Control
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    
+    // Configure View Controller
+    [self setRefreshControl:refreshControl];
+    
+    self.navigationItem.leftBarButtonItem = nil;
+    UISegmentedControl *statFilter = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Yesterday", @"Today", @"Tomorrow", nil]];
+                                      self.navigationItem.titleView = statFilter;
+    statFilter.selectedSegmentIndex = 1;
+    [statFilter setTitleTextAttributes:@{[UIFont fontWithName:@"HelveticaNeue" size:6.0]: NSFontAttributeName} forState:UIControlStateNormal];
+    [statFilter addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+
+
+     UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"settings.png"] style:UIBarButtonItemStylePlain
                                                           target:self action:@selector(showLogin:)];
     self.navigationItem.rightBarButtonItem = btn;
 }
 
+-(void)dateChanged:(id)sender{
+    UISegmentedControl *segmentCtrl =  (UISegmentedControl*)sender;
+    NSLog(@"The day changed to: %@", [segmentCtrl titleForSegmentAtIndex:[segmentCtrl selectedSegmentIndex]]);
+    MBProgressHUD *hud =  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"Loading";
+    
+    [self performSelector:@selector(removeHud:) withObject:hud afterDelay:2.0];
+//    [[CVChepClient sharedClient]getStopsForVehicle:@"need a date method here!!" completion:^(NSArray *results, NSError *error) {
+//        [self removeHud:hud];
+//    }];
+}
+-(void)removeHud:(MBProgressHUD*)hud{
+    hud.labelText = @"No Loads";
+    [hud hide:YES afterDelay:1.0];
+ 
+}
+
 -(void)viewWillAppear:(BOOL)animated{
+    NSLog(@"View will appear fired");
     BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"userLoggedIn"];
     
     if( !isUserLoggedIn ){
         [self showLoginViewAnimated:NO];
+    }else{
+        [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
+            if (error) {
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Network error" message:@"There was an error returning loads" delegate:self cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+                [av show];
+            }
+        }];
     }
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
 
+}
+
+-(void)refresh:(id)sender{
+    NSLog(@"RERESH");
+    [[CVChepClient sharedClient]getStopsForVehicle:@"" completion:^(NSArray *results, NSError *error) {
+        if (error) {
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Problem refreshing" message:@"Sorry, we could not refresh the loads" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [av show];
+        }
+            [(UIRefreshControl*)sender endRefreshing];
+    }];
 }
 
 
@@ -69,11 +118,30 @@
     return [[self.fetchedResultsController sections] count];
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo name];
 
-};
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+    /* Create custom view to display section header... */
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 2, tableView.frame.size.width, 18)];
+    [label setFont:[UIFont boldSystemFontOfSize:16]];
+    NSString *string = [sectionInfo name];
+    /* Section header is in 0th index... */
+    [label setText:string];
+    [label setShadowColor:UIColorFromRGB(0x2c3e50)];
+    [label setShadowOffset:CGSizeMake(0, 1)];
+    [label setTextColor:[UIColor whiteColor]];
+    [view addSubview:label];
+    [view setBackgroundColor:UIColorFromRGB(0x34495e)];
+    return view;
+}
+
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -95,7 +163,7 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -118,6 +186,14 @@
 {
     // The table view should not be re-orderable.
     return NO;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    if(cell.selectionStyle == UITableViewCellSelectionStyleNone){
+        return nil;
+    }
+    return indexPath;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -150,7 +226,8 @@
     
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.id" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
+    NSSortDescriptor *typeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:NO];
+    NSArray *sortDescriptors = @[sortDescriptor,typeSortDescriptor];
     
     
     
@@ -223,15 +300,6 @@
     [self.tableView endUpdates];
 }
 
-/*
-// Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    // In the simplest, most efficient, case, reload the table view.
-    [self.tableView reloadData];
-}
- */
 
 #pragma mark - Custom methods
 
@@ -241,10 +309,10 @@
     [self presentViewController:lvc animated:animated completion:nil];
 }
 
-#pragma mark Delegate methods
+#pragma mark  -  Delegate methods
 
 -(void)userDidLoginWithDictionary:(NSDictionary *)userInfo{
-    
+
 }
 
 
@@ -266,14 +334,16 @@
     cell.addressOneLabel.text = stop.address.address1;
     cell.cityLabel.text = stop.address.city;
     cell.zipLabel.text = stop.address.zip;
-    if ([stop.actual_arrival length]) {
-//        cell.backgroundColor = [UIColor greenColor];
+    cell.typeLabel.text = stop.type;
+    if (stop.actual_departure) {
+        cell.contentView.alpha = .5;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 }
 
 -(void)showLogin:(id)sender{
     NSLog(@"login button pressed");
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"Swtich vehicle or signout carrier" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles: @"Switch Vehicle",nil, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"Switch vehicle or signout carrier" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles: @"Switch Vehicle",nil, nil];
     [actionSheet showInView:self.view];
 }
 

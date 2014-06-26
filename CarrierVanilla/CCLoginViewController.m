@@ -12,6 +12,8 @@
 #import "UIColor+MLPFLatColors.h"
 #import "Pop.h"
 
+#import "CVChepClient.h"
+
 
 @interface CCLoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *submitBtn;
@@ -21,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UILabel *loginInfoLabel;
 - (IBAction)submitButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
@@ -37,12 +40,11 @@
     }
     return self;
 }
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)viewDidLoad
 {
     
-    self.view.backgroundColor = UIColorFromRGB(0x0077ac);
+    self.view.backgroundColor = UIColorFromRGB(0x3c6ba1);
     [super viewDidLoad];
     [HTAutocompleteTextField setDefaultAutocompleteDataSource:[HTAutocompleteManager sharedManager]];
 
@@ -50,13 +52,19 @@
         NSLog(@"the carrier id has already been set and I will hide this text box");
         self.carrierTextField.alpha = 0;
         self.carrierTextField.enabled = NO;
-        //CGRect offsetRect = CGRectOffset(_containerView.frame, 0, 45.0f);
-//        _containerView.frame = offsetRect;
+        __unused CGRect offsetRect = CGRectOffset(_containerView.frame, 0, 145.0f);
+        
+        POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
+        anim.toValue = [NSValue valueWithCGPoint:CGPointMake(150, 180)];
+        anim.springBounciness = 10;
+        anim.springSpeed = 2;
+        
+        
+        [_containerView.layer pop_addAnimation:anim forKey:@"position"];
     }
     self.passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.nameTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.carrierTextField.borderStyle = UITextBorderStyleRoundedRect;
-    _nameTextField.layer.borderColor = [UIColor flatDarkBlueColor].CGColor;
 
 }
 -(void)viewDidAppear:(BOOL)animated{
@@ -808,7 +816,22 @@
         [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];
         [[NSUserDefaults standardUserDefaults]synchronize];
         [_delegate userDidLoginWithDictionary:userInfo];
+    
+    if ([name isEqualToString:@"seldon"]) {
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        self.loginInfoLabel.text = @"I don't know who you are anymore";
+ 
+    }
+    
+//    [[CVChepClient sharedClient]getStopsForVehicle:@"" completion:^(NSArray *results, NSError *error) {
+//        if (error) {
+//            self.loginInfoLabel.text = @"I don't know who you are anymore";
+//        }else{
+//            [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+//        }
+//    }];
+    
 
 }
 @end

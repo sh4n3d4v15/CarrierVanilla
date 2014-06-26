@@ -21,4 +21,15 @@
 @dynamic stops;
 @dynamic refs;
 
+-(BOOL)isCompletedLoad{
+    __block BOOL complete = YES;
+    
+    [self.stops enumerateObjectsUsingBlock:^(Stop *currentStop, BOOL *stop) {
+        if (!currentStop.actual_arrival && !currentStop.actual_departure) {
+            complete = NO;
+        }
+    }];
+    return complete;
+}
+
 @end

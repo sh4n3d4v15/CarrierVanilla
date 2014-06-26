@@ -48,6 +48,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 2
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 4
 
+// MBProgressHUD
+#define COCOAPODS_POD_AVAILABLE_MBProgressHUD
+#define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
+#define COCOAPODS_VERSION_MINOR_MBProgressHUD 8
+#define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
+
 // PixateFreestyle
 #define COCOAPODS_POD_AVAILABLE_PixateFreestyle
 #define COCOAPODS_VERSION_MAJOR_PixateFreestyle 2
@@ -59,6 +65,12 @@
 #define COCOAPODS_VERSION_MAJOR_SOMessaging 1
 #define COCOAPODS_VERSION_MINOR_SOMessaging 0
 #define COCOAPODS_VERSION_PATCH_SOMessaging 0
+
+// Tweaks
+#define COCOAPODS_POD_AVAILABLE_Tweaks
+#define COCOAPODS_VERSION_MAJOR_Tweaks 1
+#define COCOAPODS_VERSION_MINOR_Tweaks 1
+#define COCOAPODS_VERSION_PATCH_Tweaks 0
 
 // UIColor+MLPFlatColors
 #define COCOAPODS_POD_AVAILABLE_UIColor_MLPFlatColors

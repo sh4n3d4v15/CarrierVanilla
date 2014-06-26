@@ -25,7 +25,6 @@
 @property(nonatomic)MKMapView *mapView;
 @property(weak,nonatomic) id <stopChangeDelegate> delegate;
 
-@property(nonatomic)CVUpdateButton *checkInButton;
-@property(nonatomic)UIButton *checkOutButton;
+@property(nonatomic)CVUpdateButton *updateButton;
 
 @end

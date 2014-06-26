@@ -204,9 +204,7 @@
                                  @"actual_departure_date": @"2014-03-25T23:59:00+01:00",
                                  @"product_id": @"60",
                                  @"delivery_number": @"3743620763",
-                                 @"delivery_line_item_number": @"10",
-                                 @"quantity": @20,
-                                 @"material_number": @"0000000001"
+                                 @"deliveries":@[]
                                  };
     NSError *error;
     NSData *updateData = [NSJSONSerialization dataWithJSONObject:updateDict options:0 error:&error];
@@ -214,11 +212,11 @@
         NSLog(@"There was an error JSON serializing the data: %@", [error localizedDescription]);
     }
     
-    NSDictionary *documentDict = @{@"document_type_id": @"1",
-                                 @"document_type_key": @"",
+    NSDictionary *documentDict = @{@"document_type_id": @"",
+                                 @"document_type_key": @"POD",
                                  @"product_id": @"60",
                                  @"comments": @"some generic comments",
-                                 @"stop_id": stopid
+                                 @"stop_id": @""
                                  };
     
     NSData *documentData = [NSJSONSerialization dataWithJSONObject:documentDict options:0 error:&error];
@@ -243,10 +241,10 @@
                                      success:^(NSURLSessionDataTask *task,
                                                id responseObject)
                                                 {
-                                                   __unused NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-                                                    NSLog(@"Success %@" , responseObject); }
+                                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                                    NSLog(@"Success %@" , httpResponse); }
                                      failure:^(NSURLSessionDataTask *task,
-                                               NSError *error) { NSLog(@"error %@", task.response); }];
+                                               NSError *error) { NSLog(@"error"); }];
     
     
     return task;
@@ -317,7 +315,7 @@
                                                                      @"reply_note_id":@"15557762",
                                                                      @"reply_note_thread_id":@"15557762",
                                                                      @"emails":@"shane.davies@chep.com",
-                                                                     @"shipments":@[@{@"id":@"55789171",@"stop_type":@"Drop"}]
+                                                                     @"shipments":@[]
                                                                      }
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
                                         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
@@ -337,6 +335,8 @@
                                             completion(nil,error);
                                         });
                                     }];
+    
+   
     return task;
 }
 

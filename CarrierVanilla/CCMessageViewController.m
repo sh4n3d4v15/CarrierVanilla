@@ -28,6 +28,7 @@
 
 - (void)loadMessages
 {
+    NSLog(@"Loading messages");
     [[CVChepClient sharedClient]getLoadNotesForLoad:self.load.id completion:^(NSDictionary *results, NSError *error) {
         if (error) {
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"ERROR" message:@"There was an error retrieving notes" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
