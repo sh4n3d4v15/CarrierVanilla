@@ -133,7 +133,7 @@
         [label setText:fullString];
     }
     [view addSubview:label];
-    [view setBackgroundColor:UIColorFromRGB(0x34495e)];
+    [view setBackgroundColor:UIColorFromRGB(0x3c6ba1)];
 
     return view;
 }
@@ -186,7 +186,7 @@
         
         
         if (self.stop.actual_arrival) {
-            [self addTimestampViewToView:self.mapView];
+            [self addTimestampViewToView:self.mapView animated:NO];
         }
 
 //        [containerView addSubview:nameLabel];
@@ -271,19 +271,11 @@
 -(void)checkMeIn:(id)sender{
     NSLog(@"Check me in!!");
     
-    if (self.stop.actual_arrival) {
-        NSLog(@"Time to check out");
-        NSString *titleString = [NSString stringWithFormat:@"Check OUT at %@ ?", self.stop.location_name];
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
-                                                                 delegate:self
-                                                        cancelButtonTitle:@"YES"
-                                                   destructiveButtonTitle:@"CANCEL"
-                                                        otherButtonTitles:nil];
-        [actionSheet showInView:self.view];
-           self.stop.actual_departure = [NSDate date];
-    }else{
+    if (!self.stop.actual_arrival) {
+
+    
         NSLog(@"Checking in");
-        NSString *titleString = [NSString stringWithFormat:@"Check IN at %@ ?", self.stop.location_name];
+        NSString *titleString = [NSString stringWithFormat:@"Check in at %@ ?", self.stop.location_name];
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
                                                                  delegate:self
                                                         cancelButtonTitle:@"YES"
@@ -297,12 +289,6 @@
 
 }
 
--(void)goToMessages:(id)sender{
-    CCMessageViewController *mvc = [[CCMessageViewController alloc]init];
-    [mvc setLoad:self.stop.load];
-    [self.navigationController pushViewController:mvc animated:YES];
-}
-
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"showMessages"]) {
         CCMessageViewController *mvc = (CCMessageViewController*)segue.destinationViewController;
@@ -310,13 +296,40 @@
     }
 }
 
--(void)addTimestampViewToView:(UIView*)view{
+-(void)addTimestampViewToView:(UIView*)view animated:(BOOL)animated{
+    
     
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
     [df setDateFormat:@"HH:mm:ss"];
     
+    CGRect largeFrame = CGRectInset(self.updateButton.layer.frame, 10, 10);
+    POPSpringAnimation *banim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
+    banim.toValue = [NSValue valueWithCGRect:largeFrame];
+    [banim setCompletionBlock:^(POPAnimation *anim, BOOL finished) {
+        [self.updateButton setTitle:@"1" forState:UIControlStateNormal];
+        self.updateButton.titleLabel.font = [UIFont systemFontOfSize:10];
+        
+    }];
+    
+    POPSpringAnimation *colorAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBackgroundColor];
+    colorAnim.toValue = (id)[UIColor colorWithRed:.1 green:.8 blue:.1 alpha:1].CGColor;
+    
+    
+    POPSpringAnimation *posAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPosition];
+    posAnim.toValue = [NSValue valueWithCGPoint:CGPointMake(15, 15)];
+    posAnim.springSpeed = 2;
+    posAnim.springBounciness = 0;
+    
+    [self.updateButton.layer pop_addAnimation:banim forKey:@"grow"];
+    [self.updateButton.layer pop_addAnimation:posAnim forKey:@"position"];
+    [self.updateButton.layer pop_addAnimation:colorAnim forKey:@"color"];
+    
+    
+    
+    
+    
     UIView *timestampView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.mapView.bounds), 30)];
-    timestampView.backgroundColor = [UIColor colorWithWhite:.99 alpha:.5];
+    timestampView.backgroundColor = [UIColor colorWithWhite:.99 alpha:.6];
     timestampView.layer.borderWidth = 2;
     timestampView.layer.borderColor = [UIColor whiteColor].CGColor;
     timestampView.alpha = 0;
@@ -327,7 +340,7 @@
     timestampLabel.textColor = [UIColor flatDarkGreenColor];
     
     [timestampView addSubview:timestampLabel];
-    [view insertSubview:timestampView atIndex:1];
+    [view insertSubview:timestampView atIndex:2];
     
     POPBasicAnimation *anim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
     anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -356,36 +369,7 @@
         [self.delegate rollbackChanges];
     }else{
         if (self.stop.actual_arrival && !self.stop.actual_departure ) {
-            
-            CGRect largeFrame = CGRectInset(self.updateButton.layer.frame, 10, 10);
-            POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
-            anim.toValue = [NSValue valueWithCGRect:largeFrame];
-            [anim setCompletionBlock:^(POPAnimation *anim, BOOL finished) {
-                [self.updateButton setTitle:@"1" forState:UIControlStateNormal];
-                self.updateButton.titleLabel.font = [UIFont systemFontOfSize:8];
-                
-            }];
-            
-            POPSpringAnimation *colorAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBackgroundColor];
-            colorAnim.toValue = (id)[UIColor colorWithRed:.1 green:.8 blue:.1 alpha:.5].CGColor;
-            
-            
-            POPSpringAnimation *posAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPosition];
-            posAnim.toValue = [NSValue valueWithCGPoint:CGPointMake(15, 15)];
-            posAnim.springSpeed = 2;
-            posAnim.springBounciness = 0;
-
-            [self addTimestampViewToView:self.mapView];
-            
-            
-            [self.updateButton.layer pop_addAnimation:anim forKey:@"grow"];
-            [self.updateButton.layer pop_addAnimation:posAnim forKey:@"position"];
-            [self.updateButton.layer pop_addAnimation:colorAnim forKey:@"color"];
-
-        }else{
-
-            
-            [self showSignatureView];
+            [self addTimestampViewToView:self.mapView animated:YES];
         }
 
     }

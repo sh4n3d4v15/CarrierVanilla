@@ -57,7 +57,8 @@
 		D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */; };
 		D0D3F3A11950501C00452C58 /* Ref.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3981950501C00452C58 /* Ref.m */; };
 		D0D3F3A21950501C00452C58 /* Shipment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F39A1950501C00452C58 /* Shipment.m */; };
-		D0D90852195C7D6F0049AA03 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D90851195C7D6F0049AA03 /* Stop.m */; };
+		D0DE9EE4195D811B0095BC5A /* Loadnote.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DE9EE3195D811B0095BC5A /* Loadnote.m */; };
+		D0DE9EE7195D81670095BC5A /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DE9EE6195D81670095BC5A /* Stop.m */; };
 		D0F7FE5F194E0EBA002CCD9F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -144,8 +145,10 @@
 		D0D3F3981950501C00452C58 /* Ref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ref.m; sourceTree = "<group>"; };
 		D0D3F3991950501C00452C58 /* Shipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shipment.h; sourceTree = "<group>"; };
 		D0D3F39A1950501C00452C58 /* Shipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shipment.m; sourceTree = "<group>"; };
-		D0D90850195C7D6F0049AA03 /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
-		D0D90851195C7D6F0049AA03 /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
+		D0DE9EE2195D811B0095BC5A /* Loadnote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loadnote.h; sourceTree = "<group>"; };
+		D0DE9EE3195D811B0095BC5A /* Loadnote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loadnote.m; sourceTree = "<group>"; };
+		D0DE9EE5195D81670095BC5A /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
+		D0DE9EE6195D81670095BC5A /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
 		D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -335,9 +338,11 @@
 				D0D3F3901950501C00452C58 /* Address.m */,
 				D0D3F3931950501C00452C58 /* Load.h */,
 				D0D3F3941950501C00452C58 /* Load.m */,
-				D0D90850195C7D6F0049AA03 /* Stop.h */,
-				D0D90851195C7D6F0049AA03 /* Stop.m */,
 				D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */,
+				D0DE9EE2195D811B0095BC5A /* Loadnote.h */,
+				D0DE9EE3195D811B0095BC5A /* Loadnote.m */,
+				D0DE9EE5195D81670095BC5A /* Stop.h */,
+				D0DE9EE6195D81670095BC5A /* Stop.m */,
 				D029281D1950907C0061069F /* Item.h */,
 				D029281E1950907C0061069F /* Item.m */,
 				D0D3F3971950501C00452C58 /* Ref.h */,
@@ -399,7 +404,7 @@
 				ORGANIZATIONNAME = "shane davis";
 				TargetAttributes = {
 					D091397E1941A4C50029AE98 = {
-						DevelopmentTeam = 7SB9SWV5PA;
+						DevelopmentTeam = 4965HJMH5J;
 					};
 					D09139A71941A4C50029AE98 = {
 						TestTargetID = D091397E1941A4C50029AE98;
@@ -507,10 +512,11 @@
 				D0D3F3A11950501C00452C58 /* Ref.m in Sources */,
 				D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */,
 				D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */,
+				D0DE9EE7195D81670095BC5A /* Stop.m in Sources */,
 				D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */,
 				D01A452819587AB700D60990 /* AFNetworkActivityLogger.m in Sources */,
+				D0DE9EE4195D811B0095BC5A /* Loadnote.m in Sources */,
 				D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */,
-				D0D90852195C7D6F0049AA03 /* Stop.m in Sources */,
 				D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */,
 				D029281F1950907C0061069F /* Item.m in Sources */,
 				D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */,

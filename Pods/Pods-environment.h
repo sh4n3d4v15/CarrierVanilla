@@ -54,6 +54,12 @@
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 8
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
 
+// MNTPullToReact
+#define COCOAPODS_POD_AVAILABLE_MNTPullToReact
+#define COCOAPODS_VERSION_MAJOR_MNTPullToReact 1
+#define COCOAPODS_VERSION_MINOR_MNTPullToReact 0
+#define COCOAPODS_VERSION_PATCH_MNTPullToReact 2
+
 // PixateFreestyle
 #define COCOAPODS_POD_AVAILABLE_PixateFreestyle
 #define COCOAPODS_VERSION_MAJOR_PixateFreestyle 2

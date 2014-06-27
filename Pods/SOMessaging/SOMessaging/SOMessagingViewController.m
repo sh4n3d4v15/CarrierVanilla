@@ -105,8 +105,8 @@
         if ([self.conversation count]) {
             NSInteger section = self.conversation.count - 1;
             NSInteger row = [self.conversation[section] count] - 1;
-           __unused NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
-           // [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            __unused NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            //[self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
     });
 }

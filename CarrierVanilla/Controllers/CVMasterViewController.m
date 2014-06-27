@@ -18,7 +18,8 @@
 #import "Ref.h"
 #import "Shipment.h"
 #import "Item.h"
-
+#import <FBTweak.h>
+#import <FBTweakInline.h>
 #import "MBProgressHUD.h"
 @interface CVMasterViewController ()<stopChangeDelegate,CCLoginViewDelegate,UIActionSheetDelegate>
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -36,6 +37,7 @@
     [super viewDidLoad];
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    
     
     // Configure Refresh Control
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
@@ -125,7 +127,6 @@
     
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
     
-    
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
     /* Create custom view to display section header... */
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 2, tableView.frame.size.width, 18)];
@@ -137,7 +138,7 @@
     [label setShadowOffset:CGSizeMake(0, 1)];
     [label setTextColor:[UIColor whiteColor]];
     [view addSubview:label];
-    [view setBackgroundColor:UIColorFromRGB(0x34495e)];
+    view.backgroundColor = UIColorFromRGB(0x3c6ba1);
     return view;
 }
 
@@ -225,7 +226,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.id" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.load_number" ascending:YES];
     NSSortDescriptor *typeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor,typeSortDescriptor];
     
@@ -235,7 +236,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"load.id" cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"load.load_number" cacheName:@"Master"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     

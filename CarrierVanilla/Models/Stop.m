@@ -2,13 +2,14 @@
 //  Stop.m
 //  CarrierVanilla
 //
-//  Created by shane davis on 26/06/2014.
+//  Created by shane davis on 27/06/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
 #import "Stop.h"
 #import "Address.h"
 #import "Load.h"
+#import "Loadnote.h"
 #import "Shipment.h"
 
 
@@ -32,8 +33,11 @@
 @dynamic type;
 @dynamic volume;
 @dynamic weight;
+@dynamic latitude;
+@dynamic longitude;
 @dynamic address;
 @dynamic load;
 @dynamic shipments;
+@dynamic loadNotes;
 
 @end
