@@ -13,10 +13,19 @@
 #import "UIColor+MLPFLatColors.h"
 #import "CCMessageViewController.h"
 #import "CVChepClient.h"
+#import "CCSignatureDrawView.h"
+#import "CCPDFWriter.h"
+#import "Pop.h"
 
+#import "MBProgressHUD.h"
+#import "CVMapAnnotation.h"
 
-@interface CVStopDetailTableViewController ()
+@interface CVStopDetailTableViewController ()<MKMapViewDelegate,UIActionSheetDelegate,CCSignatureDrawViewDelegate>
 @property(nonatomic)float shipmentCount;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *msgNavButton;
+@property(nonatomic)CVUpdateButton *updateButton;
+@property(nonatomic)UIButton *checkOutButton;
+
 @end
 
 @implementation CVStopDetailTableViewController
@@ -36,26 +45,8 @@
         NSArray *shipments = [stop.shipments allObjects];
         _shipmentCount =  [shipments count];
         NSLog(@"SHIPMENT COUNT::: %lu", (unsigned long)[shipments count]);
-        CLGeocoder *geocoder = [[CLGeocoder alloc]init];
-        [geocoder geocodeAddressString:@"M33 7TA" completionHandler:^(NSArray *placemarks, NSError *error) {
-            if (error) {
-                NSLog(@"There was an error %@", error);
-            }else{
-                NSLog(@"Placemarks %@", placemarks);
-                CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                CLLocation *location = placemark.location;
-                
-                MKCoordinateRegion region;
-                MKCoordinateSpan span;
-                span.latitudeDelta = 0.005;
-                span.longitudeDelta = 0.005;
-                region.span = span;
-                region.center = location.coordinate;
-                
-                
-                [_mapView setRegion:region animated:YES];
-            }
-        }];
+        
+
         _stop = stop;
     }
 }
@@ -63,24 +54,73 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    NSLog(@"STOP: %@", self.stop);
+    
     
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // Uncomment the following line to display an Ed    it button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    if ([self.stop.actual_arrival length]) {
-        self.checkInButton.enabled = NO;
+    if (![_stop.longitude doubleValue]) {
+        
+        CLGeocoder *geocoder = [[CLGeocoder alloc]init];
+        [geocoder geocodeAddressDictionary:@{
+                                             @"City":_stop.address.city,
+                                             @"Zip":_stop.address.zip
+                                             } completionHandler:^(NSArray *placemarks, NSError *error) {
+            
+            if (error) {
+                NSLog(@"There was an error %@", [error localizedDescription]);
+            }else{
+                NSLog(@"PLacemarks from dictionary %@", placemarks);
+                CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                CLLocation *location = placemark.location;
+                
+                MKCoordinateRegion region;
+                MKCoordinateSpan span;
+                span.latitudeDelta = 0.005;
+                span.longitudeDelta = 0.005;
+                _stop.latitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                _stop.longitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+                [self.delegate saveChangesOnContext];
+                region.span = span;
+                region.center = location.coordinate;
+                
+                [_mapView setRegion:region animated:YES];
+                CVMapAnnotation *annotation = [[CVMapAnnotation alloc]init];
+                annotation.coordinate = location.coordinate;
+                annotation.title = self.stop.location_name;
+                annotation.subtitle = self.stop.address.address1;
+                [_mapView addAnnotation:annotation];
+            }
+        }];
+        
+    }else{
+        NSLog(@"else statement");
+        
+                    MKCoordinateRegion region;
+                   MKCoordinateSpan span;
+                   span.latitudeDelta = 0.005;
+                   span.longitudeDelta = 0.005;
+       
+                   CLLocation *location = [[CLLocation alloc]initWithLatitude:[_stop.latitude doubleValue] longitude:[_stop.longitude doubleValue]];
+                   NSLog(@"Location: %@", location);
+                   region.span = span;
+                   region.center = location.coordinate;
+                   [_mapView setRegion:region animated:NO];
+        
+        CVMapAnnotation *annotation = [[CVMapAnnotation alloc]init];
+        annotation.coordinate = location.coordinate;
+        annotation.title = self.stop.location_name;
+        annotation.subtitle = self.stop.address.address1;
+        [_mapView addAnnotation:annotation];
     }
-    if ([self.stop.actual_departure length]) {
-        self.checkOutButton.enabled = NO;
-    }
+    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,7 +134,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -102,122 +142,176 @@
     // Return the number of rows in the section.
     if (section == 0) {
         return 1;
-    }else if (section == 1){
-        return self.shipmentCount;
     }
-    return 1;
-}
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    
-    if (section == 0) {
-        return @"Stop info";
-    }else if (section == 2){
-        return @"Action Buttons";
-    }
-    
-    return @"Shipment data";
+    return self.shipmentCount;
+
 }
 
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    
+    
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 2, tableView.frame.size.width, 18)];
+
+    [label setFont:[UIFont boldSystemFontOfSize:14]];
+    [label setTextColor:UIColorFromRGB(0x3c6ba1)];
+    
+    if (section == 0) {
+        [label setText:self.stop.location_name];
+    }else{
+        NSString *shipment = self.shipmentCount > 1 ? @"Shipments" : @"Shipment";
+        NSString *fullString = [NSString stringWithFormat:@"%.f %@",self.shipmentCount, shipment];
+        [label setText:fullString];
+    }
+    [view addSubview:label];
+    [view setBackgroundColor:UIColorFromRGB(0xcddcec)];
+
+    return view;
+}
+
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell" forIndexPath:indexPath];
         // Configure the cell...
     if ([indexPath section] == 0) {
-        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 300, 20)];
-        nameLabel.text = self.stop.location_name;
-        nameLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
         
-       
-        //ADRESSS
+        _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
+        _mapView.delegate = self;
+        _mapView.layer.borderColor = [UIColor colorWithWhite:.7 alpha:.3].CGColor;
+        _mapView.layer.borderWidth = 1;
+        
+        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_mapView.bounds)-60, CGRectGetWidth(_mapView.bounds), 60)];
+        containerView.backgroundColor = [UIColor colorWithWhite:1 alpha:.6];
+        containerView.layer.borderColor = [UIColor colorWithWhite:1 alpha:1].CGColor;
+        containerView.layer.borderWidth = 3;
+        
+        self.updateButton = [CVUpdateButton buttonWithType:UIButtonTypeCustom];
+        self.updateButton.frame = CGRectMake(CGRectGetWidth(_mapView.bounds)-50, CGRectGetMaxY(_mapView.bounds)-50, 40, 40);
+        self.updateButton.backgroundColor = [UIColor flatBlueColor];
+        self.updateButton.layer.cornerRadius = 5;
+        [self.updateButton addTarget:self action:@selector(checkMeIn:) forControlEvents:UIControlEventTouchUpInside];
+        
+
         
         Address *address = self.stop.address;
         
-        UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, 200, 20)];
+        UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10,  10, CGRectGetWidth(containerView.bounds)-20, 20)];
         addressOneLabel.text = address.address1;
-        addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+        addressOneLabel.textColor = [UIColor flatDarkGreenColor];
+        addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
         
-        UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, 100, 20)];
+        UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 30, 120, 20)];
         cityLabel.text = address.city;
-        cityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        cityLabel.textColor = [UIColor flatDarkGreenColor];
+        cityLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
         
         
-        UILabel *countryLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 80, 100, 20)];
+        UILabel *countryLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 30, 60, 20)];
         countryLabel.text = address.country;
-        countryLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        countryLabel.textColor = [UIColor flatDarkGreenColor];
+        countryLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
         
-        UILabel *zipLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 100, 100, 20)];
+        UILabel *zipLabel = [[UILabel alloc]initWithFrame:CGRectMake(180,  30, 60, 20)];
         zipLabel.text = address.zip;
-        zipLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        zipLabel.textColor = [UIColor flatDarkGreenColor];
+        zipLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+        
         
 
-        _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(190, 10, CGRectGetHeight(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
-        _mapView.delegate = self;
+
+        [containerView addSubview:zipLabel];
+        [containerView addSubview:countryLabel];
+        [containerView addSubview:cityLabel];
+        [containerView addSubview:addressOneLabel];
+
         
-        cell.backgroundColor = [UIColor colorWithWhite:.9 alpha:1];
-        [cell addSubview:_mapView];
-        [cell addSubview:zipLabel];
-        [cell addSubview:countryLabel];
-        [cell addSubview:cityLabel];
-        [cell addSubview:addressOneLabel];
-        
-        [cell addSubview:nameLabel];
-        
-        
-    }else if ([indexPath section] == 2){
-        self.checkInButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.checkInButton.frame = CGRectMake(0, 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
-        self.checkInButton.backgroundColor = [UIColor colorWithWhite:.95 alpha:1];
-        [self.checkInButton setTitle:@"IN" forState:UIControlStateNormal];
-        [self.checkInButton setTitle:@"DONE" forState:UIControlStateDisabled];
-        [self.checkInButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self.checkInButton setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
-         [self.checkInButton setBackgroundColor:[UIColor colorWithWhite:.8 alpha:1]];
-        [self.checkInButton addTarget:self action:@selector(checkMeIn:) forControlEvents:UIControlEventTouchUpInside];
-        
-        self.checkOutButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.checkOutButton.frame = CGRectMake(CGRectGetWidth(cell.bounds)/1.5, 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
-        self.checkOutButton.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
-        [self.checkOutButton setTitle:@"OUT" forState:UIControlStateNormal];
-        [self.checkOutButton setTitle:@"DONE" forState:UIControlStateDisabled];
-        [self.checkOutButton setBackgroundColor:[UIColor colorWithWhite:0.8 alpha:1]];
-        [self.checkOutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [self.checkOutButton addTarget:self action:@selector(checkMeOut:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        messageButton.frame = CGRectMake(CGRectGetMaxX(self.checkOutButton.bounds), 0, CGRectGetWidth(cell.bounds)/3, CGRectGetHeight(cell.bounds));
-        messageButton.backgroundColor = [UIColor flatBlueColor];
-        [messageButton setTitle:@"NOTE" forState:UIControlStateNormal];
-        [messageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [messageButton addTarget:self action:@selector(goToMessages:) forControlEvents:UIControlEventTouchUpInside];
    
-        [cell addSubview:self.checkInButton];
-        [cell addSubview:self.checkOutButton];
-        [cell addSubview:messageButton];
+        [_mapView addSubview:containerView];
+        [_mapView addSubview:self.updateButton];
+
+        
+        
+        if (self.stop.actual_arrival) {
+            [self addTimestampViewToView:self.mapView animated:NO];
+            [self addCheckOutButtonToView:_mapView];
+        }
+        if (self.stop.actual_arrival && self.stop.actual_departure) {
+            [self addTimestampViewToView:self.mapView animated:NO];
+            [self addCheckOutTimeStampeViewToView];
+        }
+        
+        
+        cell.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+        [cell addSubview:_mapView];
+        
+
+
+        
         
     }else{
         Shipment *shipment = [self.stop.shipments allObjects][indexPath.row];
         
-        UILabel *shipNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 180, 20)];
-        shipNumLabel.text = shipment.shipment_number;
-        UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, 180, 20)];
-        commentsLabel.text = shipment.comments;
-        shipNumLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        commentsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        [cell addSubview:shipNumLabel];
-        [cell addSubview:commentsLabel];
+        UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
+//        containerView.backgroundColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.1f];
+//        containerView.layer.borderColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.6f].CGColor;
+//        containerView.layer.borderWidth = 1;
+    
+        
+        UILabel *shipNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, CGRectGetWidth(containerView.bounds)-20, 20)];
+        shipNumLabel.text = [NSString stringWithFormat:@"Customer Reference: %@", shipment.shipment_number];
+        shipNumLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        shipNumLabel.textColor = [UIColor colorWithWhite:.333 alpha:1];
+        
+        UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 28, CGRectGetWidth(containerView.bounds), 20)];
+        commentsLabel.text = [NSString stringWithFormat:@"Instructions: %@", shipment.comments];
+        commentsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        commentsLabel.textColor = [UIColor colorWithWhite:.333 alpha:1];
+        
+        
+//        [containerView addSubview:shipNumLabel];
+//        [containerView addSubview:commentsLabel];
+       
+        
         [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *item, NSUInteger idx, BOOL *stop) {
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetWidth(cell.bounds)-120, (idx+1)*20, 150, 20)];
-            NSString *productString = [NSString stringWithFormat:@"%@ pieces of %@", item.pieces, item.product_id];
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, (idx)*55, CGRectGetWidth(containerView.bounds), 50)];
+            view.backgroundColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.05f];
+            view.layer.borderColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.2f].CGColor;
+            view.layer.borderWidth = 1;
+            view.layer.cornerRadius = 3;
+            
+            
+            NSString *productString = [NSString stringWithFormat:@"%@ pallets", item.product_id];
+            
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 200, 30)];
             label.text = productString;
-            label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-            [cell addSubview:label];
-
+            label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:18];
+            label.textColor = UIColorFromRGB(0x3c6ba1);
+            
+            UITextField *qtyField  = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetWidth(view.bounds)-60, 10, 50, 30)];
+            qtyField.placeholder = [item.pieces stringValue];
+            qtyField.clearsOnBeginEditing = YES;
+            qtyField.layer.borderColor = [UIColor whiteColor].CGColor;
+            qtyField.backgroundColor = [UIColor colorWithWhite:1 alpha:.6];
+            qtyField.layer.borderWidth = 1;
+            qtyField.layer.cornerRadius = 3;
+            qtyField.textAlignment = NSTextAlignmentCenter;
+            
+            [view addSubview:label];
+            [view addSubview:qtyField];
+            [containerView addSubview:view];
         }];
+        [cell addSubview:containerView];
     }
     
     return cell;
 }
+
+
 
 - (UITableViewCell *)configueCellForShipments:(UITableViewCell*)cell{
     return cell;
@@ -227,54 +321,122 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if ([indexPath section] == 0 ) {
-        return 134;
-    }else if ([indexPath section] == 1){
-        return 120;
+        return 250;
     }
-    return 100;
+    return 200;
 }
 
 #pragma mark -UIButton actions
 
 -(void)checkMeIn:(id)sender{
     NSLog(@"Check me in!!");
-    self.stop.actual_arrival = [NSString stringWithFormat:@"%@", [NSDate date]];
-
-    NSString *titleString = [NSString stringWithFormat:@"Check in at %@ ?", self.stop.location_name];
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
-                                                             delegate:self
-                                                    cancelButtonTitle:@"YES"
-                                               destructiveButtonTitle:@"CANCEL"
-                                                    otherButtonTitles:nil];
-    [actionSheet showInView:self.view];
-//    UIAlertView *alv = [[UIAlertView alloc]initWithTitle:@"Saved" message:@"Stop Updated" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel",nil];
-//    [alv show];
     
+    if (!self.stop.actual_arrival) {
+
+    
+        NSLog(@"Checking in");
+        NSString *titleString = [NSString stringWithFormat:@"Check in at %@ ?", self.stop.location_name];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"YES"
+                                                   destructiveButtonTitle:@"CANCEL"
+                                                        otherButtonTitles:nil];
+        [actionSheet showInView:self.view];
+        self.stop.actual_arrival = [NSDate date];
+        [self addCheckOutButtonToView:_mapView];
+    }
+    
+
+
 }
-//
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"showMessages"]) {
+        CCMessageViewController *mvc = (CCMessageViewController*)segue.destinationViewController;
+        [mvc setLoad:self.stop.load];
+    }
+}
+
+-(void)addTimestampViewToView:(UIView*)view animated:(BOOL)animated{
+    
+    
+    NSDateFormatter *df = [[NSDateFormatter alloc]init];
+    [df setDateFormat:@"HH:mm:ss"];
+    
+    CGRect largeFrame = CGRectInset(self.updateButton.layer.frame, 10, 10);
+    POPSpringAnimation *banim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
+    banim.toValue = [NSValue valueWithCGRect:largeFrame];
+    [banim setCompletionBlock:^(POPAnimation *anim, BOOL finished) {
+        [self.updateButton setTitle:@"1" forState:UIControlStateNormal];
+        self.updateButton.titleLabel.font = [UIFont systemFontOfSize:10];
+        
+    }];
+    
+    POPSpringAnimation *colorAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBackgroundColor];
+    colorAnim.toValue = (id)[UIColor colorWithRed:.1 green:.8 blue:.1 alpha:1].CGColor;
+    
+    
+    POPSpringAnimation *posAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPosition];
+    posAnim.toValue = [NSValue valueWithCGPoint:CGPointMake(15, 15)];
+    posAnim.springSpeed = 2;
+    posAnim.springBounciness = 0;
+    
+    [self.updateButton.layer pop_addAnimation:banim forKey:@"grow"];
+    [self.updateButton.layer pop_addAnimation:posAnim forKey:@"position"];
+    [self.updateButton.layer pop_addAnimation:colorAnim forKey:@"color"];
+    
+    
+    
+    
+    
+    UIView *timestampView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.mapView.bounds), 30)];
+    timestampView.backgroundColor = [UIColor colorWithWhite:.99 alpha:.6];
+    timestampView.layer.borderWidth = 2;
+    timestampView.layer.borderColor = [UIColor whiteColor].CGColor;
+    timestampView.alpha = 0;
+    
+    UILabel *timestampLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 0, CGRectGetWidth(timestampView.bounds), CGRectGetHeight(timestampView.bounds))];
+    
+    timestampLabel.text = [NSString stringWithFormat:@"Arrived at %@",[df stringFromDate:self.stop.actual_arrival]];
+    timestampLabel.textColor = [UIColor flatDarkGreenColor];
+    
+    [timestampView addSubview:timestampLabel];
+    [view insertSubview:timestampView atIndex:2];
+    
+    POPBasicAnimation *anim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+    anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    anim.fromValue = @(0.0);
+    anim.toValue = @(1.0);
+    anim.duration = 0.5;
+    
+    POPBasicAnimation *boundsAnim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewBounds];
+    boundsAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    boundsAnim.toValue = [NSValue valueWithCGRect:timestampView.bounds];
+    boundsAnim.fromValue = [NSValue valueWithCGRect:CGRectMake(0, 0, 0, 30)];
+    
+    [timestampView pop_addAnimation:boundsAnim forKey:@"bounds"];
+    [timestampView pop_addAnimation:anim forKey:@"fade"];
+}
+
+-(void)addCheckOutButtonToView:(UIView *)view{
+    self.checkOutButton = [CVUpdateButton buttonWithType:UIButtonTypeCustom];
+    self.checkOutButton.frame = CGRectMake(CGRectGetWidth(view.bounds)-50, CGRectGetMaxY(view.bounds)-50, 40, 40);
+    self.checkOutButton.backgroundColor = [UIColor flatBlueColor];
+    self.checkOutButton.layer.cornerRadius = 5;
+ 
+    [self.checkOutButton addTarget:self action:@selector(checkMeOut:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:self.checkOutButton];
+}
+
 -(void)checkMeOut:(id)sender{
-    NSLog(@"check me out!!");
-    self.stop.actual_departure = [NSString stringWithFormat:@"%@", [NSDate date]];
-    
-    NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date]
-                                                          dateStyle:NSDateFormatterNoStyle
-                                                          timeStyle:NSDateFormatterShortStyle];
-    NSLog(@"%@",dateString);
-
-    NSString *titleString = [NSString stringWithFormat:@"Check out from %@ ?", self.stop.location_name];
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
-                                                             delegate:self
-                                                    cancelButtonTitle:@"YES"
-                                               destructiveButtonTitle:@"CANCEL"
-                                                    otherButtonTitles:nil];
-    [actionSheet showInView:self.view];
-}
--(void)goToMessages:(id)sender{
-    CCMessageViewController *mvc = [[CCMessageViewController alloc]init];
-    [mvc setStop:self.stop];
-    [self.navigationController pushViewController:mvc animated:YES];
+    NSLog(@"Checking out");
+    if (self.stop.actual_arrival) {
+        self.stop.actual_departure = [NSDate date];
+        [self showSignatureView];
+    }
 }
 
+#pragma mark UIAction sheet delegate
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
@@ -282,11 +444,123 @@
 
         [self.delegate rollbackChanges];
     }else{
-        NSLog(@"Action was confirmed");
-        [self.delegate saveChangesOnContext];
+        if (self.stop.actual_arrival && !self.stop.actual_departure ) {
+            [self addTimestampViewToView:self.mapView animated:YES];
+        }
+
     }
 }
 
+#pragma mark show signature view AND save singature methods
+
+-(void)showSignatureView{
+    CCSignatureDrawView *sv = [[CCSignatureDrawView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) andQuantity:@"666"];
+    sv.delegate = self;
+    sv.alpha = 0;
+    [self.view addSubview:sv];
+    self.tableView.scrollEnabled = NO;
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         sv.alpha = 1;
+                     } completion:^(BOOL finished) {
+                         NSLog(@"shown signature view");
+                     }];
+    
+    
+}
+
+-(void)saveSignatureSnapshotAsData:(NSData *)imageData andSignatureBezier:(UIBezierPath*)signatureBezierPath updateQuantity:(NSString*)quantity andDismissView:(UIView *)view{
+    self.stop.signatureSnapshot = imageData;
+    NSLog(@"I saved the image data and will dismiss the view");
+    [UIView animateWithDuration:0.25f animations:^{
+        view.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        [view removeFromSuperview];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText = @"Saving Load";
+        //                self.signaturePic.image = [UIImage imageWithData:imageData];
+        //        if ([self.stop.load isCompletedLoad]) {
+        NSString *pdfName = @"pod.pdf";
+        
+        [CCPDFWriter createPDFfromLoad:self.stop.load saveToDocumentsWithFileName:pdfName];
+        [[CVChepClient sharedClient]updateStopWithId:@"75135140"
+                                             forLoad:self.stop.load.id
+                                      withQuantities:@[@2] withActualArrival:[NSDate date]
+                                 withActualDeparture:[NSDate date]
+                                              andPod:imageData
+                                          completion:^( NSError *error) {
+                                              if (error) {
+                                                  NSLog(@"there was an error %@", error);
+                                                  hud.labelText = @"Error saving";
+                                              }else{
+                                                  hud.labelText = @"Success";
+                                              }
+                                              [hud hide:YES afterDelay:0.5];
+                                              [self addCheckOutTimeStampeViewToView];
+                                              [self.delegate saveChangesOnContext];
+                                          }];
+        //        }
+    }];
+}
+
+-(void)addCheckOutTimeStampeViewToView{
+    NSDateFormatter *df = [[NSDateFormatter alloc]init];
+    [df setDateFormat:@"HH:mm:ss"];
+    
+    CGRect largeFrame = CGRectInset(self.checkOutButton.layer.frame, 10, 10);
+    POPSpringAnimation *banim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
+    banim.toValue = [NSValue valueWithCGRect:largeFrame];
+    [banim setCompletionBlock:^(POPAnimation *anim, BOOL finished) {
+        [self.checkOutButton setTitle:@"2" forState:UIControlStateNormal];
+        self.checkOutButton.titleLabel.font = [UIFont systemFontOfSize:10];
+        
+    }];
+    
+    POPSpringAnimation *colorAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBackgroundColor];
+    colorAnim.toValue = (id)[UIColor flatBlueColor].CGColor;
+    
+    
+    POPSpringAnimation *posAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPosition];
+    posAnim.toValue = [NSValue valueWithCGPoint:CGPointMake(15, 45)];
+    posAnim.springSpeed = 2;
+    posAnim.springBounciness = 0;
+    
+    [self.checkOutButton.layer pop_addAnimation:banim forKey:@"grow"];
+    [self.checkOutButton.layer pop_addAnimation:posAnim forKey:@"position"];
+    [self.checkOutButton.layer pop_addAnimation:colorAnim forKey:@"color"];
+    
+    
+    
+    
+    
+    UIView *timestampView = [[UIView alloc]initWithFrame:CGRectMake(0, 30, CGRectGetWidth(self.mapView.bounds), 30)];
+    timestampView.backgroundColor = [UIColor colorWithWhite:.99 alpha:.6];
+    timestampView.layer.borderWidth = 2;
+    timestampView.layer.borderColor = [UIColor whiteColor].CGColor;
+    timestampView.alpha = 0;
+    
+    UILabel *timestampLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 0, CGRectGetWidth(timestampView.bounds), CGRectGetHeight(timestampView.bounds))];
+    
+    timestampLabel.text = [NSString stringWithFormat:@"Departed at %@",[df stringFromDate:self.stop.actual_departure]];
+    timestampLabel.textColor = [UIColor flatBlueColor];
+    
+    [timestampView addSubview:timestampLabel];
+    [self.mapView insertSubview:timestampView atIndex:2];
+    
+    POPBasicAnimation *anim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewAlpha];
+    anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    anim.fromValue = @(0.0);
+    anim.toValue = @(1.0);
+    anim.duration = 0.5;
+    
+    POPBasicAnimation *boundsAnim = [POPBasicAnimation animationWithPropertyNamed:kPOPViewBounds];
+    boundsAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    boundsAnim.toValue = [NSValue valueWithCGRect:timestampView.bounds];
+    boundsAnim.fromValue = [NSValue valueWithCGRect:CGRectMake(0, 0, 0, 30)];
+    
+    [timestampView pop_addAnimation:boundsAnim forKey:@"bounds"];
+    [timestampView pop_addAnimation:anim forKey:@"fade"];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

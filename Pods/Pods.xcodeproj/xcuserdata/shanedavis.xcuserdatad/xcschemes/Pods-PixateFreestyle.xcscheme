@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E77CE610BF2C4C4086419EF5"
+               BlueprintIdentifier = "2C2DF3563FB146B9908A03CB"
                BuildableName = "libPods-PixateFreestyle.a"
                BlueprintName = "Pods-PixateFreestyle"
                ReferencedContainer = "container:Pods.xcodeproj">

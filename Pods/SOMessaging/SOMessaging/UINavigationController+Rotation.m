@@ -31,7 +31,7 @@ NSString const *kCantAutorotateKey = @"cantAutorotate.key";
 
 + (void)load
 {
-//    [self swizzleOriginalSelectorWithName:@"shouldAutorotate" toSelectorWithName:@"my_shouldAutorotate"];
+    //[self swizzleOriginalSelectorWithName:@"shouldAutorotate" toSelectorWithName:@"my_shouldAutorotate"];
 }
 
 #pragma mark - Swizzle Utils methods
@@ -59,7 +59,7 @@ NSString const *kCantAutorotateKey = @"cantAutorotate.key";
     if ([self respondsToSelector:@selector(cantAutorotate)] && self.cantAutorotate) {
         return NO;
     }
-    return [self my_shouldAutorotate];
+    return NO;
 }
 
 

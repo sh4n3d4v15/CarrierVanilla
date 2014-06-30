@@ -10,6 +10,9 @@
 #import "Stop.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "CVUpdateButton.h"
+
+
 @protocol stopChangeDelegate
 
 -(void)saveChangesOnContext;
@@ -17,12 +20,8 @@
 
 @end
 
-@interface CVStopDetailTableViewController : UITableViewController<MKMapViewDelegate,UIActionSheetDelegate>
+@interface CVStopDetailTableViewController : UITableViewController
 @property (strong, nonatomic) Stop *stop;
 @property(nonatomic)MKMapView *mapView;
 @property(weak,nonatomic) id <stopChangeDelegate> delegate;
-
-@property(nonatomic)UIButton *checkInButton;
-@property(nonatomic)UIButton *checkOutButton;
-
 @end

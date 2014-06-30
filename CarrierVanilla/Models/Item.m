@@ -2,23 +2,24 @@
 //  Item.m
 //  CarrierVanilla
 //
-//  Created by shane davis on 06/06/2014.
+//  Created by shane davis on 17/06/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
 #import "Item.h"
+#import "Shipment.h"
 
 
 @implementation Item
 
-@dynamic line;
-@dynamic product_id;
-@dynamic product_description;
 @dynamic commodity;
-@dynamic weight;
-@dynamic volume;
-@dynamic pieces;
 @dynamic lading;
+@dynamic line;
+@dynamic pieces;
+@dynamic product_description;
+@dynamic product_id;
+@dynamic volume;
+@dynamic weight;
 @dynamic shipment;
 
 @end

@@ -18,6 +18,10 @@
 #import "Ref.h"
 #import "Shipment.h"
 #import "Item.h"
+#import <FBTweak.h>
+#import <FBTweakInline.h>
+#import "MBProgressHUD.h"
+
 @interface CVMasterViewController ()<stopChangeDelegate,CCLoginViewDelegate,UIActionSheetDelegate>
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
@@ -33,24 +37,74 @@
 {
     [super viewDidLoad];
     
-	// Do any additional setup after loading the view, typically from a nib.
-    [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
-        NSLog(@"results: %@", results);
-        NSLog(@"error: %@", error);
-    }];
-    UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"settings.png"] style:UIBarButtonItemStylePlain
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    
+    // Configure Refresh Control
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    
+    // Configure View Controller
+    [self setRefreshControl:refreshControl];
+    
+    self.navigationItem.leftBarButtonItem = nil;
+    UISegmentedControl *statFilter = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Mon", @"Today", @"Wed", nil]];
+                                      self.navigationItem.titleView = statFilter;
+    statFilter.selectedSegmentIndex = 1;
+    [statFilter setTitleTextAttributes:@{[UIFont fontWithName:@"HelveticaNeue" size:5.0]: NSFontAttributeName} forState:UIControlStateNormal];
+    [statFilter addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+
+
+     UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain
                                                           target:self action:@selector(showLogin:)];
     self.navigationItem.rightBarButtonItem = btn;
 }
 
+-(void)dateChanged:(id)sender{
+    UISegmentedControl *segmentCtrl =  (UISegmentedControl*)sender;
+    NSLog(@"The day changed to: %@", [segmentCtrl titleForSegmentAtIndex:[segmentCtrl selectedSegmentIndex]]);
+    MBProgressHUD *hud =  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"Loading";
+    
+    [self performSelector:@selector(removeHud:) withObject:hud afterDelay:2.0];
+//    [[CVChepClient sharedClient]getStopsForVehicle:@"need a date method here!!" completion:^(NSArray *results, NSError *error) {
+//        [self removeHud:hud];
+//    }];
+}
+
+
+
+-(void)removeHud:(MBProgressHUD*)hud{
+    hud.labelText = @"No Loads";
+    [hud hide:YES afterDelay:1.0];
+ 
+}
+
 -(void)viewWillAppear:(BOOL)animated{
+    NSLog(@"View will appear fired");
     BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"userLoggedIn"];
     
     if( !isUserLoggedIn ){
         [self showLoginViewAnimated:NO];
+    }else{
+        [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
+            if (error) {
+//                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Network error" message:@"There was an error returning loads" delegate:self cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
+//                [av show];
+            }
+        }];
     }
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
 
+}
+
+-(void)refresh:(id)sender{
+    NSLog(@"RERESH");
+    [[CVChepClient sharedClient]getStopsForVehicle:@"" completion:^(NSArray *results, NSError *error) {
+        if (error) {
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Problem refreshing" message:@"Sorry, we could not refresh the loads" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [av show];
+        }
+            [(UIRefreshControl*)sender endRefreshing];
+    }];
 }
 
 
@@ -69,11 +123,41 @@
     return [[self.fetchedResultsController sections] count];
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo name];
 
-};
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
+    /* Create custom view to display section header... */
+    UILabel *shipmentnumberlabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 2, 100, 18)];
+    [shipmentnumberlabel setFont:[UIFont boldSystemFontOfSize:14]];
+    [shipmentnumberlabel setText:[sectionInfo name]];
+    [shipmentnumberlabel setTextColor:UIColorFromRGB(0x3c6ba1)];
+    [view addSubview:shipmentnumberlabel];
+    
+    UIImageView *truckimageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 1, 18, 18)];
+    [truckimageView setImage:[UIImage imageNamed:@"truck.png"]];
+    [view addSubview:truckimageView];
+    
+    UIImageView *stopimageView = [[UIImageView alloc]initWithFrame:CGRectMake(120, 5, 14, 14)];
+    [stopimageView setImage:[UIImage imageNamed:@"flag.png"]];
+    [view addSubview:stopimageView];
+    
+    UILabel *stopCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 2, 100, 18)];
+    [stopCountLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    [stopCountLabel setText:[NSString stringWithFormat:@"%i STOPS",[sectionInfo numberOfObjects]]];
+    [stopCountLabel setTextColor:UIColorFromRGB(0x3c6ba1)];
+    [view addSubview:stopCountLabel];
+    
+    
+    view.backgroundColor = UIColorFromRGB(0xcddcec);
+    return view;
+}
+
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -89,13 +173,13 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
+    return 80;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -119,6 +203,14 @@
     // The table view should not be re-orderable.
     return NO;
 }
+//
+//- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+//    if(cell.selectionStyle == UITableViewCellSelectionStyleNone){
+//        return nil;
+//    }
+//    return indexPath;
+//}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -149,8 +241,9 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.id" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.load_number" ascending:YES];
+    NSSortDescriptor *typeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:NO];
+    NSArray *sortDescriptors = @[sortDescriptor,typeSortDescriptor];
     
     
     
@@ -158,7 +251,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"load.id" cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"load.load_number" cacheName:@"Master"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -223,15 +316,6 @@
     [self.tableView endUpdates];
 }
 
-/*
-// Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    // In the simplest, most efficient, case, reload the table view.
-    [self.tableView reloadData];
-}
- */
 
 #pragma mark - Custom methods
 
@@ -241,10 +325,10 @@
     [self presentViewController:lvc animated:animated completion:nil];
 }
 
-#pragma mark Delegate methods
+#pragma mark  -  Delegate methods
 
 -(void)userDidLoginWithDictionary:(NSDictionary *)userInfo{
-    
+
 }
 
 
@@ -262,18 +346,27 @@
 - (void)configureCell:(CVStopTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Stop *stop = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.locationNameLabel.text = stop.location_name;
-    cell.addressOneLabel.text = stop.address.address1;
+    cell.locationNameLabel.text = [ NSString stringWithUTF8String:[stop.location_name cStringUsingEncoding:NSUTF8StringEncoding]];;
+    cell.locationNameLabel.textColor = UIColorFromRGB(0x3c6ba1);
+    cell.addressOneLabel.text = [ NSString stringWithUTF8String:[stop.address.address1 cStringUsingEncoding:NSUTF8StringEncoding]];
     cell.cityLabel.text = stop.address.city;
     cell.zipLabel.text = stop.address.zip;
-    if ([stop.actual_arrival length]) {
-//        cell.backgroundColor = [UIColor greenColor];
+    cell.typeLabel.text = stop.type;
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+
+    if ([stop.type isEqualToString:@"Drop"]) {
+        cell.imageView.image = stop.actual_departure ? [UIImage imageNamed:@"dropicondone1.png"] : [UIImage imageNamed:@"dropicon.png"];
+    }else{
+        cell.imageView.image = stop.actual_departure ? [UIImage imageNamed:@"pickicondone1.png"]: [UIImage imageNamed:@"pickicon.png"];
+    }
+    if (stop.actual_departure) {
+        cell.imageView.alpha = .9;
     }
 }
 
 -(void)showLogin:(id)sender{
     NSLog(@"login button pressed");
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"Swtich vehicle or signout carrier" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles: @"Switch Vehicle",nil, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"Switch vehicle or signout carrier" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles: @"Switch Vehicle",nil, nil];
     [actionSheet showInView:self.view];
 }
 
@@ -305,5 +398,10 @@
 -(void)logOutAsCarrier{
     [[NSUserDefaults standardUserDefaults]setValue:nil forKey:@"carrierID"];
 }
+
+
+#pragma mark throw away pdf methods
+
+
 
 @end

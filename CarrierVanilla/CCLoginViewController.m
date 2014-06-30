@@ -10,6 +10,9 @@
 #import "HTAutocompleteTextField.h"
 #import "HTAutocompleteManager.h"
 #import "UIColor+MLPFLatColors.h"
+#import "Pop.h"
+
+#import "CVChepClient.h"
 
 
 @interface CCLoginViewController ()
@@ -20,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UILabel *loginInfoLabel;
 - (IBAction)submitButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
@@ -39,6 +43,8 @@
 
 - (void)viewDidLoad
 {
+    
+    self.view.backgroundColor = UIColorFromRGB(0x3c6ba1);
     [super viewDidLoad];
     [HTAutocompleteTextField setDefaultAutocompleteDataSource:[HTAutocompleteManager sharedManager]];
 
@@ -46,11 +52,19 @@
         NSLog(@"the carrier id has already been set and I will hide this text box");
         self.carrierTextField.alpha = 0;
         self.carrierTextField.enabled = NO;
-        //CGRect offsetRect = CGRectOffset(_containerView.frame, 0, 45.0f);
-//        _containerView.frame = offsetRect;
+        __unused CGRect offsetRect = CGRectOffset(_containerView.frame, 0, 145.0f);
+        
+        POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
+        anim.toValue = [NSValue valueWithCGPoint:CGPointMake(150, 180)];
+        anim.springBounciness = 10;
+        anim.springSpeed = 2;
+        
+        
+        [_containerView.layer pop_addAnimation:anim forKey:@"position"];
     }
-    [_submitBtn setTitleColor:[UIColor flatDarkBlueColor] forState:UIControlStateNormal];
-    _nameTextField.layer.borderColor = [UIColor flatDarkBlueColor].CGColor;
+    self.passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
+    self.nameTextField.borderStyle = UITextBorderStyleRoundedRect;
+    self.carrierTextField.borderStyle = UITextBorderStyleRoundedRect;
 
 }
 -(void)viewDidAppear:(BOOL)animated{
@@ -69,26 +83,32 @@
 
 -(void)animationCode{
     CAShapeLayer *shapeLayer = [[CAShapeLayer alloc]init];
-    shapeLayer.strokeColor = [UIColor flatDarkBlueColor].CGColor;
+    shapeLayer.strokeColor = [UIColor whiteColor].CGColor;
     shapeLayer.fillColor = [UIColor clearColor].CGColor;
     shapeLayer.path = [self getChepBigCPath];
     [self.containerView.layer addSublayer:shapeLayer];
     
     CABasicAnimation *strokeEndMorph = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    strokeEndMorph.duration = 1;
+    strokeEndMorph.duration = 0.33;
     strokeEndMorph.fillMode = kCAFillModeForwards;
     strokeEndMorph.removedOnCompletion = NO;
     strokeEndMorph.fromValue = @0;
     strokeEndMorph.toValue = @1;
     [shapeLayer addAnimation:strokeEndMorph forKey:nil];
     
-//    CABasicAnimation *colorMorph = [CABasicAnimation animationWithKeyPath:@"fillColor"];
-//    colorMorph.duration = 1.0f;
-//    colorMorph.fillMode = kCAFillModeForwards;
-//    colorMorph.removedOnCompletion = NO;
-//    colorMorph.toValue = (id)[UIColor blueColor].CGColor;
-//    [shapeLayer addAnimation:colorMorph forKey:nil];
+    CABasicAnimation *colorMorph = [CABasicAnimation animationWithKeyPath:@"fillColor"];
+    colorMorph.duration = 1.0f;
+    colorMorph.fillMode = kCAFillModeForwards;
+    colorMorph.removedOnCompletion = NO;
+    colorMorph.toValue = (id)[UIColor colorWithWhite:1 alpha:1].CGColor;
+    [shapeLayer addAnimation:colorMorph forKey:nil];
 
+//    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBackgroundColor];
+//    anim.toValue = (id)[UIColor colorWithWhite:1 alpha:1];
+//    anim.springSpeed = 10;
+//    anim.springBounciness = 20;
+//    
+//    [shapeLayer pop_addAnimation:anim forKey:@"color"];
 }
 
 -(CGPathRef)getChepBigCPath
@@ -755,21 +775,30 @@
 #pragma mark - Text Field Delegate
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
-    NSLog(@"text field editing");
-    [UIView animateWithDuration:0.15 animations:^{
-        textField.transform = CGAffineTransformMakeScale(1.05,1.05);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.15
-                         animations:^{
-                             textField.transform = CGAffineTransformIdentity;
-                         }];
-    }];
+    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
+    anim.toValue = [NSValue valueWithCGRect:CGRectInset(textField.bounds, -2, -2)];
+    anim.springBounciness = 20;
+    [textField.layer pop_addAnimation:anim forKey:@"bounds"];
 }
-
+//-(void)textFieldDidBeginEditing:(UITextField *)textField{
+//    POPSpringAnimation *anim =
+//}
 #pragma mark Todo: add validation here
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
+
     return YES;
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
+    anim.toValue = [NSValue valueWithCGRect:CGRectInset(textField.bounds, 2, 2)];
+    anim.springBounciness = 20;
+    [anim setCompletionBlock:^(POPAnimation *animation, BOOL finished) {
+        NSLog(@"animcomople");
+    }];
+    
+    [textField.layer pop_addAnimation:anim forKey:@"bounds"];
 }
 
 - (IBAction)submitButtonPressed:(id)sender {
@@ -787,7 +816,22 @@
         [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];
         [[NSUserDefaults standardUserDefaults]synchronize];
         [_delegate userDidLoginWithDictionary:userInfo];
+    
+    if ([name isEqualToString:@"seldon"]) {
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        self.loginInfoLabel.text = @"I don't know who you are anymore";
+ 
+    }
+    
+//    [[CVChepClient sharedClient]getStopsForVehicle:@"" completion:^(NSArray *results, NSError *error) {
+//        if (error) {
+//            self.loginInfoLabel.text = @"I don't know who you are anymore";
+//        }else{
+//            [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+//        }
+//    }];
+    
 
 }
 @end

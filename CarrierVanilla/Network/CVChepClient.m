@@ -15,6 +15,7 @@
 #import "Shipment.h"
 #import "Item.h"
 
+
 @implementation CVChepClient
 +(CVChepClient *)sharedClient{
     static CVChepClient *_sharedClient = nil;
@@ -25,6 +26,7 @@
          NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
         _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
         _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
+        _sharedClient.requestSerializer.stringEncoding = NSUTF8StringEncoding;
         
         [_sharedClient.requestSerializer setAuthorizationHeaderFieldWithUsername:@"MobiShipRestUser" password:@"M0b1Sh1pm3n743"];
       //  [_sharedClient.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
@@ -76,7 +78,6 @@
             [stops enumerateObjectsUsingBlock:^(id stopobj, NSUInteger idx, BOOL *stop) {
                 Stop *_stop = [NSEntityDescription insertNewObjectForEntityForName:@"Stop" inManagedObjectContext:dmgr.managedObjectContext];
                 //            [_stop setValuesForKeysWithDictionary:stopobj];
-                //            _stop.location_name = [stopobj valueForKey:@"location_name"];
                 SET_IF_NOT_NULL(_stop.location_name , [stopobj valueForKey:@"location_name"]);
                 SET_IF_NOT_NULL(_stop.location_id, [stopobj valueForKey:@"location_id"]);
                 SET_IF_NOT_NULL(_stop.location_ref, [stopobj valueForKey:@"location_ref"]);
@@ -110,10 +111,10 @@
                         SET_IF_NOT_NULL(item.product_id,  [itemObj valueForKey:@"product_id"]);
                         SET_IF_NOT_NULL(item.product_description, [itemObj valueForKey:@"product_description"]);
                         SET_IF_NOT_NULL(item.commodity, [itemObj valueForKey:@"commodity"]);
-//                        SET_IF_NOT_NULL(item.weight, [itemObj valueForKey:@"weight"]);
-//                        SET_IF_NOT_NULL(item.volume, [itemObj valueForKey:@"volume"]);
-//                        SET_IF_NOT_NULL(item.pieces, [itemObj valueForKey:@"pieces"]);
-//                        SET_IF_NOT_NULL(item.lading, [itemObj valueForKey:@"lading"]);
+                        SET_IF_NOT_NULL(item.weight, [itemObj valueForKey:@"weight"]);
+                        SET_IF_NOT_NULL(item.volume, [itemObj valueForKey:@"volume"]);
+                        SET_IF_NOT_NULL(item.pieces, [itemObj valueForKey:@"pieces"]);
+                        SET_IF_NOT_NULL(item.lading, [itemObj valueForKey:@"lading"]);
 
                         [shipment addItemsObject:item];
                     }];
@@ -146,31 +147,6 @@
 
 
 #pragma mark - Stop Requests
-
-//-(NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:(void (^)(NSArray *, NSError *))completion{
-//    NSURLSessionDataTask *task = [self GET:@"loads" parameters:@{@"vehicle":vehicleId} success:^(NSURLSessionDataTask *task, id responseObject) {
-//        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-//        NSArray *loads = [responseObject valueForKey:@"loads"];
-//        if(httpResponse.statusCode == 200){
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [self importArrayOfStopsIntoCoreData:loads];
-//                completion(loads,nil);
-//            });
-//        }else{
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                completion(nil,nil);
-//            });
-//            NSLog(@"Received: %@", loads);
-//            NSLog(@"Received HTTP %lo", (long)httpResponse.statusCode);
-//        }
-//        
-//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            completion(nil,error);
-//        });
-//    }];
-//    return task;
-//};
 
 
 -(NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:(void (^)(NSArray *, NSError *))completion{
@@ -214,32 +190,68 @@
     return task;
 };
 
+#pragma mark - HOW TO BUILD MULTI-MULTIPART FROM DICTIONARY?
+-(NSURLSessionDataTask *)updateStopWithId:(NSString *)stopid forLoad:(NSString*)loadId withQuantities:(NSArray *)quantities withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate andPod: (NSData*)podData completion:(void (^)( NSError *))completion{
+    NSLog(@"Update stop method fired");
+    NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId,stopid];
+    NSLog(@"Full URL: %@", fullUrl);
+    
+    if ([quantities count]) {
+        NSLog(@"It appears that we have multiple quantities to update");
+    }
+    
+    NSDictionary *updateDict = @{@"actual_arrival_date": @"2014-03-25T23:59:00+01:00",
+                                 @"actual_departure_date": @"2014-03-25T23:59:00+01:00",
+                                 @"product_id": @"60",
+                                 @"delivery_number": @"3743620763",
+                                 @"deliveries":@[]
+                                 };
+    NSError *error;
+    NSData *updateData = [NSJSONSerialization dataWithJSONObject:updateDict options:0 error:&error];
+    if (error) {
+        NSLog(@"There was an error JSON serializing the data: %@", [error localizedDescription]);
+    }
+    
+    NSDictionary *documentDict = @{@"document_type_id": @"",
+                                 @"document_type_key": @"POD",
+                                 @"product_id": @"60",
+                                 @"comments": @"some generic comments",
+                                 @"stop_id": @""
+                                 };
+    
+    NSData *documentData = [NSJSONSerialization dataWithJSONObject:documentDict options:0 error:&error];
+    if (error) {
+        NSLog(@"There was an error JSON serializing the data: %@", [error localizedDescription]);
+    }
+    
+    NSURLSessionDataTask *task =  [self POST:fullUrl
+                                  parameters:nil
+                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                       
+                       [formData appendPartWithFormData:updateData name:@"update_parameters"];
+                       [formData appendPartWithFormData:documentData name:@"document_info"];
 
-//-(NSURLSessionDataTask *)updateStopWithId:(NSString *)id forLoad:(NSString*)loadId withQuantity:(NSString *)quantity withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate completion:(void (^)(NSArray *, NSError *))completion{
-//    NSLog(@"Update stop method fired");
-//    NSString *fullUrl = [[NSString stringWithFormat:@"%@/pod/%@/%@/%@",urlString,quantity,arrivalDate ? arrivalDate : @"",departureDate ? departureDate : @""]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//    NSLog(@"FULL URL:: %@", fullUrl);
-//    NSURLSessionDataTask *task = [self POST:fullUrl parameters:@{@"name":@"shane"}
-//                                    success:^(NSURLSessionDataTask *task, id responseObject) {
-//                                        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-//                                        if (httpResponse.statusCode == 200) {
-//                                            dispatch_async(dispatch_get_main_queue(), ^{
-//                                                completion(responseObject,nil);
-//                                            });
-//                                        }else{
-//                                            dispatch_async(dispatch_get_main_queue(), ^{
-//                                                completion(nil,nil);
-//                                                NSLog(@"Received: %@", responseObject);
-//                                                NSLog(@"Received HTTP %lo", (long)httpResponse.statusCode);
-//                                            });
-//                                        }
-//                                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//                                        dispatch_async(dispatch_get_main_queue(), ^{
-//                                            completion(nil,error);
-//                                        });
-//                                    }];
-//    return task;
-//}
+                       [formData appendPartWithFileData:podData
+                                                   name:@"file"
+                                               fileName:@"Proof_signed.pdf"
+                                               mimeType:@"application/pdf"];
+                       
+                      
+                   }
+                                     success:^(NSURLSessionDataTask *task,
+                                               id responseObject)
+                                                {
+                                                 __unused  NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                                    completion(Nil);
+                                                }
+                                     failure:^(NSURLSessionDataTask *task,
+                                               NSError *error) {
+                                         completion(error);
+                                     }];
+    
+    
+    return task;
+}
 
 #pragma mark - Documents Requests
 
@@ -271,8 +283,9 @@
 
 #pragma mark - Load Note Requests
 
--(NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSArray *, NSError *))completion{
-    NSURLSessionDataTask *task = [self GET:@"/loadnotes" parameters:@{@"loadId": loadId}
+-(NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSDictionary *, NSError *))completion{
+    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/notes/0/0/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId];
+    NSURLSessionDataTask *task = [self GET:queryString parameters:nil
                                    success:^(NSURLSessionDataTask *task, id responseObject) {
                                        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
                                        if (httpResponse.statusCode == 200) {
@@ -295,12 +308,18 @@
     return task;
 }
 
--(NSURLSessionDataTask *)postLoadNoteForLoad:(NSString *)loadId withNoteType:(NSString *)noteType withStopType:(NSString *)stopType withMessage:(NSString *)message completion:(void (^)(NSArray *, NSError *))completion{
+-(NSURLSessionDataTask *)postLoadNoteForLoad:(NSString *)loadId withNoteType:(NSString *)noteType withStopType:(NSString *)stopType withMessage:(NSString *)message completion:(void (^)(NSDictionary *, NSError *))completion{
+    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/addnote/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId];
     
-    NSURLSessionDataTask *task = [self POST:@"loadnote" parameters:@{@"loadId": loadId,
-                                                                     @"noteType": noteType,
-                                                                     @"stopType":stopType,
-                                                                     @"message":message}
+    NSURLSessionDataTask *task = [self POST:queryString parameters:@{
+                                                                     @"subject":@"Mobile Load Note",
+                                                                     @"message":@"in the land of the blind  ",
+                                                                     @"note_type_id":@"4647",
+                                                                     @"reply_note_id":@"15557762",
+                                                                     @"reply_note_thread_id":@"15557762",
+                                                                     @"emails":@"shane.davies@chep.com",
+                                                                     @"shipments":@[]
+                                                                     }
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
                                         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
                                         if (httpResponse.statusCode == 200) {
@@ -319,22 +338,8 @@
                                             completion(nil,error);
                                         });
                                     }];
-    return task;
-}
-#pragma mark Todo: Change this method to 'complete load'
-- (NSURLSessionDataTask *)completeStop:(Stop*)stop withDocData: (NSData*)podData completion:( void(^)(BOOL, NSError*) )completion {
-    NSURLSessionDataTask *task =  [self POST:@"/"
-                                  parameters:nil
-                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                       [formData appendPartWithFileData:podData
-                                                   name:[NSString stringWithFormat:@"%@.pdf",stop.id]
-                                               fileName:[NSString stringWithFormat:@"%@.pdf",stop.id]
-                                               mimeType:@"application/pdf"];
-                   }
-                                     success:^(NSURLSessionDataTask *task,
-                                               id responseObject) { NSLog(@"Success"); }
-                                     failure:^(NSURLSessionDataTask *task,
-                                               NSError *error) { NSLog(@"error"); }];
+    
+   
     return task;
 }
 

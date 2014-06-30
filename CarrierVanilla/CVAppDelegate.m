@@ -9,12 +9,22 @@
 #import "CVAppDelegate.h"
 
 #import "CVMasterViewController.h"
-
+#import <FBTweakShakeWindow.h>
 @implementation CVAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
+
+- (UIWindow *)window
+{
+    if (!_window) {
+        _window = [[FBTweakShakeWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    }
+    
+    return _window;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -31,9 +41,15 @@
 //        for (font in [UIFont fontNamesForFamilyName:family])
 //            NSLog(@"\tFont: %@\n", font);
 //    }
+    
+    [[UINavigationBar appearance]setBarTintColor:UIColorFromRGB(0x3c6ba1)];
+    [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+
+
     return YES;
 }
-							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

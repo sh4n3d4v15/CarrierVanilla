@@ -12,11 +12,11 @@
         <attribute name="commodity" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lading" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="line" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pieces" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pieces" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="product_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="product_id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="volume" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="weight" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="volume" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="weight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="shipment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Shipment" inverseName="items" inverseEntity="Shipment" syncable="YES"/>
     </entity>
     <entity name="Load" representedClassName="Load" syncable="YES">
@@ -35,6 +35,16 @@
             <entry key="relatedByAttribute" value="id"/>
         </userInfo>
     </entity>
+    <entity name="Loadnote" representedClassName="Loadnote" syncable="YES">
+        <attribute name="attributes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="fromMe" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="media" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="stop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stop" inverseName="loadNotes" inverseEntity="Stop" syncable="YES"/>
+    </entity>
     <entity name="Ref" representedClassName="Ref" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
@@ -48,15 +58,17 @@
     </entity>
     <entity name="Stop" representedClassName="Stop" syncable="YES">
         <attribute name="active" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="actual_arrival" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="actual_departure" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="departure_location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="actual_arrival" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="actual_departure" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="departure_location" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="eta" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="href" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="location_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location_name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location_ref" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="pallets" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="pieces" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="planned_end" optional="YES" attributeType="String" syncable="YES"/>
@@ -71,6 +83,7 @@
                 <entry key="relatedByAttribute" value="id"/>
             </userInfo>
         </relationship>
+        <relationship name="loadNotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Loadnote" inverseName="stop" inverseEntity="Loadnote" syncable="YES"/>
         <relationship name="shipments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Shipment" inverseName="stop" inverseEntity="Shipment" syncable="YES"/>
         <userInfo>
             <entry key="relatedByAttribute" value="id"/>
@@ -78,10 +91,11 @@
     </entity>
     <elements>
         <element name="Address" positionX="-10728" positionY="1548" width="128" height="133"/>
-        <element name="Item" positionX="-10728" positionY="1349" width="128" height="178"/>
+        <element name="Item" positionX="-10728" positionY="1349" width="128" height="180"/>
         <element name="Load" positionX="-10215" positionY="1916" width="128" height="148"/>
         <element name="Ref" positionX="-10719" positionY="1872" width="128" height="88"/>
         <element name="Shipment" positionX="-10512" positionY="1422" width="128" height="103"/>
-        <element name="Stop" positionX="-10224" positionY="1467" width="128" height="358"/>
+        <element name="Stop" positionX="-10224" positionY="1467" width="128" height="403"/>
+        <element name="Loadnote" positionX="-9828" positionY="1463" width="128" height="163"/>
     </elements>
 </model>
