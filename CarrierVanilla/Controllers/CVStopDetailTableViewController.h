@@ -24,7 +24,4 @@
 @property (strong, nonatomic) Stop *stop;
 @property(nonatomic)MKMapView *mapView;
 @property(weak,nonatomic) id <stopChangeDelegate> delegate;
-
-@property(nonatomic)CVUpdateButton *updateButton;
-
 @end

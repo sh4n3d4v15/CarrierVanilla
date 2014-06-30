@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4542DC8B562F410681C6358B"
+               BlueprintIdentifier = "73F0C75356524104BD479237"
                BuildableName = "libPods-MNTPullToReact.a"
                BlueprintName = "Pods-MNTPullToReact"
                ReferencedContainer = "container:Pods.xcodeproj">

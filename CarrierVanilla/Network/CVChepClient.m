@@ -26,6 +26,7 @@
          NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
         _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
         _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
+        _sharedClient.requestSerializer.stringEncoding = NSUTF8StringEncoding;
         
         [_sharedClient.requestSerializer setAuthorizationHeaderFieldWithUsername:@"MobiShipRestUser" password:@"M0b1Sh1pm3n743"];
       //  [_sharedClient.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
@@ -77,7 +78,6 @@
             [stops enumerateObjectsUsingBlock:^(id stopobj, NSUInteger idx, BOOL *stop) {
                 Stop *_stop = [NSEntityDescription insertNewObjectForEntityForName:@"Stop" inManagedObjectContext:dmgr.managedObjectContext];
                 //            [_stop setValuesForKeysWithDictionary:stopobj];
-                //            _stop.location_name = [stopobj valueForKey:@"location_name"];
                 SET_IF_NOT_NULL(_stop.location_name , [stopobj valueForKey:@"location_name"]);
                 SET_IF_NOT_NULL(_stop.location_id, [stopobj valueForKey:@"location_id"]);
                 SET_IF_NOT_NULL(_stop.location_ref, [stopobj valueForKey:@"location_ref"]);
@@ -191,7 +191,7 @@
 };
 
 #pragma mark - HOW TO BUILD MULTI-MULTIPART FROM DICTIONARY?
--(NSURLSessionDataTask *)updateStopWithId:(NSString *)stopid forLoad:(NSString*)loadId withQuantities:(NSArray *)quantities withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate andPod: (NSData*)podData completion:(void (^)(NSDictionary *, NSError *))completion{
+-(NSURLSessionDataTask *)updateStopWithId:(NSString *)stopid forLoad:(NSString*)loadId withQuantities:(NSArray *)quantities withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate andPod: (NSData*)podData completion:(void (^)( NSError *))completion{
     NSLog(@"Update stop method fired");
     NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId,stopid];
     NSLog(@"Full URL: %@", fullUrl);
@@ -241,10 +241,13 @@
                                      success:^(NSURLSessionDataTask *task,
                                                id responseObject)
                                                 {
-                                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-                                                    NSLog(@"Success %@" , httpResponse); }
+                                                 __unused  NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                                    completion(Nil);
+                                                }
                                      failure:^(NSURLSessionDataTask *task,
-                                               NSError *error) { NSLog(@"error"); }];
+                                               NSError *error) {
+                                         completion(error);
+                                     }];
     
     
     return task;
