@@ -54,9 +54,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-    
+//    [self addCustomRefreshView];
+    if(!self.stop.actual_departure){
+          [self preparePulltoRefresh];
+    }
+ 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -64,7 +66,36 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+
+-(void)preparePulltoRefresh{
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.tintColor = [UIColor whiteColor];
+    [refreshControl addTarget:self action:@selector(updateStopStatus:) forControlEvents:UIControlEventValueChanged];
+    refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Release to Check-In" attributes:@{
+                                                                                                                 NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                                                                                 NSFontAttributeName:[UIFont systemFontOfSize:20]
+                                                                                                                 }];
+    
+    //creating view for extending background color
+    CGRect frame = self.tableView.bounds;
+    frame.origin.y = -frame.size.height;
+    _refreshBackgroundView = [[UIView alloc]initWithFrame:frame];
+    _refreshBackgroundView.backgroundColor = [UIColor flatBlueColor];
+    [_refreshBackgroundView setTag:1];
+    self.refreshControl = refreshControl;
+    [self.tableView insertSubview:_refreshBackgroundView atIndex:0];
+}
+-(void)updateStopStatus:(id)sender{
+    if (!self.stop.actual_arrival) {
+        [self checkMeIn:sender];
+    }else if(!self.stop.actual_departure){
+        [self checkMeOut:sender];
+    }
+    
+}
+
 -(void)viewDidAppear:(BOOL)animated{
+    
     if (![_stop.longitude doubleValue]) {
         
         CLGeocoder *geocoder = [[CLGeocoder alloc]init];
@@ -72,55 +103,54 @@
                                              @"City":_stop.address.city,
                                              @"Zip":_stop.address.zip
                                              } completionHandler:^(NSArray *placemarks, NSError *error) {
-            
-            if (error) {
-                NSLog(@"There was an error %@", [error localizedDescription]);
-            }else{
-                NSLog(@"PLacemarks from dictionary %@", placemarks);
-                CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                CLLocation *location = placemark.location;
-                
-                MKCoordinateRegion region;
-                MKCoordinateSpan span;
-                span.latitudeDelta = 0.005;
-                span.longitudeDelta = 0.005;
-                _stop.latitude = [NSNumber numberWithDouble:location.coordinate.latitude];
-                _stop.longitude = [NSNumber numberWithDouble:location.coordinate.longitude];
-                [self.delegate saveChangesOnContext];
-                region.span = span;
-                region.center = location.coordinate;
-                
-                [_mapView setRegion:region animated:YES];
-                CVMapAnnotation *annotation = [[CVMapAnnotation alloc]init];
-                annotation.coordinate = location.coordinate;
-                annotation.title = self.stop.location_name;
-                annotation.subtitle = self.stop.address.address1;
-                [_mapView addAnnotation:annotation];
-            }
-        }];
+                                                 
+                                                 if (error) {
+                                                     NSLog(@"There was an error %@", [error localizedDescription]);
+                                                 }else{
+                                                     NSLog(@"PLacemarks from dictionary %@", placemarks);
+                                                     CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                                                     CLLocation *location = placemark.location;
+                                                     
+                                                     MKCoordinateRegion region;
+                                                     MKCoordinateSpan span;
+                                                     span.latitudeDelta = 0.005;
+                                                     span.longitudeDelta = 0.005;
+                                                     _stop.latitude = [NSNumber numberWithDouble:location.coordinate.latitude];
+                                                     _stop.longitude = [NSNumber numberWithDouble:location.coordinate.longitude];
+                                                     [self.delegate saveChangesOnContext];
+                                                     region.span = span;
+                                                     region.center = location.coordinate;
+                                                    [_mapView setRegion:region animated:YES];
+                                                    [self addAnnotationToMap:location];
+                                                 }
+                                             }];
         
     }else{
         NSLog(@"else statement");
         
-                    MKCoordinateRegion region;
-                   MKCoordinateSpan span;
-                   span.latitudeDelta = 0.005;
-                   span.longitudeDelta = 0.005;
-       
-                   CLLocation *location = [[CLLocation alloc]initWithLatitude:[_stop.latitude doubleValue] longitude:[_stop.longitude doubleValue]];
-                   NSLog(@"Location: %@", location);
-                   region.span = span;
-                   region.center = location.coordinate;
-                   [_mapView setRegion:region animated:NO];
+        MKCoordinateRegion region;
+        MKCoordinateSpan span;
+        span.latitudeDelta = 0.005;
+        span.longitudeDelta = 0.005;
         
-        CVMapAnnotation *annotation = [[CVMapAnnotation alloc]init];
-        annotation.coordinate = location.coordinate;
-        annotation.title = self.stop.location_name;
-        annotation.subtitle = self.stop.address.address1;
-        [_mapView addAnnotation:annotation];
+        CLLocation *location = [[CLLocation alloc]initWithLatitude:[_stop.latitude doubleValue] longitude:[_stop.longitude doubleValue]];
+        NSLog(@"Location: %@", location);
+        region.span = span;
+        region.center = location.coordinate;
+        [_mapView setRegion:region animated:NO];
+        [self addAnnotationToMap:location];
+
     }
     
+    
+}
 
+-(void)addAnnotationToMap:(CLLocation*)location{
+    CVMapAnnotation *annotation = [[CVMapAnnotation alloc]init];
+    annotation.coordinate = location.coordinate;
+    annotation.title = self.stop.location_name;
+    annotation.subtitle = self.stop.address.address1;
+    [_mapView addAnnotation:annotation];
 }
 
 - (void)didReceiveMemoryWarning
@@ -191,7 +221,7 @@
         containerView.layer.borderWidth = 3;
         
         self.updateButton = [CVUpdateButton buttonWithType:UIButtonTypeCustom];
-        self.updateButton.frame = CGRectMake(CGRectGetWidth(_mapView.bounds)-50, CGRectGetMaxY(_mapView.bounds)-50, 40, 40);
+        self.updateButton.frame = CGRectMake(CGRectGetWidth(_mapView.bounds), CGRectGetMaxY(_mapView.bounds), 40, 40);
         self.updateButton.backgroundColor = [UIColor flatBlueColor];
         self.updateButton.layer.cornerRadius = 5;
         [self.updateButton addTarget:self action:@selector(checkMeIn:) forControlEvents:UIControlEventTouchUpInside];
@@ -328,32 +358,12 @@
 
 #pragma mark -UIButton actions
 
--(void)checkMeIn:(id)sender{
-    NSLog(@"Check me in!!");
-    
-    if (!self.stop.actual_arrival) {
 
-    
-        NSLog(@"Checking in");
-        NSString *titleString = [NSString stringWithFormat:@"Check in at %@ ?", self.stop.location_name];
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
-                                                                 delegate:self
-                                                        cancelButtonTitle:@"YES"
-                                                   destructiveButtonTitle:@"CANCEL"
-                                                        otherButtonTitles:nil];
-        [actionSheet showInView:self.view];
-        self.stop.actual_arrival = [NSDate date];
-        [self addCheckOutButtonToView:_mapView];
-    }
-    
-
-
-}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"showMessages"]) {
         CCMessageViewController *mvc = (CCMessageViewController*)segue.destinationViewController;
-        [mvc setLoad:self.stop.load];
+        [mvc setStop:self.stop];
     }
 }
 
@@ -420,14 +430,35 @@
 
 -(void)addCheckOutButtonToView:(UIView *)view{
     self.checkOutButton = [CVUpdateButton buttonWithType:UIButtonTypeCustom];
-    self.checkOutButton.frame = CGRectMake(CGRectGetWidth(view.bounds)-50, CGRectGetMaxY(view.bounds)-50, 40, 40);
+    self.checkOutButton.frame = CGRectMake(CGRectGetWidth(view.bounds), CGRectGetMaxY(view.bounds), 40, 40);
     self.checkOutButton.backgroundColor = [UIColor flatBlueColor];
     self.checkOutButton.layer.cornerRadius = 5;
  
     [self.checkOutButton addTarget:self action:@selector(checkMeOut:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:self.checkOutButton];
 }
+-(void)checkMeIn:(id)sender{
+    NSLog(@"Check me in!!");
+    
+    if (!self.stop.actual_arrival) {
+        
+        NSLog(@"Checking in");
+        NSString *titleString = [NSString stringWithFormat:@"Check in at %@ ?", self.stop.location_name];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"YES"
+                                                   destructiveButtonTitle:@"CANCEL"
+                                                        otherButtonTitles:nil];
+        [self.refreshControl endRefreshing];
 
+        [actionSheet showInView:self.view];
+        //        self.stop.actual_arrival = [NSDate date];
+        //[self addCheckOutButtonToView:_mapView];
+    }
+    
+    
+    
+}
 -(void)checkMeOut:(id)sender{
     NSLog(@"Checking out");
     if (self.stop.actual_arrival) {
@@ -441,19 +472,23 @@
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
         NSLog(@"Action was cancelled");
-
-        [self.delegate rollbackChanges];
     }else{
-        if (self.stop.actual_arrival && !self.stop.actual_departure ) {
+        self.stop.actual_arrival = [NSDate date];
             [self addTimestampViewToView:self.mapView animated:YES];
-        }
-
+            [self.refreshControl endRefreshing];
+            [self.refreshBackgroundView setBackgroundColor:[UIColor flatGreenColor]];
+            self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Release to Check-Out" attributes:@{
+                                                                                                                                 NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                                                                                                 NSFontAttributeName:[UIFont systemFontOfSize:20]
+                                                                                                                                 }];
     }
 }
 
 #pragma mark show signature view AND save singature methods
 
 -(void)showSignatureView{
+    [self.refreshControl endRefreshing];
+    [self.refreshControl removeFromSuperview];
     CCSignatureDrawView *sv = [[CCSignatureDrawView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) andQuantity:@"666"];
     sv.delegate = self;
     sv.alpha = 0;

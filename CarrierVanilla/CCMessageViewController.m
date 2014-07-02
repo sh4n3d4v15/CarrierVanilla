@@ -9,6 +9,8 @@
 #import "CCMessageViewController.h"
 #import "CVChepClient.h"
 #import "MBProgressHUD.h"
+#import "Loadnote.h"
+#import "CVAppDelegate.h"
 @interface CCMessageViewController ()
 
 
@@ -23,31 +25,44 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.dataSource = [[NSMutableArray alloc]init];
-    
+    CVAppDelegate *dmgr = (CVAppDelegate *)[UIApplication sharedApplication].delegate;
+    self.managedObjectContext = dmgr.managedObjectContext;
     [self loadMessages];
 }
 
-- (void)loadMessages
-{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"Retrieving Messages";
-    NSLog(@"Loading messages");
-    [[CVChepClient sharedClient]getLoadNotesForLoad:self.load.id completion:^(NSDictionary *results, NSError *error) {
-        if (error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"ERROR" message:@"There was an error retrieving notes" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [av show];
-        }
-        [hud hide:YES afterDelay:0.5];
-        NSArray *notes = [results objectForKey:@"notes"];
-        [self recursivelyCheckForRepliesAndCreateMessage:notes];
+//- (void)loadMessages
+//{
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.labelText = @"Retrieving Messages";
+//    NSLog(@"Loading messages");
+//    [[CVChepClient sharedClient]getLoadNotesForLoad:self.load.id completion:^(NSDictionary *results, NSError *error) {
+//        if (error) {
+//            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"ERROR" message:@"There was an error retrieving notes" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//            [av show];
+//        }
+//        [hud hide:YES afterDelay:0.5];
+//        NSArray *notes = [results objectForKey:@"notes"];
+//        [self recursivelyCheckForRepliesAndCreateMessage:notes];
+//    }];
+//}
+
+-(void)loadMessages{
+    [[self.stop.loadNotes allObjects]enumerateObjectsUsingBlock:^(Loadnote *message, NSUInteger idx, BOOL *stop) {
+        SOMessage *soMessage = [[SOMessage alloc]init];
+        soMessage.text = message.text;
+        soMessage.fromMe = [message.fromMe boolValue];
+        soMessage.type = SOMessageTypeText;
+        soMessage.date = message.date;
+        [self.dataSource addObject:soMessage];
     }];
+    [self refreshMessages];
 }
 
 -(void)recursivelyCheckForRepliesAndCreateMessage:(NSArray*)messages{
     [messages enumerateObjectsUsingBlock:^(id message, NSUInteger idx, BOOL *stop) {
         SOMessage *soMessage = [[SOMessage alloc]init];
         soMessage.text = message[@"message"];
-        soMessage.fromMe = NO;
+        soMessage.fromMe = YES;
         soMessage.type = SOMessageTypeText;
         soMessage.date = [[NSDateFormatter new]dateFromString:message[@"created_date"]];
         [self.dataSource addObject:soMessage];
@@ -58,13 +73,12 @@
         }else{
             [self refreshMessages];
         }
-
     }];
 }
+
 #pragma mark - SOMessaging data source
 - (NSMutableArray *)messages
 {
-    
     return self.dataSource;
 }
 
@@ -101,11 +115,28 @@
         return;
     }
     
-    SOMessage *msg = [[SOMessage alloc] init];
-    msg.text = message;
-    msg.fromMe = YES;
+    Loadnote *note = [NSEntityDescription insertNewObjectForEntityForName:@"Loadnote" inManagedObjectContext:self.managedObjectContext];
+    note.text = message;
+    note.date = [NSDate date];
+    note.fromMe = [NSNumber numberWithBool:YES];
     
-    [self postMessageToServer:msg];
+
+    SOMessage *soMessage = [[SOMessage alloc]init];
+    soMessage.text = message;
+    soMessage.fromMe = YES;
+    soMessage.type = SOMessageTypeText;
+    soMessage.date = note.date;
+    [self sendMessage:soMessage];
+    
+    [self.stop addLoadNotesObject:note];
+    
+//    NSError* error = nil;
+//    if (![self.managedObjectContext save:&error]) {
+//        NSLog(@"Unable to save context for class");
+//    } else {
+//        NSLog(@"saved all records!");
+//    }
+//    //[self postMessageToServer:msg];
 }
 
 - (void)messageInputViewDidSelectMediaButton:(SOMessageInputView *)inputView
@@ -120,7 +151,7 @@
 }
 
 -(void)postMessageToServer:(SOMessage*)message{
-    [[CVChepClient sharedClient]postLoadNoteForLoad:self.load.id
+    [[CVChepClient sharedClient]postLoadNoteForLoad:self.stop.id
                                      withNoteType:@"MOBILE MESSAGE"
                                      withStopType:@"some"
                                      withMessage:message.text completion:^(NSDictionary *results, NSError *error) {
@@ -149,8 +180,8 @@
     photoMessage.fromMe = YES;
     
     [[CVChepClient sharedClient]uploadPhoto:imageData
-                                    forStopId:self.load.id
-                                    withLoadId:self.load.id
+                                    forStopId:self.stop.id
+                                    withLoadId:self.stop.id
                                     withComment:@"UPload from mobile" completion:^(NSArray *results, NSError *error) {
                                         if (error) {
                                             NSLog(@"error %@", [error localizedDescription]);

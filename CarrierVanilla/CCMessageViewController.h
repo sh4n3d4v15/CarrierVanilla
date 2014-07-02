@@ -7,8 +7,9 @@
 //
 
 #import "SOMessagingViewController.h"
-#import "Load.h"
+#import "Stop.h"
 
 @interface CCMessageViewController : SOMessagingViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
-@property(nonatomic)Load *load;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property(nonatomic)Stop *stop;
 @end

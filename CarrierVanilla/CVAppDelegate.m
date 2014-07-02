@@ -22,7 +22,6 @@
     if (!_window) {
         _window = [[FBTweakShakeWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     }
-    
     return _window;
 }
 

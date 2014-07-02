@@ -37,6 +37,8 @@
 {
     [super viewDidLoad];
     
+
+    
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     
     // Configure Refresh Control
@@ -73,9 +75,7 @@
 
 
 -(void)removeHud:(MBProgressHUD*)hud{
-    hud.labelText = @"No Loads";
     [hud hide:YES afterDelay:1.0];
- 
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -85,10 +85,15 @@
     if( !isUserLoggedIn ){
         [self showLoginViewAnimated:NO];
     }else{
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        hud.labelText = @"Retrieving loads";
         [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
             if (error) {
-//                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Network error" message:@"There was an error returning loads" delegate:self cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
-//                [av show];
+//                hud.labelText = [error localizedDescription];
+//                [self removeHud:hud];
+            }else{
+//                hud.labelText = @"Success";
+//                [self removeHud:hud];
             }
         }];
     }
