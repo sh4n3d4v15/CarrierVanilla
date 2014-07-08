@@ -11,6 +11,7 @@
 #import "MBProgressHUD.h"
 #import "Loadnote.h"
 #import "CVAppDelegate.h"
+#import "Load.h"
 @interface CCMessageViewController ()
 
 
@@ -47,17 +48,29 @@
 //}
 
 -(void)loadMessages{
+    [[CVChepClient sharedClient]getLoadNotesForLoad:self.stop.load.id completion:^(NSDictionary *results, NSError *error) {
+        if (error) {
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"ERROR" message:@"There was an error retrieving notes" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [av show];
+        }
+        NSArray *notes = [results objectForKey:@"notes"];
+        NSLog(@"NOtes: %@", notes);
+    }];
+    
+    
     [[self.stop.loadNotes allObjects]enumerateObjectsUsingBlock:^(Loadnote *message, NSUInteger idx, BOOL *stop) {
         SOMessage *soMessage = [[SOMessage alloc]init];
         soMessage.text = message.text;
         soMessage.fromMe = [message.fromMe boolValue];
-        soMessage.type = SOMessageTypeText;
+        soMessage.type = message.thumbnail ? SOMessageTypePhoto : SOMessageTypeText;
+        soMessage.thumbnail = message.thumbnail ? [UIImage imageWithData:message.thumbnail] : nil;
+        soMessage.media = message.media ? message.media : nil;
         soMessage.date = message.date;
         [self.dataSource addObject:soMessage];
     }];
     [self refreshMessages];
 }
-
+//..26 June Lean Update Request - 03 July Lean Update
 -(void)recursivelyCheckForRepliesAndCreateMessage:(NSArray*)messages{
     [messages enumerateObjectsUsingBlock:^(id message, NSUInteger idx, BOOL *stop) {
         SOMessage *soMessage = [[SOMessage alloc]init];
@@ -126,32 +139,32 @@
     soMessage.fromMe = YES;
     soMessage.type = SOMessageTypeText;
     soMessage.date = note.date;
-    [self sendMessage:soMessage];
+//    [self sendMessage:soMessage];
     
     [self.stop addLoadNotesObject:note];
     
-//    NSError* error = nil;
-//    if (![self.managedObjectContext save:&error]) {
-//        NSLog(@"Unable to save context for class");
-//    } else {
-//        NSLog(@"saved all records!");
-//    }
-//    //[self postMessageToServer:msg];
+    NSError* error = nil;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Unable to save context for class");
+    } else {
+        NSLog(@"saved all records!");
+    }
+    [self postMessageToServer:note withSoMessage:soMessage];
 }
 
 - (void)messageInputViewDidSelectMediaButton:(SOMessageInputView *)inputView
 {
     NSLog(@"media button pressed");
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     picker.delegate = self;
     picker.allowsEditing = YES;
     [self presentViewController:picker animated:YES completion:nil];
     // Take a photo/video or choose from gallery
 }
 
--(void)postMessageToServer:(SOMessage*)message{
-    [[CVChepClient sharedClient]postLoadNoteForLoad:self.stop.id
+-(void)postMessageToServer:(Loadnote*)message withSoMessage:(SOMessage*)soMessage{
+    [[CVChepClient sharedClient]postLoadNoteForLoad:self.stop.load.id
                                      withNoteType:@"MOBILE MESSAGE"
                                      withStopType:@"some"
                                      withMessage:message.text completion:^(NSDictionary *results, NSError *error) {
@@ -164,7 +177,7 @@
                                              NSLog(@"SUCCESS: %@", results);
                                          }
                                      }];
-    [self sendMessage:message];
+    [self sendMessage:soMessage];
 }
 
 #pragma mark - UIImage Picker Delegate Methods
@@ -177,19 +190,40 @@
     SOMessage *photoMessage = [[SOMessage alloc]init];
     photoMessage.type = SOMessageTypePhoto;
     photoMessage.media = imageData;
+    photoMessage.thumbnail = [UIImage imageWithData:imageData];
     photoMessage.fromMe = YES;
+    
+    Loadnote *note = [NSEntityDescription insertNewObjectForEntityForName:@"Loadnote" inManagedObjectContext:self.managedObjectContext];
+    note.date = [NSDate date];
+    note.fromMe = [NSNumber numberWithBool:YES];
+    note.thumbnail = imageData;
+    note.media = imageData;
+    note.type = SOMessageTypeText;
+   
+    
+    NSError* error = nil;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Unable to save context for class");
+    } else {
+        NSLog(@"saved all records!");
+    }
+    //[self postMessageToServer:msg];
+
+    
+    [self.stop addLoadNotesObject:note];
+    [self sendMessage:photoMessage];
     
     [[CVChepClient sharedClient]uploadPhoto:imageData
                                     forStopId:self.stop.id
-                                    withLoadId:self.stop.id
-                                    withComment:@"UPload from mobile" completion:^(NSArray *results, NSError *error) {
+                                    withLoadId:self.stop.load.id
+                                    withComment:@"Upload from mobile application" completion:^(NSDictionary *responseDic, NSError *error) {
                                         if (error) {
                                             NSLog(@"error %@", [error localizedDescription]);
                                         }else{
-                                            NSLog(@"Good upload of photo");
+                                            NSLog(@"Good upload of photo %@", responseDic);
                                         }
                                     }];
-    [self postMessageToServer:photoMessage];
+   // [self postMessageToServer:photoMessage];
 }
 
 

@@ -2,7 +2,7 @@
 //  Item.m
 //  CarrierVanilla
 //
-//  Created by shane davis on 17/06/2014.
+//  Created by shane davis on 06/07/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
@@ -20,6 +20,7 @@
 @dynamic product_id;
 @dynamic volume;
 @dynamic weight;
+@dynamic finalized;
 @dynamic shipment;
 
 @end

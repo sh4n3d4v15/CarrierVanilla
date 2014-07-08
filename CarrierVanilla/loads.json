@@ -1,0 +1,977 @@
+[{
+		"id": "35843555",
+		"load_number": "604001166",
+		"refs": [{
+			"name": "Appt #",
+			"value": "3519125"
+		}, {
+			"name": "Shipper ref #",
+			"value": "604001166"
+		}, {
+			"name": "Shipment Ref #",
+			"value": "3743620763"
+		}],
+		"status": "ACCEPTED",
+		"stops": [{
+			"id": "75135139",
+			"type": "Pick",
+			"location_id": "4343224",
+			"location_ref": "0100549097_41.033767_-4.717406",
+			"location_name": "INERGY AS SPAIN SA AREVALO",
+			"address": {
+				"address1": "POL. IND. TIERRA DE ARÔøΩÔøΩVALO",
+				"city": "AREVALO",
+				"state": "AV",
+				"zip": "05200",
+				"country": "ES"
+			},
+			"planned_start": "2014-03-25T00:00:00+01:00",
+			"planned_end": "2014-03-25T23:59:00+01:00",
+			"actual_arrival": "2014-07-03T13:27:00+02:00",
+			"actual_departure": "2014-07-03T10:18:00+02:00",
+			"weight": 102.1402,
+			"volume": 9.1818,
+			"pallets": 2.37,
+			"pieces": 3,
+			"shipments": [{
+				"shipment_number": "55789171",
+				"comments": "",
+				"primary_reference_number": "3743620763",
+				"items": [{
+					"line": "10",
+					"product_id": "60",
+					"product_description": "Auto Pallet 1000x1200",
+					"commodity": "100023",
+					"weight": 27.96,
+					"volume": 0.17,
+					"pieces": 1,
+					"lading": "1.25"
+				}, {
+					"line": "20",
+					"product_id": "62",
+					"product_description": "Auto Pallet 1000x600",
+					"commodity": "100023",
+					"weight": 13.98,
+					"volume": 0.09,
+					"pieces": 1,
+					"lading": "0.63"
+				}, {
+					"line": "30",
+					"product_id": "847",
+					"product_description": "KLT 6429",
+					"commodity": "100026",
+					"weight": 4.39,
+					"volume": 0.0,
+					"pieces": 1,
+					"lading": "0.49"
+				}]
+			}]
+		}, {
+			"id": "75135140",
+			"type": "Drop",
+			"location_id": "4283846",
+			"location_ref": "ES27_3000",
+			"location_name": "SC BELLPUIG - LERIDA",
+			"address": {
+				"address1": "CTRA. IVARS D'URGELL, KM. 0,4",
+				"city": "BELLPUIG",
+				"state": "L",
+				"zip": "25250",
+				"country": "ES"
+			},
+			"planned_start": "2014-03-25T00:00:00+01:00",
+			"planned_end": "2014-03-25T23:59:00+01:00",
+			"weight": 102.1402,
+			"volume": 9.1818,
+			"pallets": 2.37,
+			"pieces": 3,
+			"shipments": [{
+				"shipment_number": "55789171",
+				"comments": "",
+				"primary_reference_number": "3743620763",
+				"items": [{
+					"line": "10",
+					"product_id": "60",
+					"product_description": "Auto Pallet 1000x1200",
+					"commodity": "100023",
+					"weight": 27.96,
+					"volume": 0.17,
+					"pieces": 1,
+					"lading": "1.25"
+				}, {
+					"line": "20",
+					"product_id": "62",
+					"product_description": "Auto Pallet 1000x600",
+					"commodity": "100023",
+					"weight": 13.98,
+					"volume": 0.09,
+					"pieces": 1,
+					"lading": "0.63"
+				}, {
+					"line": "30",
+					"product_id": "847",
+					"product_description": "KLT 6429",
+					"commodity": "100026",
+					"weight": 4.39,
+					"volume": 0.0,
+					"pieces": 1,
+					"lading": "0.49"
+				}]
+			}]
+		}]
+	}, {
+		"id": "35847213",
+		"load_number": "604004444",
+		"refs": [{
+			"name": "Shipper ref #",
+			"value": "604004444"
+		}, {
+			"name": "Shipment Ref #",
+			"value": "3621875451"
+		}],
+		"status": "ACCEPTED",
+		"stops": [{
+			"id": "75141689",
+			"type": "Pick",
+			"location_id": "4283853",
+			"location_ref": "ES37_1000",
+			"location_name": "SC PARETS DEL VALLES - BARCELO",
+			"address": {
+				"address1": "POLIGON Z",
+				"address2": "3 CARRER DE LA LOGISTICA",
+				"address3": "935 730700",
+				"city": "PARETS DEL VALLES",
+				"state": "B",
+				"zip": "08150",
+				"country": "ES"
+			},
+			"planned_start": "2014-06-30T00:00:00+02:00",
+			"planned_end": "2014-06-30T23:59:00+02:00",
+			"weight": 14054.4683,
+			"volume": 1264.6181,
+			"pallets": 259.6,
+			"pieces": 303,
+			"shipments": [{
+				"shipment_number": "55804647",
+				"comments": "FORKLIFT",
+				"primary_reference_number": "3621875451",
+				"items": [{
+					"line": "10",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Pallet de madera",
+					"commodity": "100063",
+					"weight": 5075.0,
+					"volume": 28.01,
+					"pieces": 203,
+					"lading": "203.0"
+				}, {
+					"line": "20",
+					"product_id": "8",
+					"product_description": "B0806A-800x600 Block Pallet",
+					"commodity": "100008",
+					"weight": 1300.0,
+					"volume": 7.8,
+					"pieces": 100,
+					"lading": "56.6"
+				}]
+			}]
+		}, {
+			"id": "75141690",
+			"type": "Drop",
+			"location_id": "4287222",
+			"location_ref": "5000433547_41.845611_2.371490",
+			"location_name": "NESTLE WATERS ESPAÔøΩÔøΩA (VILADRAU)",
+			"address": {
+				"address1": "CAMINO VIEJO DE VILADRAU, S/N",
+				"city": "VILADRAU",
+				"state": "GI",
+				"zip": "17406",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-01T00:00:00+02:00",
+			"planned_end": "2014-07-01T23:59:00+02:00",
+			"weight": 14054.4683,
+			"volume": 1264.6181,
+			"pallets": 259.6,
+			"pieces": 303,
+			"shipments": [{
+				"shipment_number": "55804647",
+				"comments": "FORKLIFT",
+				"primary_reference_number": "3621875451",
+				"items": [{
+					"line": "10",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Pallet de madera",
+					"commodity": "100063",
+					"weight": 5075.0,
+					"volume": 28.01,
+					"pieces": 203,
+					"lading": "203.0"
+				}, {
+					"line": "20",
+					"product_id": "8",
+					"product_description": "B0806A-800x600 Block Pallet",
+					"commodity": "100008",
+					"weight": 1300.0,
+					"volume": 7.8,
+					"pieces": 100,
+					"lading": "56.6"
+				}]
+			}]
+		}]
+	}, {
+		"id": "35847232",
+		"load_number": "604004463",
+		"refs": [{
+			"name": "Shipper ref #",
+			"value": "604004463"
+		}, {
+			"name": "Shipment Ref #",
+			"value": "3621875452"
+		}],
+		"status": "ACCEPTED",
+		"stops": [{
+			"id": "75141709",
+			"type": "Pick",
+			"location_id": "4283853",
+			"location_ref": "ES37_1000",
+			"location_name": "SC PARETS DEL VALLES - BARCELO",
+			"address": {
+				"address1": "POLIGON Z",
+				"address2": "3 CARRER DE LA LOGISTICA",
+				"address3": "935 730700",
+				"city": "PARETS DEL VALLES",
+				"state": "B",
+				"zip": "08150",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-01T00:00:00+02:00",
+			"planned_end": "2014-07-01T23:59:00+02:00",
+			"weight": 7555.9026,
+			"volume": 801.2897,
+			"pallets": 178.1,
+			"pieces": 400,
+			"shipments": [{
+				"shipment_number": "55804648",
+				"comments": "",
+				"primary_reference_number": "3621875452",
+				"items": [{
+					"line": "10",
+					"product_id": "1",
+					"product_description": "B1210A-1200x1000 Pallet de madera",
+					"commodity": "100061",
+					"weight": 2800.0,
+					"volume": 21.33,
+					"pieces": 100,
+					"lading": "140.6"
+				}, {
+					"line": "20",
+					"product_id": "16",
+					"product_description": "P0604 - 600x400 Plastic Pallet",
+					"commodity": "100016",
+					"weight": 627.3,
+					"volume": 1.36,
+					"pieces": 300,
+					"lading": "37.5"
+				}]
+			}]
+		}, {
+			"id": "75141710",
+			"type": "Drop",
+			"location_id": "4293745",
+			"location_ref": "5000428643_41.312016_2.095943",
+			"location_name": "S.A. DAMM (FACTORIA NÔøΩÔøΩ 3)",
+			"address": {
+				"address1": "POLIGONO MANSO MATEU S/N",
+				"city": "EL PRAT DE LLOBREGAT",
+				"state": "B",
+				"zip": "08820",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-02T00:00:00+02:00",
+			"planned_end": "2014-07-02T23:59:00+02:00",
+			"weight": 7555.9026,
+			"volume": 801.2897,
+			"pallets": 178.1,
+			"pieces": 400,
+			"shipments": [{
+				"shipment_number": "55804648",
+				"comments": "",
+				"primary_reference_number": "3621875452",
+				"items": [{
+					"line": "10",
+					"product_id": "1",
+					"product_description": "B1210A-1200x1000 Pallet de madera",
+					"commodity": "100061",
+					"weight": 2800.0,
+					"volume": 21.33,
+					"pieces": 100,
+					"lading": "140.6"
+				}, {
+					"line": "20",
+					"product_id": "16",
+					"product_description": "P0604 - 600x400 Plastic Pallet",
+					"commodity": "100016",
+					"weight": 627.3,
+					"volume": 1.36,
+					"pieces": 300,
+					"lading": "37.5"
+				}]
+			}]
+		}]
+	}, {
+		"id": "35847233",
+		"load_number": "604004464",
+		"refs": [{
+			"name": "Shipper ref #",
+			"value": "604004464"
+		}, {
+			"name": "Shipment Ref #",
+			"value": "3744831301"
+		}],
+		"status": "ACCEPTED",
+		"stops": [{
+			"id": "75141711",
+			"type": "Pick",
+			"location_id": "4341908",
+			"location_ref": "0100182547_41.349119_2.122931",
+			"location_name": "CARREFOUR PLANET-HOSPITALET",
+			"address": {
+				"address1": "AVDA. GRAN VIA, 75-93 (BÔøΩÔøΩ LA PEDROS",
+				"city": "L'HOSPITALET DE LLOBREGAT",
+				"state": "B",
+				"zip": "08908",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-03T00:00:00+02:00",
+			"planned_end": "2014-07-07T23:59:00+02:00",
+			"weight": 14603.5957,
+			"volume": 1515.7053,
+			"pallets": 296.85,
+			"pieces": 250,
+			"shipments": [{
+				"shipment_number": "55804649",
+				"comments": "",
+				"primary_reference_number": "3744831301",
+				"items": [{
+					"line": "10",
+					"product_id": "1",
+					"product_description": "B1210A-1200x1000 Block Pallet",
+					"commodity": "100061",
+					"weight": 2800.0,
+					"volume": 21.33,
+					"pieces": 100,
+					"lading": "140.6"
+				}, {
+					"line": "20",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Block Pallet",
+					"commodity": "100063",
+					"weight": 3125.0,
+					"volume": 17.25,
+					"pieces": 125,
+					"lading": "125.0"
+				}, {
+					"line": "30",
+					"product_id": "60",
+					"product_description": "Auto Pallet 1000x1200",
+					"commodity": "100023",
+					"weight": 699.08,
+					"volume": 4.34,
+					"pieces": 25,
+					"lading": "31.25"
+				}]
+			}]
+		}, {
+			"id": "75141712",
+			"type": "Drop",
+			"location_id": "4283854",
+			"location_ref": "ES37_3000",
+			"location_name": "SC PARETS DEL VALLES - BARCELO",
+			"address": {
+				"address1": "POLIGON Z",
+				"address2": "3 CARRER DE LA LOGISTICA",
+				"address3": "935 730700",
+				"city": "PARETS DEL VALLES",
+				"state": "B",
+				"zip": "08150",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-03T00:00:00+02:00",
+			"planned_end": "2014-07-07T23:59:00+02:00",
+			"weight": 14603.5957,
+			"volume": 1515.7053,
+			"pallets": 296.85,
+			"pieces": 250,
+			"shipments": [{
+				"shipment_number": "55804649",
+				"comments": "",
+				"primary_reference_number": "3744831301",
+				"items": [{
+					"line": "10",
+					"product_id": "1",
+					"product_description": "B1210A-1200x1000 Block Pallet",
+					"commodity": "100061",
+					"weight": 2800.0,
+					"volume": 21.33,
+					"pieces": 100,
+					"lading": "140.6"
+				}, {
+					"line": "20",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Block Pallet",
+					"commodity": "100063",
+					"weight": 3125.0,
+					"volume": 17.25,
+					"pieces": 125,
+					"lading": "125.0"
+				}, {
+					"line": "30",
+					"product_id": "60",
+					"product_description": "Auto Pallet 1000x1200",
+					"commodity": "100023",
+					"weight": 699.08,
+					"volume": 4.34,
+					"pieces": 25,
+					"lading": "31.25"
+				}]
+			}]
+		}]
+	}, {
+		"id": "35847234",
+		"load_number": "604004465",
+		"refs": [{
+			"name": "Shipper ref #",
+			"value": "604004465"
+		}, {
+			"name": "Shipment Ref #",
+			"value": "3744831302"
+		}],
+		"status": "ACCEPTED",
+		"stops": [{
+			"id": "75141713",
+			"type": "Pick",
+			"location_id": "4344706",
+			"location_ref": "5000807419_41.515304_1.919695",
+			"location_name": "CAPRABO PLATAFORMA ABRERA",
+			"address": {
+				"address1": "POL IND SANT ERMENGOL- C/SACRAMENT,",
+				"city": "ABRERA",
+				"state": "B",
+				"zip": "08630",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-04T00:00:00+02:00",
+			"planned_end": "2014-07-08T23:59:00+02:00",
+			"weight": 6193.005,
+			"volume": 566.8003,
+			"pallets": 125.7,
+			"pieces": 300,
+			"shipments": [{
+				"shipment_number": "55804650",
+				"comments": "",
+				"primary_reference_number": "3744831302",
+				"items": [{
+					"line": "10",
+					"product_id": "8",
+					"product_description": "B0806A-800x600 Block Pallet",
+					"commodity": "100008",
+					"weight": 2600.0,
+					"volume": 15.6,
+					"pieces": 200,
+					"lading": "113.2"
+				}, {
+					"line": "20",
+					"product_id": "16",
+					"product_description": "P0604 - 600x400 Plastic Pallet",
+					"commodity": "100016",
+					"weight": 209.1,
+					"volume": 0.45,
+					"pieces": 100,
+					"lading": "12.5"
+				}]
+			}]
+		}, {
+			"id": "75141714",
+			"type": "Drop",
+			"location_id": "4283854",
+			"location_ref": "ES37_3000",
+			"location_name": "SC PARETS DEL VALLES - BARCELO",
+			"address": {
+				"address1": "POLIGON Z",
+				"address2": "3 CARRER DE LA LOGISTICA",
+				"address3": "935 730700",
+				"city": "PARETS DEL VALLES",
+				"state": "B",
+				"zip": "08150",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-04T00:00:00+02:00",
+			"planned_end": "2014-07-08T23:59:00+02:00",
+			"weight": 6193.005,
+			"volume": 566.8003,
+			"pallets": 125.7,
+			"pieces": 300,
+			"shipments": [{
+				"shipment_number": "55804650",
+				"comments": "",
+				"primary_reference_number": "3744831302",
+				"items": [{
+					"line": "10",
+					"product_id": "8",
+					"product_description": "B0806A-800x600 Block Pallet",
+					"commodity": "100008",
+					"weight": 2600.0,
+					"volume": 15.6,
+					"pieces": 200,
+					"lading": "113.2"
+				}, {
+					"line": "20",
+					"product_id": "16",
+					"product_description": "P0604 - 600x400 Plastic Pallet",
+					"commodity": "100016",
+					"weight": 209.1,
+					"volume": 0.45,
+					"pieces": 100,
+					"lading": "12.5"
+				}]
+			}]
+		}]
+	}, {
+		"id": "35847272",
+		"load_number": "604004503",
+		"refs": [{
+			"name": "Shipper ref #",
+			"value": "604004503"
+		}, {
+			"name": "Shipment Ref #",
+			"value": "3621875560"
+		}, {
+			"name": "Shipment Ref #",
+			"value": "3744831479"
+		}],
+		"status": "ACCEPTED",
+		"stops": [{
+			"id": "75141751",
+			"type": "Pick",
+			"location_id": "4283853",
+			"location_ref": "ES37_1000",
+			"location_name": "SC PARETS DEL VALLES - BARCELO",
+			"address": {
+				"address1": "POLIGON Z",
+				"address2": "3 CARRER DE LA LOGISTICA",
+				"address3": "935 730700",
+				"city": "PARETS DEL VALLES",
+				"state": "B",
+				"zip": "08150",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-02T00:00:00+02:00",
+			"planned_end": "2014-07-02T23:59:00+02:00",
+			"weight": 11911.5752,
+			"volume": 1262.8523,
+			"pallets": 245.01,
+			"pieces": 204,
+			"shipments": [{
+				"shipment_number": "55804802",
+				"comments": "FORKLIFT",
+				"primary_reference_number": "3621875560",
+				"items": [{
+					"line": "10",
+					"product_id": "1",
+					"product_description": "B1210A-1200x1000 Pallet de madera",
+					"commodity": "100061",
+					"weight": 2828.0,
+					"volume": 21.55,
+					"pieces": 101,
+					"lading": "142.01"
+				}, {
+					"line": "20",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Pallet de madera",
+					"commodity": "100063",
+					"weight": 2575.0,
+					"volume": 14.21,
+					"pieces": 103,
+					"lading": "103.0"
+				}]
+			}]
+		}, {
+			"id": "75141752",
+			"type": "Drop",
+			"location_id": "4287222",
+			"location_ref": "5000433547_41.845611_2.371490",
+			"location_name": "NESTLE WATERS ESPAÔøΩÔøΩA (VILADRAU)",
+			"address": {
+				"address1": "CAMINO VIEJO DE VILADRAU, S/N",
+				"city": "VILADRAU",
+				"state": "GI",
+				"zip": "17406",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-03T00:00:00+02:00",
+			"planned_end": "2014-07-03T23:59:00+02:00",
+			"weight": 11911.5752,
+			"volume": 1262.8523,
+			"pallets": 245.01,
+			"pieces": 204,
+			"shipments": [{
+				"shipment_number": "55804802",
+				"comments": "FORKLIFT",
+				"primary_reference_number": "3621875560",
+				"items": [{
+					"line": "10",
+					"product_id": "1",
+					"product_description": "B1210A-1200x1000 Pallet de madera",
+					"commodity": "100061",
+					"weight": 2828.0,
+					"volume": 21.55,
+					"pieces": 101,
+					"lading": "142.01"
+				}, {
+					"line": "20",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Pallet de madera",
+					"commodity": "100063",
+					"weight": 2575.0,
+					"volume": 14.21,
+					"pieces": 103,
+					"lading": "103.0"
+				}]
+			}]
+		}, {
+			"id": "75141749",
+			"type": "Pick",
+			"location_id": "4341908",
+			"location_ref": "0100182547_41.349119_2.122931",
+			"location_name": "CARREFOUR PLANET-HOSPITALET",
+			"address": {
+				"address1": "AVDA. GRAN VIA, 75-93 (BÔøΩÔøΩ LA PEDROS",
+				"city": "L'HOSPITALET DE LLOBREGAT",
+				"state": "B",
+				"zip": "08908",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-03T00:00:00+02:00",
+			"planned_end": "2014-07-07T23:59:00+02:00",
+			"weight": 16700.0153,
+			"volume": 1476.506,
+			"pallets": 303.0,
+			"pieces": 303,
+			"shipments": [{
+				"shipment_number": "55804803",
+				"comments": "",
+				"primary_reference_number": "3744831479",
+				"items": [{
+					"line": "10",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Block Pallet",
+					"commodity": "100063",
+					"weight": 7575.0,
+					"volume": 41.81,
+					"pieces": 303,
+					"lading": "303.0"
+				}]
+			}]
+		}, {
+			"id": "75141750",
+			"type": "Drop",
+			"location_id": "4283854",
+			"location_ref": "ES37_3000",
+			"location_name": "SC PARETS DEL VALLES - BARCELO",
+			"address": {
+				"address1": "POLIGON Z",
+				"address2": "3 CARRER DE LA LOGISTICA",
+				"address3": "935 730700",
+				"city": "PARETS DEL VALLES",
+				"state": "B",
+				"zip": "08150",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-03T00:00:00+02:00",
+			"planned_end": "2014-07-07T23:59:00+02:00",
+			"weight": 16700.0153,
+			"volume": 1476.506,
+			"pallets": 303.0,
+			"pieces": 303,
+			"shipments": [{
+				"shipment_number": "55804803",
+				"comments": "",
+				"primary_reference_number": "3744831479",
+				"items": [{
+					"line": "10",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Block Pallet",
+					"commodity": "100063",
+					"weight": 7575.0,
+					"volume": 41.81,
+					"pieces": 303,
+					"lading": "303.0"
+				}]
+			}]
+		}]
+	}, {
+		"id": "35847452",
+		"load_number": "605750023",
+		"refs": [{
+			"name": "Shipper ref #",
+			"value": "605750023"
+		}, {
+			"name": "Shipment Ref #",
+			"value": "3621875768"
+		}],
+		"status": "ACCEPTED",
+		"stops": [{
+			"id": "75141989",
+			"type": "Pick",
+			"location_id": "4283853",
+			"location_ref": "ES37_1000",
+			"location_name": "SC PARETS DEL VALLES - BARCELO",
+			"address": {
+				"address1": "POLIGON Z",
+				"address2": "3 CARRER DE LA LOGISTICA",
+				"address3": "935 730700",
+				"city": "PARETS DEL VALLES",
+				"state": "B",
+				"zip": "08150",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-02T00:00:00+02:00",
+			"planned_end": "2014-07-02T23:59:00+02:00",
+			"weight": 27557.781,
+			"volume": 2436.7117,
+			"pallets": 500.0,
+			"pieces": 500,
+			"shipments": [{
+				"shipment_number": "55807745",
+				"comments": "",
+				"primary_reference_number": "3621875768",
+				"items": [{
+					"line": "10",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Pallet de madera",
+					"commodity": "100063",
+					"weight": 12500.0,
+					"volume": 69.0,
+					"pieces": 500,
+					"lading": "500.0"
+				}]
+			}]
+		}, {
+			"id": "75141990",
+			"type": "Drop",
+			"location_id": "4287167",
+			"location_ref": "5000427348_41.397144_1.802585",
+			"location_name": "AFFINITY PETCARE",
+			"address": {
+				"address1": "AVDA PLA DE L'ESTACIÔøΩÔøΩ, 10",
+				"city": "ELS MONJOS",
+				"state": "B",
+				"zip": "08739",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-03T00:00:00+02:00",
+			"planned_end": "2014-07-03T23:59:00+02:00",
+			"weight": 27557.781,
+			"volume": 2436.7117,
+			"pallets": 500.0,
+			"pieces": 500,
+			"shipments": [{
+				"shipment_number": "55807745",
+				"comments": "",
+				"primary_reference_number": "3621875768",
+				"items": [{
+					"line": "10",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Pallet de madera",
+					"commodity": "100063",
+					"weight": 12500.0,
+					"volume": 69.0,
+					"pieces": 500,
+					"lading": "500.0"
+				}]
+			}]
+		}]
+	}, {
+		"id": "35847453",
+		"load_number": "605750024",
+		"refs": [{
+			"name": "Shipper ref #",
+			"value": "605750024"
+		}, {
+			"name": "Shipment Ref #",
+			"value": "3621875769"
+		}],
+		"status": "ACCEPTED",
+		"stops": [{
+			"id": "75141991",
+			"type": "Pick",
+			"location_id": "4283853",
+			"location_ref": "ES37_1000",
+			"location_name": "SC PARETS DEL VALLES - BARCELO",
+			"address": {
+				"address1": "POLIGON Z",
+				"address2": "3 CARRER DE LA LOGISTICA",
+				"address3": "935 730700",
+				"city": "PARETS DEL VALLES",
+				"state": "B",
+				"zip": "08150",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-03T00:00:00+02:00",
+			"planned_end": "2014-07-03T23:59:00+02:00",
+			"weight": 13778.8905,
+			"volume": 1218.3559,
+			"pallets": 250.0,
+			"pieces": 250,
+			"shipments": [{
+				"shipment_number": "55807746",
+				"comments": "",
+				"primary_reference_number": "3621875769",
+				"items": [{
+					"line": "10",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Pallet de madera",
+					"commodity": "100063",
+					"weight": 6250.0,
+					"volume": 34.5,
+					"pieces": 250,
+					"lading": "250.0"
+				}]
+			}]
+		}, {
+			"id": "75141992",
+			"type": "Drop",
+			"location_id": "4567758",
+			"location_ref": "0100409902_41.474326_1.978367",
+			"location_name": "FRISKIES DHL CASTELLBISBALL",
+			"address": {
+				"address1": "AREA IND. LLOBREGAT - SECTOR CAN PE",
+				"city": "CASTELLBISBAL",
+				"state": "B",
+				"zip": "08755",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-04T00:00:00Z",
+			"planned_end": "2014-07-04T23:59:00Z",
+			"weight": 13778.8905,
+			"volume": 1218.3559,
+			"pallets": 250.0,
+			"pieces": 250,
+			"shipments": [{
+				"shipment_number": "55807746",
+				"comments": "",
+				"primary_reference_number": "3621875769",
+				"items": [{
+					"line": "10",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Pallet de madera",
+					"commodity": "100063",
+					"weight": 6250.0,
+					"volume": 34.5,
+					"pieces": 250,
+					"lading": "250.0"
+				}]
+			}]
+		}]
+	}, {
+		"id": "35847454",
+		"load_number": "605750025",
+		"refs": [{
+			"name": "Shipper ref #",
+			"value": "605750025"
+		}, {
+			"name": "Shipment Ref #",
+			"value": "3744832537"
+		}],
+		"status": "ACCEPTED",
+		"stops": [{
+			"id": "75141993",
+			"type": "Pick",
+			"location_id": "4344529",
+			"location_ref": "5000756814_41.336454_2.130294",
+			"location_name": "BONMERCAT MERCABARNA - COALIMENT",
+			"address": {
+				"address1": "MERCABARNA - PABELLON POLIVALENTE",
+				"city": "BARCELONA",
+				"state": "B",
+				"zip": "08040",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-05T00:00:00+02:00",
+			"planned_end": "2014-07-09T23:59:00+02:00",
+			"weight": 11243.5746,
+			"volume": 1038.2511,
+			"pallets": 213.2,
+			"pieces": 300,
+			"shipments": [{
+				"shipment_number": "55807747",
+				"comments": "",
+				"primary_reference_number": "3744832537",
+				"items": [{
+					"line": "10",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Pallet de madera",
+					"commodity": "100063",
+					"weight": 2500.0,
+					"volume": 13.8,
+					"pieces": 100,
+					"lading": "100.0"
+				}, {
+					"line": "20",
+					"product_id": "8",
+					"product_description": "B0806A-800x600 Block Pallet",
+					"commodity": "100008",
+					"weight": 2600.0,
+					"volume": 15.6,
+					"pieces": 200,
+					"lading": "113.2"
+				}]
+			}]
+		}, {
+			"id": "75141994",
+			"type": "Drop",
+			"location_id": "4283854",
+			"location_ref": "ES37_3000",
+			"location_name": "SC PARETS DEL VALLES - BARCELO",
+			"address": {
+				"address1": "POLIGON Z",
+				"address2": "3 CARRER DE LA LOGISTICA",
+				"address3": "935 730700",
+				"city": "PARETS DEL VALLES",
+				"state": "B",
+				"zip": "08150",
+				"country": "ES"
+			},
+			"planned_start": "2014-07-05T00:00:00+02:00",
+			"planned_end": "2014-07-09T23:59:00+02:00",
+			"weight": 11243.5746,
+			"volume": 1038.2511,
+			"pallets": 213.2,
+			"pieces": 300,
+			"shipments": [{
+				"shipment_number": "55807747",
+				"comments": "",
+				"primary_reference_number": "3744832537",
+				"items": [{
+					"line": "10",
+					"product_id": "3",
+					"product_description": "B1208A- 800x1200 Pallet de madera",
+					"commodity": "100063",
+					"weight": 2500.0,
+					"volume": 13.8,
+					"pieces": 100,
+					"lading": "100.0"
+				}, {
+					"line": "20",
+					"product_id": "8",
+					"product_description": "B0806A-800x600 Block Pallet",
+					"commodity": "100008",
+					"weight": 2600.0,
+					"volume": 15.6,
+					"pieces": 200,
+					"lading": "113.2"
+				}]
+			}]
+		}]
+	}]

@@ -1,9 +1,9 @@
 //
 //  Shipment.h
-//  CarrierVanilla
+//  
 //
-//  Created by shane davis on 06/06/2014.
-//  Copyright (c) 2014 shane davis. All rights reserved.
+//  Created by shane davis on 02/07/2014.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -13,10 +13,11 @@
 
 @interface Shipment : NSManagedObject
 
-@property (nonatomic, retain) NSString * shipment_number;
 @property (nonatomic, retain) NSString * comments;
-@property (nonatomic, retain) Stop *stop;
+@property (nonatomic, retain) NSString * shipment_number;
+@property (nonatomic, retain) NSString * primary_reference_number;
 @property (nonatomic, retain) NSSet *items;
+@property (nonatomic, retain) Stop *stop;
 @end
 
 @interface Shipment (CoreDataGeneratedAccessors)
@@ -25,5 +26,5 @@
 - (void)removeItemsObject:(Item *)value;
 - (void)addItems:(NSSet *)values;
 - (void)removeItems:(NSSet *)values;
-
+-(BOOL)isFinalizedShipment;
 @end

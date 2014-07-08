@@ -16,11 +16,13 @@
 #import "CCSignatureDrawView.h"
 #import "CCPDFWriter.h"
 #import "Pop.h"
+#import "CVItemLongPress.h"
+#import "CVItemTextField.h"
 
 #import "MBProgressHUD.h"
 #import "CVMapAnnotation.h"
 
-@interface CVStopDetailTableViewController ()<MKMapViewDelegate,UIActionSheetDelegate,CCSignatureDrawViewDelegate>
+@interface CVStopDetailTableViewController ()<MKMapViewDelegate,UIActionSheetDelegate,CCSignatureDrawViewDelegate,UITextFieldDelegate>
 @property(nonatomic)float shipmentCount;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *msgNavButton;
 @property(nonatomic)CVUpdateButton *updateButton;
@@ -44,9 +46,6 @@
     if (_stop != stop) {
         NSArray *shipments = [stop.shipments allObjects];
         _shipmentCount =  [shipments count];
-        NSLog(@"SHIPMENT COUNT::: %lu", (unsigned long)[shipments count]);
-        
-
         _stop = stop;
     }
 }
@@ -54,16 +53,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [self addCustomRefreshView];
-    if(!self.stop.actual_departure){
-          [self preparePulltoRefresh];
-    }
- 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Ed    it button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self preparePulltoRefresh];
 }
 
 
@@ -71,7 +61,8 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.tintColor = [UIColor whiteColor];
     [refreshControl addTarget:self action:@selector(updateStopStatus:) forControlEvents:UIControlEventValueChanged];
-    refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Release to Check-In" attributes:@{
+    refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:_stop.actual_arrival ? @"Already Checked in!" : @"Release to Check-In"
+                                                                    attributes:@{
                                                                                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                                                                                  NSFontAttributeName:[UIFont systemFontOfSize:20]
                                                                                                                  }];
@@ -80,21 +71,26 @@
     CGRect frame = self.tableView.bounds;
     frame.origin.y = -frame.size.height;
     _refreshBackgroundView = [[UIView alloc]initWithFrame:frame];
-    _refreshBackgroundView.backgroundColor = [UIColor flatBlueColor];
+    _refreshBackgroundView.backgroundColor = _stop.actual_arrival ? [UIColor flatDarkGreenColor]: [UIColor flatDarkBlueColor];
     [_refreshBackgroundView setTag:1];
     self.refreshControl = refreshControl;
+    self.refreshControl.enabled = _stop.actual_arrival ? NO : YES;
     [self.tableView insertSubview:_refreshBackgroundView atIndex:0];
 }
+
 -(void)updateStopStatus:(id)sender{
     if (!self.stop.actual_arrival) {
         [self checkMeIn:sender];
-    }else if(!self.stop.actual_departure){
-        [self checkMeOut:sender];
+    }else{
+        [self.refreshControl endRefreshing];
     }
     
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    [self.view addGestureRecognizer:singleTap];
     
     if (![_stop.longitude doubleValue]) {
         
@@ -164,24 +160,46 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return (1+_shipmentCount);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if (section == 0) {
-        return 1;
-    }
-    return self.shipmentCount;
+    return 1;
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//primary_reference_number
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
     
+
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 2, tableView.frame.size.width, 18)];
@@ -192,8 +210,12 @@
     if (section == 0) {
         [label setText:self.stop.location_name];
     }else{
-        NSString *shipment = self.shipmentCount > 1 ? @"Shipments" : @"Shipment";
-        NSString *fullString = [NSString stringWithFormat:@"%.f %@",self.shipmentCount, shipment];
+        NSArray *shipments = [self.stop.shipments allObjects];
+        Shipment *shipment = shipments[section-1];
+        
+        NSLog(@"Shipment %@", shipment);
+//        NSString *shipment = self.shipmentCount > 1 ? @"Shipments" : @"Shipment";
+        NSString *fullString = [NSString stringWithFormat:@"Shipment Number  %@",shipment.primary_reference_number];
         [label setText:fullString];
     }
     [view addSubview:label];
@@ -201,6 +223,28 @@
 
     return view;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -224,8 +268,11 @@
         self.updateButton.frame = CGRectMake(CGRectGetWidth(_mapView.bounds), CGRectGetMaxY(_mapView.bounds), 40, 40);
         self.updateButton.backgroundColor = [UIColor flatBlueColor];
         self.updateButton.layer.cornerRadius = 5;
-        [self.updateButton addTarget:self action:@selector(checkMeIn:) forControlEvents:UIControlEventTouchUpInside];
         
+//        self.checkOutButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        self.checkOutButton.frame = CGRectMake(CGRectGetWidth(_mapView.bounds), CGRectGetMaxY(_mapView.bounds), 40, 40);
+//        self.checkOutButton.backgroundColor = [UIColor flatBlueColor];
+//        self.checkOutButton.layer.cornerRadius = 5;
 
         
         Address *address = self.stop.address;
@@ -264,11 +311,11 @@
         [_mapView addSubview:containerView];
         [_mapView addSubview:self.updateButton];
 
-        
+        [self addCheckOutButtonToView:_mapView];
         
         if (self.stop.actual_arrival) {
             [self addTimestampViewToView:self.mapView animated:NO];
-            [self addCheckOutButtonToView:_mapView];
+ 
         }
         if (self.stop.actual_arrival && self.stop.actual_departure) {
             [self addTimestampViewToView:self.mapView animated:NO];
@@ -309,28 +356,33 @@
         
         [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *item, NSUInteger idx, BOOL *stop) {
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, (idx)*55, CGRectGetWidth(containerView.bounds), 50)];
-            view.backgroundColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.05f];
+            view.backgroundColor = item.finalized ? [UIColor flatDarkGreenColor] :[UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.05f];
             view.layer.borderColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.2f].CGColor;
             view.layer.borderWidth = 1;
             view.layer.cornerRadius = 3;
             
             
-            NSString *productString = [NSString stringWithFormat:@"%@ pallets", item.product_id];
+            NSString *productString = [NSString stringWithFormat:@"%@ pallets", item.product_description];
             
             UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 200, 30)];
             label.text = productString;
-            label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:18];
-            label.textColor = UIColorFromRGB(0x3c6ba1);
+            label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+            label.textColor = item.finalized ? [UIColor whiteColor] : UIColorFromRGB(0x3c6ba1);
             
-            UITextField *qtyField  = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetWidth(view.bounds)-60, 10, 50, 30)];
-            qtyField.placeholder = [item.pieces stringValue];
-            qtyField.clearsOnBeginEditing = YES;
+            CVItemTextField *qtyField  = [[CVItemTextField alloc]initWithFrame:CGRectMake(CGRectGetWidth(view.bounds)-60, 10, 50, 30)];
+            qtyField.text = [item.pieces stringValue];
             qtyField.layer.borderColor = [UIColor whiteColor].CGColor;
-            qtyField.backgroundColor = [UIColor colorWithWhite:1 alpha:.6];
+            qtyField.textColor = item.finalized ? [UIColor whiteColor] : [UIColor flatDarkBlueColor];
+            qtyField.backgroundColor = item.finalized ? [UIColor clearColor] : [UIColor colorWithWhite:1 alpha:.6];
             qtyField.layer.borderWidth = 1;
             qtyField.layer.cornerRadius = 3;
             qtyField.textAlignment = NSTextAlignmentCenter;
+            qtyField.item = item;
+            qtyField.delegate = self;
             
+            CVItemLongPress *longPress = [[CVItemLongPress alloc]initWithTarget:self action:@selector(handleLongPressOnQtyField:)];
+            longPress.item = item;
+            [view addGestureRecognizer:longPress];
             [view addSubview:label];
             [view addSubview:qtyField];
             [containerView addSubview:view];
@@ -341,6 +393,35 @@
     return cell;
 }
 
+-(void)handleLongPressOnQtyField: (CVItemLongPress*)gesture{
+ 
+    
+    if (gesture.state == UIGestureRecognizerStateBegan && _stop.actual_arrival) {
+           NSLog(@"Gesture Item: %@", gesture.item);
+            gesture.item.finalized = [NSNumber numberWithBool:![gesture.item.finalized boolValue]];
+        
+        if ([gesture.item.shipment isFinalizedShipment]) {
+            [self checkMeOut];
+        }
+        for (UIView *subview in gesture.view.subviews) {
+            if ([subview isKindOfClass:[UITextField class]]) {
+                UITextField *textField = (UITextField*)subview;
+                textField.textColor = [UIColor whiteColor];
+                textField.backgroundColor = [UIColor clearColor];
+            }else if([subview isKindOfClass:[UILabel class]]){
+                UILabel *label = (UILabel*)subview;
+                label.textColor = [UIColor whiteColor];
+            }
+        }
+        
+        
+        POPSpringAnimation *colorAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBackgroundColor];
+        colorAnim.toValue = (id)[UIColor flatDarkGreenColor].CGColor;
+        colorAnim.springBounciness = 20;
+        [gesture.view.layer pop_addAnimation:colorAnim forKey:@"color"];
+    }
+}
+
 
 
 - (UITableViewCell *)configueCellForShipments:(UITableViewCell*)cell{
@@ -349,15 +430,20 @@
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    Shipment *shipment = [self.stop.shipments allObjects][indexPath.row];
     
     if ([indexPath section] == 0 ) {
         return 250;
     }
-    return 200;
+    return ([shipment.items count]*70);
 }
 
 #pragma mark -UIButton actions
 
+-(void)handleSingleTap:(UIGestureRecognizer*)gesture{
+    NSLog(@"single tap");
+    [self.view endEditing:YES];
+}
 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -430,11 +516,11 @@
 
 -(void)addCheckOutButtonToView:(UIView *)view{
     self.checkOutButton = [CVUpdateButton buttonWithType:UIButtonTypeCustom];
-    self.checkOutButton.frame = CGRectMake(CGRectGetWidth(view.bounds), CGRectGetMaxY(view.bounds), 40, 40);
+    self.checkOutButton.frame = CGRectMake(10, CGRectGetMaxY(view.bounds), 40, 40);
     self.checkOutButton.backgroundColor = [UIColor flatBlueColor];
     self.checkOutButton.layer.cornerRadius = 5;
  
-    [self.checkOutButton addTarget:self action:@selector(checkMeOut:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.checkOutButton addTarget:self action:@selector(checkMeOut:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:self.checkOutButton];
 }
 -(void)checkMeIn:(id)sender{
@@ -459,7 +545,7 @@
     
     
 }
--(void)checkMeOut:(id)sender{
+-(void)checkMeOut{
     NSLog(@"Checking out");
     if (self.stop.actual_arrival) {
         self.stop.actual_departure = [NSDate date];
@@ -477,11 +563,12 @@
             [self addTimestampViewToView:self.mapView animated:YES];
             [self.refreshControl endRefreshing];
             [self.refreshBackgroundView setBackgroundColor:[UIColor flatGreenColor]];
-            self.refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:@"Release to Check-Out" attributes:@{
-                                                                                                                                 NSForegroundColorAttributeName: [UIColor whiteColor],
-                                                                                                                                 NSFontAttributeName:[UIFont systemFontOfSize:20]
-                                                                                                                                 }];
+//            [self.refreshBackgroundView removeFromSuperview];
     }
+}
+
+-(NSArray*)getQuantitesForStop:(Stop*)stop{
+    return @[];
 }
 
 #pragma mark show signature view AND save singature methods
@@ -489,10 +576,12 @@
 -(void)showSignatureView{
     [self.refreshControl endRefreshing];
     [self.refreshControl removeFromSuperview];
-    CCSignatureDrawView *sv = [[CCSignatureDrawView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) andQuantity:@"666"];
+    UITableViewCell *tvc = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+
+    CCSignatureDrawView *sv = [[CCSignatureDrawView alloc]initWithFrame:CGRectMake(0, 0, tvc.frame.size.width, tvc.frame.size.height) andQuantity:@"666"];
     sv.delegate = self;
     sv.alpha = 0;
-    [self.view addSubview:sv];
+    [tvc addSubview:sv];
     self.tableView.scrollEnabled = NO;
     [UIView animateWithDuration:0.5
                      animations:^{
@@ -511,30 +600,39 @@
         view.alpha = 0.0f;
     } completion:^(BOOL finished) {
         [view removeFromSuperview];
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.labelText = @"Saving Load";
+
         //                self.signaturePic.image = [UIImage imageWithData:imageData];
-        //        if ([self.stop.load isCompletedLoad]) {
-        NSString *pdfName = @"pod.pdf";
         
-        [CCPDFWriter createPDFfromLoad:self.stop.load saveToDocumentsWithFileName:pdfName];
-        [[CVChepClient sharedClient]updateStopWithId:@"75135140"
-                                             forLoad:self.stop.load.id
-                                      withQuantities:@[@2] withActualArrival:[NSDate date]
-                                 withActualDeparture:[NSDate date]
-                                              andPod:imageData
-                                          completion:^( NSError *error) {
-                                              if (error) {
-                                                  NSLog(@"there was an error %@", error);
-                                                  hud.labelText = @"Error saving";
-                                              }else{
-                                                  hud.labelText = @"Success";
-                                              }
-                                              [hud hide:YES afterDelay:0.5];
-                                              [self addCheckOutTimeStampeViewToView];
-                                              [self.delegate saveChangesOnContext];
-                                          }];
-        //        }
+        
+        if ([self.stop.load isCompletedLoad]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.labelText = @"Saving Load";
+            NSString *pdfName = @"pod.pdf";
+            
+            [CCPDFWriter createPDFfromLoad:self.stop.load saveToDocumentsWithFileName:pdfName];
+            [[CVChepClient sharedClient]updateStopWithId:_stop.id
+                                                 forLoad:self.stop.load.id
+                                          withQuantities:@[@2] withActualArrival:_stop.actual_arrival
+                                     withActualDeparture:_stop.actual_departure
+                                                  andPod:imageData
+                                              completion:^( NSError *error) {
+                                                  if (error) {
+                                                      NSLog(@"there was an error %@", error);
+                                                      hud.labelText = @"Error saving";
+                                                  }else{
+                                                      hud.labelText = @"Success";
+                                                  }
+                                                  [hud hide:YES afterDelay:0.5];
+                                                  [self addCheckOutTimeStampeViewToView];
+                                                  [self.delegate saveChangesOnContext];
+                                                  self.title = @"Departed";
+                                              }];
+        }else{
+            NSLog(@"Load not yet complete");
+            [self addCheckOutTimeStampeViewToView];
+            [self.delegate saveChangesOnContext];
+            self.title = @"Complete";
+        }
     }];
 }
 
@@ -568,7 +666,7 @@
     
     
     
-    UIView *timestampView = [[UIView alloc]initWithFrame:CGRectMake(0, 30, CGRectGetWidth(self.mapView.bounds), 30)];
+    UIView *timestampView = [[UIView alloc]initWithFrame:CGRectMake(0, 29, CGRectGetWidth(self.mapView.bounds), 30)];
     timestampView.backgroundColor = [UIColor colorWithWhite:.99 alpha:.6];
     timestampView.layer.borderWidth = 2;
     timestampView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -596,6 +694,25 @@
     [timestampView pop_addAnimation:boundsAnim forKey:@"bounds"];
     [timestampView pop_addAnimation:anim forKey:@"fade"];
 }
+
+#pragma mark - TextField Delegate Methods
+
+-(void)textFieldDidEndEditing:(CVItemTextField *)textField{
+    
+    NSString *newValue = [textField text];
+    textField.item.pieces = [NSNumber numberWithInt:[textField.text integerValue]];
+    NSLog(@"the new text:: %@" , newValue);
+    NSLog(@"ITEM on text field is: %@", textField.item);
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return  YES;
+    
+}
+//-(void)textFieldDidBeginEditing:(CVItemTextField *)textField{
+//    NSLog(@"BEgin ITEM on text field is: %@", textField.item);
+//}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

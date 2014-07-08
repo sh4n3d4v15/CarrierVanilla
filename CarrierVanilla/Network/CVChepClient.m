@@ -79,6 +79,7 @@
                 Stop *_stop = [NSEntityDescription insertNewObjectForEntityForName:@"Stop" inManagedObjectContext:dmgr.managedObjectContext];
                 //            [_stop setValuesForKeysWithDictionary:stopobj];
                 SET_IF_NOT_NULL(_stop.location_name , [stopobj valueForKey:@"location_name"]);
+                SET_IF_NOT_NULL(_stop.id , [stopobj valueForKey:@"id"]);
                 SET_IF_NOT_NULL(_stop.location_id, [stopobj valueForKey:@"location_id"]);
                 SET_IF_NOT_NULL(_stop.location_ref, [stopobj valueForKey:@"location_ref"]);
                 SET_IF_NOT_NULL(_stop.type, [stopobj valueForKey:@"type"]);
@@ -103,6 +104,7 @@
                     Shipment *shipment = [NSEntityDescription insertNewObjectForEntityForName:@"Shipment" inManagedObjectContext:dmgr.managedObjectContext];
                     SET_IF_NOT_NULL(shipment.shipment_number,  shipmentObj[@"shipment_number"]);
                     SET_IF_NOT_NULL(shipment.comments, shipmentObj[@"comments"]);
+                    SET_IF_NOT_NULL(shipment.primary_reference_number, shipmentObj[@"primary_reference_number"]);
                     
                     NSArray *items = [shipmentObj valueForKey:@"items"];
                     [items enumerateObjectsUsingBlock:^(id itemObj, NSUInteger idx, BOOL *stop) {
@@ -171,6 +173,7 @@
                                             if (httpResponse.statusCode == 200) {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
                                                     [self importArrayOfStopsIntoCoreData:loads];
+                                                    
                                                     NSLog(@"RESONSE: %@", httpResponse);
                                                     NSLog(@"RESONSE OBJECT: %@", responseObject);
                                                     completion(responseObject,nil);
@@ -184,7 +187,18 @@
                                             }
                                         } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                completion(nil,error);
+//                                                NSError *error;
+//                                                NSString *filepath = [[NSBundle mainBundle]pathForResource:@"loads" ofType:@"json"];
+//                                                NSString *loadsJson = [[NSString alloc]initWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
+//                                                NSData *loadsData = [loadsJson dataUsingEncoding:NSUTF8StringEncoding];
+//                                                NSArray *loadsArray = [NSJSONSerialization JSONObjectWithData:loadsData options:0 error:&error];
+//                                                [self importArrayOfStopsIntoCoreData:loadsArray];
+//                                                NSLog(@"LoadsArray %@", loadsArray );
+//                                                NSLog(@"Error: %@", error);
+                                                
+                                                
+                                                
+                                               completion(nil,error);
                                             });
                                         }];
     return task;
@@ -200,10 +214,15 @@
         NSLog(@"It appears that we have multiple quantities to update");
     }
     
-    NSDictionary *updateDict = @{@"actual_arrival_date": @"2014-03-25T23:59:00+01:00",
-                                 @"actual_departure_date": @"2014-03-25T23:59:00+01:00",
+    NSDateFormatter *df = [[NSDateFormatter alloc]init];
+   // [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss+02:00"];
+    [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
+    
+    
+    NSDictionary *updateDict = @{@"actual_arrival_date": [df stringFromDate:arrivalDate],
+                                 @"actual_departure_date": [df stringFromDate:departureDate],
                                  @"product_id": @"60",
-                                 @"delivery_number": @"3743620763",
+                                 @"delivery_number": @"",
                                  @"deliveries":@[]
                                  };
     NSError *error;
@@ -215,7 +234,7 @@
     NSDictionary *documentDict = @{@"document_type_id": @"",
                                  @"document_type_key": @"POD",
                                  @"product_id": @"60",
-                                 @"comments": @"some generic comments",
+                                 @"comments": @"Completed in Madrid",
                                  @"stop_id": @""
                                  };
     
@@ -235,13 +254,13 @@
                                                    name:@"file"
                                                fileName:@"Proof_signed.pdf"
                                                mimeType:@"application/pdf"];
-                       
-                      
+
                    }
                                      success:^(NSURLSessionDataTask *task,
                                                id responseObject)
                                                 {
-                                                 __unused  NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                                    NSLog(@"Response object %@", httpResponse);
                                                     completion(Nil);
                                                 }
                                      failure:^(NSURLSessionDataTask *task,
@@ -255,29 +274,27 @@
 
 #pragma mark - Documents Requests
 
--(NSURLSessionDataTask *)uploadPhoto:(NSData *)photoData forStopId:(NSString *)stopId withLoadId:(NSString *)loadId withComment:(NSString *)comment completion:(void (^)(NSArray *, NSError *))completion{
+-(NSURLSessionDataTask *)uploadPhoto:(NSData *)photoData forStopId:(NSString *)stopId withLoadId:(NSString *)loadId withComment:(NSString *)comment completion:(void (^)(NSDictionary *, NSError *))completion{
+
+    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/upload/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId,stopId];
+    NSDictionary *docInfoDictionay = @{@"document_type_id":@"",
+                                       @"document_type_key":@"POD",
+                                       @"comments":comment,
+                                       @"stop_id":@""
+                                       };
     
-    NSURLSessionDataTask * task = [self POST:@"/photo" parameters:@{@"stopId": stopId,
-                                                                    @"loadId":loadId,
-                                                                    @"comment": comment}
-                                     success:^(NSURLSessionDataTask *task, id responseObject) {
-                                         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-                                         if (httpResponse.statusCode == 200) {
-                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                 completion(responseObject,nil);
-                                             });
-                                         }else{
-                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                 completion(nil,nil);
-                                                 NSLog(@"Recieved: %@", responseObject);
-                                                 NSLog(@"Recieved HTTP %lo", (long)httpResponse.statusCode);
-                                             });
-                                         }
-                                     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                             completion(nil,error);
-                                         });
-                                     }];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:docInfoDictionay options:0 error:nil];
+    
+    NSURLSessionDataTask * task = [self POST:queryString
+                                  parameters:@{}
+                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                       [formData appendPartWithFileData:photoData name:@"file" fileName:@"photoimage" mimeType:@"image/jpg"];
+                       [formData appendPartWithFormData:jsonData name:@"document_info"];
+                   } success:^(NSURLSessionDataTask *task, id responseObject) {
+                       NSLog(@"Photo successfully uploaded %@", responseObject);
+                   } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                       NSLog(@"there was a problem %@", task.response);
+                   }];
     return task;
 }
 
@@ -313,10 +330,10 @@
     
     NSURLSessionDataTask *task = [self POST:queryString parameters:@{
                                                                      @"subject":@"Mobile Load Note",
-                                                                     @"message":@"in the land of the blind  ",
+                                                                     @"message":message,
                                                                      @"note_type_id":@"4647",
-                                                                     @"reply_note_id":@"15557762",
-                                                                     @"reply_note_thread_id":@"15557762",
+                                                                     @"reply_note_id":@"",
+                                                                     @"reply_note_thread_id":@"",
                                                                      @"emails":@"shane.davies@chep.com",
                                                                      @"shipments":@[]
                                                                      }

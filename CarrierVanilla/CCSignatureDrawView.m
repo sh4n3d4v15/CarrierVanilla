@@ -18,37 +18,18 @@
         self.signatureBezierPath = [[UIBezierPath alloc]init];
         NSLog(@"THE SELF QUANTITY %@ ", quantity);
         _quantity = quantity;
-       self.backgroundColor = [UIColor whiteColor];
+       self.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
 //        self.alpha = 0.5f;
         self.userInteractionEnabled = YES;
         
 
         
-        UILabel *confirmLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 40, 200, 40)];
-        confirmLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:22.0f];
-        confirmLabel.textColor = UIColorFromRGB(0x3c6ba1);
-        confirmLabel.textAlignment = NSTextAlignmentCenter;
-        confirmLabel.text = @"Standard Pallets: ";
-        
-        [self addSubview:confirmLabel];
-        
         UIView *containerView = [[UIView alloc]initWithFrame:self.bounds];
-        NSLog(@"Container View Frame: %@", NSStringFromCGRect(containerView.frame));
+
         
-        UITextField *quantityTextField = [[UITextField alloc]initWithFrame:CGRectMake(210, 45, 90, 30)];
-        quantityTextField.font = [UIFont fontWithName:@"Helvetica" size:26.0f];
-        quantityTextField.textColor = UIColorFromRGB(0x3c6ba1);
-        quantityTextField.text = self.quantity;
-        quantityTextField.layer.borderColor = UIColorFromRGB(0x3c6ba1).CGColor;
-        quantityTextField.layer.borderWidth = 1;
-        quantityTextField.layer.cornerRadius = 5;
-        quantityTextField.textAlignment = NSTextAlignmentCenter;
-        quantityTextField.layer.masksToBounds = YES;
-        quantityTextField.delegate = self;
+        CGRect dottedFrame = CGRectMake(10, 10, self.bounds.size.width-40, self.bounds.size.height-60);
         
-        CGRect dottedFrame = CGRectMake(10, 150, 280, 130);
-        
-        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:dottedFrame cornerRadius:10.0];
+        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:dottedFrame cornerRadius:3.0];
 
         CAShapeLayer *dottedBorder = [CAShapeLayer layer];
         dottedBorder.frame = dottedFrame;
@@ -56,14 +37,14 @@
         NSLog(@"Dotted border Frame: %@", NSStringFromCGRect(dottedBorder.frame));
         [dottedBorder setStrokeColor:UIColorFromRGB(0x3c6ba1).CGColor];
         [dottedBorder setFillColor:[UIColor clearColor].CGColor];
-        [dottedBorder setLineDashPattern:@[[NSNumber numberWithInt:10],[NSNumber numberWithInt:5]]];
+        [dottedBorder setLineDashPattern:@[[NSNumber numberWithInt:10],[NSNumber numberWithInt:2]]];
         [dottedBorder setLineJoin:kCALineCapRound];
         [dottedBorder setPath:path.CGPath];
 //        [drawBox.layer addSublayer:dottedBorder];
 //        [containerView addSubview:drawBox];
         [containerView.layer addSublayer:dottedBorder];
         containerView.backgroundColor = [UIColor clearColor];
-        [containerView addSubview:quantityTextField];
+
         [self addSubview:containerView];
         
         CABasicAnimation *strokeEndAnim = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
@@ -78,14 +59,21 @@
 
 //        CGRect destinationFrame = CGRectMake(210.0f,454.0f, 90, 30);
         UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        doneButton.frame = CGRectMake(210,454.0f, 90, 30);
-        [doneButton setTitle:@"signed" forState:UIControlStateNormal];
-        [doneButton setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+        doneButton.frame = CGRectMake(self.bounds.size.width-65,self.bounds.size.height-35, 50, 30);
+        [doneButton setTitle:@"Done" forState:UIControlStateNormal];
+        [doneButton setTitleColor:UIColorFromRGB(0x3c6ba1) forState:UIControlStateNormal];
         [doneButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [doneButton addTarget:self action:@selector(saveImageAndDismissView:) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:doneButton];
         
+        UIButton *clearButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        clearButton.frame = CGRectMake(10,self.bounds.size.height-35, 50, 30);
+        [clearButton setTitle:@"Clear" forState:UIControlStateNormal];
+        [clearButton setTitleColor:UIColorFromRGB(0xc0392b) forState:UIControlStateNormal];
+        [clearButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        [self addSubview:clearButton];
     }
     return self;
 }

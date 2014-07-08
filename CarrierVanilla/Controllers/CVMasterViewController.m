@@ -87,15 +87,15 @@
     }else{
 //        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 //        hud.labelText = @"Retrieving loads";
-        [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
-            if (error) {
-//                hud.labelText = [error localizedDescription];
-//                [self removeHud:hud];
-            }else{
-//                hud.labelText = @"Success";
-//                [self removeHud:hud];
-            }
-        }];
+//        [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
+//            if (error) {
+////                hud.labelText = [error localizedDescription];
+////                [self removeHud:hud];
+//            }else{
+////                hud.labelText = @"Success";
+////                [self removeHud:hud];
+//            }
+//        }];
     }
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
 
@@ -133,32 +133,40 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
+
+    NSLog(@"Section: %i", section);
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    __block BOOL complete = YES;
+     [[sectionInfo objects]enumerateObjectsUsingBlock:^(Stop *_stop, NSUInteger idx, BOOL *stop) {
+        if (!_stop.actual_departure) {
+            complete = NO;
+            *stop = YES;
+        }
+    }];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
-    /* Create custom view to display section header... */
-    UILabel *shipmentnumberlabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 2, 100, 18)];
+    
+    UIImageView *truckimageView = [[UIImageView alloc]initWithFrame:CGRectMake(17, 1, 18, 18)];
+    [truckimageView setImage:[UIImage imageNamed: @"truck.png"]];
+    [view addSubview:truckimageView];
+    UILabel *shipmentnumberlabel = [[UILabel alloc] initWithFrame:CGRectMake(42, 2, 100, 18)];
     [shipmentnumberlabel setFont:[UIFont boldSystemFontOfSize:14]];
     [shipmentnumberlabel setText:[sectionInfo name]];
-    [shipmentnumberlabel setTextColor:UIColorFromRGB(0x3c6ba1)];
+    [shipmentnumberlabel setTextColor: UIColorFromRGB(0x3c6ba1)];
     [view addSubview:shipmentnumberlabel];
+
     
-    UIImageView *truckimageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 1, 18, 18)];
-    [truckimageView setImage:[UIImage imageNamed:@"truck.png"]];
-    [view addSubview:truckimageView];
-    
-    UIImageView *stopimageView = [[UIImageView alloc]initWithFrame:CGRectMake(120, 5, 14, 14)];
+    UIImageView *stopimageView = [[UIImageView alloc]initWithFrame:CGRectMake(127, 5, 14, 14)];
     [stopimageView setImage:[UIImage imageNamed:@"flag.png"]];
     [view addSubview:stopimageView];
-    
-    UILabel *stopCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 2, 100, 18)];
+    UILabel *stopCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(147, 2, 100, 18)];
     [stopCountLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [stopCountLabel setText:[NSString stringWithFormat:@"%i STOPS",[sectionInfo numberOfObjects]]];
+    [stopCountLabel setText:[NSString stringWithFormat:@"%lu STOPS",(unsigned long)[sectionInfo numberOfObjects]]];
     [stopCountLabel setTextColor:UIColorFromRGB(0x3c6ba1)];
     [view addSubview:stopCountLabel];
     
     
-    view.backgroundColor = UIColorFromRGB(0xcddcec);
+    view.backgroundColor =  UIColorFromRGB(0xcddcec);
     return view;
 }
 
@@ -354,7 +362,7 @@
     cell.locationNameLabel.text = [ NSString stringWithUTF8String:[stop.location_name cStringUsingEncoding:NSUTF8StringEncoding]];;
     cell.locationNameLabel.textColor = UIColorFromRGB(0x3c6ba1);
     cell.addressOneLabel.text = [ NSString stringWithUTF8String:[stop.address.address1 cStringUsingEncoding:NSUTF8StringEncoding]];
-    cell.cityLabel.text = stop.address.city;
+    cell.cityLabel.text = stop.load.id;
     cell.zipLabel.text = stop.address.zip;
     cell.typeLabel.text = stop.type;
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;

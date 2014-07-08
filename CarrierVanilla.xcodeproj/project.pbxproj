@@ -11,7 +11,6 @@
 		D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A4521195472F400D60990 /* CVUpdateButton.m */; };
 		D01A45251958749000D60990 /* btRippleButtton.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A45241958749000D60990 /* btRippleButtton.m */; };
 		D01A452819587AB700D60990 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A452719587AB700D60990 /* AFNetworkActivityLogger.m */; };
-		D029281F1950907C0061069F /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D029281E1950907C0061069F /* Item.m */; };
 		D0292822195195E70061069F /* CCSignatureDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292821195195E70061069F /* CCSignatureDrawView.m */; };
 		D0292825195197110061069F /* CCPDFWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292824195197110061069F /* CCPDFWriter.m */; };
 		D03B7D58196183ED006AFE53 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = D03B7D54196183ED006AFE53 /* menu.png */; };
@@ -38,6 +37,11 @@
 		D09139AD1941A4C50029AE98 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139881941A4C50029AE98 /* CoreData.framework */; };
 		D09139B51941A4C50029AE98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D09139B31941A4C50029AE98 /* InfoPlist.strings */; };
 		D09139B71941A4C50029AE98 /* CarrierVanillaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */; };
+		D0AAA12E196711760044EE87 /* truckwhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA12D196711760044EE87 /* truckwhite@2x.png */; };
+		D0AAA130196711B30044EE87 /* truckwhite.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA12F196711B30044EE87 /* truckwhite.png */; };
+		D0AAA133196712460044EE87 /* flagwhite.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA131196712460044EE87 /* flagwhite.png */; };
+		D0AAA134196712460044EE87 /* flagwhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA132196712460044EE87 /* flagwhite@2x.png */; };
+		D0AAA1371969AE680044EE87 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AAA1361969AE680044EE87 /* Item.m */; };
 		D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */; };
 		D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8DC1944E3200095E59E /* CVChepClient.m */; };
 		D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */; };
@@ -77,6 +81,9 @@
 		D0DE9F43195DFD7E0095BC5A /* pickicondone1.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F3F195DFD7E0095BC5A /* pickicondone1.png */; };
 		D0DE9F44195DFD7E0095BC5A /* pickicondone1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F40195DFD7E0095BC5A /* pickicondone1@2x.png */; };
 		D0F7FE5F194E0EBA002CCD9F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */; };
+		D0FFEEE81969D08100581F8F /* loads.json in Resources */ = {isa = PBXBuildFile; fileRef = D0FFEEE71969D08100581F8F /* loads.json */; };
+		D0FFEEEB1969D79B00581F8F /* CVItemLongPress.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FFEEEA1969D79B00581F8F /* CVItemLongPress.m */; };
+		D0FFEEEE196BF59900581F8F /* CVItemTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FFEEED196BF59900581F8F /* CVItemTextField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,8 +105,6 @@
 		D01A45241958749000D60990 /* btRippleButtton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = btRippleButtton.m; sourceTree = "<group>"; };
 		D01A452619587AB700D60990 /* AFNetworkActivityLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityLogger.h; sourceTree = "<group>"; };
 		D01A452719587AB700D60990 /* AFNetworkActivityLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityLogger.m; sourceTree = "<group>"; };
-		D029281D1950907C0061069F /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
-		D029281E1950907C0061069F /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		D0292820195195E70061069F /* CCSignatureDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSignatureDrawView.h; sourceTree = "<group>"; };
 		D0292821195195E70061069F /* CCSignatureDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSignatureDrawView.m; sourceTree = "<group>"; };
 		D0292823195197110061069F /* CCPDFWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPDFWriter.h; sourceTree = "<group>"; };
@@ -133,6 +138,12 @@
 		D09139B21941A4C50029AE98 /* CarrierVanillaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CarrierVanillaTests-Info.plist"; sourceTree = "<group>"; };
 		D09139B41941A4C50029AE98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarrierVanillaTests.m; sourceTree = "<group>"; };
+		D0AAA12D196711760044EE87 /* truckwhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "truckwhite@2x.png"; sourceTree = "<group>"; };
+		D0AAA12F196711B30044EE87 /* truckwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truckwhite.png; sourceTree = "<group>"; };
+		D0AAA131196712460044EE87 /* flagwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flagwhite.png; sourceTree = "<group>"; };
+		D0AAA132196712460044EE87 /* flagwhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flagwhite@2x.png"; sourceTree = "<group>"; };
+		D0AAA1351969AE680044EE87 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		D0AAA1361969AE680044EE87 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		D0ABC8C11944E23E0095E59E /* CVMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVMasterViewController.h; path = Controllers/CVMasterViewController.h; sourceTree = "<group>"; };
 		D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVMasterViewController.m; path = Controllers/CVMasterViewController.m; sourceTree = "<group>"; };
 		D0ABC8DB1944E3200095E59E /* CVChepClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChepClient.h; path = Network/CVChepClient.h; sourceTree = "<group>"; };
@@ -185,6 +196,11 @@
 		D0DE9F3F195DFD7E0095BC5A /* pickicondone1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickicondone1.png; sourceTree = "<group>"; };
 		D0DE9F40195DFD7E0095BC5A /* pickicondone1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pickicondone1@2x.png"; sourceTree = "<group>"; };
 		D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D0FFEEE71969D08100581F8F /* loads.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loads.json; sourceTree = "<group>"; };
+		D0FFEEE91969D79B00581F8F /* CVItemLongPress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVItemLongPress.h; sourceTree = "<group>"; };
+		D0FFEEEA1969D79B00581F8F /* CVItemLongPress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVItemLongPress.m; sourceTree = "<group>"; };
+		D0FFEEEC196BF59900581F8F /* CVItemTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVItemTextField.h; sourceTree = "<group>"; };
+		D0FFEEED196BF59900581F8F /* CVItemTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVItemTextField.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +272,7 @@
 		D091398A1941A4C50029AE98 /* CarrierVanilla */ = {
 			isa = PBXGroup;
 			children = (
+				D0FFEEE71969D08100581F8F /* loads.json */,
 				D0D3F38E1950501C00452C58 /* Models */,
 				D0D3F38B1950437D00452C58 /* CVStopTableViewCell.h */,
 				D0D3F38C1950437D00452C58 /* CVStopTableViewCell.m */,
@@ -316,6 +333,8 @@
 				D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */,
 				D0ABC8C11944E23E0095E59E /* CVMasterViewController.h */,
 				D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */,
+				D0FFEEE91969D79B00581F8F /* CVItemLongPress.h */,
+				D0FFEEEA1969D79B00581F8F /* CVItemLongPress.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -334,6 +353,8 @@
 		D0ABC8DE1944E3FA0095E59E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D0FFEEEC196BF59900581F8F /* CVItemTextField.h */,
+				D0FFEEED196BF59900581F8F /* CVItemTextField.m */,
 				D01A45231958749000D60990 /* btRippleButtton.h */,
 				D01A45241958749000D60990 /* btRippleButtton.m */,
 				D01A4520195472F400D60990 /* CVUpdateButton.h */,
@@ -351,6 +372,10 @@
 		D0D3F370194EFD6000452C58 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D0AAA131196712460044EE87 /* flagwhite.png */,
+				D0AAA132196712460044EE87 /* flagwhite@2x.png */,
+				D0AAA12F196711B30044EE87 /* truckwhite.png */,
+				D0AAA12D196711760044EE87 /* truckwhite@2x.png */,
 				D03B7D6419618BA3006AFE53 /* flag.png */,
 				D03B7D6519618BA3006AFE53 /* flag@2x.png */,
 				D03B7D60196189FC006AFE53 /* truck.png */,
@@ -392,12 +417,12 @@
 				D0D3F3931950501C00452C58 /* Load.h */,
 				D0D3F3941950501C00452C58 /* Load.m */,
 				D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */,
+				D0AAA1351969AE680044EE87 /* Item.h */,
+				D0AAA1361969AE680044EE87 /* Item.m */,
 				D0DE9EE2195D811B0095BC5A /* Loadnote.h */,
 				D0DE9EE3195D811B0095BC5A /* Loadnote.m */,
 				D0DE9EE5195D81670095BC5A /* Stop.h */,
 				D0DE9EE6195D81670095BC5A /* Stop.m */,
-				D029281D1950907C0061069F /* Item.h */,
-				D029281E1950907C0061069F /* Item.m */,
 				D0D3F3971950501C00452C58 /* Ref.h */,
 				D0D3F3981950501C00452C58 /* Ref.m */,
 				D0D3F3991950501C00452C58 /* Shipment.h */,
@@ -489,6 +514,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0DE9F44195DFD7E0095BC5A /* pickicondone1@2x.png in Resources */,
+				D0AAA130196711B30044EE87 /* truckwhite.png in Resources */,
 				D0D3F387194EFD7E00452C58 /* play_button.png in Resources */,
 				D03B7D6719618BA3006AFE53 /* flag@2x.png in Resources */,
 				D0D3F37F194EFD7E00452C58 /* attachment@2x.png in Resources */,
@@ -502,6 +528,8 @@
 				D0D3F383194EFD7E00452C58 /* bubbleReceive@2x.png in Resources */,
 				D091398F1941A4C50029AE98 /* InfoPlist.strings in Resources */,
 				D03B7D5B196183ED006AFE53 /* topic@2x.png in Resources */,
+				D0AAA133196712460044EE87 /* flagwhite.png in Resources */,
+				D0AAA134196712460044EE87 /* flagwhite@2x.png in Resources */,
 				D0D3F385194EFD7E00452C58 /* inputTextBG.png in Resources */,
 				D03B7D63196189FC006AFE53 /* truck@2x.png in Resources */,
 				D0D3F37E194EFD7E00452C58 /* attachment.png in Resources */,
@@ -509,10 +537,12 @@
 				D0D3F386194EFD7E00452C58 /* inputTextBG@2x.png in Resources */,
 				D03B7D59196183ED006AFE53 /* menu@2x.png in Resources */,
 				D0D3F38A194EFD7E00452C58 /* settings@2x.png in Resources */,
+				D0AAA12E196711760044EE87 /* truckwhite@2x.png in Resources */,
 				D03B7D62196189FC006AFE53 /* truck.png in Resources */,
 				D0DE9F32195DFA7F0095BC5A /* dropicon@2x.png in Resources */,
 				D0DE9F42195DFD7E0095BC5A /* dropicondone1@2x.png in Resources */,
 				D09139981941A4C50029AE98 /* Main.storyboard in Resources */,
+				D0FFEEE81969D08100581F8F /* loads.json in Resources */,
 				D0DE9F41195DFD7E0095BC5A /* dropicondone1.png in Resources */,
 				D03B7D6619618BA3006AFE53 /* flag.png in Resources */,
 				D0DE9F33195DFA7F0095BC5A /* pickicon.png in Resources */,
@@ -571,6 +601,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0AAA1371969AE680044EE87 /* Item.m in Sources */,
 				D0D3F39D1950501C00452C58 /* Address.m in Sources */,
 				D0D3F36D194EF8C700452C58 /* CCMessageViewController.m in Sources */,
 				D0D3F39F1950501C00452C58 /* Load.m in Sources */,
@@ -579,6 +610,7 @@
 				D09139911941A4C50029AE98 /* main.m in Sources */,
 				D0D3F3A21950501C00452C58 /* Shipment.m in Sources */,
 				D0D3F3A11950501C00452C58 /* Ref.m in Sources */,
+				D0FFEEEE196BF59900581F8F /* CVItemTextField.m in Sources */,
 				D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */,
 				D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */,
 				D0DE9EE7195D81670095BC5A /* Stop.m in Sources */,
@@ -587,12 +619,12 @@
 				D0DE9EE4195D811B0095BC5A /* Loadnote.m in Sources */,
 				D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */,
 				D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */,
-				D029281F1950907C0061069F /* Item.m in Sources */,
 				D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */,
 				D0D3F38D1950437D00452C58 /* CVStopTableViewCell.m in Sources */,
 				D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */,
 				D0292825195197110061069F /* CCPDFWriter.m in Sources */,
 				D01A45251958749000D60990 /* btRippleButtton.m in Sources */,
+				D0FFEEEB1969D79B00581F8F /* CVItemLongPress.m in Sources */,
 				D03B7D6A19619567006AFE53 /* CVMapAnnotation.m in Sources */,
 				D0292822195195E70061069F /* CCSignatureDrawView.m in Sources */,
 			);
