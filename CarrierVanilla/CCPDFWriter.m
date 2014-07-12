@@ -19,8 +19,8 @@
 +(void)createPDFfromLoad:(Load*)load saveToDocumentsWithFileName:(NSString*)aFilename
 {
     NSArray *stopsArray =  [load.stops allObjects];
-    Stop *picStop = stopsArray[0];
-    Stop *dropStop = stopsArray[1];
+    Stop *picStop = stopsArray[1];
+    Stop *dropStop = stopsArray[0];
     NSMutableData *pdfData = [NSMutableData data];
     
     CGRect pageFrame = CGRectMake(0, 0, 612, 792);
@@ -1562,6 +1562,7 @@
     NSString* documentDirectory = [documentDirectories objectAtIndex:0];
     NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:aFilename];
     [pdfData writeToFile:documentDirectoryFilename atomically:YES];
+    load.podData = pdfData;
 }
 
 @end

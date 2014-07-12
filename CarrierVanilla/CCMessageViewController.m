@@ -55,27 +55,29 @@
         }
         NSArray *notes = [results objectForKey:@"notes"];
         NSLog(@"NOtes: %@", notes);
+        [self recursivelyCheckForRepliesAndCreateMessage:notes];
     }];
     
     
-    [[self.stop.loadNotes allObjects]enumerateObjectsUsingBlock:^(Loadnote *message, NSUInteger idx, BOOL *stop) {
-        SOMessage *soMessage = [[SOMessage alloc]init];
-        soMessage.text = message.text;
-        soMessage.fromMe = [message.fromMe boolValue];
-        soMessage.type = message.thumbnail ? SOMessageTypePhoto : SOMessageTypeText;
-        soMessage.thumbnail = message.thumbnail ? [UIImage imageWithData:message.thumbnail] : nil;
-        soMessage.media = message.media ? message.media : nil;
-        soMessage.date = message.date;
-        [self.dataSource addObject:soMessage];
-    }];
-    [self refreshMessages];
+//    [[self.stop.loadNotes allObjects]enumerateObjectsUsingBlock:^(Loadnote *message, NSUInteger idx, BOOL *stop) {
+//        SOMessage *soMessage = [[SOMessage alloc]init];
+//        soMessage.text = message.text;
+//        soMessage.fromMe = [message.fromMe boolValue];
+//        soMessage.type = message.thumbnail ? SOMessageTypePhoto : SOMessageTypeText;
+//        soMessage.thumbnail = message.thumbnail ? [UIImage imageWithData:message.thumbnail] : nil;
+//        soMessage.media = message.media ? message.media : nil;
+//        soMessage.date = message.date;
+//        [self.dataSource addObject:soMessage];
+//    }];
+   // [self refreshMessages];
 }
+
 //..26 June Lean Update Request - 03 July Lean Update
 -(void)recursivelyCheckForRepliesAndCreateMessage:(NSArray*)messages{
     [messages enumerateObjectsUsingBlock:^(id message, NSUInteger idx, BOOL *stop) {
         SOMessage *soMessage = [[SOMessage alloc]init];
         soMessage.text = message[@"message"];
-        soMessage.fromMe = YES;
+        soMessage.fromMe = [[message valueForKey:@"created_by"] isEqualToString:@"APItester"] ? YES : NO;
         soMessage.type = SOMessageTypeText;
         soMessage.date = [[NSDateFormatter new]dateFromString:message[@"created_date"]];
         [self.dataSource addObject:soMessage];

@@ -272,6 +272,7 @@
 		D091398A1941A4C50029AE98 /* CarrierVanilla */ = {
 			isa = PBXGroup;
 			children = (
+				D0FFEEEF196D29B800581F8F /* iPad */,
 				D0FFEEE71969D08100581F8F /* loads.json */,
 				D0D3F38E1950501C00452C58 /* Models */,
 				D0D3F38B1950437D00452C58 /* CVStopTableViewCell.h */,
@@ -429,6 +430,13 @@
 				D0D3F39A1950501C00452C58 /* Shipment.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D0FFEEEF196D29B800581F8F /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -752,13 +760,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: shane davis (4965HJMH5J)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: shane davis (4965HJMH5J)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CarrierVanilla/CarrierVanilla-Prefix.pch";
 				INFOPLIST_FILE = "CarrierVanilla/CarrierVanilla-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8A0CFEBF-CAF8-4EDB-A8C0-A76D67508C15";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -769,13 +779,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: shane davis (4965HJMH5J)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: shane davis (4965HJMH5J)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CarrierVanilla/CarrierVanilla-Prefix.pch";
 				INFOPLIST_FILE = "CarrierVanilla/CarrierVanilla-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8A0CFEBF-CAF8-4EDB-A8C0-A76D67508C15";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

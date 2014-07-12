@@ -44,6 +44,7 @@
 - (void)setStop:(Stop *)stop
 {
     if (_stop != stop) {
+        NSLog(@"Stop Shipments: %@", [stop.shipments allObjects]);
         NSArray *shipments = [stop.shipments allObjects];
         _shipmentCount =  [shipments count];
         _stop = stop;
@@ -54,6 +55,7 @@
 {
     [super viewDidLoad];
     [self preparePulltoRefresh];
+    [self.tableView setTableFooterView:[UIView new]];
 }
 
 
@@ -213,9 +215,12 @@
         NSArray *shipments = [self.stop.shipments allObjects];
         Shipment *shipment = shipments[section-1];
         
-        NSLog(@"Shipment %@", shipment);
+        [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *item, NSUInteger idx, BOOL *stop) {
+            NSLog(@"AN ITEM: %@", item.product_description);
+            NSLog(@"___________________________________________________________________________");
+        }];
 //        NSString *shipment = self.shipmentCount > 1 ? @"Shipments" : @"Shipment";
-        NSString *fullString = [NSString stringWithFormat:@"Shipment Number  %@",shipment.primary_reference_number];
+        NSString *fullString = [NSString stringWithFormat:@"Shipment Number  %@", shipment.primary_reference_number];
         [label setText:fullString];
     }
     [view addSubview:label];
@@ -331,7 +336,9 @@
         
         
     }else{
-        Shipment *shipment = [self.stop.shipments allObjects][indexPath.row];
+        Shipment *shipment = [self.stop.shipments allObjects][indexPath.section-1];
+        
+        NSLog(@"IS THIS SHIPMENT RIGHT?? : %@", shipment);
         
         UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
 //        containerView.backgroundColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.1f];
@@ -355,6 +362,7 @@
        
         
         [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *item, NSUInteger idx, BOOL *stop) {
+            NSLog(@"ITEM FOUND::::: %@", item);
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, (idx)*55, CGRectGetWidth(containerView.bounds), 50)];
             view.backgroundColor = item.finalized ? [UIColor flatDarkGreenColor] :[UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.05f];
             view.layer.borderColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.2f].CGColor;
@@ -362,11 +370,11 @@
             view.layer.cornerRadius = 3;
             
             
-            NSString *productString = [NSString stringWithFormat:@"%@ pallets", item.product_description];
+            NSString *productString =  item.product_description;
             
-            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 200, 30)];
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 230, 30)];
             label.text = productString;
-            label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+            label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
             label.textColor = item.finalized ? [UIColor whiteColor] : UIColorFromRGB(0x3c6ba1);
             
             CVItemTextField *qtyField  = [[CVItemTextField alloc]initWithFrame:CGRectMake(CGRectGetWidth(view.bounds)-60, 10, 50, 30)];
@@ -396,11 +404,11 @@
 -(void)handleLongPressOnQtyField: (CVItemLongPress*)gesture{
  
     
-    if (gesture.state == UIGestureRecognizerStateBegan && _stop.actual_arrival) {
+    if (gesture.state == UIGestureRecognizerStateBegan && _stop.actual_arrival && !_stop.actual_departure) {
            NSLog(@"Gesture Item: %@", gesture.item);
             gesture.item.finalized = [NSNumber numberWithBool:![gesture.item.finalized boolValue]];
         
-        if ([gesture.item.shipment isFinalizedShipment]) {
+        if ([_stop isFinalizedShipment]) {
             [self checkMeOut];
         }
         for (UIView *subview in gesture.view.subviews) {
@@ -567,9 +575,7 @@
     }
 }
 
--(NSArray*)getQuantitesForStop:(Stop*)stop{
-    return @[];
-}
+
 
 #pragma mark show signature view AND save singature methods
 
@@ -604,17 +610,13 @@
         //                self.signaturePic.image = [UIImage imageWithData:imageData];
         
         
-        if ([self.stop.load isCompletedLoad]) {
+       // if ([self.stop.load isCompletedLoad]) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.labelText = @"Saving Load";
             NSString *pdfName = @"pod.pdf";
-            
+
             [CCPDFWriter createPDFfromLoad:self.stop.load saveToDocumentsWithFileName:pdfName];
-            [[CVChepClient sharedClient]updateStopWithId:_stop.id
-                                                 forLoad:self.stop.load.id
-                                          withQuantities:@[@2] withActualArrival:_stop.actual_arrival
-                                     withActualDeparture:_stop.actual_departure
-                                                  andPod:imageData
+            [[CVChepClient sharedClient]updateStop:_stop
                                               completion:^( NSError *error) {
                                                   if (error) {
                                                       NSLog(@"there was an error %@", error);
@@ -627,12 +629,12 @@
                                                   [self.delegate saveChangesOnContext];
                                                   self.title = @"Departed";
                                               }];
-        }else{
-            NSLog(@"Load not yet complete");
-            [self addCheckOutTimeStampeViewToView];
-            [self.delegate saveChangesOnContext];
-            self.title = @"Complete";
-        }
+//        }else{
+//            NSLog(@"Load not yet complete");
+//            [self addCheckOutTimeStampeViewToView];
+//            [self.delegate saveChangesOnContext];
+//            self.title = @"Complete";
+//        }
     }];
 }
 
@@ -700,9 +702,7 @@
 -(void)textFieldDidEndEditing:(CVItemTextField *)textField{
     
     NSString *newValue = [textField text];
-    textField.item.pieces = [NSNumber numberWithInt:[textField.text integerValue]];
-    NSLog(@"the new text:: %@" , newValue);
-    NSLog(@"ITEM on text field is: %@", textField.item);
+    textField.item.pieces = [NSNumber numberWithInt:[newValue integerValue]];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{

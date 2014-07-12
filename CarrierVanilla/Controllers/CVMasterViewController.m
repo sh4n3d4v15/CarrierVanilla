@@ -255,7 +255,7 @@
     
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.load_number" ascending:YES];
-    NSSortDescriptor *typeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:NO];
+    NSSortDescriptor *typeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor,typeSortDescriptor];
     
     
@@ -373,7 +373,7 @@
         cell.imageView.image = stop.actual_departure ? [UIImage imageNamed:@"pickicondone1.png"]: [UIImage imageNamed:@"pickicon.png"];
     }
     if (stop.actual_departure) {
-        cell.imageView.alpha = .9;
+       // cell.imageView.alpha = .9;
     }
 }
 

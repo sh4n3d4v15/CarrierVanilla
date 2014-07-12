@@ -11,7 +11,7 @@
 #import "Load.h"
 #import "Loadnote.h"
 #import "Shipment.h"
-
+#import "Item.h"
 
 @implementation Stop
 
@@ -39,5 +39,19 @@
 @dynamic load;
 @dynamic shipments;
 @dynamic loadNotes;
+
+-(BOOL)isFinalizedShipment{
+    __block BOOL complete = YES;
+    
+    [[self.shipments allObjects]enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger idx, BOOL *stop) {
+        [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *currentItem, NSUInteger idx, BOOL *stop) {
+            if (!currentItem.finalized) {
+                complete = NO;
+            }
+        }];
+    }];
+    
+    return complete;
+}
 
 @end

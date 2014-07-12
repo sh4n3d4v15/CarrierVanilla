@@ -7,14 +7,14 @@
 //
 
 #import "AFHTTPSessionManager.h"
-
+#import "Stop.h"
 @interface CVChepClient : AFHTTPSessionManager
 
 +(CVChepClient*)sharedClient;
 #pragma mark - Stop Requests
 - (NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:( void (^)(NSArray *results, NSError *error) )completion;
 
--(NSURLSessionDataTask *)updateStopWithId:(NSString *)stopid forLoad:(NSString*)loadId withQuantities:(NSArray *)quantities withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate andPod: (NSData*)podData completion:(void (^)( NSError *))completion;
+-(NSURLSessionDataTask *)updateStop:(Stop *)stop completion:(void (^)( NSError *))completion;
 
 #pragma mark - Documents Requests
 -(NSURLSessionDataTask*)uploadPhoto:(NSData*)photoData forStopId:(NSString*)stopId withLoadId:(NSString*)loadId withComment:(NSString*)comment completion:(void(^)(NSDictionary *responseDic,NSError *error))completion;

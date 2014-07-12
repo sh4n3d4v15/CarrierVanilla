@@ -19,16 +19,5 @@
 @dynamic items;
 @dynamic stop;
 
--(BOOL)isFinalizedShipment{
-    __block BOOL complete = YES;
-    
-    [self.items enumerateObjectsUsingBlock:^(Item *currentItem, BOOL *stop) {
-        if (!currentItem.finalized) {
-            complete = NO;
-        }
-    }];
-    return complete;
-}
-
 
 @end

@@ -8,7 +8,7 @@
 
 #import "CVChepClient.h"
 #import "CVAppDelegate.h"
-#import "Stop.h"
+
 #import "Load.h"
 #import "Address.h"
 #import "Ref.h"
@@ -50,6 +50,7 @@
 }
 
 #define SET_IF_NOT_NULL(TARGET, VAL) if(VAL != [NSNull null]) { TARGET = VAL; }
+
 - (void)importArrayOfStopsIntoCoreData:(NSArray*)resultsArray
 {
     CVAppDelegate *dmgr = (CVAppDelegate *)[UIApplication sharedApplication].delegate;
@@ -119,8 +120,9 @@
                         SET_IF_NOT_NULL(item.lading, [itemObj valueForKey:@"lading"]);
 
                         [shipment addItemsObject:item];
-                    }];
+                    }];///ITEMS LOOP
                     
+                    NSLog(@"SHIPMENT ITEMS: %@", [shipment.items allObjects]);
                     [_stop addShipmentsObject:shipment];
                     [load addStopsObject:_stop];
                 }];
@@ -172,10 +174,9 @@
                                             NSLog(@"top response %@", responseObject);
                                             if (httpResponse.statusCode == 200) {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                    NSLog(@"REPONSE::::: %@", responseObject);
                                                     [self importArrayOfStopsIntoCoreData:loads];
                                                     
-                                                    NSLog(@"RESONSE: %@", httpResponse);
-                                                    NSLog(@"RESONSE OBJECT: %@", responseObject);
                                                     completion(responseObject,nil);
                                                 });
                                             }else{
@@ -204,23 +205,36 @@
     return task;
 };
 
+-(NSArray*)getQuantitesForStop:(Stop*)stop{
+    NSMutableArray *returnArray = [NSMutableArray new];
+    [stop.shipments enumerateObjectsUsingBlock:^(Shipment *shipment, BOOL *stop) {
+        [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *item, NSUInteger idx, BOOL *stop) {
+            
+            [returnArray addObject:@{@"delivery_line_item_number": item.line,
+                                     @"quantity": item.pieces ,
+                                     @"material_number":item.commodity
+                                     }];
+        }];
+    }];
+    return returnArray;
+}
+
+
 #pragma mark - HOW TO BUILD MULTI-MULTIPART FROM DICTIONARY?
--(NSURLSessionDataTask *)updateStopWithId:(NSString *)stopid forLoad:(NSString*)loadId withQuantities:(NSArray *)quantities withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate andPod: (NSData*)podData completion:(void (^)( NSError *))completion{
+-(NSURLSessionDataTask *)updateStop:(Stop *)stop completion:(void (^)( NSError *))completion{
     NSLog(@"Update stop method fired");
-    NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId,stopid];
+    NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",stop.load.id,stop.id];
     NSLog(@"Full URL: %@", fullUrl);
     
-    if ([quantities count]) {
-        NSLog(@"It appears that we have multiple quantities to update");
-    }
+    __unused NSArray *deliveries = [self getQuantitesForStop:stop];
     
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
-   // [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss+02:00"];
-    [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
+    [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss+02:00"];
+   // [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
     
     
-    NSDictionary *updateDict = @{@"actual_arrival_date": [df stringFromDate:arrivalDate],
-                                 @"actual_departure_date": [df stringFromDate:departureDate],
+    NSDictionary *updateDict = @{@"actual_arrival_date": [df stringFromDate:stop.actual_arrival],
+                                 @"actual_departure_date": [df stringFromDate:stop.actual_departure],
                                  @"product_id": @"60",
                                  @"delivery_number": @"",
                                  @"deliveries":@[]
@@ -234,8 +248,8 @@
     NSDictionary *documentDict = @{@"document_type_id": @"",
                                  @"document_type_key": @"POD",
                                  @"product_id": @"60",
-                                 @"comments": @"Completed in Madrid",
-                                 @"stop_id": @""
+                                 @"comments": @"Completed in Madrid after lunch",
+                                 @"stop_id": stop.id
                                  };
     
     NSData *documentData = [NSJSONSerialization dataWithJSONObject:documentDict options:0 error:&error];
@@ -250,7 +264,7 @@
                        [formData appendPartWithFormData:updateData name:@"update_parameters"];
                        [formData appendPartWithFormData:documentData name:@"document_info"];
 
-                       [formData appendPartWithFileData:podData
+                       [formData appendPartWithFileData:stop.load.podData
                                                    name:@"file"
                                                fileName:@"Proof_signed.pdf"
                                                mimeType:@"application/pdf"];
@@ -332,10 +346,9 @@
                                                                      @"subject":@"Mobile Load Note",
                                                                      @"message":message,
                                                                      @"note_type_id":@"4647",
-                                                                     @"reply_note_id":@"",
-                                                                     @"reply_note_thread_id":@"",
-                                                                     @"emails":@"shane.davies@chep.com",
-                                                                     @"shipments":@[]
+                                                                     @"reply_note_id":@"0",
+                                                                     @"reply_note_thread_id":@"0",
+                                                                     @"emails":@[@"shane.davies@chep.com"]
                                                                      }
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
                                         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;

@@ -50,5 +50,5 @@
 - (void)removeLoadNotesObject:(Loadnote *)value;
 - (void)addLoadNotes:(NSSet *)values;
 - (void)removeLoadNotes:(NSSet *)values;
-
+-(BOOL)isFinalizedShipment;
 @end

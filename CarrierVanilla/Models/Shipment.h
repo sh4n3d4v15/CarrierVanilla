@@ -26,5 +26,4 @@
 - (void)removeItemsObject:(Item *)value;
 - (void)addItems:(NSSet *)values;
 - (void)removeItems:(NSSet *)values;
--(BOOL)isFinalizedShipment;
 @end
