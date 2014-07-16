@@ -154,10 +154,10 @@
 
 
 -(NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:(void (^)(NSArray *, NSError *))completion{
-    NSLog(@"Calling the method::");
         NSString *urlString = @"/shipment_tracking_rest/jsonp/loads/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu";
+        NSLog(@"Vheicle selected: %@", vehicleId);
         NSURLSessionDataTask *task = [self POST:urlString parameters:@{
-                                                                     @"vehicle":@"TEST123",
+                                                                     @"vehicle":vehicleId,
                                                                      @"res":@"",
                                                                      @"offset":@0,
                                                                      @"limit":@50,
@@ -229,8 +229,8 @@
     __unused NSArray *deliveries = [self getQuantitesForStop:stop];
     
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss+02:00"];
-   // [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
+    [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss+03:00"];
+   //[df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
     
     
     NSDictionary *updateDict = @{@"actual_arrival_date": [df stringFromDate:stop.actual_arrival],

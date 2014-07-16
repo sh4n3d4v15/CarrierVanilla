@@ -810,14 +810,14 @@
     NSString *carrierId = [[self.carrierTextField text]copy];
 //    _carrierTextField.text = nil;
 
-        [[NSUserDefaults standardUserDefaults]setValue:carrierId forKey:@"carrierID"];
+        [[NSUserDefaults standardUserDefaults]setValue:name forKey:@"vehicle"];
         NSDictionary *userInfo = @{@"vehicle":name,@"password":password};
         
         [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];
         [[NSUserDefaults standardUserDefaults]synchronize];
         [_delegate userDidLoginWithDictionary:userInfo];
     
-    if ([name isEqualToString:@"seldon"]) {
+    if ([carrierId isEqualToString:@"MobiShipRestUser"] && [password isEqualToString:@"M0b1Sh1pm3n743"]){
         [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }else{
         self.loginInfoLabel.text = @"I don't know who you are anymore";

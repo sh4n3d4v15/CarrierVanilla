@@ -49,7 +49,7 @@
     
     self.navigationItem.leftBarButtonItem = nil;
     UISegmentedControl *statFilter = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Mon", @"Today", @"Wed", nil]];
-                                      self.navigationItem.titleView = statFilter;
+                                    //  self.navigationItem.titleView = statFilter;
     statFilter.selectedSegmentIndex = 1;
     [statFilter setTitleTextAttributes:@{[UIFont fontWithName:@"HelveticaNeue" size:5.0]: NSFontAttributeName} forState:UIControlStateNormal];
     [statFilter addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
@@ -103,7 +103,7 @@
 
 -(void)refresh:(id)sender{
     NSLog(@"RERESH");
-    [[CVChepClient sharedClient]getStopsForVehicle:@"" completion:^(NSArray *results, NSError *error) {
+    [[CVChepClient sharedClient]getStopsForVehicle:[[NSUserDefaults standardUserDefaults]valueForKey:@"vehicle"] completion:^(NSArray *results, NSError *error) {
         if (error) {
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Problem refreshing" message:@"Sorry, we could not refresh the loads" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
@@ -341,7 +341,13 @@
 #pragma mark  -  Delegate methods
 
 -(void)userDidLoginWithDictionary:(NSDictionary *)userInfo{
-
+    [[CVChepClient sharedClient]getStopsForVehicle:[userInfo valueForKey:@"vehicle"] completion:^(NSArray *results, NSError *error) {
+        if(error){
+            NSLog(@"Error %@", error);
+        }else{
+            NSLog(@"all good");
+        }
+    }];
 }
 
 
