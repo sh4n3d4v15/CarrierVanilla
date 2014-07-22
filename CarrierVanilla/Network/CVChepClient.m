@@ -21,15 +21,12 @@
     static CVChepClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        
-        __unused NSURL *baseUrl = [NSURL URLWithString:@"http://chepserver.eu01.aws.af.cm"];
-         NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
+
+        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
         _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
         _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
         _sharedClient.requestSerializer.stringEncoding = NSUTF8StringEncoding;
-        
-        [_sharedClient.requestSerializer setAuthorizationHeaderFieldWithUsername:@"MobiShipRestUser" password:@"M0b1Sh1pm3n743"];
-      //  [_sharedClient.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
+        [[AFNetworkReachabilityManager sharedManager]startMonitoring];
         [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             NSOperationQueue *operationQueue = _sharedClient.operationQueue;
             switch (status) {
@@ -45,15 +42,41 @@
             NSLog(@"Reachability %@", AFStringFromNetworkReachabilityStatus(status));
         }];
     });
-    [[AFNetworkReachabilityManager sharedManager]startMonitoring];
+
     return _sharedClient;
 }
 
 #define SET_IF_NOT_NULL(TARGET, VAL) if(VAL != [NSNull null]) { TARGET = VAL; }
 
+- (void) deleteAllObjects: (NSString *) entityDescription  {
+    CVAppDelegate *del =  (CVAppDelegate *)[UIApplication sharedApplication].delegate;
+      self.moc = del.managedObjectContext;
+    
+    
+    NSLog(@"Entity description: %@", entityDescription);
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:self.moc];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error;
+    NSArray *items = [self.moc executeFetchRequest:fetchRequest error:&error];
+    
+    
+    for (Load *load in items) {
+        if([load isCompletedLoad]){
+            [self.moc deleteObject:load];
+            NSLog(@"%@ object deleted",entityDescription);
+        }
+    }
+    if (![self.moc save:&error]) {
+    	NSLog(@"Error deleting %@ - error:%@",entityDescription,error);
+    }
+    
+}
+
 - (void)importArrayOfStopsIntoCoreData:(NSArray*)resultsArray
 {
-    CVAppDelegate *dmgr = (CVAppDelegate *)[UIApplication sharedApplication].delegate;
+    [self deleteAllObjects:@"Load"];
     
     
     NSString *predicateString = [NSString stringWithFormat:@"load_number == $LOAD_NUMBER"];
@@ -61,23 +84,24 @@
     
     
     [resultsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
+        
         NSDictionary *variables = @{@"LOAD_NUMBER": [obj valueForKey:@"load_number"]};
         NSPredicate *localPredicate = [predicate predicateWithSubstitutionVariables:variables];
         NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Load"];
         NSError *error;
         [fetchRequest setPredicate:localPredicate];
-        NSArray *foundLoads = [dmgr.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        NSArray *foundLoads = [_moc executeFetchRequest:fetchRequest error:&error];
         
         if (![foundLoads count]) {
             
-            Load *load = [NSEntityDescription insertNewObjectForEntityForName:@"Load" inManagedObjectContext:dmgr.managedObjectContext];
+            Load *load = [NSEntityDescription insertNewObjectForEntityForName:@"Load" inManagedObjectContext:_moc];
             SET_IF_NOT_NULL(load.id , [obj valueForKey:@"id"]);
             SET_IF_NOT_NULL(load.load_number, [obj valueForKey:@"load_number"]);
             SET_IF_NOT_NULL(load.status, [obj valueForKey:@"status"]);
             
             NSArray *stops = [obj objectForKey:@"stops"];
             [stops enumerateObjectsUsingBlock:^(id stopobj, NSUInteger idx, BOOL *stop) {
-                Stop *_stop = [NSEntityDescription insertNewObjectForEntityForName:@"Stop" inManagedObjectContext:dmgr.managedObjectContext];
+                Stop *_stop = [NSEntityDescription insertNewObjectForEntityForName:@"Stop" inManagedObjectContext:_moc];
                 //            [_stop setValuesForKeysWithDictionary:stopobj];
                 SET_IF_NOT_NULL(_stop.location_name , [stopobj valueForKey:@"location_name"]);
                 SET_IF_NOT_NULL(_stop.id , [stopobj valueForKey:@"id"]);
@@ -91,7 +115,7 @@
                 SET_IF_NOT_NULL(_stop.pieces, [stopobj valueForKey:@"pieces"]);
                
                 
-                Address *address = [NSEntityDescription insertNewObjectForEntityForName:@"Address" inManagedObjectContext:dmgr.managedObjectContext];
+                Address *address = [NSEntityDescription insertNewObjectForEntityForName:@"Address" inManagedObjectContext:_moc];
                 SET_IF_NOT_NULL(address.address1, [stopobj valueForKeyPath:@"address.address1"]);
                 SET_IF_NOT_NULL(address.city, [stopobj valueForKeyPath:@"address.city"]);
                 SET_IF_NOT_NULL(address.state, [stopobj valueForKeyPath:@"address.state"]);
@@ -102,14 +126,14 @@
                 NSArray *shipments = [stopobj valueForKey:@"shipments"];
                 NSLog(@"Shipemnts in master %@", shipments);
                 [shipments enumerateObjectsUsingBlock:^(id shipmentObj, NSUInteger idx, BOOL *stop) {
-                    Shipment *shipment = [NSEntityDescription insertNewObjectForEntityForName:@"Shipment" inManagedObjectContext:dmgr.managedObjectContext];
+                    Shipment *shipment = [NSEntityDescription insertNewObjectForEntityForName:@"Shipment" inManagedObjectContext:_moc];
                     SET_IF_NOT_NULL(shipment.shipment_number,  shipmentObj[@"shipment_number"]);
                     SET_IF_NOT_NULL(shipment.comments, shipmentObj[@"comments"]);
                     SET_IF_NOT_NULL(shipment.primary_reference_number, shipmentObj[@"primary_reference_number"]);
                     
                     NSArray *items = [shipmentObj valueForKey:@"items"];
                     [items enumerateObjectsUsingBlock:^(id itemObj, NSUInteger idx, BOOL *stop) {
-                        Item *item = [NSEntityDescription insertNewObjectForEntityForName:@"Item" inManagedObjectContext:dmgr.managedObjectContext];
+                        Item *item = [NSEntityDescription insertNewObjectForEntityForName:@"Item" inManagedObjectContext:_moc];
                         SET_IF_NOT_NULL(item.line, [itemObj valueForKey:@"line"]);
                         SET_IF_NOT_NULL(item.product_id,  [itemObj valueForKey:@"product_id"]);
                         SET_IF_NOT_NULL(item.product_description, [itemObj valueForKey:@"product_description"]);
@@ -130,34 +154,42 @@
             
             NSArray *refs = [obj valueForKey:@"refs"];
             [refs enumerateObjectsUsingBlock:^(id refobj, NSUInteger idx, BOOL *stop) {
-                Ref *_ref = [NSEntityDescription insertNewObjectForEntityForName:@"Ref" inManagedObjectContext:dmgr.managedObjectContext];
+                Ref *_ref = [NSEntityDescription insertNewObjectForEntityForName:@"Ref" inManagedObjectContext:_moc];
                 SET_IF_NOT_NULL(_ref.name, [refobj valueForKey:@"name"]);
                 SET_IF_NOT_NULL(_ref.value, [refobj valueForKey:@"value"]);
 
                 [load addRefsObject:_ref];
             }];
-        }else{
-            NSLog(@"I stopped this from being duplicated: %@", foundLoads);
-        }
+        }//end of if loads found
     }];
     
     NSError* error = nil;
-    if (![dmgr.managedObjectContext save:&error]) {
+    if (![_moc save:&error]) {
         NSLog(@"Unable to save context for class");
     } else {
         NSLog(@"saved all records!");
     }
+        
 }
 
 
 #pragma mark - Stop Requests
 
 
--(NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:(void (^)(NSArray *, NSError *))completion{
+-(NSURLSessionDataTask *)getStopsForUser:(NSDictionary *)userinfo completion:(void (^)(NSString *, NSError *))completion{
+        [self.operationQueue setSuspended:NO];
+        NSString *username = [userinfo valueForKey:@"carrier"];
+        NSString *password = [userinfo valueForKey:@"password"];
+    
+        NSLog(@"The username is %@ and the password is %@", username , password);
+    
+        [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
+        //[self.requestSerializer setAuthorizationHeaderFieldWithUsername: password:[userinfo valueForKey:@"password"]];
+
         NSString *urlString = @"/shipment_tracking_rest/jsonp/loads/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu";
-        NSLog(@"Vheicle selected: %@", vehicleId);
+        NSLog(@"Vheicle selected: %@", userinfo );
         NSURLSessionDataTask *task = [self POST:urlString parameters:@{
-                                                                     @"vehicle":vehicleId,
+                                                                     @"vehicle":[userinfo valueForKey:@"vehicle"],
                                                                      @"res":@"",
                                                                      @"offset":@0,
                                                                      @"limit":@50,
@@ -169,6 +201,7 @@
                                                                      @"drop_end_date":@""}
                                       
                                         success:^(NSURLSessionDataTask *task, id responseObject) {
+                                            NSLog(@"Success");
                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
                                             NSArray *loads = [responseObject valueForKey:@"loads"];
                                             NSLog(@"top response %@", responseObject);
@@ -177,17 +210,26 @@
                                                     NSLog(@"REPONSE::::: %@", responseObject);
                                                     [self importArrayOfStopsIntoCoreData:loads];
                                                     
-                                                    completion(responseObject,nil);
+                                                    completion(@"all is good with 200 in da hood",nil);
                                                 });
                                             }else{
                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                    completion(nil,nil);
+                                                    completion(@"Something unexplained happened",nil);
                                                     NSLog(@"Received: %@", responseObject);
                                                     NSLog(@"Received HTTP %lo", (long)httpResponse.statusCode);
                                                 });
                                             }
                                         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           NSLog(@"Failure");
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                            NSLog(@"STATUS: %i", httpResponse.statusCode);
                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                
+                                                if (httpResponse.statusCode == 401) {
+                                                    completion(@"User login not successful", error);
+                                                }else{
+                                                    completion(@"Network connection error", error);
+                                                }
 //                                                NSError *error;
 //                                                NSString *filepath = [[NSBundle mainBundle]pathForResource:@"loads" ofType:@"json"];
 //                                                NSString *loadsJson = [[NSString alloc]initWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
@@ -196,10 +238,7 @@
 //                                                [self importArrayOfStopsIntoCoreData:loadsArray];
 //                                                NSLog(@"LoadsArray %@", loadsArray );
 //                                                NSLog(@"Error: %@", error);
-                                                
-                                                
-                                                
-                                               completion(nil,error);
+                                              // completion(nil,error);
                                             });
                                         }];
     return task;
@@ -229,7 +268,7 @@
     __unused NSArray *deliveries = [self getQuantitesForStop:stop];
     
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss+03:00"];
+    [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss+02:00"];
    //[df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
     
     
@@ -315,6 +354,7 @@
 #pragma mark - Load Note Requests
 
 -(NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSDictionary *, NSError *))completion{
+    [self.operationQueue setSuspended:NO];
     NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/notes/0/0/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId];
     NSURLSessionDataTask *task = [self GET:queryString parameters:nil
                                    success:^(NSURLSessionDataTask *task, id responseObject) {

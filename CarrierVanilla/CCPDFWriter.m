@@ -9,6 +9,8 @@
 #import "CCPDFWriter.h"
 #import "Stop.h"
 #import "Address.h"
+#import "Shipment.h"
+#import "Item.h"
 #import <QuartzCore/QuartzCore.h>
 
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -18,9 +20,22 @@
 
 +(void)createPDFfromLoad:(Load*)load saveToDocumentsWithFileName:(NSString*)aFilename
 {
+    
     NSArray *stopsArray =  [load.stops allObjects];
-    Stop *picStop = stopsArray[1];
-    Stop *dropStop = stopsArray[0];
+    
+    
+    Stop *stop1 = stopsArray[0];
+    Stop *stop2 = stopsArray[1];
+    
+    Stop *picStop;
+    Stop *dropStop;
+    if([stop1.type isEqualToString:@"Pick"]){
+        picStop = stop1;
+        dropStop = stop2;
+    }else{
+        picStop = stop2;
+        dropStop = stop1;
+    }
     NSMutableData *pdfData = [NSMutableData data];
     
     CGRect pageFrame = CGRectMake(0, 0, 612, 792);
@@ -63,16 +78,19 @@
     NSString* fAXContent = @"FAX +44 01932 850144";
     //RECIEVER
     NSString* aDDRESSSCITYRContent = picStop.address.city;
-//    NSString* address3RContent = dropStop.address.address3;
-//    NSString* address2RContent = dropStop.address.address2;
-//    NSString* address1RContent = dropStop.address.address1;
+    //    NSString* address3RContent = dropStop.address.address3;
+    NSString* address2RContent = dropStop.address.state;
+    NSString* address1RContent = dropStop.address.address1;
     NSString* receiverLocationNameContent = dropStop.location_name;
     //SENDER
     NSString* aDDRESSSCITYContent = picStop.address.city;
-//    NSString* address3Content = picStop.address.address3;
-//    NSString* address2Content = picStop.address.address2;
-//    NSString* address1Content = picStop.address.address1;
+    //    NSString* address3Content = picStop.address.address3;
+    NSString* address2Content = picStop.address.state;
+    NSString* address1Content = picStop.address.address1;
     NSString* senderLocationNameContent = picStop.location_name;
+    
+    //carrrier
+    NSString* carrierContent = @"The olde truck company";
     
     
     //// logo 2 Drawing
@@ -1262,11 +1280,21 @@
         [strokeColor setFill];
         [text2Content drawInRect: text2Rect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
+        CGRect text2Rect1 = CGRectMake(CGRectGetMinX(frame) + 221, CGRectGetMinY(frame) + 158, 158, 15);
+        [strokeColor setFill];
+        [@"Big Olde Trucking Company" drawInRect: text2Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        
         
         //// Text 3 Drawing
         CGRect text3Rect = CGRectMake(CGRectGetMinX(frame) + 401, CGRectGetMinY(frame) + 138, 127, 15);
         [strokeColor setFill];
         [text3Content drawInRect: text3Rect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        
+        NSString *shipmentNumber = picStop.load.load_number;
+        
+        CGRect text3Rect1 = CGRectMake(CGRectGetMinX(frame) + 401, CGRectGetMinY(frame) + 158, 147, 15);
+        [strokeColor setFill];
+        [shipmentNumber drawInRect: text3Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
         
         //// Text 4 Drawing
@@ -1279,6 +1307,11 @@
         CGRect text5Rect = CGRectMake(CGRectGetMinX(frame) + 220, CGRectGetMinY(frame) + 241, 101, 15);
         [strokeColor setFill];
         [text5Content drawInRect: text5Rect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        
+        //// Text 5 Drawing
+        CGRect text5Rect1 = CGRectMake(CGRectGetMinX(frame) + 220, CGRectGetMinY(frame) + 261, 101, 15);
+        [strokeColor setFill];
+        [@"18 July 2014" drawInRect: text5Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
         
         //// Text 6 Drawing
@@ -1340,12 +1373,45 @@
         [strokeColor setStroke];
         bezier8Path.lineWidth = 1;
         [bezier8Path stroke];
-
+        
+        
+        NSArray *shipments = [picStop.shipments allObjects];
+        
+        [shipments enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger outerIndex, BOOL *stop) {
+            NSArray *items = [shipment.items allObjects];
+            [items enumerateObjectsUsingBlock:^(Item *item, NSUInteger innerIndex, BOOL *stop) {
+                
+                
+                CGRect dESCRIPTIONRect1 = CGRectMake(CGRectGetMinX(frame) + 175, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 147, 15);
+                [strokeColor setFill];
+                [item.product_description drawInRect: dESCRIPTIONRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 8] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+                
+                CGRect pLANNEDQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 398, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 73, 14);
+                [strokeColor setFill];
+                NSLog(@"Pickstop pieces: %@", picStop.pieces);
+                [[picStop.pieces stringValue] drawInRect: pLANNEDQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+                
+                
+                CGRect aCTUALQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 487, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 73, 14);
+                [strokeColor setFill];
+                
+                [[item.pieces stringValue] drawInRect: aCTUALQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+                
+                
+                
+                
+            }];//items enumeration
+        }];//shipment enumeration
+        
         
         //// ITEM Drawing
         CGRect iTEMRect = CGRectMake(CGRectGetMinX(frame) + 48, CGRectGetMinY(frame) + 356, 26, 15);
         [strokeColor setFill];
         [iTEMContent drawInRect: iTEMRect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        
+        CGRect iTEMRect1 = CGRectMake(CGRectGetMinX(frame) + 48, CGRectGetMinY(frame) + 376, 26, 15);
+        [strokeColor setFill];
+        [@"10" drawInRect: iTEMRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
         
         
         //// PRODUCT Drawing
@@ -1354,10 +1420,20 @@
         [pRODUCTContent drawInRect: pRODUCTRect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
         
         
+        //// PRODUCT Drawing
+        CGRect pRODUCTRect1 = CGRectMake(CGRectGetMinX(frame) + 86, CGRectGetMinY(frame) + 376, 83, 14);
+        [strokeColor setFill];
+        [@"00000001" drawInRect: pRODUCTRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        
         //// DESCRIPTION Drawing
         CGRect dESCRIPTIONRect = CGRectMake(CGRectGetMinX(frame) + 175, CGRectGetMinY(frame) + 355, 147, 15);
         [strokeColor setFill];
         [dESCRIPTIONContent drawInRect: dESCRIPTIONRect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+        
+        //// DESCRIPTION Drawing
+        //        CGRect dESCRIPTIONRect1 = CGRectMake(CGRectGetMinX(frame) + 175, CGRectGetMinY(frame) + 375, 147, 15);
+        //        [strokeColor setFill];
+        //        [@"B1208A- 800x1200 Block Pallet" drawInRect: dESCRIPTIONRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 8] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
         
         
         //// BATCH Drawing
@@ -1371,17 +1447,27 @@
         [strokeColor setFill];
         [pLANNEDQUANTITYContent drawInRect: pLANNEDQUANTITYRect withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
         
+        //// PLANNED QUANTITY Drawing
+        //        CGRect pLANNEDQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 398, CGRectGetMinY(frame) + 376, 85, 16);
+        //        [strokeColor setFill];
+        //        [@"520" drawInRect: pLANNEDQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
         
         //// ACTUAL QUANTITY Drawing
         CGRect aCTUALQUANTITYRect = CGRectMake(CGRectGetMinX(frame) + 487, CGRectGetMinY(frame) + 356, 73, 14);
         [strokeColor setFill];
         [aCTUALQUANTITYContent drawInRect: aCTUALQUANTITYRect withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
         
+        //// ACTUAL QUANTITY Drawing
         
         //// COMMENTS Drawing
         CGRect cOMMENTSRect = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 508, 74, 15);
         [strokeColor setFill];
         [cOMMENTSContent drawInRect: cOMMENTSRect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        
+        //// COMMENTS Drawing
+        CGRect cOMMENTSRect1 = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 528, 374, 15);
+        [strokeColor setFill];
+        [@"** This load was complete through the mobile application" drawInRect: cOMMENTSRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
     }
     
     
@@ -1436,10 +1522,12 @@
         [sENDERContent drawInRect: sENDERRect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
         
-        //// CARRIER Drawing
+        ////  Drawing
         CGRect cARRIERRect = CGRectMake(CGRectGetMinX(frame) + 226, CGRectGetMinY(frame) + 550, 111, 16);
         [strokeColor setFill];
         [cARRIERContent drawInRect: cARRIERRect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        
+        
         
         
         //// RECEIVER Drawing
@@ -1489,28 +1577,30 @@
             [aDDRESSSCITYRContent drawInRect: aDDRESSSCITYRRect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
             
             
-//            //// address3R Drawing
-//            CGRect address3RRect = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 308, 160, 17);
-//            [strokeColor setFill];
-//            [address3RContent drawInRect: address3RRect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
-//            
-//            
-//            //// address2R Drawing
-//            CGRect address2RRect = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 295, 160, 20);
-//            [strokeColor setFill];
-//            [address2RContent drawInRect: address2RRect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
-//            
-//            
-//            //// address1R Drawing
-//            CGRect address1RRect = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 281, 160, 18);
-//            [strokeColor setFill];
-//            [address1RContent drawInRect: address1RRect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
-//            
+            //            //// address3R Drawing
+            //            CGRect address3RRect = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 308, 160, 17);
+            //            [strokeColor setFill];
+            //            [address3RContent drawInRect: address3RRect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+            
+            
+            //// address2R Drawing
+            CGRect address2RRect = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 295, 160, 20);
+            [strokeColor setFill];
+            [address2RContent drawInRect: address2RRect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+            //
+            //
+            //            //// address1R Drawing
+            CGRect address1RRect = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 281, 160, 18);
+            [strokeColor setFill];
+            [address1RContent drawInRect: address1RRect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+            
             
             //// receiverLocationName Drawing
             CGRect receiverLocationNameRect = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 261, 160, 21);
             [strokeColor setFill];
             [receiverLocationNameContent drawInRect: receiverLocationNameRect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+            
+            
         }
         
         
@@ -1523,23 +1613,23 @@
             
             
             //// address3 Drawing
-//            CGRect address3Rect = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 204, 160, 17);
-//            [strokeColor setFill];
-//            [address3Content drawInRect: address3Rect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
-//            
-//            
-//            //// address2 Drawing
-//            CGRect address2Rect = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 191, 160, 20);
-//            [strokeColor setFill];
-//            [address2Content drawInRect: address2Rect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
-//            
+            //            CGRect address3Rect = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 204, 160, 17);
+            //            [strokeColor setFill];
+            //            [address3Content drawInRect: address3Rect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+            //
+            //
+            //            //// address2 Drawing
+            CGRect address2Rect = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 191, 160, 20);
+            [strokeColor setFill];
+            [address2Content drawInRect: address2Rect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+            
             
             //// address1 Drawing
-//            CGRect address1Rect = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 177, 160, 18);
-//            [strokeColor setFill];
-//            [address1Content drawInRect: address1Rect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
-//            
-//            
+            CGRect address1Rect = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 177, 160, 18);
+            [strokeColor setFill];
+            [address1Content drawInRect: address1Rect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+            //
+            //
             //// senderLocationName Drawing
             CGRect senderLocationNameRect = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 157, 160, 21);
             [strokeColor setFill];
@@ -1549,20 +1639,21 @@
     
     
     //// senderSignatureBox Drawing
-   CGRect senderSignatureBoxRect = CGRectMake(CGRectGetMinX(frame) + 67.5, CGRectGetMinY(frame) + 576.5, 115, 57);
+    CGRect senderSignatureBoxRect = CGRectMake(CGRectGetMinX(frame) + 67.5, CGRectGetMinY(frame) + 576.5, 115, 57);
     [senderSignature drawInRect:senderSignatureBoxRect];
     
     //// receiverSignatureBox Drawing
     CGRect receiverSignatureBoxRect = CGRectMake(CGRectGetMinX(frame) + 424.5, CGRectGetMinY(frame) + 567.5, 114, 66);
     [receiverSignature drawInRect:receiverSignatureBoxRect];
     
-
+    
     UIGraphicsEndPDFContext();
     NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
     NSString* documentDirectory = [documentDirectories objectAtIndex:0];
     NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:aFilename];
-    [pdfData writeToFile:documentDirectoryFilename atomically:YES];
     load.podData = pdfData;
+    [pdfData writeToFile:documentDirectoryFilename atomically:YES];
+    
 }
 
 @end

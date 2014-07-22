@@ -810,19 +810,32 @@
     NSString *carrierId = [[self.carrierTextField text]copy];
 //    _carrierTextField.text = nil;
 
-        [[NSUserDefaults standardUserDefaults]setValue:name forKey:@"vehicle"];
-        NSDictionary *userInfo = @{@"vehicle":name,@"password":password};
-        
-        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-        [_delegate userDidLoginWithDictionary:userInfo];
+
+        NSDictionary *userInfo = @{@"vehicle": name , @"carrier": carrierId, @"password":password};
     
-    if ([carrierId isEqualToString:@"MobiShipRestUser"] && [password isEqualToString:@"M0b1Sh1pm3n743"]){
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    }else{
-        self.loginInfoLabel.text = @"I don't know who you are anymore";
- 
-    }
+
+
+//    if ([carrierId isEqualToString:@""] && [password isEqualToString:@""]){
+//    if ([carrierId isEqualToString:@"MobiShipRestUser"] && [password isEqualToString:@"M0b1Sh1pm3n743"]){
+        [_delegate userDidLoginWithDictionary:userInfo completion:^(NSError *error, NSString *message) {
+            if(error){
+                NSLog(@"there was an error logging in! %@", error.description);
+                NSLog(@"there was an error logging in - message %@", message);
+                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Credentials problem" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [av show];
+            }else{
+                [[NSUserDefaults standardUserDefaults]setValue:name forKey:@"vehicle"];
+                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                NSLog(@"Successful login");
+                NSLog(@"It worked- message %@", message);
+                [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+            }
+        }];
+//    }else{
+//        self.loginInfoLabel.text = @"I don't know who you are anymore";
+// 
+//    }
     
 //    [[CVChepClient sharedClient]getStopsForVehicle:@"" completion:^(NSArray *results, NSError *error) {
 //        if (error) {

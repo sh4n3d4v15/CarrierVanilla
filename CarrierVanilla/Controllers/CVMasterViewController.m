@@ -85,17 +85,7 @@
     if( !isUserLoggedIn ){
         [self showLoginViewAnimated:NO];
     }else{
-//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        hud.labelText = @"Retrieving loads";
-//        [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
-//            if (error) {
-////                hud.labelText = [error localizedDescription];
-////                [self removeHud:hud];
-//            }else{
-////                hud.labelText = @"Success";
-////                [self removeHud:hud];
-//            }
-//        }];
+       // [self refresh:nil];
     }
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
 
@@ -103,12 +93,14 @@
 
 -(void)refresh:(id)sender{
     NSLog(@"RERESH");
-    [[CVChepClient sharedClient]getStopsForVehicle:[[NSUserDefaults standardUserDefaults]valueForKey:@"vehicle"] completion:^(NSArray *results, NSError *error) {
+//    [[CVChepClient sharedClient]setIsGetRequest:YES];
+    [[CVChepClient sharedClient]getStopsForUser:[[NSUserDefaults standardUserDefaults]valueForKey:@"vehicle"] completion:^(NSString *responseMessage, NSError *error) {
         if (error) {
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Problem refreshing" message:@"Sorry, we could not refresh the loads" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
         }
             [(UIRefreshControl*)sender endRefreshing];
+//            [[CVChepClient sharedClient]setIsGetRequest:NO];
     }];
 }
 
@@ -340,13 +332,9 @@
 
 #pragma mark  -  Delegate methods
 
--(void)userDidLoginWithDictionary:(NSDictionary *)userInfo{
-    [[CVChepClient sharedClient]getStopsForVehicle:[userInfo valueForKey:@"vehicle"] completion:^(NSArray *results, NSError *error) {
-        if(error){
-            NSLog(@"Error %@", error);
-        }else{
-            NSLog(@"all good");
-        }
+-(void)userDidLoginWithDictionary:(NSDictionary *)userInfo completion:(void (^)(NSError *, NSString *))completion{
+    [[CVChepClient sharedClient]getStopsForUser:userInfo completion:^(NSString *responseMessage, NSError *error) {
+        completion(error,responseMessage);
     }];
 }
 
@@ -368,7 +356,7 @@
     cell.locationNameLabel.text = [ NSString stringWithUTF8String:[stop.location_name cStringUsingEncoding:NSUTF8StringEncoding]];;
     cell.locationNameLabel.textColor = UIColorFromRGB(0x3c6ba1);
     cell.addressOneLabel.text = [ NSString stringWithUTF8String:[stop.address.address1 cStringUsingEncoding:NSUTF8StringEncoding]];
-    cell.cityLabel.text = stop.load.id;
+    cell.cityLabel.text = stop.address.city;
     cell.zipLabel.text = stop.address.zip;
     cell.typeLabel.text = stop.type;
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;

@@ -351,14 +351,14 @@
         shipNumLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
         shipNumLabel.textColor = [UIColor colorWithWhite:.333 alpha:1];
         
-        UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 28, CGRectGetWidth(containerView.bounds), 20)];
-        commentsLabel.text = [NSString stringWithFormat:@"Instructions: %@", shipment.comments];
+        UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, containerView.frame.size.height-10, CGRectGetWidth(containerView.bounds), 20)];
+        commentsLabel.text = [NSString stringWithFormat:@"Comments: %@", shipment.comments];
         commentsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
-        commentsLabel.textColor = [UIColor colorWithWhite:.333 alpha:1];
+        commentsLabel.textColor = UIColorFromRGB(0x3c6ba1);
         
         
 //        [containerView addSubview:shipNumLabel];
-//        [containerView addSubview:commentsLabel];
+        [containerView addSubview:commentsLabel];
        
         
         [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *item, NSUInteger idx, BOOL *stop) {
@@ -443,7 +443,7 @@
     if ([indexPath section] == 0 ) {
         return 250;
     }
-    return ([shipment.items count]*70);
+    return ([shipment.items count]*80);
 }
 
 #pragma mark -UIButton actions

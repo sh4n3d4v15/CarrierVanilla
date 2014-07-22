@@ -12,7 +12,7 @@
 
 +(CVChepClient*)sharedClient;
 #pragma mark - Stop Requests
-- (NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:( void (^)(NSArray *results, NSError *error) )completion;
+- (NSURLSessionDataTask *)getStopsForUser:(NSDictionary *)userinfo completion:( void (^)(NSString *responseMessage, NSError *error) )completion;
 
 -(NSURLSessionDataTask *)updateStop:(Stop *)stop completion:(void (^)( NSError *))completion;
 
@@ -23,5 +23,7 @@
 -(NSURLSessionDataTask*)getLoadNotesForLoad: (NSString*)loadId completion:(void (^)(NSDictionary *results, NSError *error))completion;
 
 -(NSURLSessionDataTask*)postLoadNoteForLoad: (NSString*)loadId withNoteType:(NSString*)noteType withStopType: (NSString*)stopType withMessage: (NSString *)message completion:(void (^)(NSDictionary *results, NSError *error))completion;
+@property(nonatomic)NSManagedObjectContext *moc;
+@property(nonatomic)BOOL isReachable;
 @end
 
