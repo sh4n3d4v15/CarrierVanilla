@@ -282,32 +282,32 @@
         
         Address *address = self.stop.address;
         
-        UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10,  10, CGRectGetWidth(containerView.bounds)-20, 20)];
-        addressOneLabel.text = address.address1;
+        UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10,  5, CGRectGetWidth(containerView.bounds)-20, 20)];
+        addressOneLabel.text = [NSString stringWithFormat:@"STREET: %@", address.address1];
         addressOneLabel.textColor = [UIColor flatDarkGreenColor];
-        addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+        addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
         
-        UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 30, 120, 20)];
-        cityLabel.text = address.city;
+        UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, CGRectGetWidth(containerView.bounds)-20, 20)];
+        cityLabel.text = [NSString stringWithFormat:@"CITY: %@", address.city];
         cityLabel.textColor = [UIColor flatDarkGreenColor];
-        cityLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+        cityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
         
         
-        UILabel *countryLabel = [[UILabel alloc]initWithFrame:CGRectMake(120, 30, 60, 20)];
-        countryLabel.text = address.country;
-        countryLabel.textColor = [UIColor flatDarkGreenColor];
-        countryLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+        UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 35, 100, 20)];
+        stateLabel.text = [NSString stringWithFormat:@"STATE: %@", address.state];
+        stateLabel.textColor = [UIColor flatDarkGreenColor];
+        stateLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
         
-        UILabel *zipLabel = [[UILabel alloc]initWithFrame:CGRectMake(180,  30, 60, 20)];
-        zipLabel.text = address.zip;
+        UILabel *zipLabel = [[UILabel alloc]initWithFrame:CGRectMake(110,  35, 200, 20)];
+        zipLabel.text = [NSString stringWithFormat:@"POST CODE: %@", address.zip];
         zipLabel.textColor = [UIColor flatDarkGreenColor];
-        zipLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+        zipLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
         
         
 
 
         [containerView addSubview:zipLabel];
-        [containerView addSubview:countryLabel];
+        [containerView addSubview:stateLabel];
         [containerView addSubview:cityLabel];
         [containerView addSubview:addressOneLabel];
 

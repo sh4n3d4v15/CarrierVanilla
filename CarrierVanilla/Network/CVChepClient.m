@@ -48,11 +48,11 @@
 
 #define SET_IF_NOT_NULL(TARGET, VAL) if(VAL != [NSNull null]) { TARGET = VAL; }
 
-- (void) deleteAllObjects: (NSString *) entityDescription  {
+- (void) deleteAllObjects: (NSString *) entityDescription comparingNetworkResults:(NSArray*)networkResults  {
     CVAppDelegate *del =  (CVAppDelegate *)[UIApplication sharedApplication].delegate;
       self.moc = del.managedObjectContext;
     
-    
+    NSArray *loadIdsArray = [networkResults valueForKey:@"load_number"];
     NSLog(@"Entity description: %@", entityDescription);
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:self.moc];
@@ -66,6 +66,9 @@
         if([load isCompletedLoad]){
             [self.moc deleteObject:load];
             NSLog(@"%@ object deleted",entityDescription);
+        }else if (![loadIdsArray containsObject:load.load_number]){
+            [self.moc deleteObject:load];
+            NSLog(@"%@ object deleted",entityDescription);
         }
     }
     if (![self.moc save:&error]) {
@@ -76,12 +79,11 @@
 
 - (void)importArrayOfStopsIntoCoreData:(NSArray*)resultsArray
 {
-    [self deleteAllObjects:@"Load"];
+    [self deleteAllObjects:@"Load" comparingNetworkResults:resultsArray];
     
     
     NSString *predicateString = [NSString stringWithFormat:@"load_number == $LOAD_NUMBER"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
-    
     
     [resultsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
         
@@ -208,8 +210,11 @@
                                             if (httpResponse.statusCode == 200) {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
                                                     NSLog(@"REPONSE::::: %@", responseObject);
-                                                    [self importArrayOfStopsIntoCoreData:loads];
-                                                    
+                                                    if (![loads count]) {
+                                                        completion(@"No Loads For This Vehicle", nil);
+                                                    }else{
+                                                         [self importArrayOfStopsIntoCoreData:loads];
+                                                    }
                                                     completion(@"all is good with 200 in da hood",nil);
                                                 });
                                             }else{
@@ -222,7 +227,7 @@
                                         } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                            NSLog(@"Failure");
                                              NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-                                            NSLog(@"STATUS: %i", httpResponse.statusCode);
+                                            NSLog(@"STATUS: %li", (long)httpResponse.statusCode);
                                             dispatch_async(dispatch_get_main_queue(), ^{
                                                 
                                                 if (httpResponse.statusCode == 401) {

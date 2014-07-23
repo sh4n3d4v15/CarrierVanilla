@@ -143,6 +143,7 @@
                                     <outlet property="addressOneLabel" destination="JhV-py-oyr" id="RnE-tU-hlD"/>
                                     <outlet property="cityLabel" destination="udx-2g-JOI" id="0I1-CG-U94"/>
                                     <outlet property="locationNameLabel" destination="zFi-q3-ex3" id="d3c-0B-neD"/>
+                                    <outlet property="timeWindowLabel" destination="Wk7-ff-Upe" id="IXS-v5-phN"/>
                                     <segue destination="lGj-pC-jJV" kind="push" identifier="showStop" id="4Qo-uG-6Gh"/>
                                 </connections>
                             </tableViewCell>

@@ -818,7 +818,7 @@
 //    if ([carrierId isEqualToString:@""] && [password isEqualToString:@""]){
 //    if ([carrierId isEqualToString:@"MobiShipRestUser"] && [password isEqualToString:@"M0b1Sh1pm3n743"]){
         [_delegate userDidLoginWithDictionary:userInfo completion:^(NSError *error, NSString *message) {
-            if(error){
+            if(error || [message isEqualToString:@"No Loads For This Vehicle"]){
                 NSLog(@"there was an error logging in! %@", error.description);
                 NSLog(@"there was an error logging in - message %@", message);
                 UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Credentials problem" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];

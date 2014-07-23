@@ -37,6 +37,10 @@
 {
     [super viewDidLoad];
     
+    _timeWindowformatter = [[NSDateFormatter alloc]init];
+    [_timeWindowformatter setDateFormat:@"HH:mm"];
+    
+    
 
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -359,6 +363,7 @@
     cell.cityLabel.text = stop.address.city;
     cell.zipLabel.text = stop.address.zip;
     cell.typeLabel.text = stop.type;
+    cell.timeWindowLabel.text = stop.planned_end;
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
 
     if ([stop.type isEqualToString:@"Drop"]) {
