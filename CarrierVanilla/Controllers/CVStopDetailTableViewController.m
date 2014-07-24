@@ -206,11 +206,11 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 2, tableView.frame.size.width, 18)];
 
-    [label setFont:[UIFont boldSystemFontOfSize:14]];
+    [label setFont:[UIFont boldSystemFontOfSize:12]];
     [label setTextColor:UIColorFromRGB(0x3c6ba1)];
     
     if (section == 0) {
-        [label setText:self.stop.location_name];
+        [label setText:[NSString stringWithFormat:@"%@ %@", [self.stop.type isEqualToString:@"Pick"]? @"COLLECT FROM: " : @"DELIVER TO: ", self.stop.location_name]];
     }else{
         NSArray *shipments = [self.stop.shipments allObjects];
         Shipment *shipment = shipments[section-1];
@@ -220,7 +220,7 @@
             NSLog(@"___________________________________________________________________________");
         }];
 //        NSString *shipment = self.shipmentCount > 1 ? @"Shipments" : @"Shipment";
-        NSString *fullString = [NSString stringWithFormat:@"Shipment Number  %@", shipment.primary_reference_number];
+        NSString *fullString = [NSString stringWithFormat:@"CUSTOMER REFERENCE  %@", shipment.primary_reference_number];
         [label setText:fullString];
     }
     [view addSubview:label];
@@ -352,8 +352,8 @@
         shipNumLabel.textColor = [UIColor colorWithWhite:.333 alpha:1];
         
         UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, containerView.frame.size.height-10, CGRectGetWidth(containerView.bounds), 20)];
-        commentsLabel.text = [NSString stringWithFormat:@"Comments: %@", shipment.comments];
-        commentsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        commentsLabel.text = [NSString stringWithFormat:@"Special Instructions: %@", shipment.comments];
+        commentsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
         commentsLabel.textColor = UIColorFromRGB(0x3c6ba1);
         
         

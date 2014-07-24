@@ -25,5 +25,6 @@
 -(NSURLSessionDataTask*)postLoadNoteForLoad: (NSString*)loadId withNoteType:(NSString*)noteType withStopType: (NSString*)stopType withMessage: (NSString *)message completion:(void (^)(NSDictionary *results, NSError *error))completion;
 @property(nonatomic)NSManagedObjectContext *moc;
 @property(nonatomic)BOOL isReachable;
+@property(nonatomic)NSDateFormatter *dateFormatter;
 @end
 

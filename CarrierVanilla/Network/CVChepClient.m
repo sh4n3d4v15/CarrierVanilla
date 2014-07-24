@@ -42,6 +42,8 @@
             NSLog(@"Reachability %@", AFStringFromNetworkReachabilityStatus(status));
         }];
     });
+    
+    _sharedClient.dateFormatter = [[NSDateFormatter alloc]init];
 
     return _sharedClient;
 }
@@ -264,7 +266,6 @@
 }
 
 
-#pragma mark - HOW TO BUILD MULTI-MULTIPART FROM DICTIONARY?
 -(NSURLSessionDataTask *)updateStop:(Stop *)stop completion:(void (^)( NSError *))completion{
     NSLog(@"Update stop method fired");
     NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",stop.load.id,stop.id];
@@ -272,13 +273,14 @@
     
     __unused NSArray *deliveries = [self getQuantitesForStop:stop];
     
-    NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    [df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss+02:00"];
+
+    [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss+00:00"];
+    NSLog(@"********* Here is what date will be uploaded into the TMS: %@", [_dateFormatter stringFromDate:stop.actual_departure]);
    //[df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
     
     
-    NSDictionary *updateDict = @{@"actual_arrival_date": [df stringFromDate:stop.actual_arrival],
-                                 @"actual_departure_date": [df stringFromDate:stop.actual_departure],
+    NSDictionary *updateDict = @{@"actual_arrival_date": [_dateFormatter stringFromDate:stop.actual_arrival],
+                                 @"actual_departure_date": [_dateFormatter stringFromDate:stop.actual_departure],
                                  @"product_id": @"60",
                                  @"delivery_number": @"",
                                  @"deliveries":@[]
@@ -346,7 +348,7 @@
     NSURLSessionDataTask * task = [self POST:queryString
                                   parameters:@{}
                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                       [formData appendPartWithFileData:photoData name:@"file" fileName:@"photoimage" mimeType:@"image/jpg"];
+                       [formData appendPartWithFileData:photoData name:@"file" fileName:@"photoimage.jpg" mimeType:@"image/jpg"];
                        [formData appendPartWithFormData:jsonData name:@"document_info"];
                    } success:^(NSURLSessionDataTask *task, id responseObject) {
                        NSLog(@"Photo successfully uploaded %@", responseObject);

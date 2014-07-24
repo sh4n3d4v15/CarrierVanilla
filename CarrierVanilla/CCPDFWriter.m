@@ -36,6 +36,7 @@
         picStop = stop2;
         dropStop = stop1;
     }
+    
     NSMutableData *pdfData = [NSMutableData data];
     
     CGRect pageFrame = CGRectMake(0, 0, 612, 792);
@@ -90,7 +91,7 @@
     NSString* senderLocationNameContent = picStop.location_name;
     
     //carrrier
-    NSString* carrierContent = @"The olde truck company";
+    __unused NSString* carrierContent = @"The olde truck company";
     
     
     //// logo 2 Drawing
@@ -1282,7 +1283,7 @@
         
         CGRect text2Rect1 = CGRectMake(CGRectGetMinX(frame) + 221, CGRectGetMinY(frame) + 158, 158, 15);
         [strokeColor setFill];
-        [@"Big Olde Trucking Company" drawInRect: text2Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        [[[NSUserDefaults standardUserDefaults]valueForKey:@"carrier"] drawInRect: text2Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
         
         //// Text 3 Drawing
@@ -1292,9 +1293,9 @@
         
         NSString *shipmentNumber = picStop.load.load_number;
         
-        CGRect text3Rect1 = CGRectMake(CGRectGetMinX(frame) + 401, CGRectGetMinY(frame) + 158, 147, 15);
-        [strokeColor setFill];
-        [shipmentNumber drawInRect: text3Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+//        CGRect text3Rect1 = CGRectMake(CGRectGetMinX(frame) + 401, CGRectGetMinY(frame) + 158, 147, 15);
+//        [strokeColor setFill];
+//        [shipmentNumber drawInRect: text3Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
         
         //// Text 4 Drawing
@@ -1309,15 +1310,21 @@
         [text5Content drawInRect: text5Rect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
         //// Text 5 Drawing
+        NSDateFormatter *df = [NSDateFormatter new];
+        [df setDateFormat:@"dd-MM-yyyy"];
         CGRect text5Rect1 = CGRectMake(CGRectGetMinX(frame) + 220, CGRectGetMinY(frame) + 261, 101, 15);
         [strokeColor setFill];
-        [@"18 July 2014" drawInRect: text5Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        [[df stringFromDate:dropStop.actual_arrival] drawInRect: text5Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
         
         //// Text 6 Drawing
         CGRect text6Rect = CGRectMake(CGRectGetMinX(frame) + 402, CGRectGetMinY(frame) + 241, 126, 18);
         [strokeColor setFill];
         [text6Content drawInRect: text6Rect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        
+        CGRect shipnumrect = CGRectMake(CGRectGetMinX(frame) + 402, CGRectGetMinY(frame) + 261, 126, 18);
+        [strokeColor setFill];
+        [picStop.load.load_number drawInRect: shipnumrect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
     }
     
     
@@ -1377,7 +1384,17 @@
         
         NSArray *shipments = [picStop.shipments allObjects];
         
+        CGRect text3Rect1 = CGRectMake(CGRectGetMinX(frame) + 401, CGRectGetMinY(frame) + 158, 147, 15);
+        [strokeColor setFill];
+        [[shipments[0] valueForKey:@"primary_reference_number" ] drawInRect: text3Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        
         [shipments enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger outerIndex, BOOL *stop) {
+            
+            ///write shipment number
+            
+
+            
+            
             NSArray *items = [shipment.items allObjects];
             [items enumerateObjectsUsingBlock:^(Item *item, NSUInteger innerIndex, BOOL *stop) {
                 

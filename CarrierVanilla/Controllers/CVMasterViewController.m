@@ -128,9 +128,6 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    
-
-    NSLog(@"Section: %i", section);
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
     __block BOOL complete = YES;
      [[sectionInfo objects]enumerateObjectsUsingBlock:^(Stop *_stop, NSUInteger idx, BOOL *stop) {
@@ -160,6 +157,13 @@
     [stopCountLabel setText:[NSString stringWithFormat:@"%lu STOPS",(unsigned long)[sectionInfo numberOfObjects]]];
     [stopCountLabel setTextColor:UIColorFromRGB(0x3c6ba1)];
     [view addSubview:stopCountLabel];
+    
+    UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 2, 80, 18)];
+    [statusLabel setText:complete ? @"COMPLETE" : @"ACCEPTED" ];
+    [statusLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    [statusLabel setTextColor: UIColorFromRGB(0x3c6ba1)];
+    
+   // [view addSubview:statusLabel];
     
     
     view.backgroundColor =  UIColorFromRGB(0xcddcec);

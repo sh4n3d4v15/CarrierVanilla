@@ -825,6 +825,7 @@
                 [av show];
             }else{
                 [[NSUserDefaults standardUserDefaults]setValue:name forKey:@"vehicle"];
+                [[NSUserDefaults standardUserDefaults]setValue:carrierId forKey:@"carrier"];
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];
                 [[NSUserDefaults standardUserDefaults]synchronize];
                 NSLog(@"Successful login");
