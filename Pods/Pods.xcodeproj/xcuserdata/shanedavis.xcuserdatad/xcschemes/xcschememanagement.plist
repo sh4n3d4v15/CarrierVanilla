@@ -2,49 +2,67 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Pods-AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-MBProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-SOMessaging.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-UIColor+MLPFlatColors.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-pop.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>00F19EB3E874441CB565A19E</key>
+		<key>40E20C64133646EEAC07F695</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2C2DF3563FB146B9908A03CB</key>
+		<key>8104CAE20C6947DEA6460AFB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>34D95AE8B8274BD38DA3B989</key>
+		<key>948F992A76B44C0EBCB98FDF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>657DAE4608BC4CEB92D24F35</key>
+		<key>B7783AA7F9CD4274965F0E17</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7393C226D53043C292B3EA57</key>
+		<key>CEF1A950665244928B1861B6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>73F0C75356524104BD479237</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>84700415BD614B4082464724</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8C64F662027443B2B537CA81</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DC78E8E204C943FA96E495C0</key>
+		<key>F170A7308EC446F4913EB812</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -44,6 +44,9 @@
     });
     
     _sharedClient.dateFormatter = [[NSDateFormatter alloc]init];
+    [_sharedClient.dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
+    [_sharedClient.dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+    [_sharedClient.dateFormatter setFormatterBehavior:NSDateFormatterBehaviorDefault];
 
     return _sharedClient;
 }
@@ -96,7 +99,7 @@
         [fetchRequest setPredicate:localPredicate];
         NSArray *foundLoads = [_moc executeFetchRequest:fetchRequest error:&error];
         
-        if (![foundLoads count]) {
+        if ([foundLoads count]) {
             
             Load *load = [NSEntityDescription insertNewObjectForEntityForName:@"Load" inManagedObjectContext:_moc];
             SET_IF_NOT_NULL(load.id , [obj valueForKey:@"id"]);
@@ -112,8 +115,13 @@
                 SET_IF_NOT_NULL(_stop.location_id, [stopobj valueForKey:@"location_id"]);
                 SET_IF_NOT_NULL(_stop.location_ref, [stopobj valueForKey:@"location_ref"]);
                 SET_IF_NOT_NULL(_stop.type, [stopobj valueForKey:@"type"]);
-                SET_IF_NOT_NULL(_stop.planned_start, [stopobj valueForKey:@"planned_start"]);
-                SET_IF_NOT_NULL(_stop.planned_end, [stopobj valueForKey:@"planned_end"]);
+                ///do we get values returned without dates?
+                _stop.planned_start =  [_dateFormatter dateFromString:[stopobj valueForKey:@"planned_start"]];
+                _stop.planned_end =  [_dateFormatter dateFromString:[stopobj valueForKey:@"planned_end"]];
+                NSLog(@"**Planned date that is coming in from the json object: %@", [stopobj valueForKey:@"planned_end"]);
+                NSLog(@"**Planned date that is being saved as date: %@", _stop.planned_end);
+               // SET_IF_NOT_NULL(_stop.planned_end, [stopobj valueForKey:@"planned_end"]);
+                
                 SET_IF_NOT_NULL(_stop.weight, [stopobj valueForKey:@"weight"]);
                 SET_IF_NOT_NULL(_stop.pallets, [stopobj valueForKey:@"pallets"]);
                 SET_IF_NOT_NULL(_stop.pieces, [stopobj valueForKey:@"pieces"]);
@@ -128,7 +136,7 @@
                 _stop.address = address;
                 
                 NSArray *shipments = [stopobj valueForKey:@"shipments"];
-                NSLog(@"Shipemnts in master %@", shipments);
+//                NSLog(@"Shipemnts in master %@", shipments);
                 [shipments enumerateObjectsUsingBlock:^(id shipmentObj, NSUInteger idx, BOOL *stop) {
                     Shipment *shipment = [NSEntityDescription insertNewObjectForEntityForName:@"Shipment" inManagedObjectContext:_moc];
                     SET_IF_NOT_NULL(shipment.shipment_number,  shipmentObj[@"shipment_number"]);
@@ -149,8 +157,6 @@
 
                         [shipment addItemsObject:item];
                     }];///ITEMS LOOP
-                    
-                    NSLog(@"SHIPMENT ITEMS: %@", [shipment.items allObjects]);
                     [_stop addShipmentsObject:shipment];
                     [load addStopsObject:_stop];
                 }];
@@ -182,8 +188,8 @@
 
 -(NSURLSessionDataTask *)getStopsForUser:(NSDictionary *)userinfo completion:(void (^)(NSString *, NSError *))completion{
         [self.operationQueue setSuspended:NO];
-        NSString *username = [userinfo valueForKey:@"carrier"];
-        NSString *password = [userinfo valueForKey:@"password"];
+        NSString *username = @"shane";//[userinfo valueForKey:@"carrier"];
+        NSString *password =  @"shane";// [userinfo valueForKey:@"password"];
     
         NSLog(@"The username is %@ and the password is %@", username , password);
     
@@ -193,7 +199,7 @@
         NSString *urlString = @"/shipment_tracking_rest/jsonp/loads/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu";
         NSLog(@"Vheicle selected: %@", userinfo );
         NSURLSessionDataTask *task = [self POST:urlString parameters:@{
-                                                                     @"vehicle":[userinfo valueForKey:@"vehicle"],
+                                                                     @"vehicle":@"",//[userinfo valueForKey:@"vehicle"],
                                                                      @"res":@"",
                                                                      @"offset":@0,
                                                                      @"limit":@50,
@@ -237,15 +243,14 @@
                                                 }else{
                                                     completion(@"Network connection error", error);
                                                 }
-//                                                NSError *error;
-//                                                NSString *filepath = [[NSBundle mainBundle]pathForResource:@"loads" ofType:@"json"];
-//                                                NSString *loadsJson = [[NSString alloc]initWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
-//                                                NSData *loadsData = [loadsJson dataUsingEncoding:NSUTF8StringEncoding];
-//                                                NSArray *loadsArray = [NSJSONSerialization JSONObjectWithData:loadsData options:0 error:&error];
-//                                                [self importArrayOfStopsIntoCoreData:loadsArray];
-//                                                NSLog(@"LoadsArray %@", loadsArray );
-//                                                NSLog(@"Error: %@", error);
-                                              // completion(nil,error);
+                                               NSError *error;
+                                                NSString *filepath = [[NSBundle mainBundle]pathForResource:@"loads" ofType:@"json"] ;                                               NSString *loadsJson = [[NSString alloc]initWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:&error];
+                                                NSData *loadsData = [loadsJson dataUsingEncoding:NSUTF8StringEncoding];
+                                                NSArray *loadsArray = [NSJSONSerialization JSONObjectWithData:loadsData options:0 error:&error];
+                                                [self importArrayOfStopsIntoCoreData:loadsArray];
+                                               // NSLog(@"LoadsArray %@", loadsArray );
+                                                //NSLog(@"Error: %@", error);
+                                               completion(nil,error);
                                             });
                                         }];
     return task;

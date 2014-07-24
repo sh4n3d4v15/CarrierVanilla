@@ -44,7 +44,7 @@
 - (void)setStop:(Stop *)stop
 {
     if (_stop != stop) {
-        NSLog(@"Stop Shipments: %@", [stop.shipments allObjects]);
+        NSLog(@"Stop: %@", stop);
         NSArray *shipments = [stop.shipments allObjects];
         _shipmentCount =  [shipments count];
         _stop = stop;

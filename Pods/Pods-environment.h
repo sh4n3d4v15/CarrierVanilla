@@ -54,29 +54,11 @@
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 8
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
 
-// MNTPullToReact
-#define COCOAPODS_POD_AVAILABLE_MNTPullToReact
-#define COCOAPODS_VERSION_MAJOR_MNTPullToReact 1
-#define COCOAPODS_VERSION_MINOR_MNTPullToReact 0
-#define COCOAPODS_VERSION_PATCH_MNTPullToReact 2
-
-// PixateFreestyle
-#define COCOAPODS_POD_AVAILABLE_PixateFreestyle
-#define COCOAPODS_VERSION_MAJOR_PixateFreestyle 2
-#define COCOAPODS_VERSION_MINOR_PixateFreestyle 1
-#define COCOAPODS_VERSION_PATCH_PixateFreestyle 3
-
 // SOMessaging
 #define COCOAPODS_POD_AVAILABLE_SOMessaging
 #define COCOAPODS_VERSION_MAJOR_SOMessaging 1
 #define COCOAPODS_VERSION_MINOR_SOMessaging 0
 #define COCOAPODS_VERSION_PATCH_SOMessaging 0
-
-// Tweaks
-#define COCOAPODS_POD_AVAILABLE_Tweaks
-#define COCOAPODS_VERSION_MAJOR_Tweaks 1
-#define COCOAPODS_VERSION_MINOR_Tweaks 1
-#define COCOAPODS_VERSION_PATCH_Tweaks 0
 
 // UIColor+MLPFlatColors
 #define COCOAPODS_POD_AVAILABLE_UIColor_MLPFlatColors

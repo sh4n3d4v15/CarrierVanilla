@@ -367,7 +367,7 @@
     cell.cityLabel.text = stop.address.city;
     cell.zipLabel.text = stop.address.zip;
     cell.typeLabel.text = stop.type;
-    cell.timeWindowLabel.text = stop.planned_end;
+    cell.timeWindowLabel.text = [_timeWindowformatter stringFromDate:stop.planned_end];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
 
     if ([stop.type isEqualToString:@"Drop"]) {

@@ -73,8 +73,8 @@
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="pallets" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="pieces" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="planned_end" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="planned_start" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="planned_end" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="planned_start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="signatureSnapshot" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="volume" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>

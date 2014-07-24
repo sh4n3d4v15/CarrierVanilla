@@ -25,8 +25,8 @@
 @property (nonatomic, retain) NSString * location_ref;
 @property (nonatomic, retain) NSNumber * pallets;
 @property (nonatomic, retain) NSNumber * pieces;
-@property (nonatomic, retain) NSString * planned_end;
-@property (nonatomic, retain) NSString * planned_start;
+@property (nonatomic, retain) NSDate * planned_end;
+@property (nonatomic, retain) NSDate * planned_start;
 @property (nonatomic, retain) NSData * signatureSnapshot;
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSNumber * volume;
