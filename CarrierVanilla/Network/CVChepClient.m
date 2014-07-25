@@ -8,7 +8,7 @@
 
 #import "CVChepClient.h"
 #import "CVAppDelegate.h"
-#import "Stop.h"
+
 #import "Load.h"
 #import "Address.h"
 #import "Ref.h"
@@ -21,15 +21,12 @@
     static CVChepClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        
-        __unused NSURL *baseUrl = [NSURL URLWithString:@"http://chepserver.eu01.aws.af.cm"];
-         NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
+
+        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
         _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
         _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
         _sharedClient.requestSerializer.stringEncoding = NSUTF8StringEncoding;
-        
-        [_sharedClient.requestSerializer setAuthorizationHeaderFieldWithUsername:@"MobiShipRestUser" password:@"M0b1Sh1pm3n743"];
-      //  [_sharedClient.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
+        [[AFNetworkReachabilityManager sharedManager]startMonitoring];
         [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             NSOperationQueue *operationQueue = _sharedClient.operationQueue;
             switch (status) {
@@ -45,51 +42,92 @@
             NSLog(@"Reachability %@", AFStringFromNetworkReachabilityStatus(status));
         }];
     });
-    [[AFNetworkReachabilityManager sharedManager]startMonitoring];
+    
+    _sharedClient.dateFormatter = [[NSDateFormatter alloc]init];
+    [_sharedClient.dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
+    [_sharedClient.dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+    [_sharedClient.dateFormatter setFormatterBehavior:NSDateFormatterBehaviorDefault];
+
     return _sharedClient;
 }
 
 #define SET_IF_NOT_NULL(TARGET, VAL) if(VAL != [NSNull null]) { TARGET = VAL; }
+
+- (void) deleteAllObjects: (NSString *) entityDescription comparingNetworkResults:(NSArray*)networkResults  {
+    CVAppDelegate *del =  (CVAppDelegate *)[UIApplication sharedApplication].delegate;
+      self.moc = del.managedObjectContext;
+    
+    NSArray *loadIdsArray = [networkResults valueForKey:@"load_number"];
+    NSLog(@"Entity description: %@", entityDescription);
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:self.moc];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error;
+    NSArray *items = [self.moc executeFetchRequest:fetchRequest error:&error];
+    
+    
+    for (Load *load in items) {
+        if([load isCompletedLoad]){
+            [self.moc deleteObject:load];
+            NSLog(@"%@ object deleted iceman",entityDescription);
+        }else if (![loadIdsArray containsObject:load.load_number]){
+            [self.moc deleteObject:load];
+            NSLog(@"%@ object deleted iceman",entityDescription);
+        }
+    }
+    if (![self.moc save:&error]) {
+    	NSLog(@"Error deleting %@ - error:%@",entityDescription,error);
+    }
+    
+}
+
 - (void)importArrayOfStopsIntoCoreData:(NSArray*)resultsArray
 {
-    CVAppDelegate *dmgr = (CVAppDelegate *)[UIApplication sharedApplication].delegate;
+    [self deleteAllObjects:@"Load" comparingNetworkResults:resultsArray];
     
     
     NSString *predicateString = [NSString stringWithFormat:@"load_number == $LOAD_NUMBER"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
     
-    
     [resultsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
+        
         NSDictionary *variables = @{@"LOAD_NUMBER": [obj valueForKey:@"load_number"]};
         NSPredicate *localPredicate = [predicate predicateWithSubstitutionVariables:variables];
         NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Load"];
         NSError *error;
         [fetchRequest setPredicate:localPredicate];
-        NSArray *foundLoads = [dmgr.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        NSArray *foundLoads = [_moc executeFetchRequest:fetchRequest error:&error];
         
         if (![foundLoads count]) {
             
-            Load *load = [NSEntityDescription insertNewObjectForEntityForName:@"Load" inManagedObjectContext:dmgr.managedObjectContext];
+            Load *load = [NSEntityDescription insertNewObjectForEntityForName:@"Load" inManagedObjectContext:_moc];
             SET_IF_NOT_NULL(load.id , [obj valueForKey:@"id"]);
             SET_IF_NOT_NULL(load.load_number, [obj valueForKey:@"load_number"]);
             SET_IF_NOT_NULL(load.status, [obj valueForKey:@"status"]);
             
             NSArray *stops = [obj objectForKey:@"stops"];
             [stops enumerateObjectsUsingBlock:^(id stopobj, NSUInteger idx, BOOL *stop) {
-                Stop *_stop = [NSEntityDescription insertNewObjectForEntityForName:@"Stop" inManagedObjectContext:dmgr.managedObjectContext];
+                Stop *_stop = [NSEntityDescription insertNewObjectForEntityForName:@"Stop" inManagedObjectContext:_moc];
                 //            [_stop setValuesForKeysWithDictionary:stopobj];
                 SET_IF_NOT_NULL(_stop.location_name , [stopobj valueForKey:@"location_name"]);
+                SET_IF_NOT_NULL(_stop.id , [stopobj valueForKey:@"id"]);
                 SET_IF_NOT_NULL(_stop.location_id, [stopobj valueForKey:@"location_id"]);
                 SET_IF_NOT_NULL(_stop.location_ref, [stopobj valueForKey:@"location_ref"]);
                 SET_IF_NOT_NULL(_stop.type, [stopobj valueForKey:@"type"]);
-                SET_IF_NOT_NULL(_stop.planned_start, [stopobj valueForKey:@"planned_start"]);
-                SET_IF_NOT_NULL(_stop.planned_end, [stopobj valueForKey:@"planned_end"]);
+                ///do we get values returned without dates?
+                _stop.planned_start =  [_dateFormatter dateFromString:[stopobj valueForKey:@"planned_start"]];
+                _stop.planned_end =  [_dateFormatter dateFromString:[stopobj valueForKey:@"planned_end"]];
+                NSLog(@"**Planned date that is coming in from the json object: %@", [stopobj valueForKey:@"planned_end"]);
+                NSLog(@"**Planned date that is being saved as date: %@", _stop.planned_end);
+               // SET_IF_NOT_NULL(_stop.planned_end, [stopobj valueForKey:@"planned_end"]);
+                
                 SET_IF_NOT_NULL(_stop.weight, [stopobj valueForKey:@"weight"]);
                 SET_IF_NOT_NULL(_stop.pallets, [stopobj valueForKey:@"pallets"]);
                 SET_IF_NOT_NULL(_stop.pieces, [stopobj valueForKey:@"pieces"]);
                
                 
-                Address *address = [NSEntityDescription insertNewObjectForEntityForName:@"Address" inManagedObjectContext:dmgr.managedObjectContext];
+                Address *address = [NSEntityDescription insertNewObjectForEntityForName:@"Address" inManagedObjectContext:_moc];
                 SET_IF_NOT_NULL(address.address1, [stopobj valueForKeyPath:@"address.address1"]);
                 SET_IF_NOT_NULL(address.city, [stopobj valueForKeyPath:@"address.city"]);
                 SET_IF_NOT_NULL(address.state, [stopobj valueForKeyPath:@"address.state"]);
@@ -98,15 +136,16 @@
                 _stop.address = address;
                 
                 NSArray *shipments = [stopobj valueForKey:@"shipments"];
-                NSLog(@"Shipemnts in master %@", shipments);
+//                NSLog(@"Shipemnts in master %@", shipments);
                 [shipments enumerateObjectsUsingBlock:^(id shipmentObj, NSUInteger idx, BOOL *stop) {
-                    Shipment *shipment = [NSEntityDescription insertNewObjectForEntityForName:@"Shipment" inManagedObjectContext:dmgr.managedObjectContext];
+                    Shipment *shipment = [NSEntityDescription insertNewObjectForEntityForName:@"Shipment" inManagedObjectContext:_moc];
                     SET_IF_NOT_NULL(shipment.shipment_number,  shipmentObj[@"shipment_number"]);
                     SET_IF_NOT_NULL(shipment.comments, shipmentObj[@"comments"]);
+                    SET_IF_NOT_NULL(shipment.primary_reference_number, shipmentObj[@"primary_reference_number"]);
                     
                     NSArray *items = [shipmentObj valueForKey:@"items"];
                     [items enumerateObjectsUsingBlock:^(id itemObj, NSUInteger idx, BOOL *stop) {
-                        Item *item = [NSEntityDescription insertNewObjectForEntityForName:@"Item" inManagedObjectContext:dmgr.managedObjectContext];
+                        Item *item = [NSEntityDescription insertNewObjectForEntityForName:@"Item" inManagedObjectContext:_moc];
                         SET_IF_NOT_NULL(item.line, [itemObj valueForKey:@"line"]);
                         SET_IF_NOT_NULL(item.product_id,  [itemObj valueForKey:@"product_id"]);
                         SET_IF_NOT_NULL(item.product_description, [itemObj valueForKey:@"product_description"]);
@@ -117,8 +156,7 @@
                         SET_IF_NOT_NULL(item.lading, [itemObj valueForKey:@"lading"]);
 
                         [shipment addItemsObject:item];
-                    }];
-                    
+                    }];///ITEMS LOOP
                     [_stop addShipmentsObject:shipment];
                     [load addStopsObject:_stop];
                 }];
@@ -126,34 +164,42 @@
             
             NSArray *refs = [obj valueForKey:@"refs"];
             [refs enumerateObjectsUsingBlock:^(id refobj, NSUInteger idx, BOOL *stop) {
-                Ref *_ref = [NSEntityDescription insertNewObjectForEntityForName:@"Ref" inManagedObjectContext:dmgr.managedObjectContext];
+                Ref *_ref = [NSEntityDescription insertNewObjectForEntityForName:@"Ref" inManagedObjectContext:_moc];
                 SET_IF_NOT_NULL(_ref.name, [refobj valueForKey:@"name"]);
                 SET_IF_NOT_NULL(_ref.value, [refobj valueForKey:@"value"]);
 
                 [load addRefsObject:_ref];
             }];
-        }else{
-            NSLog(@"I stopped this from being duplicated: %@", foundLoads);
-        }
+        }//end of if loads found
     }];
     
     NSError* error = nil;
-    if (![dmgr.managedObjectContext save:&error]) {
+    if (![_moc save:&error]) {
         NSLog(@"Unable to save context for class");
     } else {
         NSLog(@"saved all records!");
     }
+        
 }
 
 
 #pragma mark - Stop Requests
 
 
--(NSURLSessionDataTask *)getStopsForVehicle:(NSString *)vehicleId completion:(void (^)(NSArray *, NSError *))completion{
-    NSLog(@"Calling the method::");
+-(NSURLSessionDataTask *)getStopsForUser:(NSDictionary *)userinfo completion:(void (^)(NSString *, NSError *))completion{
+        [self.operationQueue setSuspended:NO];
+    
+        NSString *username = [userinfo valueForKey:@"carrier"];
+        NSString *password =  [userinfo valueForKey:@"password"];
+    
+        NSLog(@"The username is %@ and the password is %@", username , password);
+    
+        [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
+
         NSString *urlString = @"/shipment_tracking_rest/jsonp/loads/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu";
+        NSLog(@"Vheicle selected: %@", userinfo );
         NSURLSessionDataTask *task = [self POST:urlString parameters:@{
-                                                                     @"vehicle":@"TEST123",
+                                                                     @"vehicle":[userinfo valueForKey:@"vehicle"],
                                                                      @"res":@"",
                                                                      @"offset":@0,
                                                                      @"limit":@50,
@@ -165,45 +211,79 @@
                                                                      @"drop_end_date":@""}
                                       
                                         success:^(NSURLSessionDataTask *task, id responseObject) {
+                                            NSLog(@"Success");
                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
                                             NSArray *loads = [responseObject valueForKey:@"loads"];
                                             NSLog(@"top response %@", responseObject);
                                             if (httpResponse.statusCode == 200) {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                    [self importArrayOfStopsIntoCoreData:loads];
-                                                    NSLog(@"RESONSE: %@", httpResponse);
-                                                    NSLog(@"RESONSE OBJECT: %@", responseObject);
-                                                    completion(responseObject,nil);
+                                                    NSLog(@"REPONSE::::: %@", responseObject);
+                                                    if ([loads count] < 1) {
+                                                        completion(@"No Loads For This Vehicle", nil);
+                                                    }else{
+                                                         [self importArrayOfStopsIntoCoreData:loads];
+                                                        completion(@"all is good with 200 in da hood",nil);
+                                                    }
+                                                    
                                                 });
                                             }else{
                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                    completion(nil,nil);
+                                                    completion(@"Something unexplained happened",nil);
                                                     NSLog(@"Received: %@", responseObject);
                                                     NSLog(@"Received HTTP %lo", (long)httpResponse.statusCode);
                                                 });
                                             }
                                         } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                           NSLog(@"Failure %@", error);
+                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                            NSLog(@"STATUS: %li", (long)httpResponse.statusCode);
                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                completion(nil,error);
+                                                
+                                                if (httpResponse.statusCode == 401) {
+                                                    completion(@"User login not successful", error);
+                                                    NSLog(@"401");
+                                                    NSLog(@"Failure %@", error);
+                                                }else{
+                                                    completion(@"Network connection error", error);
+                                                }
+
                                             });
                                         }];
     return task;
 };
 
-#pragma mark - HOW TO BUILD MULTI-MULTIPART FROM DICTIONARY?
--(NSURLSessionDataTask *)updateStopWithId:(NSString *)stopid forLoad:(NSString*)loadId withQuantities:(NSArray *)quantities withActualArrival:(NSDate *)arrivalDate withActualDeparture:(NSDate*)departureDate andPod: (NSData*)podData completion:(void (^)( NSError *))completion{
+-(NSArray*)getQuantitesForStop:(Stop*)stop{
+    NSMutableArray *returnArray = [NSMutableArray new];
+    [stop.shipments enumerateObjectsUsingBlock:^(Shipment *shipment, BOOL *stop) {
+        [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *item, NSUInteger idx, BOOL *stop) {
+            
+            [returnArray addObject:@{@"delivery_line_item_number": item.line,
+                                     @"quantity": item.pieces ,
+                                     @"material_number":item.commodity
+                                     }];
+        }];
+    }];
+    return returnArray;
+}
+
+
+-(NSURLSessionDataTask *)updateStop:(Stop *)stop completion:(void (^)( NSError *))completion{
     NSLog(@"Update stop method fired");
-    NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId,stopid];
+    NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",stop.load.id,stop.id];
     NSLog(@"Full URL: %@", fullUrl);
     
-    if ([quantities count]) {
-        NSLog(@"It appears that we have multiple quantities to update");
-    }
+    __unused NSArray *deliveries = [self getQuantitesForStop:stop];
     
-    NSDictionary *updateDict = @{@"actual_arrival_date": @"2014-03-25T23:59:00+01:00",
-                                 @"actual_departure_date": @"2014-03-25T23:59:00+01:00",
+
+    [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss+00:00"];
+    NSLog(@"********* Here is what date will be uploaded into the TMS: %@", [_dateFormatter stringFromDate:stop.actual_departure]);
+   //[df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
+    
+    
+    NSDictionary *updateDict = @{@"actual_arrival_date": [_dateFormatter stringFromDate:stop.actual_arrival],
+                                 @"actual_departure_date": [_dateFormatter stringFromDate:stop.actual_departure],
                                  @"product_id": @"60",
-                                 @"delivery_number": @"3743620763",
+                                 @"delivery_number": @"",
                                  @"deliveries":@[]
                                  };
     NSError *error;
@@ -215,8 +295,8 @@
     NSDictionary *documentDict = @{@"document_type_id": @"",
                                  @"document_type_key": @"POD",
                                  @"product_id": @"60",
-                                 @"comments": @"some generic comments",
-                                 @"stop_id": @""
+                                 @"comments": @"Defect test",
+                                 @"stop_id": stop.id
                                  };
     
     NSData *documentData = [NSJSONSerialization dataWithJSONObject:documentDict options:0 error:&error];
@@ -231,17 +311,17 @@
                        [formData appendPartWithFormData:updateData name:@"update_parameters"];
                        [formData appendPartWithFormData:documentData name:@"document_info"];
 
-                       [formData appendPartWithFileData:podData
+                       [formData appendPartWithFileData:stop.load.podData
                                                    name:@"file"
                                                fileName:@"Proof_signed.pdf"
                                                mimeType:@"application/pdf"];
-                       
-                      
+
                    }
                                      success:^(NSURLSessionDataTask *task,
                                                id responseObject)
                                                 {
-                                                 __unused  NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                                    NSLog(@"Response object %@", httpResponse);
                                                     completion(Nil);
                                                 }
                                      failure:^(NSURLSessionDataTask *task,
@@ -255,39 +335,40 @@
 
 #pragma mark - Documents Requests
 
--(NSURLSessionDataTask *)uploadPhoto:(NSData *)photoData forStopId:(NSString *)stopId withLoadId:(NSString *)loadId withComment:(NSString *)comment completion:(void (^)(NSArray *, NSError *))completion{
+-(NSURLSessionDataTask *)uploadPhoto:(NSData *)photoData forStopId:(NSString *)stopId withLoadId:(NSString *)loadId withComment:(NSString *)comment completion:(void (^)(NSDictionary *, NSError *))completion{
+
+    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/upload/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId,stopId];
+    NSDictionary *docInfoDictionay = @{@"document_type_id":@"",
+                                       @"document_type_key":@"POD",
+                                       @"comments":@"defect",
+                                       @"stop_id":@""
+                                       };
     
-    NSURLSessionDataTask * task = [self POST:@"/photo" parameters:@{@"stopId": stopId,
-                                                                    @"loadId":loadId,
-                                                                    @"comment": comment}
-                                     success:^(NSURLSessionDataTask *task, id responseObject) {
-                                         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-                                         if (httpResponse.statusCode == 200) {
-                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                 completion(responseObject,nil);
-                                             });
-                                         }else{
-                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                 completion(nil,nil);
-                                                 NSLog(@"Recieved: %@", responseObject);
-                                                 NSLog(@"Recieved HTTP %lo", (long)httpResponse.statusCode);
-                                             });
-                                         }
-                                     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                             completion(nil,error);
-                                         });
-                                     }];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:docInfoDictionay options:0 error:nil];
+    
+    NSURLSessionDataTask * task = [self POST:queryString
+                                  parameters:@{}
+                   constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                       [formData appendPartWithFileData:photoData name:@"file" fileName:@"photoimage.jpg" mimeType:@"image/jpg"];
+                       [formData appendPartWithFormData:jsonData name:@"document_info"];
+                   } success:^(NSURLSessionDataTask *task, id responseObject) {
+                       NSLog(@"Photo successfully uploaded %@", responseObject);
+                   } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                       NSLog(@"there was a problem %@", task.response);
+                   }];
     return task;
 }
 
 #pragma mark - Load Note Requests
 
 -(NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSDictionary *, NSError *))completion{
+    [self.operationQueue setSuspended:NO];
     NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/notes/0/0/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId];
+    NSLog(@"GET LOAD NOTES QUIERY STRING: %@", queryString);
     NSURLSessionDataTask *task = [self GET:queryString parameters:nil
                                    success:^(NSURLSessionDataTask *task, id responseObject) {
                                        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                       NSLog(@"SUCCESS LOAD NOTES HTTP RESPONSE: %@", httpResponse);
                                        if (httpResponse.statusCode == 200) {
                                            dispatch_async(dispatch_get_main_queue(), ^{
                                                completion(responseObject,nil);
@@ -301,6 +382,8 @@
                                        }
                                        
                                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                       NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                       NSLog(@"FAILURE LOAD NOTES HTTP RESPONSE: %@", httpResponse);
                                        dispatch_async(dispatch_get_main_queue(), ^{
                                            completion(nil,error);
                                        });
@@ -313,12 +396,11 @@
     
     NSURLSessionDataTask *task = [self POST:queryString parameters:@{
                                                                      @"subject":@"Mobile Load Note",
-                                                                     @"message":@"in the land of the blind  ",
+                                                                     @"message":message,
                                                                      @"note_type_id":@"4647",
-                                                                     @"reply_note_id":@"15557762",
-                                                                     @"reply_note_thread_id":@"15557762",
-                                                                     @"emails":@"shane.davies@chep.com",
-                                                                     @"shipments":@[]
+                                                                     @"reply_note_id":@"0",
+                                                                     @"reply_note_thread_id":@"0",
+                                                                     @"emails":@[@"shane.davies@chep.com"]
                                                                      }
                                     success:^(NSURLSessionDataTask *task, id responseObject) {
                                         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;

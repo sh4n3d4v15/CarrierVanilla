@@ -18,8 +18,6 @@
 #import "Ref.h"
 #import "Shipment.h"
 #import "Item.h"
-#import <FBTweak.h>
-#import <FBTweakInline.h>
 #import "MBProgressHUD.h"
 
 @interface CVMasterViewController ()<stopChangeDelegate,CCLoginViewDelegate,UIActionSheetDelegate>
@@ -37,6 +35,12 @@
 {
     [super viewDidLoad];
     
+    _timeWindowformatter = [[NSDateFormatter alloc]init];
+    [_timeWindowformatter setDateFormat:@"HH:mm"];
+    
+    
+
+    
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     
     // Configure Refresh Control
@@ -47,7 +51,7 @@
     
     self.navigationItem.leftBarButtonItem = nil;
     UISegmentedControl *statFilter = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Mon", @"Today", @"Wed", nil]];
-                                      self.navigationItem.titleView = statFilter;
+                                    //  self.navigationItem.titleView = statFilter;
     statFilter.selectedSegmentIndex = 1;
     [statFilter setTitleTextAttributes:@{[UIFont fontWithName:@"HelveticaNeue" size:5.0]: NSFontAttributeName} forState:UIControlStateNormal];
     [statFilter addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
@@ -73,9 +77,7 @@
 
 
 -(void)removeHud:(MBProgressHUD*)hud{
-    hud.labelText = @"No Loads";
     [hud hide:YES afterDelay:1.0];
- 
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -85,22 +87,16 @@
     if( !isUserLoggedIn ){
         [self showLoginViewAnimated:NO];
     }else{
-        [[CVChepClient sharedClient]getStopsForVehicle:@"goo" completion:^(NSArray *results, NSError *error) {
-            if (error) {
-//                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Network error" message:@"There was an error returning loads" delegate:self cancelButtonTitle:@"OKAY" otherButtonTitles: nil];
-//                [av show];
-            }
-        }];
+       // [self refresh:nil];
     }
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
 
 }
 
 -(void)refresh:(id)sender{
-    NSLog(@"RERESH");
-    [[CVChepClient sharedClient]getStopsForVehicle:@"" completion:^(NSArray *results, NSError *error) {
+    [[CVChepClient sharedClient]getStopsForUser:_userinfo completion:^(NSString *responseMessage, NSError *error) {
         if (error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Problem refreshing" message:@"Sorry, we could not refresh the loads" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Problem refreshing" message:responseMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
         }
             [(UIRefreshControl*)sender endRefreshing];
@@ -112,7 +108,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -127,33 +122,45 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    __block BOOL complete = YES;
+     [[sectionInfo objects]enumerateObjectsUsingBlock:^(Stop *_stop, NSUInteger idx, BOOL *stop) {
+        if (!_stop.actual_departure) {
+            complete = NO;
+            *stop = YES;
+        }
+    }];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
-    /* Create custom view to display section header... */
-    UILabel *shipmentnumberlabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 2, 100, 18)];
+    
+    UIImageView *truckimageView = [[UIImageView alloc]initWithFrame:CGRectMake(17, 1, 18, 18)];
+    [truckimageView setImage:[UIImage imageNamed: @"truck.png"]];
+    [view addSubview:truckimageView];
+    UILabel *shipmentnumberlabel = [[UILabel alloc] initWithFrame:CGRectMake(42, 2, 100, 18)];
     [shipmentnumberlabel setFont:[UIFont boldSystemFontOfSize:14]];
     [shipmentnumberlabel setText:[sectionInfo name]];
-    [shipmentnumberlabel setTextColor:UIColorFromRGB(0x3c6ba1)];
+    [shipmentnumberlabel setTextColor: UIColorFromRGB(0x3c6ba1)];
     [view addSubview:shipmentnumberlabel];
+
     
-    UIImageView *truckimageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 1, 18, 18)];
-    [truckimageView setImage:[UIImage imageNamed:@"truck.png"]];
-    [view addSubview:truckimageView];
-    
-    UIImageView *stopimageView = [[UIImageView alloc]initWithFrame:CGRectMake(120, 5, 14, 14)];
+    UIImageView *stopimageView = [[UIImageView alloc]initWithFrame:CGRectMake(127, 5, 14, 14)];
     [stopimageView setImage:[UIImage imageNamed:@"flag.png"]];
     [view addSubview:stopimageView];
-    
-    UILabel *stopCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 2, 100, 18)];
+    UILabel *stopCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(147, 2, 100, 18)];
     [stopCountLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [stopCountLabel setText:[NSString stringWithFormat:@"%i STOPS",[sectionInfo numberOfObjects]]];
+    [stopCountLabel setText:[NSString stringWithFormat:@"%lu STOPS",(unsigned long)[sectionInfo numberOfObjects]]];
     [stopCountLabel setTextColor:UIColorFromRGB(0x3c6ba1)];
     [view addSubview:stopCountLabel];
     
+    UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 2, 80, 18)];
+    [statusLabel setText:complete ? @"COMPLETE" : @"ACCEPTED" ];
+    [statusLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    [statusLabel setTextColor: UIColorFromRGB(0x3c6ba1)];
     
-    view.backgroundColor = UIColorFromRGB(0xcddcec);
+   // [view addSubview:statusLabel];
+    
+    
+    view.backgroundColor =  UIColorFromRGB(0xcddcec);
     return view;
 }
 
@@ -242,7 +249,7 @@
     
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.load_number" ascending:YES];
-    NSSortDescriptor *typeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:NO];
+    NSSortDescriptor *typeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor,typeSortDescriptor];
     
     
@@ -327,8 +334,12 @@
 
 #pragma mark  -  Delegate methods
 
--(void)userDidLoginWithDictionary:(NSDictionary *)userInfo{
-
+-(void)userDidLoginWithDictionary:(NSDictionary *)userInfo completion:(void (^)(NSError *, NSString *))completion{
+    _userinfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"userinfo"];
+    [[CVChepClient sharedClient]getStopsForUser:userInfo completion:^(NSString *responseMessage, NSError *error) {
+        NSLog(@"GOG ERROR Mater: %@", error);
+        completion(error,responseMessage);
+    }];
 }
 
 
@@ -352,6 +363,7 @@
     cell.cityLabel.text = stop.address.city;
     cell.zipLabel.text = stop.address.zip;
     cell.typeLabel.text = stop.type;
+    cell.timeWindowLabel.text = [_timeWindowformatter stringFromDate:stop.planned_end];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
 
     if ([stop.type isEqualToString:@"Drop"]) {
@@ -360,7 +372,7 @@
         cell.imageView.image = stop.actual_departure ? [UIImage imageNamed:@"pickicondone1.png"]: [UIImage imageNamed:@"pickicon.png"];
     }
     if (stop.actual_departure) {
-        cell.imageView.alpha = .9;
+       // cell.imageView.alpha = .9;
     }
 }
 
@@ -396,7 +408,7 @@
 }
 
 -(void)logOutAsCarrier{
-    [[NSUserDefaults standardUserDefaults]setValue:nil forKey:@"carrierID"];
+    [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"userinfo"];
 }
 
 

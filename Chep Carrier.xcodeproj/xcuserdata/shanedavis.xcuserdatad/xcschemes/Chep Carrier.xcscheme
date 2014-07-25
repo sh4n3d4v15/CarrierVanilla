@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F170A7308EC446F4913EB812"
-               BuildableName = "libPods-MBProgressHUD.a"
-               BlueprintName = "Pods-MBProgressHUD"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BlueprintIdentifier = "D091397E1941A4C50029AE98"
+               BuildableName = "Chep Carrier.app"
+               BlueprintName = "Chep Carrier"
+               ReferencedContainer = "container:Chep Carrier.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,6 +29,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D091397E1941A4C50029AE98"
+            BuildableName = "Chep Carrier.app"
+            BlueprintName = "Chep Carrier"
+            ReferencedContainer = "container:Chep Carrier.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -39,6 +48,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D091397E1941A4C50029AE98"
+            BuildableName = "Chep Carrier.app"
+            BlueprintName = "Chep Carrier"
+            ReferencedContainer = "container:Chep Carrier.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -48,6 +66,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D091397E1941A4C50029AE98"
+            BuildableName = "Chep Carrier.app"
+            BlueprintName = "Chep Carrier"
+            ReferencedContainer = "container:Chep Carrier.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

@@ -9,7 +9,6 @@
 #import "CVAppDelegate.h"
 
 #import "CVMasterViewController.h"
-#import <FBTweakShakeWindow.h>
 @implementation CVAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -17,14 +16,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 
-- (UIWindow *)window
-{
-    if (!_window) {
-        _window = [[FBTweakShakeWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    }
-    
-    return _window;
-}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

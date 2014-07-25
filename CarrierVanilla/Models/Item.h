@@ -2,7 +2,7 @@
 //  Item.h
 //  CarrierVanilla
 //
-//  Created by shane davis on 17/06/2014.
+//  Created by shane davis on 06/07/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
@@ -21,6 +21,7 @@
 @property (nonatomic, retain) NSString * product_id;
 @property (nonatomic, retain) NSNumber * volume;
 @property (nonatomic, retain) NSNumber * weight;
+@property (nonatomic, retain) NSNumber * finalized;
 @property (nonatomic, retain) Shipment *shipment;
 
 @end

@@ -1,9 +1,9 @@
 //
 //  Shipment.m
-//  CarrierVanilla
+//  
 //
-//  Created by shane davis on 06/06/2014.
-//  Copyright (c) 2014 shane davis. All rights reserved.
+//  Created by shane davis on 02/07/2014.
+//
 //
 
 #import "Shipment.h"
@@ -13,9 +13,11 @@
 
 @implementation Shipment
 
-@dynamic shipment_number;
 @dynamic comments;
-@dynamic stop;
+@dynamic shipment_number;
+@dynamic primary_reference_number;
 @dynamic items;
+@dynamic stop;
+
 
 @end

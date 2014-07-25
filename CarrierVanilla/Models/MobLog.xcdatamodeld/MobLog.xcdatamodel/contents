@@ -10,6 +10,7 @@
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES">
         <attribute name="commodity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="finalized" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lading" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="line" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pieces" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -20,7 +21,8 @@
         <relationship name="shipment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Shipment" inverseName="items" inverseEntity="Shipment" syncable="YES"/>
     </entity>
     <entity name="Load" representedClassName="Load" syncable="YES">
-        <attribute name="completed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="completed" optional="YES" attributeType="String" defaultValueString="1" syncable="YES"/>
+        <attribute name="driver" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="load_number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="podData" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -52,6 +54,7 @@
     </entity>
     <entity name="Shipment" representedClassName="Shipment" syncable="YES">
         <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="primary_reference_number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shipment_number" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Item" inverseName="shipment" inverseEntity="Item" syncable="YES"/>
         <relationship name="stop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stop" inverseName="shipments" inverseEntity="Stop" syncable="YES"/>
@@ -71,8 +74,8 @@
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="pallets" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="pieces" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="planned_end" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="planned_start" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="planned_end" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="planned_start" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="signatureSnapshot" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="volume" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -91,11 +94,11 @@
     </entity>
     <elements>
         <element name="Address" positionX="-10728" positionY="1548" width="128" height="133"/>
-        <element name="Item" positionX="-10728" positionY="1349" width="128" height="180"/>
-        <element name="Load" positionX="-10215" positionY="1916" width="128" height="148"/>
-        <element name="Ref" positionX="-10719" positionY="1872" width="128" height="88"/>
-        <element name="Shipment" positionX="-10512" positionY="1422" width="128" height="103"/>
-        <element name="Stop" positionX="-10224" positionY="1467" width="128" height="403"/>
+        <element name="Item" positionX="-10728" positionY="1349" width="128" height="193"/>
+        <element name="Load" positionX="-10215" positionY="1916" width="128" height="163"/>
         <element name="Loadnote" positionX="-9828" positionY="1463" width="128" height="163"/>
+        <element name="Ref" positionX="-10719" positionY="1872" width="128" height="88"/>
+        <element name="Shipment" positionX="-10512" positionY="1422" width="128" height="118"/>
+        <element name="Stop" positionX="-10224" positionY="1467" width="128" height="403"/>
     </elements>
 </model>

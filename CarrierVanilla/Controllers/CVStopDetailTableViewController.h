@@ -24,4 +24,5 @@
 @property (strong, nonatomic) Stop *stop;
 @property(nonatomic)MKMapView *mapView;
 @property(weak,nonatomic) id <stopChangeDelegate> delegate;
+@property(nonatomic)UIView *refreshBackgroundView;
 @end

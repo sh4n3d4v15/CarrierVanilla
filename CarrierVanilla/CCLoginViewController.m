@@ -10,6 +10,7 @@
 #import "HTAutocompleteTextField.h"
 #import "HTAutocompleteManager.h"
 #import "UIColor+MLPFLatColors.h"
+#import "MBProgressHUD.h"
 #import "Pop.h"
 
 #import "CVChepClient.h"
@@ -804,34 +805,46 @@
 - (IBAction)submitButtonPressed:(id)sender {
     NSLog(@"dismiss button pressed");
     NSString *name = [[self.nameTextField text]copy];
-//    _nameTextField.text = nil;
-    NSString *password = [[self.passwordTextField text]copy];
-//    _passwordTextField.text = nil;
-    NSString *carrierId = [[self.carrierTextField text]copy];
-//    _carrierTextField.text = nil;
-
-        [[NSUserDefaults standardUserDefaults]setValue:carrierId forKey:@"carrierID"];
-        NSDictionary *userInfo = @{@"vehicle":name,@"password":password};
-        
-        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-        [_delegate userDidLoginWithDictionary:userInfo];
-    
-    if ([name isEqualToString:@"seldon"]) {
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    //    _nameTextField.text = nil;
+    NSString *password =  [[self.passwordTextField text]copy];//@"M0b1Sh1pm3n743";
+    //    _passwordTextField.text = nil;
+    NSString *carrierId =  [[self.carrierTextField text]copy];//@"MobiShipRestUser";
+    if([name isEqualToString:@""]){
+        self.loginInfoLabel.text = @"Please Enter Vehicle ID";
     }else{
-        self.loginInfoLabel.text = @"I don't know who you are anymore";
- 
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"Logging In";
+    
+
+    //    _carrierTextField.text = nil;
+    
+    
+    NSDictionary *userInfo = @{@"vehicle": name , @"carrier": carrierId, @"password":password};
+    
+    NSLog(@"Userinfo in login screen %@", userInfo);
+
+        [_delegate userDidLoginWithDictionary:userInfo completion:^(NSError *error, NSString *message) {
+            NSLog(@"ERRORR:: %@", error);
+            if(error || [message isEqualToString:@"No Loads For This Vehicle"]){
+                NSLog(@"there was an error logging in! %@", error.description);
+                NSLog(@"there was an error logging in - message %@", message);
+                hud.labelText = @"Login error";
+                [hud hide:YES afterDelay:0.5];
+                self.loginInfoLabel.text = message;
+            }else{
+                [hud hide:YES];
+                //            [[NSUserDefaults standardUserDefaults]setValue:name forKey:@"vehicle"];
+                //            [[NSUserDefaults standardUserDefaults]setValue:carrierId forKey:@"carrier"];
+                [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userinfo"];
+                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                
+                NSLog(@"Successful login");
+                NSLog(@"It worked- message %@", message);
+                [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+            }
+        }];
     }
     
-//    [[CVChepClient sharedClient]getStopsForVehicle:@"" completion:^(NSArray *results, NSError *error) {
-//        if (error) {
-//            self.loginInfoLabel.text = @"I don't know who you are anymore";
-//        }else{
-//            [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//        }
-//    }];
-    
-
 }
 @end
