@@ -814,10 +814,7 @@
     }else{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = @"Logging In";
-    
-
-    //    _carrierTextField.text = nil;
-    
+ 
     
     NSDictionary *userInfo = @{@"vehicle": name , @"carrier": carrierId, @"password":password};
     
@@ -826,15 +823,12 @@
         [_delegate userDidLoginWithDictionary:userInfo completion:^(NSError *error, NSString *message) {
             NSLog(@"ERRORR:: %@", error);
             if(error || [message isEqualToString:@"No Loads For This Vehicle"]){
-                NSLog(@"there was an error logging in! %@", error.description);
                 NSLog(@"there was an error logging in - message %@", message);
                 hud.labelText = @"Login error";
                 [hud hide:YES afterDelay:0.5];
                 self.loginInfoLabel.text = message;
             }else{
                 [hud hide:YES];
-                //            [[NSUserDefaults standardUserDefaults]setValue:name forKey:@"vehicle"];
-                //            [[NSUserDefaults standardUserDefaults]setValue:carrierId forKey:@"carrier"];
                 [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userinfo"];
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];
                 [[NSUserDefaults standardUserDefaults]synchronize];
@@ -847,4 +841,22 @@
     }
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end

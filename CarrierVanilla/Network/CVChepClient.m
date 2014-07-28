@@ -44,9 +44,8 @@
     });
     
     _sharedClient.dateFormatter = [[NSDateFormatter alloc]init];
-    [_sharedClient.dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
-    [_sharedClient.dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
-    [_sharedClient.dateFormatter setFormatterBehavior:NSDateFormatterBehaviorDefault];
+    [_sharedClient.dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    [_sharedClient.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
 
     return _sharedClient;
 }
@@ -65,13 +64,13 @@
     
     NSError *error;
     NSArray *items = [self.moc executeFetchRequest:fetchRequest error:&error];
-    
+//    NSArray *itemsIdsArray = [items valueForKey:@"load_number"];
     
     for (Load *load in items) {
         if([load isCompletedLoad]){
             [self.moc deleteObject:load];
             NSLog(@"%@ object deleted iceman",entityDescription);
-        }else if (![loadIdsArray containsObject:load.load_number]){
+        }else if (![loadIdsArray containsObject:load.load_number]){//1 LOAD HAS BEEN CANCELLED 2
             [self.moc deleteObject:load];
             NSLog(@"%@ object deleted iceman",entityDescription);
         }
@@ -87,7 +86,7 @@
     [self deleteAllObjects:@"Load" comparingNetworkResults:resultsArray];
     
     
-    NSString *predicateString = [NSString stringWithFormat:@"load_number == $LOAD_NUMBER"];
+    NSString *predicateString = [NSString stringWithFormat:@"load_number == $LOAD_NUMBER"];//if the n-loadnubmer doesnt exist;create
     NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
     
     [resultsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
@@ -116,8 +115,13 @@
                 SET_IF_NOT_NULL(_stop.location_ref, [stopobj valueForKey:@"location_ref"]);
                 SET_IF_NOT_NULL(_stop.type, [stopobj valueForKey:@"type"]);
                 ///do we get values returned without dates?
-                _stop.planned_start =  [_dateFormatter dateFromString:[stopobj valueForKey:@"planned_start"]];
-                _stop.planned_end =  [_dateFormatter dateFromString:[stopobj valueForKey:@"planned_end"]];
+                
+                NSString *startdatestring = [[stopobj valueForKey:@"planned_start"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"planned_start"] length]-6)];
+                NSString *enddatestring = [[stopobj valueForKey:@"planned_end"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"planned_end"] length]-6)];
+                _stop.planned_start =  [_dateFormatter dateFromString:startdatestring];
+                NSLog(@"Start DATESTRING: %@", startdatestring);
+                NSLog(@"End DATESTRING: %@", enddatestring);
+                _stop.planned_end =  [_dateFormatter dateFromString:enddatestring];
                 NSLog(@"**Planned date that is coming in from the json object: %@", [stopobj valueForKey:@"planned_end"]);
                 NSLog(@"**Planned date that is being saved as date: %@", _stop.planned_end);
                // SET_IF_NOT_NULL(_stop.planned_end, [stopobj valueForKey:@"planned_end"]);
@@ -191,6 +195,7 @@
     
         NSString *username = [userinfo valueForKey:@"carrier"];
         NSString *password =  [userinfo valueForKey:@"password"];
+        NSString *vehicle = [userinfo valueForKey:@"vehicle"];
     
         NSLog(@"The username is %@ and the password is %@", username , password);
     
@@ -199,7 +204,7 @@
         NSString *urlString = @"/shipment_tracking_rest/jsonp/loads/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu";
         NSLog(@"Vheicle selected: %@", userinfo );
         NSURLSessionDataTask *task = [self POST:urlString parameters:@{
-                                                                     @"vehicle":[userinfo valueForKey:@"vehicle"],
+                                                                     @"vehicle":vehicle,
                                                                      @"res":@"",
                                                                      @"offset":@0,
                                                                      @"limit":@50,

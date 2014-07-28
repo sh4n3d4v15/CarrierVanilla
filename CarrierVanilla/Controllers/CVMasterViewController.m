@@ -94,7 +94,8 @@
 }
 
 -(void)refresh:(id)sender{
-    [[CVChepClient sharedClient]getStopsForUser:_userinfo completion:^(NSString *responseMessage, NSError *error) {
+    NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
+    [[CVChepClient sharedClient]getStopsForUser:userinfo completion:^(NSString *responseMessage, NSError *error) {
         if (error) {
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Problem refreshing" message:responseMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
@@ -363,7 +364,7 @@
     cell.cityLabel.text = stop.address.city;
     cell.zipLabel.text = stop.address.zip;
     cell.typeLabel.text = stop.type;
-    cell.timeWindowLabel.text = [_timeWindowformatter stringFromDate:stop.planned_end];
+    cell.timeWindowLabel.text = [NSString stringWithFormat:@"%@ - %@",[_timeWindowformatter stringFromDate:stop.planned_start],[_timeWindowformatter stringFromDate:stop.planned_end]];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
 
     if ([stop.type isEqualToString:@"Drop"]) {
