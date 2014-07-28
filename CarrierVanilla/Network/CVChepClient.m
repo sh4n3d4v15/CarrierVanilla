@@ -104,6 +104,7 @@
             SET_IF_NOT_NULL(load.id , [obj valueForKey:@"id"]);
             SET_IF_NOT_NULL(load.load_number, [obj valueForKey:@"load_number"]);
             SET_IF_NOT_NULL(load.status, [obj valueForKey:@"status"]);
+           // SET_IF_NOT_NULL(load.driver, [obj valueForKey:@"driver"]);
             
             NSArray *stops = [obj objectForKey:@"stops"];
             [stops enumerateObjectsUsingBlock:^(id stopobj, NSUInteger idx, BOOL *stop) {
@@ -210,6 +211,7 @@
                                                                      @"limit":@50,
                                                                      @"include_stops":@YES,
                                                                      @"include_shipments":@YES,
+                                                                     @"expand_loads":@YES,
                                                                      @"pick_start_date":@"",
                                                                      @"pick_end_date":@"",
                                                                      @"drop_start_date":@"",
@@ -273,6 +275,12 @@
 
 
 -(NSURLSessionDataTask *)updateStop:(Stop *)stop completion:(void (^)( NSError *))completion{
+    
+    NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
+    NSString *username = [userinfo valueForKey:@"carrier"];
+    NSString *password =  [userinfo valueForKey:@"password"];
+    [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
+    
     NSLog(@"Update stop method fired");
     NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",stop.load.id,stop.id];
     NSLog(@"Full URL: %@", fullUrl);
@@ -280,7 +288,7 @@
     __unused NSArray *deliveries = [self getQuantitesForStop:stop];
     
 
-    [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ss+00:00"];
+    [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss+00:00"];
     NSLog(@"********* Here is what date will be uploaded into the TMS: %@", [_dateFormatter stringFromDate:stop.actual_departure]);
    //[df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
     
@@ -341,6 +349,11 @@
 #pragma mark - Documents Requests
 
 -(NSURLSessionDataTask *)uploadPhoto:(NSData *)photoData forStopId:(NSString *)stopId withLoadId:(NSString *)loadId withComment:(NSString *)comment completion:(void (^)(NSDictionary *, NSError *))completion{
+    
+    NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
+    NSString *username = [userinfo valueForKey:@"carrier"];
+    NSString *password =  [userinfo valueForKey:@"password"];
+    [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
 
     NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/upload/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId,stopId];
     NSDictionary *docInfoDictionay = @{@"document_type_id":@"",
@@ -367,6 +380,12 @@
 #pragma mark - Load Note Requests
 
 -(NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSDictionary *, NSError *))completion{
+    
+    NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
+    NSString *username = [userinfo valueForKey:@"carrier"];
+    NSString *password =  [userinfo valueForKey:@"password"];
+    [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
+    
     [self.operationQueue setSuspended:NO];
     NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/notes/0/0/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId];
     NSLog(@"GET LOAD NOTES QUIERY STRING: %@", queryString);
@@ -397,6 +416,12 @@
 }
 
 -(NSURLSessionDataTask *)postLoadNoteForLoad:(NSString *)loadId withNoteType:(NSString *)noteType withStopType:(NSString *)stopType withMessage:(NSString *)message completion:(void (^)(NSDictionary *, NSError *))completion{
+    
+    NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
+    NSString *username = [userinfo valueForKey:@"carrier"];
+    NSString *password =  [userinfo valueForKey:@"password"];
+    [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
+    
     NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/addnote/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId];
     
     NSURLSessionDataTask *task = [self POST:queryString parameters:@{

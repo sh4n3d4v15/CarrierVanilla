@@ -204,7 +204,7 @@
 
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 2, tableView.frame.size.width, 18)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 2, view.frame.size.width-20, 18)];
 
     [label setFont:[UIFont boldSystemFontOfSize:12]];
     [label setTextColor:UIColorFromRGB(0x3c6ba1)];

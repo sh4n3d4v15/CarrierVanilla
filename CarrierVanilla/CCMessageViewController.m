@@ -57,6 +57,11 @@
         }
         NSArray *notes = [results objectForKey:@"notes"];
         NSLog(@"NOtes: %@", notes);
+        if ([notes count]<1) {
+            hud.labelText = @"No new notes";
+            
+        }
+        [hud hide:YES afterDelay:1];
         [self recursivelyCheckForRepliesAndCreateMessage:notes];
     }];
     

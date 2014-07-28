@@ -22,7 +22,7 @@
     </entity>
     <entity name="Load" representedClassName="Load" syncable="YES">
         <attribute name="completed" optional="YES" attributeType="String" defaultValueString="1" syncable="YES"/>
-        <attribute name="driver" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="driver" optional="YES" attributeType="String" defaultValueString="0" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="load_number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="podData" optional="YES" attributeType="Binary" syncable="YES"/>

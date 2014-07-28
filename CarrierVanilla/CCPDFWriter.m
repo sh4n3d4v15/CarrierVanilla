@@ -1314,7 +1314,7 @@
         [df setDateFormat:@"dd-MM-yyyy"];
         CGRect text5Rect1 = CGRectMake(CGRectGetMinX(frame) + 220, CGRectGetMinY(frame) + 261, 101, 15);
         [strokeColor setFill];
-        [[df stringFromDate:dropStop.actual_arrival] drawInRect: text5Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        [[df stringFromDate:dropStop.planned_end] drawInRect: text5Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
         
         //// Text 6 Drawing
