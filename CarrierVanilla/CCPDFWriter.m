@@ -91,7 +91,7 @@
     NSString* senderLocationNameContent = picStop.location_name;
     
     //carrrier
-    __unused NSString* carrierContent = @"The olde truck company";
+     NSString* carrierContent = @"MobiShipRestUser";
     
     
     //// logo 2 Drawing
@@ -1283,7 +1283,7 @@
         
         CGRect text2Rect1 = CGRectMake(CGRectGetMinX(frame) + 221, CGRectGetMinY(frame) + 158, 158, 15);
         [strokeColor setFill];
-        [[[NSUserDefaults standardUserDefaults]valueForKey:@"carrier"] drawInRect: text2Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        [@"MobiShipRestUser" drawInRect: text2Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
         
         //// Text 3 Drawing
@@ -1406,7 +1406,7 @@
                 CGRect pLANNEDQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 398, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 73, 14);
                 [strokeColor setFill];
                 NSLog(@"Pickstop pieces: %@", picStop.pieces);
-                [[picStop.pieces stringValue] drawInRect: pLANNEDQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+                [[dropStop.pieces stringValue] drawInRect: pLANNEDQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
                 
                 
                 CGRect aCTUALQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 487, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 73, 14);
