@@ -358,7 +358,7 @@
     NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/upload/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId,stopId];
     NSDictionary *docInfoDictionay = @{@"document_type_id":@"",
                                        @"document_type_key":@"POD",
-                                       @"comments":@"defect",
+                                       @"comments":@"",
                                        @"stop_id":@""
                                        };
     

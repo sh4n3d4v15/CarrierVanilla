@@ -31,53 +31,53 @@
     [self loadMessages];
 }
 
-//- (void)loadMessages
-//{
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    hud.labelText = @"Retrieving Messages";
-//    NSLog(@"Loading messages");
-//    [[CVChepClient sharedClient]getLoadNotesForLoad:self.load.id completion:^(NSDictionary *results, NSError *error) {
-//        if (error) {
-//            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"ERROR" message:@"There was an error retrieving notes" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-//            [av show];
-//        }
-//        [hud hide:YES afterDelay:0.5];
-//        NSArray *notes = [results objectForKey:@"notes"];
-//        [self recursivelyCheckForRepliesAndCreateMessage:notes];
-//    }];
-//}
-
--(void)loadMessages{
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.labelText = @"Updating Messages";
+- (void)loadMessages
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"Retrieving Messages";
+    NSLog(@"Loading messages");
     [[CVChepClient sharedClient]getLoadNotesForLoad:self.stop.load.id completion:^(NSDictionary *results, NSError *error) {
         if (error) {
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"ERROR" message:@"There was an error retrieving notes" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
         }
+        [hud hide:YES afterDelay:0.5];
         NSArray *notes = [results objectForKey:@"notes"];
-        NSLog(@"NOtes: %@", notes);
-        if ([notes count]<1) {
-            hud.labelText = @"No new notes";
-            
-        }
-        [hud hide:YES afterDelay:1];
         [self recursivelyCheckForRepliesAndCreateMessage:notes];
     }];
-    
-    
-//    [[self.stop.loadNotes allObjects]enumerateObjectsUsingBlock:^(Loadnote *message, NSUInteger idx, BOOL *stop) {
-//        SOMessage *soMessage = [[SOMessage alloc]init];
-//        soMessage.text = message.text;
-//        soMessage.fromMe = [message.fromMe boolValue];
-//        soMessage.type = message.thumbnail ? SOMessageTypePhoto : SOMessageTypeText;
-//        soMessage.thumbnail = message.thumbnail ? [UIImage imageWithData:message.thumbnail] : nil;
-//        soMessage.media = message.media ? message.media : nil;
-//        soMessage.date = message.date;
-//        [self.dataSource addObject:soMessage];
-//    }];
-   // [self refreshMessages];
 }
+
+//-(void)loadMessages{
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        hud.labelText = @"Updating Messages";
+//    [[CVChepClient sharedClient]getLoadNotesForLoad:self.stop.load.id completion:^(NSDictionary *results, NSError *error) {
+//        if (error) {
+//            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"ERROR" message:@"There was an error retrieving notes" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//            [av show];
+//        }
+//        NSArray *notes = [results objectForKey:@"notes"];
+//        NSLog(@"NOtes: %@", notes);
+//        if ([notes count]<1) {
+//            hud.labelText = @"No new notes";
+//            
+//        }
+//        [hud hide:YES afterDelay:1];
+//        [self recursivelyCheckForRepliesAndCreateMessage:notes];
+//    }];
+//    
+//    
+////    [[self.stop.loadNotes allObjects]enumerateObjectsUsingBlock:^(Loadnote *message, NSUInteger idx, BOOL *stop) {
+////        SOMessage *soMessage = [[SOMessage alloc]init];
+////        soMessage.text = message.text;
+////        soMessage.fromMe = [message.fromMe boolValue];
+////        soMessage.type = message.thumbnail ? SOMessageTypePhoto : SOMessageTypeText;
+////        soMessage.thumbnail = message.thumbnail ? [UIImage imageWithData:message.thumbnail] : nil;
+////        soMessage.media = message.media ? message.media : nil;
+////        soMessage.date = message.date;
+////        [self.dataSource addObject:soMessage];
+////    }];
+//   // [self refreshMessages];
+//}
 
 //..26 June Lean Update Request - 03 July Lean Update
 -(void)recursivelyCheckForRepliesAndCreateMessage:(NSArray*)messages{
@@ -202,24 +202,24 @@
     photoMessage.thumbnail = [UIImage imageWithData:imageData];
     photoMessage.fromMe = YES;
     
-    Loadnote *note = [NSEntityDescription insertNewObjectForEntityForName:@"Loadnote" inManagedObjectContext:self.managedObjectContext];
-    note.date = [NSDate date];
-    note.fromMe = [NSNumber numberWithBool:YES];
-    note.thumbnail = imageData;
-    note.media = imageData;
-    note.type = SOMessageTypeText;
-   
-    
-    NSError* error = nil;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Unable to save context for class");
-    } else {
-        NSLog(@"saved all records!");
-    }
+//    Loadnote *note = [NSEntityDescription insertNewObjectForEntityForName:@"Loadnote" inManagedObjectContext:self.managedObjectContext];
+//    note.date = [NSDate date];
+//    note.fromMe = [NSNumber numberWithBool:YES];
+//    note.thumbnail = imageData;
+//    note.media = imageData;
+//    note.type = SOMessageTypeText;
+//   
+//    
+//    NSError* error = nil;
+//    if (![self.managedObjectContext save:&error]) {
+//        NSLog(@"Unable to save context for class");
+//    } else {
+//        NSLog(@"saved all records!");
+//    }
     //[self postMessageToServer:msg];
 
     
-    [self.stop addLoadNotesObject:note];
+//    [self.stop addLoadNotesObject:note];
     [self sendMessage:photoMessage];
     
     [[CVChepClient sharedClient]uploadPhoto:imageData
