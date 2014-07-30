@@ -11,5 +11,5 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface CCPDFWriter : NSObject
-+(void)createPDFfromLoad:(Load*)load saveToDocumentsWithFileName:(NSString*)aFilename;
++(void)createPDFfromLoad:(Load*)load forStopType:(NSString*)stopType saveToDocumentsWithFileName:(NSString*)aFilename;
 @end

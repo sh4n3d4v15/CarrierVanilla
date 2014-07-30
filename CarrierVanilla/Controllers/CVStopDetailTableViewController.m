@@ -553,6 +553,7 @@
                      }];
     
     
+    
 }
 
 -(void)saveSignatureSnapshotAsData:(NSData *)imageData andSignatureBezier:(UIBezierPath*)signatureBezierPath updateQuantity:(NSString*)quantity andDismissView:(UIView *)view{
@@ -571,7 +572,7 @@
             hud.labelText = @"Saving Load";
             NSString *pdfName = @"pod.pdf";
 
-            [CCPDFWriter createPDFfromLoad:self.stop.load saveToDocumentsWithFileName:pdfName];
+            [CCPDFWriter createPDFfromLoad:self.stop.load forStopType:self.stop.type saveToDocumentsWithFileName:pdfName];
             [[CVChepClient sharedClient]updateStop:_stop
                                               completion:^( NSError *error) {
                                                   if (error) {

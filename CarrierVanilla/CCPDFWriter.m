@@ -18,7 +18,7 @@
 
 @implementation CCPDFWriter
 
-+(void)createPDFfromLoad:(Load*)load saveToDocumentsWithFileName:(NSString*)aFilename
++(void)createPDFfromLoad:(Load*)load forStopType:(NSString*)stopType saveToDocumentsWithFileName:(NSString*)aFilename
 {
     
     NSArray *stopsArray =  [load.stops allObjects];
@@ -91,7 +91,7 @@
     NSString* senderLocationNameContent = picStop.location_name;
     
     //carrrier
-     NSString* carrierContent = @"MobiShipRestUser";
+    __unused  NSString* carrierContent = @"MobiShipRestUser";
     
     
     //// logo 2 Drawing
@@ -1232,7 +1232,7 @@
     [logo2Path closePath];
     [logo setFill];
     [logo2Path fill];
-    
+#pragma mark - writing
     
     //// Locations
     {
@@ -1402,7 +1402,8 @@
                 CGRect pLANNEDQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 398, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 73, 14);
                 [strokeColor setFill];
                 NSLog(@"Pickstop pieces: %@", picStop.pieces);
-                [[dropStop.pieces stringValue] drawInRect: pLANNEDQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+                NSString *updatedQuantity = [stopType isEqualToString:@"pick"] ? [picStop.pieces stringValue] : [dropStop.pieces stringValue];
+                [updatedQuantity drawInRect: pLANNEDQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
                 
                 
                 CGRect aCTUALQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 487, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 73, 14);
