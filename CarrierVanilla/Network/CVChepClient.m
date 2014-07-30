@@ -308,7 +308,7 @@
     NSDictionary *documentDict = @{@"document_type_id": @"",
                                  @"document_type_key": @"POD",
                                  @"product_id": @"60",
-                                 @"comments": @"Defect test",
+                                 @"comments": @"",
                                  @"stop_id": stop.id
                                  };
     
