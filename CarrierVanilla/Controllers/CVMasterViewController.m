@@ -336,12 +336,12 @@
 - (void)configureCell:(CVStopTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Stop *stop = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.locationNameLabel.text = [ NSString stringWithUTF8String:[stop.location_name cStringUsingEncoding:NSUTF8StringEncoding]];;
+    cell.locationNameLabel.text = [ NSString stringWithUTF8String:[stop.location_name UTF8String]];;
     cell.locationNameLabel.textColor = UIColorFromRGB(0x3c6ba1);
-    cell.addressOneLabel.text = [ NSString stringWithUTF8String:[stop.address.address1 cStringUsingEncoding:NSUTF8StringEncoding]];
-    cell.cityLabel.text = stop.address.city;
-    cell.zipLabel.text = stop.address.zip;
-    cell.typeLabel.text = stop.type;
+    cell.addressOneLabel.text = [ NSString stringWithUTF8String:[stop.address.address1 UTF8String]];
+    cell.cityLabel.text = [NSString stringWithUTF8String:[stop.address.city UTF8String]];
+    cell.zipLabel.text = [NSString stringWithUTF8String:[stop.address.zip UTF8String]];
+    cell.typeLabel.text = [NSString stringWithUTF8String:[stop.type UTF8String]];
     cell.timeWindowLabel.text = [NSString stringWithFormat:@"%@ - %@",[_timeWindowformatter stringFromDate:stop.planned_start],[_timeWindowformatter stringFromDate:stop.planned_end]];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
 

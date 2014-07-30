@@ -1391,10 +1391,6 @@
         [shipments enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger outerIndex, BOOL *stop) {
             
             ///write shipment number
-            
-
-            
-            
             NSArray *items = [shipment.items allObjects];
             [items enumerateObjectsUsingBlock:^(Item *item, NSUInteger innerIndex, BOOL *stop) {
                 

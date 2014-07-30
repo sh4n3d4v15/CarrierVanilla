@@ -210,7 +210,7 @@
     [label setTextColor:UIColorFromRGB(0x3c6ba1)];
     
     if (section == 0) {
-        [label setText:[NSString stringWithFormat:@"%@ %@", [self.stop.type isEqualToString:@"Pick"]? @"COLLECT FROM: " : @"DELIVER TO: ", self.stop.location_name]];
+        [label setText:[NSString stringWithFormat:@"%@ %@", [self.stop.type isEqualToString:@"Pick"]? @"COLLECT FROM: " : @"DELIVER TO: ", [NSString stringWithUTF8String:[self.stop.location_name UTF8String]]]];
     }else{
         NSArray *shipments = [self.stop.shipments allObjects];
         Shipment *shipment = shipments[section-1];
@@ -283,23 +283,23 @@
         Address *address = self.stop.address;
         
         UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10,  5, CGRectGetWidth(containerView.bounds)-20, 20)];
-        addressOneLabel.text = [NSString stringWithFormat:@"STREET: %@", address.address1];
+        addressOneLabel.text = [NSString stringWithFormat:@"STREET: %@", [NSString stringWithUTF8String:[address.address1 UTF8String]]];
         addressOneLabel.textColor = [UIColor flatDarkGreenColor];
         addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
         
         UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, CGRectGetWidth(containerView.bounds)-20, 20)];
-        cityLabel.text = [NSString stringWithFormat:@"CITY: %@", address.city];
+        cityLabel.text = [NSString stringWithFormat:@"CITY: %@", [NSString stringWithUTF8String:[address.city UTF8String]]];
         cityLabel.textColor = [UIColor flatDarkGreenColor];
         cityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
         
         
         UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 35, 100, 20)];
-        stateLabel.text = [NSString stringWithFormat:@"STATE: %@", address.state];
+        stateLabel.text = [NSString stringWithFormat:@"STATE: %@", [NSString stringWithUTF8String:[address.state UTF8String]]];
         stateLabel.textColor = [UIColor flatDarkGreenColor];
         stateLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
         
         UILabel *zipLabel = [[UILabel alloc]initWithFrame:CGRectMake(110,  35, 200, 20)];
-        zipLabel.text = [NSString stringWithFormat:@"POST CODE: %@", address.zip];
+        zipLabel.text = [NSString stringWithFormat:@"POST CODE: %@", [NSString stringWithUTF8String:[address.zip UTF8String]]];
         zipLabel.textColor = [UIColor flatDarkGreenColor];
         zipLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
         
