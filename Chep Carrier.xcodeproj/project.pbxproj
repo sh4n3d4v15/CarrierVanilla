@@ -41,7 +41,6 @@
 		D0AAA130196711B30044EE87 /* truckwhite.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA12F196711B30044EE87 /* truckwhite.png */; };
 		D0AAA133196712460044EE87 /* flagwhite.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA131196712460044EE87 /* flagwhite.png */; };
 		D0AAA134196712460044EE87 /* flagwhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA132196712460044EE87 /* flagwhite@2x.png */; };
-		D0AAA1371969AE680044EE87 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AAA1361969AE680044EE87 /* Item.m */; };
 		D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */; };
 		D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8DC1944E3200095E59E /* CVChepClient.m */; };
 		D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */; };
@@ -138,12 +137,12 @@
 		D09139B21941A4C50029AE98 /* Chep CarrierTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Chep CarrierTests-Info.plist"; sourceTree = "<group>"; };
 		D09139B41941A4C50029AE98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarrierVanillaTests.m; sourceTree = "<group>"; };
+		D0A74338198A611F00279C9D /* Item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		D0A74339198A611F00279C9D /* Item.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		D0AAA12D196711760044EE87 /* truckwhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "truckwhite@2x.png"; sourceTree = "<group>"; };
 		D0AAA12F196711B30044EE87 /* truckwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truckwhite.png; sourceTree = "<group>"; };
 		D0AAA131196712460044EE87 /* flagwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flagwhite.png; sourceTree = "<group>"; };
 		D0AAA132196712460044EE87 /* flagwhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flagwhite@2x.png"; sourceTree = "<group>"; };
-		D0AAA1351969AE680044EE87 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
-		D0AAA1361969AE680044EE87 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		D0ABC8C11944E23E0095E59E /* CVMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVMasterViewController.h; path = Controllers/CVMasterViewController.h; sourceTree = "<group>"; };
 		D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVMasterViewController.m; path = Controllers/CVMasterViewController.m; sourceTree = "<group>"; };
 		D0ABC8DB1944E3200095E59E /* CVChepClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChepClient.h; path = Network/CVChepClient.h; sourceTree = "<group>"; };
@@ -413,13 +412,13 @@
 		D0D3F38E1950501C00452C58 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D0A74338198A611F00279C9D /* Item.h */,
+				D0A74339198A611F00279C9D /* Item.m */,
 				D0E6FBEF19827C6B0099B4A9 /* Load.h */,
 				D0E6FBF019827C6B0099B4A9 /* Load.m */,
 				D0D3F38F1950501C00452C58 /* Address.h */,
 				D0D3F3901950501C00452C58 /* Address.m */,
 				D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */,
-				D0AAA1351969AE680044EE87 /* Item.h */,
-				D0AAA1361969AE680044EE87 /* Item.m */,
 				D0DE9EE2195D811B0095BC5A /* Loadnote.h */,
 				D0DE9EE3195D811B0095BC5A /* Loadnote.m */,
 				D0DE9EE5195D81670095BC5A /* Stop.h */,
@@ -609,7 +608,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0AAA1371969AE680044EE87 /* Item.m in Sources */,
 				D0D3F39D1950501C00452C58 /* Address.m in Sources */,
 				D0D3F36D194EF8C700452C58 /* CCMessageViewController.m in Sources */,
 				D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */,

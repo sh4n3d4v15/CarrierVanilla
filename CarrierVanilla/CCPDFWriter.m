@@ -1382,7 +1382,7 @@
         [bezier8Path stroke];
         
         
-        NSArray *shipments = [picStop.shipments allObjects];
+        NSArray *shipments = [stopType isEqualToString:@"Pick"] ? [picStop.shipments allObjects] : [dropStop.shipments allObjects];
         
         CGRect text3Rect1 = CGRectMake(CGRectGetMinX(frame) + 401, CGRectGetMinY(frame) + 158, 147, 15);
         [strokeColor setFill];
@@ -1402,14 +1402,22 @@
                 CGRect pLANNEDQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 398, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 73, 14);
                 [strokeColor setFill];
                 NSLog(@"Pickstop pieces: %@", picStop.pieces);
+                
                 NSString *updatedQuantity = [stopType isEqualToString:@"pick"] ? [picStop.pieces stringValue] : [dropStop.pieces stringValue];
-                [updatedQuantity drawInRect: pLANNEDQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+                
+                NSLog(@"******************************************** update quantity is: %@", updatedQuantity);
+                [[item.pieces stringValue] drawInRect: pLANNEDQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
                 
                 
                 CGRect aCTUALQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 487, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 73, 14);
                 [strokeColor setFill];
+                NSLog(@"UPdated pieces: %@",[item.updated_pieces stringValue] );
+                [[item.updated_pieces stringValue] drawInRect: aCTUALQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
                 
-                [[item.pieces stringValue] drawInRect: aCTUALQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+                
+                CGRect pRODUCTRect1 = CGRectMake(CGRectGetMinX(frame) + 86, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 73, 14);
+                [strokeColor setFill];
+                [item.product_id drawInRect: pRODUCTRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
                 
                 
                 
@@ -1423,9 +1431,9 @@
         [strokeColor setFill];
         [iTEMContent drawInRect: iTEMRect withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
         
-        CGRect iTEMRect1 = CGRectMake(CGRectGetMinX(frame) + 48, CGRectGetMinY(frame) + 376, 26, 15);
-        [strokeColor setFill];
-        [@"10" drawInRect: iTEMRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+//        CGRect iTEMRect1 = CGRectMake(CGRectGetMinX(frame) + 48, CGRectGetMinY(frame) + 376, 26, 15);
+//        [strokeColor setFill];
+//        [@"10" drawInRect: iTEMRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
         
         
         //// PRODUCT Drawing
@@ -1435,9 +1443,9 @@
         
         
         //// PRODUCT Drawing
-        CGRect pRODUCTRect1 = CGRectMake(CGRectGetMinX(frame) + 86, CGRectGetMinY(frame) + 376, 83, 14);
-        [strokeColor setFill];
-        [@"00000001" drawInRect: pRODUCTRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+//        CGRect pRODUCTRect1 = CGRectMake(CGRectGetMinX(frame) + 86, CGRectGetMinY(frame) + 376, 83, 14);
+//        [strokeColor setFill];
+//        [@"00000001" drawInRect: pRODUCTRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
         
         //// DESCRIPTION Drawing
         CGRect dESCRIPTIONRect = CGRectMake(CGRectGetMinX(frame) + 175, CGRectGetMinY(frame) + 355, 147, 15);

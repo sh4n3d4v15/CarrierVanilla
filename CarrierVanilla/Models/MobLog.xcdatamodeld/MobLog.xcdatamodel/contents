@@ -16,6 +16,7 @@
         <attribute name="pieces" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="product_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="product_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated_pieces" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="volume" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="shipment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Shipment" inverseName="items" inverseEntity="Shipment" syncable="YES"/>
@@ -94,7 +95,7 @@
     </entity>
     <elements>
         <element name="Address" positionX="-10728" positionY="1548" width="128" height="133"/>
-        <element name="Item" positionX="-10728" positionY="1349" width="128" height="193"/>
+        <element name="Item" positionX="-10728" positionY="1349" width="128" height="208"/>
         <element name="Load" positionX="-10215" positionY="1916" width="128" height="163"/>
         <element name="Loadnote" positionX="-9828" positionY="1463" width="128" height="163"/>
         <element name="Ref" positionX="-10719" positionY="1872" width="128" height="88"/>

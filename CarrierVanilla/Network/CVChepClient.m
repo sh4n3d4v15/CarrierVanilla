@@ -21,8 +21,8 @@
     static CVChepClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-
-        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
+        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://usorlut27.chep.com:50000"];
+//        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
         _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
         _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
         _sharedClient.requestSerializer.stringEncoding = NSUTF8StringEncoding;
@@ -45,7 +45,9 @@
     
     _sharedClient.dateFormatter = [[NSDateFormatter alloc]init];
     [_sharedClient.dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-    [_sharedClient.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+//    [_sharedClient.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    [_sharedClient.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+
 
     return _sharedClient;
 }
@@ -158,6 +160,7 @@
                         SET_IF_NOT_NULL(item.weight, [itemObj valueForKey:@"weight"]);
                         SET_IF_NOT_NULL(item.volume, [itemObj valueForKey:@"volume"]);
                         SET_IF_NOT_NULL(item.pieces, [itemObj valueForKey:@"pieces"]);
+                        SET_IF_NOT_NULL(item.updated_pieces, [itemObj valueForKey:@"pieces"]);
                         SET_IF_NOT_NULL(item.lading, [itemObj valueForKey:@"lading"]);
 
                         [shipment addItemsObject:item];
@@ -204,6 +207,7 @@
 
         NSString *urlString = @"/shipment_tracking_rest/jsonp/loads/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu";
         NSLog(@"Vheicle selected: %@", userinfo );
+    NSLog(@"QUERY: %@", urlString);
         NSURLSessionDataTask *task = [self POST:urlString parameters:@{
                                                                      @"vehicle":vehicle,
                                                                      @"res":@"",
@@ -224,9 +228,10 @@
                                             NSLog(@"top response %@", responseObject);
                                             if (httpResponse.statusCode == 200) {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                    NSLog(@"REPONSE::::: %@", responseObject);
+                                                    NSLog(@"REPONSE::::: %@", httpResponse);
                                                     if ([loads count] < 1) {
                                                         completion(@"No Loads For This Vehicle", nil);
+                                                        NSLog(@"************LOADS: %@",loads );
                                                     }else{
                                                          [self importArrayOfStopsIntoCoreData:loads];
                                                         completion(@"all is good with 200 in da hood",nil);
