@@ -21,8 +21,8 @@
     static CVChepClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://usorlut27.chep.com:50000"];
-//        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
+//        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://usorlut27.chep.com:50000"];
+        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
         _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
         _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
         _sharedClient.requestSerializer.stringEncoding = NSUTF8StringEncoding;
@@ -45,8 +45,8 @@
     
     _sharedClient.dateFormatter = [[NSDateFormatter alloc]init];
     [_sharedClient.dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-//    [_sharedClient.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
-    [_sharedClient.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+    //[_sharedClient.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"BST"]];
+    [_sharedClient.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
 
 
     return _sharedClient;
@@ -293,9 +293,12 @@
     __unused NSArray *deliveries = [self getQuantitesForStop:stop];
     
 
-    [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss+00:00"];
-    NSLog(@"********* Here is what date will be uploaded into the TMS: %@", [_dateFormatter stringFromDate:stop.actual_departure]);
-   //[df setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
+   // [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss+00:00"];
+    [_dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+    NSLog(@"********* 1.Here is what date will be uploaded into the TMS: %@", [_dateFormatter stringFromDate:stop.actual_departure]);
+//    [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
+    NSLog(@"********* 2.Here is what date will be uploaded into the TMS: %@", [_dateFormatter stringFromDate:stop.actual_departure]);
+  
     
     
     NSDictionary *updateDict = @{@"actual_arrival_date": [_dateFormatter stringFromDate:stop.actual_arrival],

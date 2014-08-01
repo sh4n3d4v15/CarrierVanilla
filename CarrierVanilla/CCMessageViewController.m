@@ -165,7 +165,7 @@
 {
     NSLog(@"media button pressed");
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;//UIImagePickerControllerSourceTypePhotoLibrary;
     picker.delegate = self;
     picker.allowsEditing = YES;
     [self presentViewController:picker animated:YES completion:nil];

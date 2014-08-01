@@ -1670,11 +1670,11 @@
     
     
     UIGraphicsEndPDFContext();
-    NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
-    NSString* documentDirectory = [documentDirectories objectAtIndex:0];
-    NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:aFilename];
+//    NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
+//    NSString* documentDirectory = [documentDirectories objectAtIndex:0];
+//    NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:aFilename];
     load.podData = pdfData;
-    [pdfData writeToFile:documentDirectoryFilename atomically:YES];
+   // [pdfData writeToFile:documentDirectoryFilename atomically:YES];
     
 }
 
