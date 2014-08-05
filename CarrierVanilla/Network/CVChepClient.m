@@ -22,7 +22,8 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
 //        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://usorlut27.chep.com:50000"];
-        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
+//        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
+        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://usorlut48.chep.com:50000"];
         _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
         _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
         _sharedClient.requestSerializer.stringEncoding = NSUTF8StringEncoding;

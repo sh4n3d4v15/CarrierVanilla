@@ -390,9 +390,4 @@
     [[NSUserDefaults standardUserDefaults]setObject:nil forKey:@"userinfo"];
 }
 
-
-#pragma mark throw away pdf methods
-
-
-
 @end
