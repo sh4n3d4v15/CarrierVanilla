@@ -12,4 +12,6 @@
 @interface CCMessageViewController : SOMessagingViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property(nonatomic)Stop *stop;
+@property(nonatomic)NSDate *lastMessageDate;
+@property(nonatomic)NSDateFormatter *df;
 @end

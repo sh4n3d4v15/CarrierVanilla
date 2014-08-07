@@ -1,24 +1,24 @@
 //
 //  Loadnote.m
-//  CarrierVanilla
+//  Chep Carrier
 //
-//  Created by shane davis on 27/06/2014.
+//  Created by shane davis on 07/08/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
 #import "Loadnote.h"
-#import "Stop.h"
+#import "Load.h"
 
 
 @implementation Loadnote
 
-@dynamic text;
-@dynamic type;
-@dynamic media;
-@dynamic thumbnail;
-@dynamic date;
 @dynamic attributes;
+@dynamic date;
 @dynamic fromMe;
-@dynamic stop;
+@dynamic media;
+@dynamic text;
+@dynamic thumbnail;
+@dynamic type;
+@dynamic load;
 
 @end

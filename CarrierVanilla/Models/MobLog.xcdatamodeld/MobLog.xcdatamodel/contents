@@ -28,6 +28,7 @@
         <attribute name="load_number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="podData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="loadNotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Loadnote" inverseName="load" inverseEntity="Loadnote" syncable="YES"/>
         <relationship name="refs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ref" inverseName="load" inverseEntity="Ref" syncable="YES"/>
         <relationship name="stops" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Stop" inverseName="load" inverseEntity="Stop" syncable="YES">
             <userInfo>
@@ -46,7 +47,7 @@
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="stop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stop" inverseName="loadNotes" inverseEntity="Stop" syncable="YES"/>
+        <relationship name="load" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Load" inverseName="loadNotes" inverseEntity="Load" syncable="YES"/>
     </entity>
     <entity name="Ref" representedClassName="Ref" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -87,7 +88,6 @@
                 <entry key="relatedByAttribute" value="id"/>
             </userInfo>
         </relationship>
-        <relationship name="loadNotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Loadnote" inverseName="stop" inverseEntity="Loadnote" syncable="YES"/>
         <relationship name="shipments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Shipment" inverseName="stop" inverseEntity="Shipment" syncable="YES"/>
         <userInfo>
             <entry key="relatedByAttribute" value="id"/>
@@ -96,10 +96,10 @@
     <elements>
         <element name="Address" positionX="-10728" positionY="1548" width="128" height="133"/>
         <element name="Item" positionX="-10728" positionY="1349" width="128" height="208"/>
-        <element name="Load" positionX="-10215" positionY="1916" width="128" height="163"/>
-        <element name="Loadnote" positionX="-9828" positionY="1463" width="128" height="163"/>
+        <element name="Load" positionX="-10215" positionY="1916" width="128" height="178"/>
+        <element name="Loadnote" positionX="-9947" positionY="1629" width="128" height="163"/>
         <element name="Ref" positionX="-10719" positionY="1872" width="128" height="88"/>
         <element name="Shipment" positionX="-10512" positionY="1422" width="128" height="118"/>
-        <element name="Stop" positionX="-10224" positionY="1467" width="128" height="403"/>
+        <element name="Stop" positionX="-10224" positionY="1467" width="128" height="388"/>
     </elements>
 </model>

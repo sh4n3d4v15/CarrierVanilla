@@ -1,17 +1,17 @@
 //
 //  Stop.m
-//  CarrierVanilla
+//  Chep Carrier
 //
-//  Created by shane davis on 27/06/2014.
+//  Created by shane davis on 07/08/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
 #import "Stop.h"
 #import "Address.h"
 #import "Load.h"
-#import "Loadnote.h"
 #import "Shipment.h"
 #import "Item.h"
+
 
 @implementation Stop
 
@@ -22,9 +22,11 @@
 @dynamic eta;
 @dynamic href;
 @dynamic id;
+@dynamic latitude;
 @dynamic location_id;
 @dynamic location_name;
 @dynamic location_ref;
+@dynamic longitude;
 @dynamic pallets;
 @dynamic pieces;
 @dynamic planned_end;
@@ -33,13 +35,9 @@
 @dynamic type;
 @dynamic volume;
 @dynamic weight;
-@dynamic latitude;
-@dynamic longitude;
 @dynamic address;
 @dynamic load;
 @dynamic shipments;
-@dynamic loadNotes;
-
 -(BOOL)isFinalizedShipment{
     __block BOOL complete = YES;
     
@@ -53,5 +51,4 @@
     
     return complete;
 }
-
 @end

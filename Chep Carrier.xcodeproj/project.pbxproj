@@ -43,6 +43,10 @@
 		D0AAA134196712460044EE87 /* flagwhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA132196712460044EE87 /* flagwhite@2x.png */; };
 		D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */; };
 		D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8DC1944E3200095E59E /* CVChepClient.m */; };
+		D0B078F61993727C00CE8DF9 /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F51993727C00CE8DF9 /* Load.m */; };
+		D0B078F9199372C600CE8DF9 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F8199372C600CE8DF9 /* Stop.m */; };
+		D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078FB1993731100CE8DF9 /* Loadnote.m */; };
+		D0B078FF199388CF00CE8DF9 /* NSArray+Flatten.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078FE199388CF00CE8DF9 /* NSArray+Flatten.m */; };
 		D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */; };
 		D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */; };
 		D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */; };
@@ -68,8 +72,6 @@
 		D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */; };
 		D0D3F3A11950501C00452C58 /* Ref.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3981950501C00452C58 /* Ref.m */; };
 		D0D3F3A21950501C00452C58 /* Shipment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F39A1950501C00452C58 /* Shipment.m */; };
-		D0DE9EE4195D811B0095BC5A /* Loadnote.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DE9EE3195D811B0095BC5A /* Loadnote.m */; };
-		D0DE9EE7195D81670095BC5A /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0DE9EE6195D81670095BC5A /* Stop.m */; };
 		D0DE9F31195DFA7F0095BC5A /* dropicon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F2D195DFA7F0095BC5A /* dropicon.png */; };
 		D0DE9F32195DFA7F0095BC5A /* dropicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F2E195DFA7F0095BC5A /* dropicon@2x.png */; };
 		D0DE9F33195DFA7F0095BC5A /* pickicon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F2F195DFA7F0095BC5A /* pickicon.png */; };
@@ -78,7 +80,6 @@
 		D0DE9F42195DFD7E0095BC5A /* dropicondone1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F3E195DFD7E0095BC5A /* dropicondone1@2x.png */; };
 		D0DE9F43195DFD7E0095BC5A /* pickicondone1.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F3F195DFD7E0095BC5A /* pickicondone1.png */; };
 		D0DE9F44195DFD7E0095BC5A /* pickicondone1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F40195DFD7E0095BC5A /* pickicondone1@2x.png */; };
-		D0E6FBF119827C6B0099B4A9 /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E6FBF019827C6B0099B4A9 /* Load.m */; };
 		D0F7FE5F194E0EBA002CCD9F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */; };
 		D0FFEEE81969D08100581F8F /* loads.json in Resources */ = {isa = PBXBuildFile; fileRef = D0FFEEE71969D08100581F8F /* loads.json */; };
 		D0FFEEEB1969D79B00581F8F /* CVItemLongPress.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FFEEEA1969D79B00581F8F /* CVItemLongPress.m */; };
@@ -147,6 +148,14 @@
 		D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVMasterViewController.m; path = Controllers/CVMasterViewController.m; sourceTree = "<group>"; };
 		D0ABC8DB1944E3200095E59E /* CVChepClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChepClient.h; path = Network/CVChepClient.h; sourceTree = "<group>"; };
 		D0ABC8DC1944E3200095E59E /* CVChepClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVChepClient.m; path = Network/CVChepClient.m; sourceTree = "<group>"; };
+		D0B078F41993727C00CE8DF9 /* Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Load.h; sourceTree = "<group>"; };
+		D0B078F51993727C00CE8DF9 /* Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Load.m; sourceTree = "<group>"; };
+		D0B078F7199372C600CE8DF9 /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
+		D0B078F8199372C600CE8DF9 /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
+		D0B078FA1993731100CE8DF9 /* Loadnote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loadnote.h; sourceTree = "<group>"; };
+		D0B078FB1993731100CE8DF9 /* Loadnote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loadnote.m; sourceTree = "<group>"; };
+		D0B078FD199388CF00CE8DF9 /* NSArray+Flatten.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Flatten.h"; sourceTree = "<group>"; };
+		D0B078FE199388CF00CE8DF9 /* NSArray+Flatten.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Flatten.m"; sourceTree = "<group>"; };
 		D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVAppDelegate.m; sourceTree = "<group>"; };
 		D0D3F35D194E39DE00452C58 /* CCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLoginViewController.h; sourceTree = "<group>"; };
 		D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLoginViewController.m; sourceTree = "<group>"; };
@@ -180,10 +189,6 @@
 		D0D3F3981950501C00452C58 /* Ref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ref.m; sourceTree = "<group>"; };
 		D0D3F3991950501C00452C58 /* Shipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shipment.h; sourceTree = "<group>"; };
 		D0D3F39A1950501C00452C58 /* Shipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shipment.m; sourceTree = "<group>"; };
-		D0DE9EE2195D811B0095BC5A /* Loadnote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loadnote.h; sourceTree = "<group>"; };
-		D0DE9EE3195D811B0095BC5A /* Loadnote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loadnote.m; sourceTree = "<group>"; };
-		D0DE9EE5195D81670095BC5A /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
-		D0DE9EE6195D81670095BC5A /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
 		D0DE9F2D195DFA7F0095BC5A /* dropicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropicon.png; sourceTree = "<group>"; };
 		D0DE9F2E195DFA7F0095BC5A /* dropicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropicon@2x.png"; sourceTree = "<group>"; };
 		D0DE9F2F195DFA7F0095BC5A /* pickicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickicon.png; sourceTree = "<group>"; };
@@ -192,8 +197,6 @@
 		D0DE9F3E195DFD7E0095BC5A /* dropicondone1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropicondone1@2x.png"; sourceTree = "<group>"; };
 		D0DE9F3F195DFD7E0095BC5A /* pickicondone1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickicondone1.png; sourceTree = "<group>"; };
 		D0DE9F40195DFD7E0095BC5A /* pickicondone1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pickicondone1@2x.png"; sourceTree = "<group>"; };
-		D0E6FBEF19827C6B0099B4A9 /* Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Load.h; path = ../../Load.h; sourceTree = "<group>"; };
-		D0E6FBF019827C6B0099B4A9 /* Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Load.m; path = ../../Load.m; sourceTree = "<group>"; };
 		D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D0FFEEE71969D08100581F8F /* loads.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loads.json; sourceTree = "<group>"; };
 		D0FFEEE91969D79B00581F8F /* CVItemLongPress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVItemLongPress.h; sourceTree = "<group>"; };
@@ -235,6 +238,8 @@
 		D09139761941A4C50029AE98 = {
 			isa = PBXGroup;
 			children = (
+				D0B078FD199388CF00CE8DF9 /* NSArray+Flatten.h */,
+				D0B078FE199388CF00CE8DF9 /* NSArray+Flatten.m */,
 				D091398A1941A4C50029AE98 /* CarrierVanilla */,
 				D09139B01941A4C50029AE98 /* CarrierVanillaTests */,
 				D09139811941A4C50029AE98 /* Frameworks */,
@@ -412,17 +417,17 @@
 		D0D3F38E1950501C00452C58 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D0B078F41993727C00CE8DF9 /* Load.h */,
+				D0B078F7199372C600CE8DF9 /* Stop.h */,
+				D0B078F8199372C600CE8DF9 /* Stop.m */,
+				D0B078F51993727C00CE8DF9 /* Load.m */,
 				D0A74338198A611F00279C9D /* Item.h */,
 				D0A74339198A611F00279C9D /* Item.m */,
-				D0E6FBEF19827C6B0099B4A9 /* Load.h */,
-				D0E6FBF019827C6B0099B4A9 /* Load.m */,
 				D0D3F38F1950501C00452C58 /* Address.h */,
 				D0D3F3901950501C00452C58 /* Address.m */,
 				D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */,
-				D0DE9EE2195D811B0095BC5A /* Loadnote.h */,
-				D0DE9EE3195D811B0095BC5A /* Loadnote.m */,
-				D0DE9EE5195D81670095BC5A /* Stop.h */,
-				D0DE9EE6195D81670095BC5A /* Stop.m */,
+				D0B078FA1993731100CE8DF9 /* Loadnote.h */,
+				D0B078FB1993731100CE8DF9 /* Loadnote.m */,
 				D0D3F3971950501C00452C58 /* Ref.h */,
 				D0D3F3981950501C00452C58 /* Ref.m */,
 				D0D3F3991950501C00452C58 /* Shipment.h */,
@@ -609,20 +614,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0D3F39D1950501C00452C58 /* Address.m in Sources */,
+				D0B078FF199388CF00CE8DF9 /* NSArray+Flatten.m in Sources */,
 				D0D3F36D194EF8C700452C58 /* CCMessageViewController.m in Sources */,
 				D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */,
 				D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */,
 				D09139911941A4C50029AE98 /* main.m in Sources */,
-				D0E6FBF119827C6B0099B4A9 /* Load.m in Sources */,
 				D0D3F3A21950501C00452C58 /* Shipment.m in Sources */,
 				D0D3F3A11950501C00452C58 /* Ref.m in Sources */,
 				D0FFEEEE196BF59900581F8F /* CVItemTextField.m in Sources */,
 				D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */,
 				D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */,
-				D0DE9EE7195D81670095BC5A /* Stop.m in Sources */,
+				D0B078F9199372C600CE8DF9 /* Stop.m in Sources */,
+				D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */,
 				D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */,
+				D0B078F61993727C00CE8DF9 /* Load.m in Sources */,
 				D01A452819587AB700D60990 /* AFNetworkActivityLogger.m in Sources */,
-				D0DE9EE4195D811B0095BC5A /* Loadnote.m in Sources */,
 				D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */,
 				D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */,
 				D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */,
