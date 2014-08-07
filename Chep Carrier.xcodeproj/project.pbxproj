@@ -46,7 +46,6 @@
 		D0B078F61993727C00CE8DF9 /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F51993727C00CE8DF9 /* Load.m */; };
 		D0B078F9199372C600CE8DF9 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F8199372C600CE8DF9 /* Stop.m */; };
 		D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078FB1993731100CE8DF9 /* Loadnote.m */; };
-		D0B078FF199388CF00CE8DF9 /* NSArray+Flatten.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078FE199388CF00CE8DF9 /* NSArray+Flatten.m */; };
 		D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */; };
 		D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */; };
 		D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */; };
@@ -154,8 +153,6 @@
 		D0B078F8199372C600CE8DF9 /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
 		D0B078FA1993731100CE8DF9 /* Loadnote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loadnote.h; sourceTree = "<group>"; };
 		D0B078FB1993731100CE8DF9 /* Loadnote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loadnote.m; sourceTree = "<group>"; };
-		D0B078FD199388CF00CE8DF9 /* NSArray+Flatten.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Flatten.h"; sourceTree = "<group>"; };
-		D0B078FE199388CF00CE8DF9 /* NSArray+Flatten.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Flatten.m"; sourceTree = "<group>"; };
 		D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVAppDelegate.m; sourceTree = "<group>"; };
 		D0D3F35D194E39DE00452C58 /* CCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLoginViewController.h; sourceTree = "<group>"; };
 		D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLoginViewController.m; sourceTree = "<group>"; };
@@ -238,8 +235,6 @@
 		D09139761941A4C50029AE98 = {
 			isa = PBXGroup;
 			children = (
-				D0B078FD199388CF00CE8DF9 /* NSArray+Flatten.h */,
-				D0B078FE199388CF00CE8DF9 /* NSArray+Flatten.m */,
 				D091398A1941A4C50029AE98 /* CarrierVanilla */,
 				D09139B01941A4C50029AE98 /* CarrierVanillaTests */,
 				D09139811941A4C50029AE98 /* Frameworks */,
@@ -614,7 +609,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0D3F39D1950501C00452C58 /* Address.m in Sources */,
-				D0B078FF199388CF00CE8DF9 /* NSArray+Flatten.m in Sources */,
 				D0D3F36D194EF8C700452C58 /* CCMessageViewController.m in Sources */,
 				D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */,
 				D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */,

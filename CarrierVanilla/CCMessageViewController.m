@@ -12,8 +12,6 @@
 #import "Loadnote.h"
 #import "CVAppDelegate.h"
 #import "Load.h"
-
-#import "NSArray+Flatten.h"
 @interface CCMessageViewController ()
 
 
@@ -151,7 +149,7 @@
 - (NSTimeInterval)intervalForMessagesGrouping
 {
     // Return 0 for disableing grouping
-    return 0;
+    return 60*60;
 }
 
 - (void)configureMessageCell:(SOMessageCell *)cell forMessageAtIndex:(NSInteger)index
