@@ -21,6 +21,7 @@ PODS:
   - MBProgressHUD (0.8)
   - pop (1.0.5)
   - SOMessaging (1.0.0)
+  - TOMSMorphingLabel (0.2.2)
   - UIColor+MLPFlatColors (1.0)
 
 DEPENDENCIES:
@@ -28,6 +29,7 @@ DEPENDENCIES:
   - MBProgressHUD (~> 0.8)
   - pop (~> 1.0)
   - SOMessaging (~> 1.0.0)
+  - TOMSMorphingLabel (~> 0.2.2)
   - UIColor+MLPFlatColors (~> 1.0)
 
 SPEC CHECKSUMS:
@@ -35,6 +37,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   pop: 75fa2b33934200a8a68abb449ac1726fcf7e43b9
   SOMessaging: 040111bede4ae5c48d1d0181ca746a5617a06331
+  TOMSMorphingLabel: b0ef90ad7a660a3a30bdf626cfc23028fa0b67f9
   UIColor+MLPFlatColors: d74d0e59ba8eb8960c0f8136928056d91e208585
 
 COCOAPODS: 0.33.1

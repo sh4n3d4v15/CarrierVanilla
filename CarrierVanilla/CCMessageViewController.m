@@ -24,13 +24,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.dataSource = [[NSMutableArray alloc]init];
     CVAppDelegate *dmgr = (CVAppDelegate *)[UIApplication sharedApplication].delegate;
     self.managedObjectContext = dmgr.managedObjectContext;
     [self addLoadnotesToDataSource];
     self.df = [NSDateFormatter new];
-    [self loadMessages];
+    //[self loadMessages];
     NSLog(@"Stop Loadnote count: %i", [_stop.load.loadNotes count]);
 }
 
@@ -41,10 +40,8 @@
     [sortedMessages enumerateObjectsUsingBlock:^(Loadnote *loadnote, NSUInteger idx, BOOL *stop) {
         [self.dataSource addObject:[self convertLoadnoteToSomessage:loadnote]];
         _lastMessageDate = loadnote.date;
-        // NSLog(@"Loadnote date: %@", loadnote);
         [self refreshMessages];
     }];
-    
 }
 
 
@@ -98,8 +95,8 @@
     
     [_df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     //    [_df setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-   // NSSortDescriptor* sortOrderByCreatedDate = [NSSortDescriptor sortDescriptorWithKey: @"created_date" ascending: YES];
-   // messages = [messages sortedArrayUsingDescriptors:@[sortOrderByCreatedDate]];
+    NSSortDescriptor* sortOrderByCreatedDate = [NSSortDescriptor sortDescriptorWithKey: @"created_date" ascending: YES];
+    messages = [messages sortedArrayUsingDescriptors:@[sortOrderByCreatedDate]];
     [messages enumerateObjectsUsingBlock:^(id message, NSUInteger idx, BOOL *stop) {
         
         NSDate *messageCreatedDate = [_df dateFromString:message[@"created_date"]];

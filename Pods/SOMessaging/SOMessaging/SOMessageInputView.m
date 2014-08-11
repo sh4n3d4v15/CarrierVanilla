@@ -205,9 +205,9 @@
 {
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.tableView.contentInset.top, 0.0, keyboardFrame.size.height + self.frame.size.height, 0.0);
 
-    NSInteger section = [self.tableView numberOfSections] - 1;
-    NSInteger row = [self.tableView numberOfRowsInSection:section] - 1;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+//    NSInteger section = [self.tableView numberOfSections] - 1;
+//    NSInteger row = [self.tableView numberOfRowsInSection:section] - 1;
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
     
     [UIView beginAnimations:@"anim" context:NULL];
     [UIView setAnimationDuration:keyboardDuration];
@@ -217,9 +217,9 @@
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
     if (scrollToBottom) {
-        if (row >= 0) {
-            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-        }
+//        if (row >= 0) {
+//            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+//        }
     }
     [UIView commitAnimations];
 }

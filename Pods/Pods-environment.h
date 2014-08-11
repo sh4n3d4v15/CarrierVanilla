@@ -60,6 +60,12 @@
 #define COCOAPODS_VERSION_MINOR_SOMessaging 0
 #define COCOAPODS_VERSION_PATCH_SOMessaging 0
 
+// TOMSMorphingLabel
+#define COCOAPODS_POD_AVAILABLE_TOMSMorphingLabel
+#define COCOAPODS_VERSION_MAJOR_TOMSMorphingLabel 0
+#define COCOAPODS_VERSION_MINOR_TOMSMorphingLabel 2
+#define COCOAPODS_VERSION_PATCH_TOMSMorphingLabel 2
+
 // UIColor+MLPFlatColors
 #define COCOAPODS_POD_AVAILABLE_UIColor_MLPFlatColors
 #define COCOAPODS_VERSION_MAJOR_UIColor_MLPFlatColors 1

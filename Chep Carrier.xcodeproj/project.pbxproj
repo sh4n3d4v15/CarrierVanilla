@@ -43,6 +43,8 @@
 		D0AAA134196712460044EE87 /* flagwhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA132196712460044EE87 /* flagwhite@2x.png */; };
 		D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */; };
 		D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8DC1944E3200095E59E /* CVChepClient.m */; };
+		D0AEB4E21998F095003C506F /* network.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AEB4E01998F095003C506F /* network.png */; };
+		D0AEB4E31998F095003C506F /* network@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AEB4E11998F095003C506F /* network@2x.png */; };
 		D0B078F61993727C00CE8DF9 /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F51993727C00CE8DF9 /* Load.m */; };
 		D0B078F9199372C600CE8DF9 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F8199372C600CE8DF9 /* Stop.m */; };
 		D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078FB1993731100CE8DF9 /* Loadnote.m */; };
@@ -147,6 +149,8 @@
 		D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVMasterViewController.m; path = Controllers/CVMasterViewController.m; sourceTree = "<group>"; };
 		D0ABC8DB1944E3200095E59E /* CVChepClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChepClient.h; path = Network/CVChepClient.h; sourceTree = "<group>"; };
 		D0ABC8DC1944E3200095E59E /* CVChepClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVChepClient.m; path = Network/CVChepClient.m; sourceTree = "<group>"; };
+		D0AEB4E01998F095003C506F /* network.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = network.png; sourceTree = "<group>"; };
+		D0AEB4E11998F095003C506F /* network@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "network@2x.png"; sourceTree = "<group>"; };
 		D0B078F41993727C00CE8DF9 /* Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Load.h; sourceTree = "<group>"; };
 		D0B078F51993727C00CE8DF9 /* Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Load.m; sourceTree = "<group>"; };
 		D0B078F7199372C600CE8DF9 /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
@@ -372,6 +376,8 @@
 		D0D3F370194EFD6000452C58 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D0AEB4E01998F095003C506F /* network.png */,
+				D0AEB4E11998F095003C506F /* network@2x.png */,
 				D0AAA131196712460044EE87 /* flagwhite.png */,
 				D0AAA132196712460044EE87 /* flagwhite@2x.png */,
 				D0AAA12F196711B30044EE87 /* truckwhite.png */,
@@ -412,9 +418,9 @@
 		D0D3F38E1950501C00452C58 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D0B078F41993727C00CE8DF9 /* Load.h */,
 				D0B078F7199372C600CE8DF9 /* Stop.h */,
 				D0B078F8199372C600CE8DF9 /* Stop.m */,
+				D0B078F41993727C00CE8DF9 /* Load.h */,
 				D0B078F51993727C00CE8DF9 /* Load.m */,
 				D0A74338198A611F00279C9D /* Item.h */,
 				D0A74339198A611F00279C9D /* Item.m */,
@@ -528,6 +534,7 @@
 				D0D3F384194EFD7E00452C58 /* chep.png in Resources */,
 				D09139A31941A4C50029AE98 /* Images.xcassets in Resources */,
 				D0DE9F34195DFA7F0095BC5A /* pickicon@2x.png in Resources */,
+				D0AEB4E21998F095003C506F /* network.png in Resources */,
 				D0D3F381194EFD7E00452C58 /* bubble@2x.png in Resources */,
 				D0D3F382194EFD7E00452C58 /* bubbleReceive.png in Resources */,
 				D03B7D5A196183ED006AFE53 /* topic.png in Resources */,
@@ -546,6 +553,7 @@
 				D0D3F38A194EFD7E00452C58 /* settings@2x.png in Resources */,
 				D0AAA12E196711760044EE87 /* truckwhite@2x.png in Resources */,
 				D03B7D62196189FC006AFE53 /* truck.png in Resources */,
+				D0AEB4E31998F095003C506F /* network@2x.png in Resources */,
 				D0DE9F32195DFA7F0095BC5A /* dropicon@2x.png in Resources */,
 				D0DE9F42195DFD7E0095BC5A /* dropicondone1@2x.png in Resources */,
 				D09139981941A4C50029AE98 /* Main.storyboard in Resources */,

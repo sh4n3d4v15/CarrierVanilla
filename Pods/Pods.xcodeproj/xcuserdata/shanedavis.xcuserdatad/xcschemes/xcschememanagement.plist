@@ -6,63 +6,73 @@
 	<dict>
 		<key>Pods-AFNetworking.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-MBProgressHUD.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-SOMessaging.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>5</integer>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-TOMSMorphingLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-UIColor+MLPFlatColors.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>6</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-pop.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>40E20C64133646EEAC07F695</key>
+		<key>17C671EF479E40DEAAC0938C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8104CAE20C6947DEA6460AFB</key>
+		<key>3E29A35012E8482ABE9BA155</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>948F992A76B44C0EBCB98FDF</key>
+		<key>6238147C2BED4CA0A8D94EA1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B7783AA7F9CD4274965F0E17</key>
+		<key>6585B4C98224482A9C38BB2A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CEF1A950665244928B1861B6</key>
+		<key>C094ACEE9A7342118D41C4B3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F170A7308EC446F4913EB812</key>
+		<key>E8F6BB17ED2044159D57BB18</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FC46220B0E494D55AC91CE64</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -20,6 +20,7 @@
 #import "Item.h"
 #import "MBProgressHUD.h"
 
+
 @interface CVMasterViewController ()<stopChangeDelegate,CCLoginViewDelegate,UIActionSheetDelegate>
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
@@ -34,6 +35,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+//    _morphLabel  = [[TOMSMorphingLabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 88)];
+//    _morphLabel.text = @"Today";
+//    _morphLabel.textColor = [UIColor whiteColor];
+//    _morphLabel.font = [UIFont systemFontOfSize:18.0f];
+//    _morphLabel.textAlignment = NSTextAlignmentCenter;
+//    
+//    UIPanGestureRecognizer *pang = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(changelabel:)];
+//    [self.navigationController.view addGestureRecognizer:pang];
+////
+//    [self.navigationController.view addSubview:_morphLabel];
     
     _timeWindowformatter = [[NSDateFormatter alloc]init];
     [_timeWindowformatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
@@ -61,6 +74,20 @@
      UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain
                                                           target:self action:@selector(showLogin:)];
     self.navigationItem.rightBarButtonItem = btn;
+    
+//    [self performSelector:@selector(changelabel) withObject:nil afterDelay:10];
+}
+
+-(void)changelabel:(UIPanGestureRecognizer*)gesture{
+    
+    CGPoint velocity = [gesture velocityInView:self.navigationController.view];
+    
+    if (velocity.x > 0) {
+        _morphLabel.text = @"Yesterday";
+    }else{
+        _morphLabel.text = @"Tommorrow";
+        [self getLoadsForDifferentDate];
+    }
 }
 
 -(void)dateChanged:(id)sender{
@@ -133,33 +160,41 @@
         }
     }];
     
+    
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
     
     UIImageView *truckimageView = [[UIImageView alloc]initWithFrame:CGRectMake(17, 1, 18, 18)];
     [truckimageView setImage:[UIImage imageNamed: @"truck.png"]];
     [view addSubview:truckimageView];
-    UILabel *shipmentnumberlabel = [[UILabel alloc] initWithFrame:CGRectMake(42, 2, 100, 18)];
+    UILabel *shipmentnumberlabel = [[UILabel alloc] initWithFrame:CGRectMake(44, 2, 100, 18)];
     [shipmentnumberlabel setFont:[UIFont boldSystemFontOfSize:14]];
     [shipmentnumberlabel setText:[sectionInfo name]];
     [shipmentnumberlabel setTextColor: UIColorFromRGB(0x3c6ba1)];
     [view addSubview:shipmentnumberlabel];
 
     
-    UIImageView *stopimageView = [[UIImageView alloc]initWithFrame:CGRectMake(127, 5, 14, 14)];
+    UIImageView *stopimageView = [[UIImageView alloc]initWithFrame:CGRectMake(135, 5, 14, 14)];
     [stopimageView setImage:[UIImage imageNamed:@"flag.png"]];
     [view addSubview:stopimageView];
-    UILabel *stopCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(147, 2, 100, 18)];
+    UILabel *stopCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(159, 2, 100, 18)];
     [stopCountLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [stopCountLabel setText:[NSString stringWithFormat:@"%lu STOPS",(unsigned long)[sectionInfo numberOfObjects]]];
     [stopCountLabel setTextColor:UIColorFromRGB(0x3c6ba1)];
     [view addSubview:stopCountLabel];
     
-    UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 2, 80, 18)];
-    [statusLabel setText:complete ? @"COMPLETE" : @"ACCEPTED" ];
+    
+    UIImageView *networkimageView = [[UIImageView alloc]initWithFrame:CGRectMake(243, 5, 14, 14)];
+    [networkimageView setImage:[UIImage imageNamed:@"network.png"]];
+    [view addSubview:networkimageView];
+    
+    NSString *driver = [NSString stringWithFormat:@"JOB %@",[[[sectionInfo objects]firstObject]valueForKeyPath:@"load.driver"]];
+    UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(265, 2, 80, 18)];
+    [statusLabel setText:driver];
     [statusLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [statusLabel setTextColor: UIColorFromRGB(0x3c6ba1)];
     
-   // [view addSubview:statusLabel];
+    
+    [view addSubview:statusLabel];
     
     
     view.backgroundColor =  UIColorFromRGB(0xcddcec);
@@ -212,6 +247,22 @@
 
 #pragma mark - Fetched results controller
 
+-(void)getLoadsForDifferentDate{
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type == %@",@"Pick"];
+    [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+	if (![self.fetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    abort();
+	}else{
+        NSLog(@"i did the request");
+       [self.tableView reloadData];
+    }
+   
+}
 - (NSFetchedResultsController *)fetchedResultsController
 {
     if (_fetchedResultsController != nil) {
@@ -227,9 +278,10 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.load_number" ascending:YES];
-    NSSortDescriptor *typeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor,typeSortDescriptor];
+//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.load_number" ascending:YES];
+    NSSortDescriptor *typeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:NO];
+    NSSortDescriptor *driverSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.driver" ascending:YES];
+    NSArray *sortDescriptors = @[driverSortDescriptor,typeSortDescriptor];
     
     
     
@@ -237,7 +289,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"load.load_number" cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"load.load_number" cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     

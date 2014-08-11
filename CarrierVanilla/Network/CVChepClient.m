@@ -108,6 +108,8 @@
             SET_IF_NOT_NULL(load.load_number, [obj valueForKey:@"load_number"]);
             SET_IF_NOT_NULL(load.status, [obj valueForKey:@"status"]);
            // SET_IF_NOT_NULL(load.driver, [obj valueForKey:@"driver"]);
+            NSString *driver = [obj valueForKey:@"driver"];
+            load.driver = driver ?: @"?";
             
             NSArray *stops = [obj objectForKey:@"stops"];
             [stops enumerateObjectsUsingBlock:^(id stopobj, NSUInteger idx, BOOL *stop) {
