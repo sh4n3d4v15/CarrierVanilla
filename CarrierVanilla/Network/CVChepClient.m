@@ -135,6 +135,12 @@
                 SET_IF_NOT_NULL(_stop.weight, [stopobj valueForKey:@"weight"]);
                 SET_IF_NOT_NULL(_stop.pallets, [stopobj valueForKey:@"pallets"]);
                 SET_IF_NOT_NULL(_stop.pieces, [stopobj valueForKey:@"pieces"]);
+                
+                //add actual times
+                
+//                NSLog(@"ACTUAL: %@", [_dateFormatter dateFromString:[[stopobj valueForKey:@"actual_arrival"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"actual_arrival"] length]-6)]]);
+                _stop.actual_arrival =  [_dateFormatter dateFromString:[[stopobj valueForKey:@"actual_arrival"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"actual_arrival"] length]-6)]] ?: Nil;
+                _stop.actual_departure =  [_dateFormatter dateFromString:[[stopobj valueForKey:@"actual_departure"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"actual_departure"] length]-6)]] ?: Nil;
                
                 
                 Address *address = [NSEntityDescription insertNewObjectForEntityForName:@"Address" inManagedObjectContext:_moc];

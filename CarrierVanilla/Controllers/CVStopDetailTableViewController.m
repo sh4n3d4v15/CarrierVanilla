@@ -162,7 +162,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return (1+_shipmentCount);
+    return (2+_shipmentCount);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -178,9 +178,6 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
-    
-
-    
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 18)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 2, view.frame.size.width-20, 18)];
 
@@ -189,15 +186,13 @@
     
     if (section == 0) {
         [label setText:[NSString stringWithFormat:@"%@ %@", [self.stop.type isEqualToString:@"Pick"]? @"COLLECT FROM: " : @"DELIVER TO: ", [NSString stringWithUTF8String:[self.stop.location_name UTF8String]]]];
-    }else{
-        NSArray *shipments = [self.stop.shipments allObjects];
-        Shipment *shipment = shipments[section-1];
+    }else if (section == 1){
+        [label setText:@"Special Instructions"];
+    
         
-        [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *item, NSUInteger idx, BOOL *stop) {
-            NSLog(@"AN ITEM: %@", item.product_description);
-            NSLog(@"___________________________________________________________________________");
-        }];
-//        NSString *shipment = self.shipmentCount > 1 ? @"Shipments" : @"Shipment";
+    } else{
+        NSArray *shipments = [self.stop.shipments allObjects];
+        Shipment *shipment = shipments[section-2];
         NSString *fullString = [NSString stringWithFormat:@"CUSTOMER REFERENCE  %@", shipment.primary_reference_number];
         [label setText:fullString];
     }
@@ -213,6 +208,11 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell" forIndexPath:indexPath];
         // Configure the cell...
+    
+    
+    Shipment *shipment = [[self.stop.shipments allObjects]firstObject];
+    
+    
     if ([indexPath section] == 0) {
         
         _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
@@ -230,6 +230,7 @@
         self.updateButton.backgroundColor = [UIColor flatBlueColor];
         self.updateButton.layer.cornerRadius = 5;
         
+
 //        self.checkOutButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //        self.checkOutButton.frame = CGRectMake(CGRectGetWidth(_mapView.bounds), CGRectGetMaxY(_mapView.bounds), 40, 40);
 //        self.checkOutButton.backgroundColor = [UIColor flatBlueColor];
@@ -291,34 +292,29 @@
 
         
         
+    }else if ([indexPath section] == 1){
+        [[_stop.shipments allObjects]enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger idx, BOOL *stop) {
+            UILabel *commentLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, idx*10+10, cell.frame.size.width - 40, 20)];
+            commentLabel.textColor = UIColorFromRGB(0xc0392b);
+            commentLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
+            commentLabel.text = shipment.comments;
+            [cell addSubview:commentLabel];
+        }];
+        
+        
+        
+        
     }else{
-        Shipment *shipment = [self.stop.shipments allObjects][indexPath.section-1];
-        
-        NSLog(@"IS THIS SHIPMENT RIGHT?? : %@", shipment);
-        
+
         UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
-//        containerView.backgroundColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.1f];
-//        containerView.layer.borderColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.6f].CGColor;
-//        containerView.layer.borderWidth = 1;
-    
         
         UILabel *shipNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, CGRectGetWidth(containerView.bounds)-20, 20)];
         shipNumLabel.text = [NSString stringWithFormat:@"Customer Reference: %@", shipment.shipment_number];
         shipNumLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
         shipNumLabel.textColor = [UIColor colorWithWhite:.333 alpha:1];
-        
-        UILabel *commentsLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, containerView.frame.size.height-10, CGRectGetWidth(containerView.bounds), 20)];
-        commentsLabel.text = [NSString stringWithFormat:@"Special Instructions: %@", shipment.comments];
-        commentsLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
-        commentsLabel.textColor = UIColorFromRGB(0x3c6ba1);
-        
-        
-//        [containerView addSubview:shipNumLabel];
-        [containerView addSubview:commentsLabel];
-       
+
         
         [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *item, NSUInteger idx, BOOL *stop) {
-            NSLog(@"ITEM FOUND::::: %@", item);
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, (idx)*55, CGRectGetWidth(containerView.bounds), 50)];
             view.backgroundColor = item.finalized ? [UIColor flatDarkGreenColor] :[UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.05f];
             view.layer.borderColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.2f].CGColor;
@@ -334,6 +330,7 @@
             label.textColor = item.finalized ? [UIColor whiteColor] : UIColorFromRGB(0x3c6ba1);
             
             CVItemTextField *qtyField  = [[CVItemTextField alloc]initWithFrame:CGRectMake(CGRectGetWidth(view.bounds)-60, 10, 50, 30)];
+            qtyField.keyboardType = UIKeyboardTypeNumberPad;
             qtyField.text = [item.updated_pieces stringValue];
             qtyField.layer.borderColor = [UIColor whiteColor].CGColor;
             qtyField.textColor = item.finalized ? [UIColor whiteColor] : [UIColor flatDarkBlueColor];
@@ -361,9 +358,7 @@
  
     
     if (gesture.state == UIGestureRecognizerStateBegan && _stop.actual_arrival && !_stop.actual_departure) {
-           NSLog(@"Gesture Item: %@", gesture.item);
             gesture.item.finalized = [NSNumber numberWithBool:![gesture.item.finalized boolValue]];
-        
         if ([_stop isFinalizedShipment]) {
             [self checkMeOut];
         }
@@ -445,10 +440,6 @@
     [self.updateButton.layer pop_addAnimation:posAnim forKey:@"position"];
     [self.updateButton.layer pop_addAnimation:colorAnim forKey:@"color"];
     
-    
-    
-    
-    
     UIView *timestampView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.mapView.bounds), 30)];
     timestampView.backgroundColor = [UIColor colorWithWhite:.99 alpha:.6];
     timestampView.layer.borderWidth = 2;
@@ -488,8 +479,6 @@
     [view addSubview:self.checkOutButton];
 }
 -(void)checkMeIn:(id)sender{
-    NSLog(@"Check me in!!");
-    
     if (!self.stop.actual_arrival) {
         
         NSLog(@"Checking in");
@@ -655,6 +644,10 @@
 }
 
 #pragma mark - TextField Delegate Methods
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    return !_stop.actual_departure ? YES : NO ;
+}
 
 -(void)textFieldDidEndEditing:(CVItemTextField *)textField{
     
