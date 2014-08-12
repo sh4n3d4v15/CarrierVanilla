@@ -36,7 +36,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        NSLog(@"ini login view controller");
         // Custom initialization
     }
     return self;
@@ -50,7 +49,6 @@
     [HTAutocompleteTextField setDefaultAutocompleteDataSource:[HTAutocompleteManager sharedManager]];
 
     if ([[NSUserDefaults standardUserDefaults]valueForKey:@"carrierID"]) {
-        NSLog(@"the carrier id has already been set and I will hide this text box");
         self.carrierTextField.alpha = 0;
         self.carrierTextField.enabled = NO;
         __unused CGRect offsetRect = CGRectOffset(_containerView.frame, 0, 145.0f);
@@ -104,12 +102,6 @@
     colorMorph.toValue = (id)[UIColor colorWithWhite:1 alpha:1].CGColor;
     [shapeLayer addAnimation:colorMorph forKey:nil];
 
-//    POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBackgroundColor];
-//    anim.toValue = (id)[UIColor colorWithWhite:1 alpha:1];
-//    anim.springSpeed = 10;
-//    anim.springBounciness = 20;
-//    
-//    [shapeLayer pop_addAnimation:anim forKey:@"color"];
 }
 
 -(CGPathRef)getChepBigCPath
@@ -795,10 +787,6 @@
     POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
     anim.toValue = [NSValue valueWithCGRect:CGRectInset(textField.bounds, 2, 2)];
     anim.springBounciness = 20;
-    [anim setCompletionBlock:^(POPAnimation *animation, BOOL finished) {
-        NSLog(@"animcomople");
-    }];
-    
     [textField.layer pop_addAnimation:anim forKey:@"bounds"];
 }
 
@@ -818,8 +806,6 @@
     
     NSDictionary *userInfo = @{@"vehicle": name , @"carrier": carrierId, @"password":password};
     
-    NSLog(@"Userinfo in login screen %@", userInfo);
-
         [_delegate userDidLoginWithDictionary:userInfo completion:^(NSError *error, NSString *message) {
             NSLog(@"ERRORR:: %@", error);
             if(error || [message isEqualToString:@"No Loads For This Vehicle"]){
@@ -832,9 +818,6 @@
                 [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userinfo"];
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];
                 [[NSUserDefaults standardUserDefaults]synchronize];
-                
-                NSLog(@"Successful login");
-                NSLog(@"It worked- message %@", message);
                 [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
             }
         }];

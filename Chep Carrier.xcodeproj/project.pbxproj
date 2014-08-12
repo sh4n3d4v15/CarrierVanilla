@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		73CBFCF4B2EF4DADBBF2BDFB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0996C26EA9F043BF83367717 /* libPods.a */; };
 		D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A4521195472F400D60990 /* CVUpdateButton.m */; };
-		D01A45251958749000D60990 /* btRippleButtton.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A45241958749000D60990 /* btRippleButtton.m */; };
-		D01A452819587AB700D60990 /* AFNetworkActivityLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A452719587AB700D60990 /* AFNetworkActivityLogger.m */; };
 		D0292822195195E70061069F /* CCSignatureDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292821195195E70061069F /* CCSignatureDrawView.m */; };
 		D0292825195197110061069F /* CCPDFWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292824195197110061069F /* CCPDFWriter.m */; };
 		D03B7D58196183ED006AFE53 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = D03B7D54196183ED006AFE53 /* menu.png */; };
@@ -45,6 +43,8 @@
 		D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8DC1944E3200095E59E /* CVChepClient.m */; };
 		D0AEB4E21998F095003C506F /* network.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AEB4E01998F095003C506F /* network.png */; };
 		D0AEB4E31998F095003C506F /* network@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AEB4E11998F095003C506F /* network@2x.png */; };
+		D0AEB4E619991E86003C506F /* chepnav.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AEB4E419991E86003C506F /* chepnav.png */; };
+		D0AEB4E719991E87003C506F /* chepnav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AEB4E519991E86003C506F /* chepnav@2x.png */; };
 		D0B078F61993727C00CE8DF9 /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F51993727C00CE8DF9 /* Load.m */; };
 		D0B078F9199372C600CE8DF9 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F8199372C600CE8DF9 /* Stop.m */; };
 		D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078FB1993731100CE8DF9 /* Loadnote.m */; };
@@ -82,7 +82,6 @@
 		D0DE9F43195DFD7E0095BC5A /* pickicondone1.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F3F195DFD7E0095BC5A /* pickicondone1.png */; };
 		D0DE9F44195DFD7E0095BC5A /* pickicondone1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F40195DFD7E0095BC5A /* pickicondone1@2x.png */; };
 		D0F7FE5F194E0EBA002CCD9F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */; };
-		D0FFEEE81969D08100581F8F /* loads.json in Resources */ = {isa = PBXBuildFile; fileRef = D0FFEEE71969D08100581F8F /* loads.json */; };
 		D0FFEEEB1969D79B00581F8F /* CVItemLongPress.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FFEEEA1969D79B00581F8F /* CVItemLongPress.m */; };
 		D0FFEEEE196BF59900581F8F /* CVItemTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FFEEED196BF59900581F8F /* CVItemTextField.m */; };
 /* End PBXBuildFile section */
@@ -100,26 +99,22 @@
 /* Begin PBXFileReference section */
 		0996C26EA9F043BF83367717 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		21742465D60E4C8D8F007F4E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		D01A4520195472F400D60990 /* CVUpdateButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVUpdateButton.h; sourceTree = "<group>"; };
-		D01A4521195472F400D60990 /* CVUpdateButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVUpdateButton.m; sourceTree = "<group>"; };
-		D01A45231958749000D60990 /* btRippleButtton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = btRippleButtton.h; sourceTree = "<group>"; };
-		D01A45241958749000D60990 /* btRippleButtton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = btRippleButtton.m; sourceTree = "<group>"; };
-		D01A452619587AB700D60990 /* AFNetworkActivityLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityLogger.h; sourceTree = "<group>"; };
-		D01A452719587AB700D60990 /* AFNetworkActivityLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityLogger.m; sourceTree = "<group>"; };
-		D0292820195195E70061069F /* CCSignatureDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSignatureDrawView.h; sourceTree = "<group>"; };
-		D0292821195195E70061069F /* CCSignatureDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSignatureDrawView.m; sourceTree = "<group>"; };
-		D0292823195197110061069F /* CCPDFWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPDFWriter.h; sourceTree = "<group>"; };
-		D0292824195197110061069F /* CCPDFWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPDFWriter.m; sourceTree = "<group>"; };
-		D03B7D54196183ED006AFE53 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
-		D03B7D55196183ED006AFE53 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@2x.png"; sourceTree = "<group>"; };
-		D03B7D56196183ED006AFE53 /* topic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topic.png; sourceTree = "<group>"; };
-		D03B7D57196183ED006AFE53 /* topic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topic@2x.png"; sourceTree = "<group>"; };
-		D03B7D60196189FC006AFE53 /* truck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truck.png; sourceTree = "<group>"; };
-		D03B7D61196189FC006AFE53 /* truck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "truck@2x.png"; sourceTree = "<group>"; };
-		D03B7D6419618BA3006AFE53 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
-		D03B7D6519618BA3006AFE53 /* flag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flag@2x.png"; sourceTree = "<group>"; };
-		D03B7D6819619566006AFE53 /* CVMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVMapAnnotation.h; sourceTree = "<group>"; };
-		D03B7D6919619567006AFE53 /* CVMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVMapAnnotation.m; sourceTree = "<group>"; };
+		D01A4520195472F400D60990 /* CVUpdateButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVUpdateButton.h; path = Views/CVUpdateButton.h; sourceTree = "<group>"; };
+		D01A4521195472F400D60990 /* CVUpdateButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVUpdateButton.m; path = Views/CVUpdateButton.m; sourceTree = "<group>"; };
+		D0292820195195E70061069F /* CCSignatureDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSignatureDrawView.h; path = Views/CCSignatureDrawView.h; sourceTree = "<group>"; };
+		D0292821195195E70061069F /* CCSignatureDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSignatureDrawView.m; path = Views/CCSignatureDrawView.m; sourceTree = "<group>"; };
+		D0292823195197110061069F /* CCPDFWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPDFWriter.h; path = Controllers/CCPDFWriter.h; sourceTree = "<group>"; };
+		D0292824195197110061069F /* CCPDFWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPDFWriter.m; path = Controllers/CCPDFWriter.m; sourceTree = "<group>"; };
+		D03B7D54196183ED006AFE53 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = Images/menu.png; sourceTree = "<group>"; };
+		D03B7D55196183ED006AFE53 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu@2x.png"; path = "Images/menu@2x.png"; sourceTree = "<group>"; };
+		D03B7D56196183ED006AFE53 /* topic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = topic.png; path = Images/topic.png; sourceTree = "<group>"; };
+		D03B7D57196183ED006AFE53 /* topic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "topic@2x.png"; path = "Images/topic@2x.png"; sourceTree = "<group>"; };
+		D03B7D60196189FC006AFE53 /* truck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = truck.png; path = Images/truck.png; sourceTree = "<group>"; };
+		D03B7D61196189FC006AFE53 /* truck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "truck@2x.png"; path = "Images/truck@2x.png"; sourceTree = "<group>"; };
+		D03B7D6419618BA3006AFE53 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flag.png; path = Images/flag.png; sourceTree = "<group>"; };
+		D03B7D6519618BA3006AFE53 /* flag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "flag@2x.png"; path = "Images/flag@2x.png"; sourceTree = "<group>"; };
+		D03B7D6819619566006AFE53 /* CVMapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVMapAnnotation.h; path = Views/CVMapAnnotation.h; sourceTree = "<group>"; };
+		D03B7D6919619567006AFE53 /* CVMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVMapAnnotation.m; path = Views/CVMapAnnotation.m; sourceTree = "<group>"; };
 		D04C3312194B3D7000BF42C4 /* CVStopDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVStopDetailTableViewController.h; path = Controllers/CVStopDetailTableViewController.h; sourceTree = "<group>"; };
 		D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVStopDetailTableViewController.m; path = Controllers/CVStopDetailTableViewController.m; sourceTree = "<group>"; };
 		D091397F1941A4C50029AE98 /* Chep Carrier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chep Carrier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,16 +136,18 @@
 		D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarrierVanillaTests.m; sourceTree = "<group>"; };
 		D0A74338198A611F00279C9D /* Item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		D0A74339198A611F00279C9D /* Item.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
-		D0AAA12D196711760044EE87 /* truckwhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "truckwhite@2x.png"; sourceTree = "<group>"; };
-		D0AAA12F196711B30044EE87 /* truckwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = truckwhite.png; sourceTree = "<group>"; };
-		D0AAA131196712460044EE87 /* flagwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flagwhite.png; sourceTree = "<group>"; };
-		D0AAA132196712460044EE87 /* flagwhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flagwhite@2x.png"; sourceTree = "<group>"; };
+		D0AAA12D196711760044EE87 /* truckwhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "truckwhite@2x.png"; path = "Images/truckwhite@2x.png"; sourceTree = "<group>"; };
+		D0AAA12F196711B30044EE87 /* truckwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = truckwhite.png; path = Images/truckwhite.png; sourceTree = "<group>"; };
+		D0AAA131196712460044EE87 /* flagwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flagwhite.png; path = Images/flagwhite.png; sourceTree = "<group>"; };
+		D0AAA132196712460044EE87 /* flagwhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "flagwhite@2x.png"; path = "Images/flagwhite@2x.png"; sourceTree = "<group>"; };
 		D0ABC8C11944E23E0095E59E /* CVMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVMasterViewController.h; path = Controllers/CVMasterViewController.h; sourceTree = "<group>"; };
 		D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVMasterViewController.m; path = Controllers/CVMasterViewController.m; sourceTree = "<group>"; };
 		D0ABC8DB1944E3200095E59E /* CVChepClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChepClient.h; path = Network/CVChepClient.h; sourceTree = "<group>"; };
 		D0ABC8DC1944E3200095E59E /* CVChepClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVChepClient.m; path = Network/CVChepClient.m; sourceTree = "<group>"; };
-		D0AEB4E01998F095003C506F /* network.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = network.png; sourceTree = "<group>"; };
-		D0AEB4E11998F095003C506F /* network@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "network@2x.png"; sourceTree = "<group>"; };
+		D0AEB4E01998F095003C506F /* network.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = network.png; path = Images/network.png; sourceTree = "<group>"; };
+		D0AEB4E11998F095003C506F /* network@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "network@2x.png"; path = "Images/network@2x.png"; sourceTree = "<group>"; };
+		D0AEB4E419991E86003C506F /* chepnav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chepnav.png; path = Images/chepnav.png; sourceTree = "<group>"; };
+		D0AEB4E519991E86003C506F /* chepnav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chepnav@2x.png"; path = "Images/chepnav@2x.png"; sourceTree = "<group>"; };
 		D0B078F41993727C00CE8DF9 /* Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Load.h; sourceTree = "<group>"; };
 		D0B078F51993727C00CE8DF9 /* Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Load.m; sourceTree = "<group>"; };
 		D0B078F7199372C600CE8DF9 /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
@@ -158,31 +155,31 @@
 		D0B078FA1993731100CE8DF9 /* Loadnote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loadnote.h; sourceTree = "<group>"; };
 		D0B078FB1993731100CE8DF9 /* Loadnote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loadnote.m; sourceTree = "<group>"; };
 		D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVAppDelegate.m; sourceTree = "<group>"; };
-		D0D3F35D194E39DE00452C58 /* CCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLoginViewController.h; sourceTree = "<group>"; };
-		D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLoginViewController.m; sourceTree = "<group>"; };
-		D0D3F363194E3F1900452C58 /* HTAutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTAutocompleteTextField.h; sourceTree = "<group>"; };
-		D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTAutocompleteTextField.m; sourceTree = "<group>"; };
-		D0D3F366194E3F2F00452C58 /* HTAutocompleteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTAutocompleteManager.h; sourceTree = "<group>"; };
-		D0D3F367194E3F2F00452C58 /* HTAutocompleteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTAutocompleteManager.m; sourceTree = "<group>"; };
+		D0D3F35D194E39DE00452C58 /* CCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCLoginViewController.h; path = Controllers/CCLoginViewController.h; sourceTree = "<group>"; };
+		D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLoginViewController.m; path = Controllers/CCLoginViewController.m; sourceTree = "<group>"; };
+		D0D3F363194E3F1900452C58 /* HTAutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTAutocompleteTextField.h; path = Views/HTAutocompleteTextField.h; sourceTree = "<group>"; };
+		D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTAutocompleteTextField.m; path = Views/HTAutocompleteTextField.m; sourceTree = "<group>"; };
+		D0D3F366194E3F2F00452C58 /* HTAutocompleteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTAutocompleteManager.h; path = Controllers/HTAutocompleteManager.h; sourceTree = "<group>"; };
+		D0D3F367194E3F2F00452C58 /* HTAutocompleteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTAutocompleteManager.m; path = Controllers/HTAutocompleteManager.m; sourceTree = "<group>"; };
 		D0D3F369194EF30600452C58 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		D0D3F36B194EF8C700452C58 /* CCMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMessageViewController.h; sourceTree = "<group>"; };
-		D0D3F36C194EF8C700452C58 /* CCMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMessageViewController.m; sourceTree = "<group>"; };
+		D0D3F36B194EF8C700452C58 /* CCMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCMessageViewController.h; path = Controllers/CCMessageViewController.h; sourceTree = "<group>"; };
+		D0D3F36C194EF8C700452C58 /* CCMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCMessageViewController.m; path = Controllers/CCMessageViewController.m; sourceTree = "<group>"; };
 		D0D3F36E194EFB8D00452C58 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		D0D3F371194EFD7E00452C58 /* attachment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attachment.png; sourceTree = "<group>"; };
-		D0D3F372194EFD7E00452C58 /* attachment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "attachment@2x.png"; sourceTree = "<group>"; };
-		D0D3F373194EFD7E00452C58 /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
-		D0D3F374194EFD7E00452C58 /* bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble@2x.png"; sourceTree = "<group>"; };
-		D0D3F375194EFD7E00452C58 /* bubbleReceive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbleReceive.png; sourceTree = "<group>"; };
-		D0D3F376194EFD7E00452C58 /* bubbleReceive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubbleReceive@2x.png"; sourceTree = "<group>"; };
-		D0D3F377194EFD7E00452C58 /* chep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chep.png; sourceTree = "<group>"; };
-		D0D3F378194EFD7E00452C58 /* inputTextBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inputTextBG.png; sourceTree = "<group>"; };
-		D0D3F379194EFD7E00452C58 /* inputTextBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inputTextBG@2x.png"; sourceTree = "<group>"; };
-		D0D3F37A194EFD7E00452C58 /* play_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play_button.png; sourceTree = "<group>"; };
-		D0D3F37B194EFD7E00452C58 /* play_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play_button@2x.png"; sourceTree = "<group>"; };
-		D0D3F37C194EFD7E00452C58 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
-		D0D3F37D194EFD7E00452C58 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
-		D0D3F38B1950437D00452C58 /* CVStopTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVStopTableViewCell.h; sourceTree = "<group>"; };
-		D0D3F38C1950437D00452C58 /* CVStopTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVStopTableViewCell.m; sourceTree = "<group>"; };
+		D0D3F371194EFD7E00452C58 /* attachment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = attachment.png; path = Images/attachment.png; sourceTree = "<group>"; };
+		D0D3F372194EFD7E00452C58 /* attachment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "attachment@2x.png"; path = "Images/attachment@2x.png"; sourceTree = "<group>"; };
+		D0D3F373194EFD7E00452C58 /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bubble.png; path = Images/bubble.png; sourceTree = "<group>"; };
+		D0D3F374194EFD7E00452C58 /* bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bubble@2x.png"; path = "Images/bubble@2x.png"; sourceTree = "<group>"; };
+		D0D3F375194EFD7E00452C58 /* bubbleReceive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bubbleReceive.png; path = Images/bubbleReceive.png; sourceTree = "<group>"; };
+		D0D3F376194EFD7E00452C58 /* bubbleReceive@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bubbleReceive@2x.png"; path = "Images/bubbleReceive@2x.png"; sourceTree = "<group>"; };
+		D0D3F377194EFD7E00452C58 /* chep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chep.png; path = Images/chep.png; sourceTree = "<group>"; };
+		D0D3F378194EFD7E00452C58 /* inputTextBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inputTextBG.png; path = Images/inputTextBG.png; sourceTree = "<group>"; };
+		D0D3F379194EFD7E00452C58 /* inputTextBG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "inputTextBG@2x.png"; path = "Images/inputTextBG@2x.png"; sourceTree = "<group>"; };
+		D0D3F37A194EFD7E00452C58 /* play_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play_button.png; path = Images/play_button.png; sourceTree = "<group>"; };
+		D0D3F37B194EFD7E00452C58 /* play_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play_button@2x.png"; path = "Images/play_button@2x.png"; sourceTree = "<group>"; };
+		D0D3F37C194EFD7E00452C58 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = Images/settings.png; sourceTree = "<group>"; };
+		D0D3F37D194EFD7E00452C58 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings@2x.png"; path = "Images/settings@2x.png"; sourceTree = "<group>"; };
+		D0D3F38B1950437D00452C58 /* CVStopTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVStopTableViewCell.h; path = Views/CVStopTableViewCell.h; sourceTree = "<group>"; };
+		D0D3F38C1950437D00452C58 /* CVStopTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVStopTableViewCell.m; path = Views/CVStopTableViewCell.m; sourceTree = "<group>"; };
 		D0D3F38F1950501C00452C58 /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
 		D0D3F3901950501C00452C58 /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
 		D0D3F3961950501C00452C58 /* MobLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MobLog.xcdatamodel; sourceTree = "<group>"; };
@@ -190,20 +187,19 @@
 		D0D3F3981950501C00452C58 /* Ref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ref.m; sourceTree = "<group>"; };
 		D0D3F3991950501C00452C58 /* Shipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shipment.h; sourceTree = "<group>"; };
 		D0D3F39A1950501C00452C58 /* Shipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shipment.m; sourceTree = "<group>"; };
-		D0DE9F2D195DFA7F0095BC5A /* dropicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropicon.png; sourceTree = "<group>"; };
-		D0DE9F2E195DFA7F0095BC5A /* dropicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropicon@2x.png"; sourceTree = "<group>"; };
-		D0DE9F2F195DFA7F0095BC5A /* pickicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickicon.png; sourceTree = "<group>"; };
-		D0DE9F30195DFA7F0095BC5A /* pickicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pickicon@2x.png"; sourceTree = "<group>"; };
-		D0DE9F3D195DFD7E0095BC5A /* dropicondone1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropicondone1.png; sourceTree = "<group>"; };
-		D0DE9F3E195DFD7E0095BC5A /* dropicondone1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropicondone1@2x.png"; sourceTree = "<group>"; };
-		D0DE9F3F195DFD7E0095BC5A /* pickicondone1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickicondone1.png; sourceTree = "<group>"; };
-		D0DE9F40195DFD7E0095BC5A /* pickicondone1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pickicondone1@2x.png"; sourceTree = "<group>"; };
+		D0DE9F2D195DFA7F0095BC5A /* dropicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dropicon.png; path = Images/dropicon.png; sourceTree = "<group>"; };
+		D0DE9F2E195DFA7F0095BC5A /* dropicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dropicon@2x.png"; path = "Images/dropicon@2x.png"; sourceTree = "<group>"; };
+		D0DE9F2F195DFA7F0095BC5A /* pickicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pickicon.png; path = Images/pickicon.png; sourceTree = "<group>"; };
+		D0DE9F30195DFA7F0095BC5A /* pickicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pickicon@2x.png"; path = "Images/pickicon@2x.png"; sourceTree = "<group>"; };
+		D0DE9F3D195DFD7E0095BC5A /* dropicondone1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dropicondone1.png; path = Images/dropicondone1.png; sourceTree = "<group>"; };
+		D0DE9F3E195DFD7E0095BC5A /* dropicondone1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dropicondone1@2x.png"; path = "Images/dropicondone1@2x.png"; sourceTree = "<group>"; };
+		D0DE9F3F195DFD7E0095BC5A /* pickicondone1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pickicondone1.png; path = Images/pickicondone1.png; sourceTree = "<group>"; };
+		D0DE9F40195DFD7E0095BC5A /* pickicondone1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pickicondone1@2x.png"; path = "Images/pickicondone1@2x.png"; sourceTree = "<group>"; };
 		D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		D0FFEEE71969D08100581F8F /* loads.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loads.json; sourceTree = "<group>"; };
-		D0FFEEE91969D79B00581F8F /* CVItemLongPress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVItemLongPress.h; sourceTree = "<group>"; };
-		D0FFEEEA1969D79B00581F8F /* CVItemLongPress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVItemLongPress.m; sourceTree = "<group>"; };
-		D0FFEEEC196BF59900581F8F /* CVItemTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVItemTextField.h; sourceTree = "<group>"; };
-		D0FFEEED196BF59900581F8F /* CVItemTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVItemTextField.m; sourceTree = "<group>"; };
+		D0FFEEE91969D79B00581F8F /* CVItemLongPress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVItemLongPress.h; path = Controllers/CVItemLongPress.h; sourceTree = "<group>"; };
+		D0FFEEEA1969D79B00581F8F /* CVItemLongPress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVItemLongPress.m; path = Controllers/CVItemLongPress.m; sourceTree = "<group>"; };
+		D0FFEEEC196BF59900581F8F /* CVItemTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVItemTextField.h; path = Views/CVItemTextField.h; sourceTree = "<group>"; };
+		D0FFEEED196BF59900581F8F /* CVItemTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVItemTextField.m; path = Views/CVItemTextField.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,7 +272,6 @@
 			isa = PBXGroup;
 			children = (
 				D0FFEEEF196D29B800581F8F /* iPad */,
-				D0FFEEE71969D08100581F8F /* loads.json */,
 				D0D3F38E1950501C00452C58 /* Models */,
 				D0D3F370194EFD6000452C58 /* Images */,
 				D0ABC8DE1944E3FA0095E59E /* Views */,
@@ -344,8 +339,6 @@
 		D0ABC8DA1944E3170095E59E /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				D01A452619587AB700D60990 /* AFNetworkActivityLogger.h */,
-				D01A452719587AB700D60990 /* AFNetworkActivityLogger.m */,
 				D0ABC8DB1944E3200095E59E /* CVChepClient.h */,
 				D0ABC8DC1944E3200095E59E /* CVChepClient.m */,
 			);
@@ -359,8 +352,6 @@
 				D0D3F38C1950437D00452C58 /* CVStopTableViewCell.m */,
 				D0FFEEEC196BF59900581F8F /* CVItemTextField.h */,
 				D0FFEEED196BF59900581F8F /* CVItemTextField.m */,
-				D01A45231958749000D60990 /* btRippleButtton.h */,
-				D01A45241958749000D60990 /* btRippleButtton.m */,
 				D01A4520195472F400D60990 /* CVUpdateButton.h */,
 				D01A4521195472F400D60990 /* CVUpdateButton.m */,
 				D0292820195195E70061069F /* CCSignatureDrawView.h */,
@@ -376,6 +367,8 @@
 		D0D3F370194EFD6000452C58 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D0AEB4E419991E86003C506F /* chepnav.png */,
+				D0AEB4E519991E86003C506F /* chepnav@2x.png */,
 				D0AEB4E01998F095003C506F /* network.png */,
 				D0AEB4E11998F095003C506F /* network@2x.png */,
 				D0AAA131196712460044EE87 /* flagwhite.png */,
@@ -536,7 +529,9 @@
 				D0DE9F34195DFA7F0095BC5A /* pickicon@2x.png in Resources */,
 				D0AEB4E21998F095003C506F /* network.png in Resources */,
 				D0D3F381194EFD7E00452C58 /* bubble@2x.png in Resources */,
+				D0AEB4E719991E87003C506F /* chepnav@2x.png in Resources */,
 				D0D3F382194EFD7E00452C58 /* bubbleReceive.png in Resources */,
+				D0AEB4E619991E86003C506F /* chepnav.png in Resources */,
 				D03B7D5A196183ED006AFE53 /* topic.png in Resources */,
 				D0D3F389194EFD7E00452C58 /* settings.png in Resources */,
 				D0D3F383194EFD7E00452C58 /* bubbleReceive@2x.png in Resources */,
@@ -557,7 +552,6 @@
 				D0DE9F32195DFA7F0095BC5A /* dropicon@2x.png in Resources */,
 				D0DE9F42195DFD7E0095BC5A /* dropicondone1@2x.png in Resources */,
 				D09139981941A4C50029AE98 /* Main.storyboard in Resources */,
-				D0FFEEE81969D08100581F8F /* loads.json in Resources */,
 				D0DE9F41195DFD7E0095BC5A /* dropicondone1.png in Resources */,
 				D03B7D6619618BA3006AFE53 /* flag.png in Resources */,
 				D0DE9F33195DFA7F0095BC5A /* pickicon.png in Resources */,
@@ -630,14 +624,12 @@
 				D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */,
 				D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */,
 				D0B078F61993727C00CE8DF9 /* Load.m in Sources */,
-				D01A452819587AB700D60990 /* AFNetworkActivityLogger.m in Sources */,
 				D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */,
 				D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */,
 				D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */,
 				D0D3F38D1950437D00452C58 /* CVStopTableViewCell.m in Sources */,
 				D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */,
 				D0292825195197110061069F /* CCPDFWriter.m in Sources */,
-				D01A45251958749000D60990 /* btRippleButtton.m in Sources */,
 				D0FFEEEB1969D79B00581F8F /* CVItemLongPress.m in Sources */,
 				D03B7D6A19619567006AFE53 /* CVMapAnnotation.m in Sources */,
 				D0292822195195E70061069F /* CCSignatureDrawView.m in Sources */,

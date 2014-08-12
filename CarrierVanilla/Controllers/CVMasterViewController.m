@@ -36,17 +36,10 @@
 {
     [super viewDidLoad];
     
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(90, 20, 136.96, 35.2)];
+    imageView.image = [UIImage imageNamed:@"chepnav.png"];
     
-//    _morphLabel  = [[TOMSMorphingLabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 88)];
-//    _morphLabel.text = @"Today";
-//    _morphLabel.textColor = [UIColor whiteColor];
-//    _morphLabel.font = [UIFont systemFontOfSize:18.0f];
-//    _morphLabel.textAlignment = NSTextAlignmentCenter;
-//    
-//    UIPanGestureRecognizer *pang = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(changelabel:)];
-//    [self.navigationController.view addGestureRecognizer:pang];
-////
-//    [self.navigationController.view addSubview:_morphLabel];
+    [self.navigationController.view addSubview:imageView];
     
     _timeWindowformatter = [[NSDateFormatter alloc]init];
     [_timeWindowformatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
@@ -56,26 +49,13 @@
 
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    
-    // Configure Refresh Control
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    
-    // Configure View Controller
     [self setRefreshControl:refreshControl];
     
     self.navigationItem.leftBarButtonItem = nil;
-    UISegmentedControl *statFilter = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Mon", @"Today", @"Wed", nil]];
-                                    //  self.navigationItem.titleView = statFilter;
-    statFilter.selectedSegmentIndex = 1;
-    [statFilter setTitleTextAttributes:@{[UIFont fontWithName:@"HelveticaNeue" size:5.0]: NSFontAttributeName} forState:UIControlStateNormal];
-    [statFilter addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
-
-
      UIBarButtonItem *btn = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"menu.png"] style:UIBarButtonItemStylePlain
                                                           target:self action:@selector(showLogin:)];
     self.navigationItem.rightBarButtonItem = btn;
-    
-//    [self performSelector:@selector(changelabel) withObject:nil afterDelay:10];
 }
 
 -(void)changelabel:(UIPanGestureRecognizer*)gesture{
@@ -97,9 +77,6 @@
     hud.labelText = @"Loading";
     
     [self performSelector:@selector(removeHud:) withObject:hud afterDelay:2.0];
-//    [[CVChepClient sharedClient]getStopsForVehicle:@"need a date method here!!" completion:^(NSArray *results, NSError *error) {
-//        [self removeHud:hud];
-//    }];
 }
 
 
@@ -253,10 +230,7 @@
     [self.fetchedResultsController.fetchRequest setPredicate:predicate];
     NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+
 	}else{
         NSLog(@"i did the request");
        [self.tableView reloadData];
@@ -295,10 +269,7 @@
     
 	NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error]) {
-	     // Replace this implementation with code to handle the error appropriately.
-	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
+
 	}
     
     return _fetchedResultsController;
@@ -368,7 +339,6 @@
 -(void)userDidLoginWithDictionary:(NSDictionary *)userInfo completion:(void (^)(NSError *, NSString *))completion{
     _userinfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"userinfo"];
     [[CVChepClient sharedClient]getStopsForUser:userInfo completion:^(NSString *responseMessage, NSError *error) {
-        NSLog(@"GOG ERROR Mater: %@", error);
         completion(error,responseMessage);
     }];
 }
@@ -378,7 +348,6 @@
     NSError *error;
     [self.managedObjectContext save:&error];
     if (error) {
-        NSLog(@"There was an error saving the context");
     }
 }
 
@@ -416,7 +385,6 @@
 #pragma mark - UIAction Sheet Delegate Methods
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    NSLog(@"button clicked on action sheet: %li", (long)buttonIndex);
     
     switch (buttonIndex) {
         case 0:

@@ -24,16 +24,6 @@
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     CVMasterViewController *controller = (CVMasterViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
-    
-//    NSString *family, *font;
-//    for (family in [UIFont familyNames])
-//    {
-//        NSLog(@"\nFamily: %@", family);
-//        
-//        for (font in [UIFont fontNamesForFamilyName:family])
-//            NSLog(@"\tFont: %@\n", font);
-//    }
-    
     [[UINavigationBar appearance]setBarTintColor:UIColorFromRGB(0x3c6ba1)];
     [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -151,7 +141,7 @@
          
          */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+       // abort();
     }    
     
     return _persistentStoreCoordinator;

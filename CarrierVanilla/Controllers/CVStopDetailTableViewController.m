@@ -44,7 +44,6 @@
 - (void)setStop:(Stop *)stop
 {
     if (_stop != stop) {
-        NSLog(@"Stop: %@", stop);
         NSArray *shipments = [stop.shipments allObjects];
         _shipmentCount =  [shipments count];
         _stop = stop;
@@ -103,9 +102,7 @@
                                              } completionHandler:^(NSArray *placemarks, NSError *error) {
                                                  
                                                  if (error) {
-                                                     NSLog(@"There was an error %@", [error localizedDescription]);
                                                  }else{
-                                                     NSLog(@"PLacemarks from dictionary %@", placemarks);
                                                      CLPlacemark *placemark = [placemarks objectAtIndex:0];
                                                      CLLocation *location = placemark.location;
                                                      
@@ -124,7 +121,6 @@
                                              }];
         
     }else{
-        NSLog(@"else statement");
         
         MKCoordinateRegion region;
         MKCoordinateSpan span;
@@ -132,7 +128,6 @@
         span.longitudeDelta = 0.005;
         
         CLLocation *location = [[CLLocation alloc]initWithLatitude:[_stop.latitude doubleValue] longitude:[_stop.longitude doubleValue]];
-        NSLog(@"Location: %@", location);
         region.span = span;
         region.center = location.coordinate;
         [_mapView setRegion:region animated:NO];
@@ -167,7 +162,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return 1;
 
 }
@@ -186,13 +180,11 @@
     
     if (section == 0) {
         [label setText:[NSString stringWithFormat:@"%@ %@", [self.stop.type isEqualToString:@"Pick"]? @"COLLECT FROM: " : @"DELIVER TO: ", [NSString stringWithUTF8String:[self.stop.location_name UTF8String]]]];
-    }else if (section == 1){
-        [label setText:@"Special Instructions"];
-    
-        
+    }else if (section == 2){
+        [label setText:@"SPECIAL INSTRUCTIONS"];
     } else{
         NSArray *shipments = [self.stop.shipments allObjects];
-        Shipment *shipment = shipments[section-2];
+        Shipment *shipment = shipments[section-1];
         NSString *fullString = [NSString stringWithFormat:@"CUSTOMER REFERENCE  %@", shipment.primary_reference_number];
         [label setText:fullString];
     }
@@ -210,7 +202,6 @@
         // Configure the cell...
     
     
-    Shipment *shipment = [[self.stop.shipments allObjects]firstObject];
     
     
     if ([indexPath section] == 0) {
@@ -229,36 +220,29 @@
         self.updateButton.frame = CGRectMake(CGRectGetWidth(_mapView.bounds), CGRectGetMaxY(_mapView.bounds), 40, 40);
         self.updateButton.backgroundColor = [UIColor flatBlueColor];
         self.updateButton.layer.cornerRadius = 5;
-        
-
-//        self.checkOutButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//        self.checkOutButton.frame = CGRectMake(CGRectGetWidth(_mapView.bounds), CGRectGetMaxY(_mapView.bounds), 40, 40);
-//        self.checkOutButton.backgroundColor = [UIColor flatBlueColor];
-//        self.checkOutButton.layer.cornerRadius = 5;
-
-        
+       
         Address *address = self.stop.address;
         
         UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10,  5, CGRectGetWidth(containerView.bounds)-20, 20)];
         addressOneLabel.text = [NSString stringWithFormat:@"STREET: %@", [NSString stringWithUTF8String:[address.address1 UTF8String]]];
         addressOneLabel.textColor = [UIColor flatDarkGreenColor];
-        addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
+        addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13];
         
         UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, CGRectGetWidth(containerView.bounds)-20, 20)];
         cityLabel.text = [NSString stringWithFormat:@"CITY: %@", [NSString stringWithUTF8String:[address.city UTF8String]]];
         cityLabel.textColor = [UIColor flatDarkGreenColor];
-        cityLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
+        cityLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
         
         
         UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 35, 100, 20)];
         stateLabel.text = [NSString stringWithFormat:@"STATE: %@", [NSString stringWithUTF8String:[address.state UTF8String]]];
         stateLabel.textColor = [UIColor flatDarkGreenColor];
-        stateLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
+        stateLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
         
         UILabel *zipLabel = [[UILabel alloc]initWithFrame:CGRectMake(110,  35, 200, 20)];
         zipLabel.text = [NSString stringWithFormat:@"POST CODE: %@", [NSString stringWithUTF8String:[address.zip UTF8String]]];
         zipLabel.textColor = [UIColor flatDarkGreenColor];
-        zipLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
+        zipLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
         
         
 
@@ -292,12 +276,12 @@
 
         
         
-    }else if ([indexPath section] == 1){
+    }else if ([indexPath section] == 2){
         [[_stop.shipments allObjects]enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger idx, BOOL *stop) {
             UILabel *commentLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, idx*10+10, cell.frame.size.width - 40, 20)];
             commentLabel.textColor = UIColorFromRGB(0xc0392b);
             commentLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
-            commentLabel.text = shipment.comments;
+            commentLabel.text = [shipment.comments length] ? shipment.comments : @"...";
             [cell addSubview:commentLabel];
         }];
         
@@ -305,6 +289,9 @@
         
         
     }else{
+        
+        Shipment *shipment = [self.stop.shipments allObjects][indexPath.section-1];
+
 
         UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
         
@@ -400,7 +387,6 @@
 #pragma mark -UIButton actions
 
 -(void)handleSingleTap:(UIGestureRecognizer*)gesture{
-    NSLog(@"single tap");
     [self.view endEditing:YES];
 }
 
@@ -481,7 +467,6 @@
 -(void)checkMeIn:(id)sender{
     if (!self.stop.actual_arrival) {
         
-        NSLog(@"Checking in");
         NSString *titleString = [NSString stringWithFormat:@"Check in at %@ ?", self.stop.location_name];
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
                                                                  delegate:self
@@ -491,8 +476,6 @@
         [self.refreshControl endRefreshing];
 
         [actionSheet showInView:self.view];
-        //        self.stop.actual_arrival = [NSDate date];
-        //[self addCheckOutButtonToView:_mapView];
     }
     
     
@@ -510,13 +493,11 @@
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
-        NSLog(@"Action was cancelled");
     }else{
         self.stop.actual_arrival = [NSDate date];
             [self addTimestampViewToView:self.mapView animated:YES];
             [self.refreshControl endRefreshing];
             [self.refreshBackgroundView setBackgroundColor:[UIColor flatGreenColor]];
-//            [self.refreshBackgroundView removeFromSuperview];
     }
 }
 
@@ -547,16 +528,11 @@
 
 -(void)saveSignatureSnapshotAsData:(NSData *)imageData andSignatureBezier:(UIBezierPath*)signatureBezierPath updateQuantity:(NSString*)quantity andDismissView:(UIView *)view{
     self.stop.signatureSnapshot = imageData;
-    NSLog(@"I saved the image data and will dismiss the view");
     [UIView animateWithDuration:0.25f animations:^{
         view.alpha = 0.0f;
     } completion:^(BOOL finished) {
         [view removeFromSuperview];
 
-        //                self.signaturePic.image = [UIImage imageWithData:imageData];
-        
-        
-       // if ([self.stop.load isCompletedLoad]) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.labelText = @"Saving Load";
             NSString *pdfName = @"pod.pdf";
@@ -565,7 +541,6 @@
             [[CVChepClient sharedClient]updateStop:_stop
                                               completion:^( NSError *error) {
                                                   if (error) {
-                                                      NSLog(@"there was an error %@", error);
                                                       hud.labelText = @"Error saving";
                                                   }else{
                                                       hud.labelText = @"Success";
@@ -575,12 +550,6 @@
                                                   [self.delegate saveChangesOnContext];
                                                   self.title = @"Departed";
                                               }];
-//        }else{
-//            NSLog(@"Load not yet complete");
-//            [self addCheckOutTimeStampeViewToView];
-//            [self.delegate saveChangesOnContext];
-//            self.title = @"Complete";
-//        }
     }];
 }
 

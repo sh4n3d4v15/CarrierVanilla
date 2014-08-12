@@ -23,7 +23,7 @@
     dispatch_once(&onceToken, ^{
 //        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://usorlut27.chep.com:50000"];
 //        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
-        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://usorlut48.chep.com:50000"];
+        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://api.chep.com"];
         _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
         _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
         _sharedClient.requestSerializer.stringEncoding = NSUTF8StringEncoding;
@@ -40,7 +40,6 @@
                     [operationQueue setSuspended:YES];
                     break;
             }
-            NSLog(@"Reachability %@", AFStringFromNetworkReachabilityStatus(status));
         }];
     });
     
@@ -60,22 +59,18 @@
       self.moc = del.managedObjectContext;
     
     NSArray *loadIdsArray = [networkResults valueForKey:@"load_number"];
-    NSLog(@"Entity description: %@", entityDescription);
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:self.moc];
     [fetchRequest setEntity:entity];
     
     NSError *error;
     NSArray *items = [self.moc executeFetchRequest:fetchRequest error:&error];
-//    NSArray *itemsIdsArray = [items valueForKey:@"load_number"];
     
     for (Load *load in items) {
         if([load isCompletedLoad]){
             [self.moc deleteObject:load];
-            NSLog(@"%@ object deleted iceman",entityDescription);
         }else if (![loadIdsArray containsObject:load.load_number]){//1 LOAD HAS BEEN CANCELLED 2
             [self.moc deleteObject:load];
-            NSLog(@"%@ object deleted iceman",entityDescription);
         }
     }
     if (![self.moc save:&error]) {
@@ -125,20 +120,12 @@
                 NSString *startdatestring = [[stopobj valueForKey:@"planned_start"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"planned_start"] length]-6)];
                 NSString *enddatestring = [[stopobj valueForKey:@"planned_end"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"planned_end"] length]-6)];
                 _stop.planned_start =  [_dateFormatter dateFromString:startdatestring];
-                NSLog(@"Start DATESTRING: %@", startdatestring);
-                NSLog(@"End DATESTRING: %@", enddatestring);
                 _stop.planned_end =  [_dateFormatter dateFromString:enddatestring];
-                NSLog(@"**Planned date that is coming in from the json object: %@", [stopobj valueForKey:@"planned_end"]);
-                NSLog(@"**Planned date that is being saved as date: %@", _stop.planned_end);
-               // SET_IF_NOT_NULL(_stop.planned_end, [stopobj valueForKey:@"planned_end"]);
                 
                 SET_IF_NOT_NULL(_stop.weight, [stopobj valueForKey:@"weight"]);
                 SET_IF_NOT_NULL(_stop.pallets, [stopobj valueForKey:@"pallets"]);
                 SET_IF_NOT_NULL(_stop.pieces, [stopobj valueForKey:@"pieces"]);
-                
-                //add actual times
-                
-//                NSLog(@"ACTUAL: %@", [_dateFormatter dateFromString:[[stopobj valueForKey:@"actual_arrival"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"actual_arrival"] length]-6)]]);
+
                 _stop.actual_arrival =  [_dateFormatter dateFromString:[[stopobj valueForKey:@"actual_arrival"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"actual_arrival"] length]-6)]] ?: Nil;
                 _stop.actual_departure =  [_dateFormatter dateFromString:[[stopobj valueForKey:@"actual_departure"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"actual_departure"] length]-6)]] ?: Nil;
                
@@ -210,13 +197,9 @@
         NSString *password =  [userinfo valueForKey:@"password"];
         NSString *vehicle = [userinfo valueForKey:@"vehicle"];
     
-        NSLog(@"The username is %@ and the password is %@", username , password);
-    
         [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
 
         NSString *urlString = @"/shipment_tracking_rest/jsonp/loads/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu";
-        NSLog(@"Vheicle selected: %@", userinfo );
-    NSLog(@"QUERY: %@", urlString);
         NSURLSessionDataTask *task = [self POST:urlString parameters:@{
                                                                      @"vehicle":vehicle,
                                                                      @"res":@"",
@@ -231,16 +214,12 @@
                                                                      @"drop_end_date":@""}
                                       
                                         success:^(NSURLSessionDataTask *task, id responseObject) {
-                                            NSLog(@"Success");
                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
                                             NSArray *loads = [responseObject valueForKey:@"loads"];
-                                            NSLog(@"top response %@", responseObject);
                                             if (httpResponse.statusCode == 200) {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                                    NSLog(@"REPONSE::::: %@", httpResponse);
                                                     if ([loads count] < 1) {
                                                         completion(@"No Loads For This Vehicle", nil);
-                                                        NSLog(@"************LOADS: %@",loads );
                                                     }else{
                                                          [self importArrayOfStopsIntoCoreData:loads];
                                                         completion(@"all is good with 200 in da hood",nil);
@@ -250,20 +229,14 @@
                                             }else{
                                                 dispatch_async(dispatch_get_main_queue(), ^{
                                                     completion(@"Something unexplained happened",nil);
-                                                    NSLog(@"Received: %@", responseObject);
-                                                    NSLog(@"Received HTTP %lo", (long)httpResponse.statusCode);
                                                 });
                                             }
                                         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                           NSLog(@"Failure %@", error);
                                              NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-                                            NSLog(@"STATUS: %li", (long)httpResponse.statusCode);
                                             dispatch_async(dispatch_get_main_queue(), ^{
                                                 
                                                 if (httpResponse.statusCode == 401) {
                                                     completion(@"User login not successful", error);
-                                                    NSLog(@"401");
-                                                    NSLog(@"Failure %@", error);
                                                 }else{
                                                     completion(@"Network connection error", error);
                                                 }
@@ -318,10 +291,6 @@
                                  };
     NSError *error;
     NSData *updateData = [NSJSONSerialization dataWithJSONObject:updateDict options:0 error:&error];
-    if (error) {
-        NSLog(@"There was an error JSON serializing the data: %@", [error localizedDescription]);
-    }
-    
     NSDictionary *documentDict = @{@"document_type_id": @"",
                                  @"document_type_key": @"POD",
                                  @"product_id": @"60",
@@ -330,10 +299,6 @@
                                  };
     
     NSData *documentData = [NSJSONSerialization dataWithJSONObject:documentDict options:0 error:&error];
-    if (error) {
-        NSLog(@"There was an error JSON serializing the data: %@", [error localizedDescription]);
-    }
-    
     NSURLSessionDataTask *task =  [self POST:fullUrl
                                   parameters:nil
                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -350,8 +315,7 @@
                                      success:^(NSURLSessionDataTask *task,
                                                id responseObject)
                                                 {
-                                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
-                                                    NSLog(@"Response object %@", httpResponse);
+                                                  // NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
                                                     completion(Nil);
                                                 }
                                      failure:^(NSURLSessionDataTask *task,
@@ -387,9 +351,7 @@
                        [formData appendPartWithFileData:photoData name:@"file" fileName:@"photoimage.jpg" mimeType:@"image/jpg"];
                        [formData appendPartWithFormData:jsonData name:@"document_info"];
                    } success:^(NSURLSessionDataTask *task, id responseObject) {
-                       NSLog(@"Photo successfully uploaded %@", responseObject);
                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                       NSLog(@"there was a problem %@", task.response);
                    }];
     return task;
 }

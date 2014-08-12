@@ -32,7 +32,6 @@ static HTAutocompleteManager *sharedManager;
         {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             vehicleIdsArray = [defaults arrayForKey:@"vehicleIds"];
-            NSLog(@"Vehicles: %@", vehicleIdsArray);
         });
 
         NSString *stringToLookFor;

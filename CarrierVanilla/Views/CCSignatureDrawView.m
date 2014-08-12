@@ -16,7 +16,6 @@
         // Initialization code
         
         self.signatureBezierPath = [[UIBezierPath alloc]init];
-        NSLog(@"THE SELF QUANTITY %@ ", quantity);
         _quantity = quantity;
        self.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
 //        self.alpha = 0.5f;
@@ -33,8 +32,6 @@
 
         CAShapeLayer *dottedBorder = [CAShapeLayer layer];
         dottedBorder.frame = dottedFrame;
-        
-        NSLog(@"Dotted border Frame: %@", NSStringFromCGRect(dottedBorder.frame));
         [dottedBorder setStrokeColor:UIColorFromRGB(0x3c6ba1).CGColor];
         [dottedBorder setFillColor:[UIColor clearColor].CGColor];
         [dottedBorder setLineDashPattern:@[[NSNumber numberWithInt:10],[NSNumber numberWithInt:2]]];
@@ -80,7 +77,6 @@
 #pragma mark - Drawing
 
 -(void)saveImageAndDismissView:(id)sender{
-    NSLog(@"dismissing");
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0);
     [self.image drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
     UIImage *saveImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -148,7 +144,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
     NSString *textValue = textField.text;
-    NSLog(@"TEXT VALUE: %@", textValue);
     self.quantity = textValue;
     [textField resignFirstResponder];
         return YES;

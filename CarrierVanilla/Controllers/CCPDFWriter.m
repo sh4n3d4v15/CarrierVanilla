@@ -1401,17 +1401,13 @@
                 
                 CGRect pLANNEDQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 398, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 73, 14);
                 [strokeColor setFill];
-                NSLog(@"Pickstop pieces: %@", picStop.pieces);
                 
-                NSString *updatedQuantity = [stopType isEqualToString:@"pick"] ? [picStop.pieces stringValue] : [dropStop.pieces stringValue];
                 
-                NSLog(@"******************************************** update quantity is: %@", updatedQuantity);
                 [[item.pieces stringValue] drawInRect: pLANNEDQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
                 
                 
                 CGRect aCTUALQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 487, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex) + ( outerIndex * 10) ), 73, 14);
                 [strokeColor setFill];
-                NSLog(@"UPdated pieces: %@",[item.updated_pieces stringValue] );
                 [[item.updated_pieces stringValue] drawInRect: aCTUALQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
                 
                 
