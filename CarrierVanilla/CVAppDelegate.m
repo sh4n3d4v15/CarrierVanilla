@@ -29,12 +29,7 @@
     [[UINavigationBar appearance]setBarTintColor:UIColorFromRGB(0x3c6ba1)];
     [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
-    [self performSelector:@selector(overlayDriveSafeView) withObject:nil afterDelay:2.0];
-    [self performSelector:@selector(removeDriveSafeView) withObject:nil afterDelay:6.0];
-    
-
-    
+ 
     [SOMotionDetector sharedInstance].delegate = self;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0"))
     {
@@ -59,7 +54,6 @@
     [imageView setImage:[UIImage imageNamed:@"steeringwheel"]];
     
     [_driverSafeOverlay addSubview:imageView];
-    
 
     return YES;
 }
