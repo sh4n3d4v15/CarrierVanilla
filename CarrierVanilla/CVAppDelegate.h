@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface CVAppDelegate : UIResponder <UIApplicationDelegate>
+#import "SOMotionDetector.h"
+@interface CVAppDelegate : UIResponder <UIApplicationDelegate,SOMotionDetectorDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
+@property(nonatomic)UIView *driverSafeOverlay;
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 

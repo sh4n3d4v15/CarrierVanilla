@@ -19,7 +19,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-TOMSMorphingLabel.xcscheme</key>
+		<key>Pods-SOMotionDetector.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -42,37 +42,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>17C671EF479E40DEAAC0938C</key>
+		<key>03FBCBA78D1C47E69A45952E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3E29A35012E8482ABE9BA155</key>
+		<key>080EA369458945A1BB24BFCA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6238147C2BED4CA0A8D94EA1</key>
+		<key>482FE6D60843451AB48F7023</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6585B4C98224482A9C38BB2A</key>
+		<key>889EA5BEF4D84A368A0C4F32</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C094ACEE9A7342118D41C4B3</key>
+		<key>8DB9E0EA16B44B32A2A1B532</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E8F6BB17ED2044159D57BB18</key>
+		<key>C64A672ED77F40F9B4011411</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FC46220B0E494D55AC91CE64</key>
+		<key>E8443DC46E4A4D399E0DB66D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

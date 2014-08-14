@@ -21,6 +21,8 @@
 		D03B7D6719618BA3006AFE53 /* flag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D03B7D6519618BA3006AFE53 /* flag@2x.png */; };
 		D03B7D6A19619567006AFE53 /* CVMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = D03B7D6919619567006AFE53 /* CVMapAnnotation.m */; };
 		D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */; };
+		D05583B9199BEFCD00CAAEB6 /* steeringwheel.png in Resources */ = {isa = PBXBuildFile; fileRef = D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */; };
+		D05583BA199BEFCD00CAAEB6 /* steeringwheel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D05583B8199BEFCD00CAAEB6 /* steeringwheel@2x.png */; };
 		D09139831941A4C50029AE98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139821941A4C50029AE98 /* Foundation.framework */; };
 		D09139851941A4C50029AE98 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139841941A4C50029AE98 /* CoreGraphics.framework */; };
 		D09139871941A4C50029AE98 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139861941A4C50029AE98 /* UIKit.framework */; };
@@ -49,6 +51,7 @@
 		D0B078F9199372C600CE8DF9 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F8199372C600CE8DF9 /* Stop.m */; };
 		D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078FB1993731100CE8DF9 /* Loadnote.m */; };
 		D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */; };
+		D0CB703C199B7031006E2B60 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0CB703B199B7031006E2B60 /* CoreMotion.framework */; };
 		D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */; };
 		D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */; };
 		D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F367194E3F2F00452C58 /* HTAutocompleteManager.m */; };
@@ -117,6 +120,8 @@
 		D03B7D6919619567006AFE53 /* CVMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVMapAnnotation.m; path = Views/CVMapAnnotation.m; sourceTree = "<group>"; };
 		D04C3312194B3D7000BF42C4 /* CVStopDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVStopDetailTableViewController.h; path = Controllers/CVStopDetailTableViewController.h; sourceTree = "<group>"; };
 		D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVStopDetailTableViewController.m; path = Controllers/CVStopDetailTableViewController.m; sourceTree = "<group>"; };
+		D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = steeringwheel.png; sourceTree = "<group>"; };
+		D05583B8199BEFCD00CAAEB6 /* steeringwheel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "steeringwheel@2x.png"; sourceTree = "<group>"; };
 		D091397F1941A4C50029AE98 /* Chep Carrier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chep Carrier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09139821941A4C50029AE98 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D09139841941A4C50029AE98 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -155,6 +160,7 @@
 		D0B078FA1993731100CE8DF9 /* Loadnote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loadnote.h; sourceTree = "<group>"; };
 		D0B078FB1993731100CE8DF9 /* Loadnote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loadnote.m; sourceTree = "<group>"; };
 		D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVAppDelegate.m; sourceTree = "<group>"; };
+		D0CB703B199B7031006E2B60 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		D0D3F35D194E39DE00452C58 /* CCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCLoginViewController.h; path = Controllers/CCLoginViewController.h; sourceTree = "<group>"; };
 		D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLoginViewController.m; path = Controllers/CCLoginViewController.m; sourceTree = "<group>"; };
 		D0D3F363194E3F1900452C58 /* HTAutocompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTAutocompleteTextField.h; path = Views/HTAutocompleteTextField.h; sourceTree = "<group>"; };
@@ -207,6 +213,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0CB703C199B7031006E2B60 /* CoreMotion.framework in Frameworks */,
 				D0D3F36F194EFB8D00452C58 /* QuartzCore.framework in Frameworks */,
 				D0D3F36A194EF30600452C58 /* CoreLocation.framework in Frameworks */,
 				D0F7FE5F194E0EBA002CCD9F /* MapKit.framework in Frameworks */,
@@ -255,6 +262,7 @@
 		D09139811941A4C50029AE98 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0CB703B199B7031006E2B60 /* CoreMotion.framework */,
 				D0D3F36E194EFB8D00452C58 /* QuartzCore.framework */,
 				D0D3F369194EF30600452C58 /* CoreLocation.framework */,
 				D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */,
@@ -367,6 +375,8 @@
 		D0D3F370194EFD6000452C58 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */,
+				D05583B8199BEFCD00CAAEB6 /* steeringwheel@2x.png */,
 				D0AEB4E419991E86003C506F /* chepnav.png */,
 				D0AEB4E519991E86003C506F /* chepnav@2x.png */,
 				D0AEB4E01998F095003C506F /* network.png */,
@@ -528,6 +538,7 @@
 				D09139A31941A4C50029AE98 /* Images.xcassets in Resources */,
 				D0DE9F34195DFA7F0095BC5A /* pickicon@2x.png in Resources */,
 				D0AEB4E21998F095003C506F /* network.png in Resources */,
+				D05583BA199BEFCD00CAAEB6 /* steeringwheel@2x.png in Resources */,
 				D0D3F381194EFD7E00452C58 /* bubble@2x.png in Resources */,
 				D0AEB4E719991E87003C506F /* chepnav@2x.png in Resources */,
 				D0D3F382194EFD7E00452C58 /* bubbleReceive.png in Resources */,
@@ -552,6 +563,7 @@
 				D0DE9F32195DFA7F0095BC5A /* dropicon@2x.png in Resources */,
 				D0DE9F42195DFD7E0095BC5A /* dropicondone1@2x.png in Resources */,
 				D09139981941A4C50029AE98 /* Main.storyboard in Resources */,
+				D05583B9199BEFCD00CAAEB6 /* steeringwheel.png in Resources */,
 				D0DE9F41195DFD7E0095BC5A /* dropicondone1.png in Resources */,
 				D03B7D6619618BA3006AFE53 /* flag.png in Resources */,
 				D0DE9F33195DFA7F0095BC5A /* pickicon.png in Resources */,
@@ -759,13 +771,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: shane davis (4965HJMH5J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CarrierVanilla/Chep Carrier-Prefix.pch";
 				INFOPLIST_FILE = "CarrierVanilla/Chep Carrier-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Chep Carrier";
-				PROVISIONING_PROFILE = "8A0CFEBF-CAF8-4EDB-A8C0-A76D67508C15";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -778,13 +790,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: shane davis (4965HJMH5J)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CarrierVanilla/Chep Carrier-Prefix.pch";
 				INFOPLIST_FILE = "CarrierVanilla/Chep Carrier-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Chep Carrier";
-				PROVISIONING_PROFILE = "8A0CFEBF-CAF8-4EDB-A8C0-A76D67508C15";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

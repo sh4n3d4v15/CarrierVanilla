@@ -58,17 +58,7 @@
     self.navigationItem.rightBarButtonItem = btn;
 }
 
--(void)changelabel:(UIPanGestureRecognizer*)gesture{
-    
-    CGPoint velocity = [gesture velocityInView:self.navigationController.view];
-    
-    if (velocity.x > 0) {
-        _morphLabel.text = @"Yesterday";
-    }else{
-        _morphLabel.text = @"Tommorrow";
-        [self getLoadsForDifferentDate];
-    }
-}
+
 
 -(void)dateChanged:(id)sender{
     UISegmentedControl *segmentCtrl =  (UISegmentedControl*)sender;
