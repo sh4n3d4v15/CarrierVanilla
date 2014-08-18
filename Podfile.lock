@@ -20,6 +20,7 @@ PODS:
     - AFNetworking/NSURLSession
   - MBProgressHUD (0.8)
   - pop (1.0.5)
+  - RFKeyboardToolbar (1.2)
   - SOMessaging (1.0.0)
   - SOMotionDetector (1.0.1)
   - UIColor+MLPFlatColors (1.0)
@@ -28,6 +29,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - MBProgressHUD (~> 0.8)
   - pop (~> 1.0)
+  - RFKeyboardToolbar (~> 1.2)
   - SOMessaging (~> 1.0.0)
   - SOMotionDetector (~> 1.0.1)
   - UIColor+MLPFlatColors (~> 1.0)
@@ -36,6 +38,7 @@ SPEC CHECKSUMS:
   AFNetworking: ab63e259fe91eef4519b371ef0a4955af0e73e64
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   pop: 75fa2b33934200a8a68abb449ac1726fcf7e43b9
+  RFKeyboardToolbar: 1520d2fb04d16797abe3f7bc8b206916e1eca335
   SOMessaging: 040111bede4ae5c48d1d0181ca746a5617a06331
   SOMotionDetector: c9b0f935cfda1a1e7a7b40ecd73dc44c595de6e7
   UIColor+MLPFlatColors: d74d0e59ba8eb8960c0f8136928056d91e208585

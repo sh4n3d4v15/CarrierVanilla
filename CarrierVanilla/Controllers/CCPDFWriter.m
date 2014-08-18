@@ -1281,9 +1281,9 @@
         [strokeColor setFill];
         [text2Content drawInRect: text2Rect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
-//        CGRect text2Rect1 = CGRectMake(CGRectGetMinX(frame) + 221, CGRectGetMinY(frame) + 158, 158, 15);
-//        [strokeColor setFill];
-//        [@"MobiShipRestUser" drawInRect: text2Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+        CGRect text2Rect1 = CGRectMake(CGRectGetMinX(frame) + 221, CGRectGetMinY(frame) + 158, 158, 15);
+        [strokeColor setFill];
+        [@"TDS Logistics" drawInRect: text2Rect1 withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
         
         
         //// Text 3 Drawing

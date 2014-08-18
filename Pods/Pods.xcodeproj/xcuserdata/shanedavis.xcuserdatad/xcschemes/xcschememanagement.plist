@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-RFKeyboardToolbar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SOMessaging.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,37 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>03FBCBA78D1C47E69A45952E</key>
+		<key>0EC196ADD0404477836E6330</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>080EA369458945A1BB24BFCA</key>
+		<key>0FB0AC87C2C548179CF0EA3C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>482FE6D60843451AB48F7023</key>
+		<key>12EF8F53358742A5BBD12AE9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>889EA5BEF4D84A368A0C4F32</key>
+		<key>3CE4C6F06F574708B4A77D3A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8DB9E0EA16B44B32A2A1B532</key>
+		<key>82E863D04DBA4F1094C79312</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C64A672ED77F40F9B4011411</key>
+		<key>9AD30124992B41DAB9D7026C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E8443DC46E4A4D399E0DB66D</key>
+		<key>BA72C0FE1C3D47758276153E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ED16C83311D746A2A5A20B12</key>
 		<dict>
 			<key>primary</key>
 			<true/>

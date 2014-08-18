@@ -28,6 +28,9 @@
 - (IBAction)submitButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
+@property(nonatomic)UIDynamicAnimator *animator;
+@property(nonatomic)UIGravityBehavior *gravity;
+@property(nonatomic)UICollisionBehavior *collision;
 @end
 
 @implementation CCLoginViewController
@@ -64,6 +67,7 @@
     self.passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.nameTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.carrierTextField.borderStyle = UITextBorderStyleRoundedRect;
+    
 
 }
 -(void)viewDidAppear:(BOOL)animated{
@@ -71,6 +75,16 @@
     [self.view addGestureRecognizer:singleTap];
     [self performSelector:@selector(animationCode) withObject:nil afterDelay:0.1f];
     [super viewDidAppear:animated];
+    
+//    _animator = [[UIDynamicAnimator alloc]initWithReferenceView:self.view];
+//    _gravity = [[UIGravityBehavior alloc]initWithItems:@[_carrierTextField]];
+//    [_animator addBehavior:_gravity];
+//    
+//    _collision = [[UICollisionBehavior alloc]initWithItems:@[_carrierTextField]];
+//    _collision.translatesReferenceBoundsIntoBoundary = YES;
+//    
+//    [_animator addBehavior:_collision];
+    
 }
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)sender
@@ -794,9 +808,9 @@
     NSLog(@"dismiss button pressed");
     NSString *name = [[self.nameTextField text]copy];
     //    _nameTextField.text = nil;
-    NSString *password =  [[self.passwordTextField text]copy];//@"M0b1Sh1pm3n743";
+    NSString *password =  @"5UTP71BBYT3SUADBR0VIS8NLJMKUZCIV";//@"M0b1Sh1pm3n743";
     //    _passwordTextField.text = nil;
-    NSString *carrierId =  [[self.carrierTextField text]copy];//@"MobiShipRestUser";
+    NSString *carrierId =  @"TDSadmin";//@"MobiShipRestUser";
     if([name isEqualToString:@""]){
         self.loginInfoLabel.text = @"Please Enter Vehicle ID";
     }else{

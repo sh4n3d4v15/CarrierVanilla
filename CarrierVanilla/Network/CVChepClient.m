@@ -27,6 +27,8 @@
         _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
         _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
         _sharedClient.requestSerializer.stringEncoding = NSUTF8StringEncoding;
+        [_sharedClient.requestSerializer setAuthorizationHeaderFieldWithUsername:@"MobiShipRestUser" password:@"M0b1Sh1pm3n743"];
+
         [[AFNetworkReachabilityManager sharedManager]startMonitoring];
         [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
             NSOperationQueue *operationQueue = _sharedClient.operationQueue;
@@ -197,9 +199,7 @@
         NSString *password =  [userinfo valueForKey:@"password"];
         NSString *vehicle = [userinfo valueForKey:@"vehicle"];
     
-        [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
-
-        NSString *urlString = @"/shipment_tracking_rest/jsonp/loads/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu";
+        NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/uid/%@/pwd/%@/region/eu",username,password];
         NSURLSessionDataTask *task = [self POST:urlString parameters:@{
                                                                      @"vehicle":vehicle,
                                                                      @"res":@"",
@@ -215,6 +215,7 @@
                                       
                                         success:^(NSURLSessionDataTask *task, id responseObject) {
                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
+                                            NSLog(@"Http resp: %@", httpResponse);
                                             NSArray *loads = [responseObject valueForKey:@"loads"];
                                             if (httpResponse.statusCode == 200) {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -266,10 +267,7 @@
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
     NSString *username = [userinfo valueForKey:@"carrier"];
     NSString *password =  [userinfo valueForKey:@"password"];
-    [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
-    
-    NSLog(@"Update stop method fired");
-    NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",stop.load.id,stop.id];
+    NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/%@/pwd/%@/region/eu",stop.load.id,stop.id,username,password];
     NSLog(@"Full URL: %@", fullUrl);
     
     __unused NSArray *deliveries = [self getQuantitesForStop:stop];
@@ -277,9 +275,7 @@
 
    // [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss+00:00"];
     [_dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-    NSLog(@"********* 1.Here is what date will be uploaded into the TMS: %@", [_dateFormatter stringFromDate:stop.actual_departure]);
 //    [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
-    NSLog(@"********* 2.Here is what date will be uploaded into the TMS: %@", [_dateFormatter stringFromDate:stop.actual_departure]);
   
     
     
@@ -334,9 +330,7 @@
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
     NSString *username = [userinfo valueForKey:@"carrier"];
     NSString *password =  [userinfo valueForKey:@"password"];
-    [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
-
-    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/upload/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId,stopId];
+    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/upload/uid/%@/pwd/%@/region/eu",loadId,stopId,username,password];
     NSDictionary *docInfoDictionay = @{@"document_type_id":@"",
                                        @"document_type_key":@"POD",
                                        @"comments":@"",
@@ -363,10 +357,8 @@
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
     NSString *username = [userinfo valueForKey:@"carrier"];
     NSString *password =  [userinfo valueForKey:@"password"];
-    [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
-    
     [self.operationQueue setSuspended:NO];
-    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/notes/0/0/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId];
+    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/notes/0/0/uid/%@/pwd/%@/region/eu",loadId,username,password];
     NSLog(@"GET LOAD NOTES QUIERY STRING: %@", queryString);
     NSURLSessionDataTask *task = [self GET:queryString parameters:nil
                                    success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -399,9 +391,7 @@
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
     NSString *username = [userinfo valueForKey:@"carrier"];
     NSString *password =  [userinfo valueForKey:@"password"];
-    [self.requestSerializer setAuthorizationHeaderFieldWithUsername:username password:password];
-    
-    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/addnote/uid/APItester/pwd/ZTNhNzk5MGUtM2IyYi00M2M4LThhNDct/region/eu",loadId];
+    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/addnote/uid/%@/pwd/%@/region/eu",loadId,username,password];
     
     NSURLSessionDataTask *task = [self POST:queryString parameters:@{
                                                                      @"subject":@"Mobile Load Note",
