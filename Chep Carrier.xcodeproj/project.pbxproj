@@ -76,6 +76,9 @@
 		D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */; };
 		D0D3F3A11950501C00452C58 /* Ref.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F3981950501C00452C58 /* Ref.m */; };
 		D0D3F3A21950501C00452C58 /* Shipment.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F39A1950501C00452C58 /* Shipment.m */; };
+		D0DDE7E619A36454005203B7 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0DDE7E219A36454005203B7 /* libTestFlight.a */; };
+		D0DDE7E819A364B9005203B7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D0DDE7E719A364B9005203B7 /* libz.dylib */; };
+		D0DDE7EA19A4B0B4005203B7 /* keys.json in Resources */ = {isa = PBXBuildFile; fileRef = D0DDE7E919A4B0B4005203B7 /* keys.json */; };
 		D0DE9F31195DFA7F0095BC5A /* dropicon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F2D195DFA7F0095BC5A /* dropicon.png */; };
 		D0DE9F32195DFA7F0095BC5A /* dropicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F2E195DFA7F0095BC5A /* dropicon@2x.png */; };
 		D0DE9F33195DFA7F0095BC5A /* pickicon.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F2F195DFA7F0095BC5A /* pickicon.png */; };
@@ -193,6 +196,12 @@
 		D0D3F3981950501C00452C58 /* Ref.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ref.m; sourceTree = "<group>"; };
 		D0D3F3991950501C00452C58 /* Shipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shipment.h; sourceTree = "<group>"; };
 		D0D3F39A1950501C00452C58 /* Shipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shipment.m; sourceTree = "<group>"; };
+		D0DDE7E219A36454005203B7 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		D0DDE7E319A36454005203B7 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		D0DDE7E419A36454005203B7 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		D0DDE7E519A36454005203B7 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		D0DDE7E719A364B9005203B7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		D0DDE7E919A4B0B4005203B7 /* keys.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = keys.json; sourceTree = "<group>"; };
 		D0DE9F2D195DFA7F0095BC5A /* dropicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dropicon.png; path = Images/dropicon.png; sourceTree = "<group>"; };
 		D0DE9F2E195DFA7F0095BC5A /* dropicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dropicon@2x.png"; path = "Images/dropicon@2x.png"; sourceTree = "<group>"; };
 		D0DE9F2F195DFA7F0095BC5A /* pickicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pickicon.png; path = Images/pickicon.png; sourceTree = "<group>"; };
@@ -213,11 +222,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0DDE7E819A364B9005203B7 /* libz.dylib in Frameworks */,
 				D0CB703C199B7031006E2B60 /* CoreMotion.framework in Frameworks */,
 				D0D3F36F194EFB8D00452C58 /* QuartzCore.framework in Frameworks */,
 				D0D3F36A194EF30600452C58 /* CoreLocation.framework in Frameworks */,
 				D0F7FE5F194E0EBA002CCD9F /* MapKit.framework in Frameworks */,
 				D09139851941A4C50029AE98 /* CoreGraphics.framework in Frameworks */,
+				D0DDE7E619A36454005203B7 /* libTestFlight.a in Frameworks */,
 				D09139891941A4C50029AE98 /* CoreData.framework in Frameworks */,
 				D09139871941A4C50029AE98 /* UIKit.framework in Frameworks */,
 				D09139831941A4C50029AE98 /* Foundation.framework in Frameworks */,
@@ -262,6 +273,7 @@
 		D09139811941A4C50029AE98 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0DDE7E719A364B9005203B7 /* libz.dylib */,
 				D0CB703B199B7031006E2B60 /* CoreMotion.framework */,
 				D0D3F36E194EFB8D00452C58 /* QuartzCore.framework */,
 				D0D3F369194EF30600452C58 /* CoreLocation.framework */,
@@ -279,7 +291,7 @@
 		D091398A1941A4C50029AE98 /* CarrierVanilla */ = {
 			isa = PBXGroup;
 			children = (
-				D0FFEEEF196D29B800581F8F /* iPad */,
+				D0DDE7E119A36419005203B7 /* TestFlight */,
 				D0D3F38E1950501C00452C58 /* Models */,
 				D0D3F370194EFD6000452C58 /* Images */,
 				D0ABC8DE1944E3FA0095E59E /* Views */,
@@ -290,6 +302,7 @@
 				D09139961941A4C50029AE98 /* Main.storyboard */,
 				D09139A21941A4C50029AE98 /* Images.xcassets */,
 				D091398B1941A4C50029AE98 /* Supporting Files */,
+				D0DDE7E919A4B0B4005203B7 /* keys.json */,
 			);
 			path = CarrierVanilla;
 			sourceTree = "<group>";
@@ -440,11 +453,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		D0FFEEEF196D29B800581F8F /* iPad */ = {
+		D0DDE7E119A36419005203B7 /* TestFlight */ = {
 			isa = PBXGroup;
 			children = (
+				D0DDE7E219A36454005203B7 /* libTestFlight.a */,
+				D0DDE7E319A36454005203B7 /* TestFlight.h */,
+				D0DDE7E419A36454005203B7 /* TestFlight+AsyncLogging.h */,
+				D0DDE7E519A36454005203B7 /* TestFlight+ManualSessions.h */,
 			);
-			name = iPad;
+			name = TestFlight;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -554,6 +571,7 @@
 				D03B7D63196189FC006AFE53 /* truck@2x.png in Resources */,
 				D0D3F37E194EFD7E00452C58 /* attachment.png in Resources */,
 				D0D3F388194EFD7E00452C58 /* play_button@2x.png in Resources */,
+				D0DDE7EA19A4B0B4005203B7 /* keys.json in Resources */,
 				D0D3F386194EFD7E00452C58 /* inputTextBG@2x.png in Resources */,
 				D03B7D59196183ED006AFE53 /* menu@2x.png in Resources */,
 				D0D3F38A194EFD7E00452C58 /* settings@2x.png in Resources */,
@@ -770,14 +788,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CarrierVanilla/Chep Carrier-Prefix.pch";
 				INFOPLIST_FILE = "CarrierVanilla/Chep Carrier-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CarrierVanilla",
+				);
 				PRODUCT_NAME = "Chep Carrier";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "c0037e06-e0e2-4480-b6ec-59f1cffec049";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -789,14 +811,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CarrierVanilla/Chep Carrier-Prefix.pch";
 				INFOPLIST_FILE = "CarrierVanilla/Chep Carrier-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CarrierVanilla",
+				);
 				PRODUCT_NAME = "Chep Carrier";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "c0037e06-e0e2-4480-b6ec-59f1cffec049";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

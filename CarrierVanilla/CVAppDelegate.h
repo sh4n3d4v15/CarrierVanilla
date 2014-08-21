@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SOMotionDetector.h"
-@interface CVAppDelegate : UIResponder <UIApplicationDelegate,SOMotionDetectorDelegate>
+@interface CVAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

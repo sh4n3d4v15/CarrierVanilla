@@ -349,9 +349,9 @@
     Stop *stop = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.locationNameLabel.text = [ NSString stringWithUTF8String:[stop.location_name UTF8String]];;
     cell.locationNameLabel.textColor = UIColorFromRGB(0x3c6ba1);
-    cell.addressOneLabel.text = [ NSString stringWithUTF8String:[stop.address.address1 UTF8String]];
-    cell.cityLabel.text = [NSString stringWithUTF8String:[stop.address.city UTF8String]];
-    cell.zipLabel.text = [NSString stringWithUTF8String:[stop.address.zip UTF8String]];
+    cell.addressOneLabel.text = [stop.address.address1 length] ? [NSString stringWithUTF8String:[stop.address.address1 UTF8String]] : @"";
+    cell.cityLabel.text = [stop.address.city length] ? [NSString stringWithUTF8String:[stop.address.city UTF8String]] : @"";
+    cell.zipLabel.text = [stop.address.zip length] ? [NSString stringWithUTF8String:[stop.address.zip UTF8String]] : @"";
     cell.typeLabel.text = [NSString stringWithUTF8String:[stop.type UTF8String]];
     cell.timeWindowLabel.text = [NSString stringWithFormat:@"%@ - %@",[_timeWindowformatter stringFromDate:stop.planned_start],[_timeWindowformatter stringFromDate:stop.planned_end]];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;

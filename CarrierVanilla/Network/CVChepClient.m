@@ -217,6 +217,7 @@
                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
                                             NSLog(@"Http resp: %@", httpResponse);
                                             NSArray *loads = [responseObject valueForKey:@"loads"];
+                                            NSLog(@"Loads: %@",loads);
                                             if (httpResponse.statusCode == 200) {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
                                                     if ([loads count] < 1) {

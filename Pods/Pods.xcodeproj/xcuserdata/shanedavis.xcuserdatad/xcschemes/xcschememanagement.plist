@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Reveal-iOS-SDK.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SOMessaging.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,42 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0EC196ADD0404477836E6330</key>
+		<key>01B7DDA7C4D645378EFF7309</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0FB0AC87C2C548179CF0EA3C</key>
+		<key>24650BD93E20472A9E3CC1AF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>12EF8F53358742A5BBD12AE9</key>
+		<key>2DF51144916C4896A87A16C8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3CE4C6F06F574708B4A77D3A</key>
+		<key>31EE0695C17D4BB7B6B10D74</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>82E863D04DBA4F1094C79312</key>
+		<key>3ABC621199444F60BF9A0F84</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9AD30124992B41DAB9D7026C</key>
+		<key>57E39D633B664BBB940C20E5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BA72C0FE1C3D47758276153E</key>
+		<key>63D9A2136DE74CA490D0EB8E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>ED16C83311D746A2A5A20B12</key>
+		<key>E4B2C539605A45FCA382F0D0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EEC96B03AF5E4B2CAB2F7894</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -43,7 +43,7 @@
     
     [[self.shipments allObjects]enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger idx, BOOL *stop) {
         [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *currentItem, NSUInteger idx, BOOL *stop) {
-            if (!currentItem.finalized) {
+            if (![currentItem.finalized boolValue]) {
                 complete = NO;
             }
         }];

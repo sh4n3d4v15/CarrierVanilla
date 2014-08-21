@@ -40,12 +40,26 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+
+
+
     }
     return self;
 }
 
 - (void)viewDidLoad
 {
+    
+    NSError *error;
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"keys" ofType:@"json"];
+    NSString *myJSON = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
+    _keys = [NSJSONSerialization JSONObjectWithData:[myJSON dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+    if(error){
+        NSLog(@"ERROR JSON: %@", error);
+    }else{
+        
+        NSLog(@"KEYS: %@", _keys);
+    }
     
     self.view.backgroundColor = UIColorFromRGB(0x3c6ba1);
     [super viewDidLoad];
@@ -787,9 +801,7 @@
     anim.springBounciness = 20;
     [textField.layer pop_addAnimation:anim forKey:@"bounds"];
 }
-//-(void)textFieldDidBeginEditing:(UITextField *)textField{
-//    POPSpringAnimation *anim =
-//}
+
 #pragma mark Todo: add validation here
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
@@ -805,21 +817,20 @@
 }
 
 - (IBAction)submitButtonPressed:(id)sender {
-    NSLog(@"dismiss button pressed");
+    
     NSString *name = [[self.nameTextField text]copy];
-    //    _nameTextField.text = nil;
-    NSString *password =  @"5UTP71BBYT3SUADBR0VIS8NLJMKUZCIV";//@"M0b1Sh1pm3n743";
-    //    _passwordTextField.text = nil;
-    NSString *carrierId =  @"TDSadmin";//@"MobiShipRestUser";
-    if([name isEqualToString:@""]){
-        self.loginInfoLabel.text = @"Please Enter Vehicle ID";
+    NSString *carrierId =  [[self.carrierTextField text]copy];
+    NSString *password =  [_keys valueForKey:carrierId] ?: @"";
+
+   
+    if([name isEqualToString:@""] || [carrierId isEqualToString:@""] || [password isEqualToString:@""]){
+        self.loginInfoLabel.text = @"Credentials Incorrect/Missing";
     }else{
+        
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = @"Logging In";
- 
-    
+   
     NSDictionary *userInfo = @{@"vehicle": name , @"carrier": carrierId, @"password":password};
-    
         [_delegate userDidLoginWithDictionary:userInfo completion:^(NSError *error, NSString *message) {
             NSLog(@"ERRORR:: %@", error);
             if(error || [message isEqualToString:@"No Loads For This Vehicle"]){
@@ -836,24 +847,5 @@
             }
         }];
     }
-    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @end

@@ -37,8 +37,6 @@
         [dottedBorder setLineDashPattern:@[[NSNumber numberWithInt:10],[NSNumber numberWithInt:2]]];
         [dottedBorder setLineJoin:kCALineCapRound];
         [dottedBorder setPath:path.CGPath];
-//        [drawBox.layer addSublayer:dottedBorder];
-//        [containerView addSubview:drawBox];
         [containerView.layer addSublayer:dottedBorder];
         containerView.backgroundColor = [UIColor clearColor];
 
@@ -50,11 +48,7 @@
         strokeEndAnim.toValue = [NSNumber numberWithFloat:1.0f];
         strokeEndAnim.fillMode = kCAFillModeForwards;
         strokeEndAnim.removedOnCompletion = NO;
-        
         [dottedBorder addAnimation:strokeEndAnim forKey:nil];
-//        self.quantityLabel.alpha = 0.0f;
-
-//        CGRect destinationFrame = CGRectMake(210.0f,454.0f, 90, 30);
         UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         doneButton.frame = CGRectMake(self.bounds.size.width-65,self.bounds.size.height-35, 50, 30);
         [doneButton setTitle:@"Done" forState:UIControlStateNormal];
@@ -69,10 +63,14 @@
         [clearButton setTitle:@"Clear" forState:UIControlStateNormal];
         [clearButton setTitleColor:UIColorFromRGB(0xc0392b) forState:UIControlStateNormal];
         [clearButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [clearButton addTarget:self action:@selector(removeView) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:clearButton];
     }
     return self;
+}
+-(void)removeView{
+    [self.delegate cancelActionAndRemoveSignatureView:self];
 }
 #pragma mark - Drawing
 
@@ -137,16 +135,6 @@
     }
     
 
-}
-
-#pragma mark Text Field Delegate
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    
-    NSString *textValue = textField.text;
-    self.quantity = textValue;
-    [textField resignFirstResponder];
-        return YES;
 }
 
 
