@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-TOMSMorphingLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-UIColor+MLPFlatColors.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,47 +57,52 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>01B7DDA7C4D645378EFF7309</key>
+		<key>004C9982282E45C0990EF334</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>24650BD93E20472A9E3CC1AF</key>
+		<key>05EA0BF4654C44D1AA11A595</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2DF51144916C4896A87A16C8</key>
+		<key>1F5AE5664B0847FF96826E0B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>31EE0695C17D4BB7B6B10D74</key>
+		<key>3230C0F857CF4CEB9B4C47D8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3ABC621199444F60BF9A0F84</key>
+		<key>B9A0C3C6A5EE45569659B3E1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>57E39D633B664BBB940C20E5</key>
+		<key>D4CD8957987347A4BA4651AE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>63D9A2136DE74CA490D0EB8E</key>
+		<key>E20D4DA7368D49D19F15DFDD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E4B2C539605A45FCA382F0D0</key>
+		<key>F6E133305C0946ABA377E63B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EEC96B03AF5E4B2CAB2F7894</key>
+		<key>FBBD77EC723F4ED2A410B68B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FD253D0E88C044F2896E4285</key>
 		<dict>
 			<key>primary</key>
 			<true/>

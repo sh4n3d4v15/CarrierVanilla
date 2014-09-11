@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F6E133305C0946ABA377E63B"
-               BuildableName = "libPods-UIColor+MLPFlatColors.a"
-               BlueprintName = "Pods-UIColor+MLPFlatColors"
+               BlueprintIdentifier = "05EA0BF4654C44D1AA11A595"
+               BuildableName = "libPods-TOMSMorphingLabel.a"
+               BlueprintName = "Pods-TOMSMorphingLabel"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

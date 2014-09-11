@@ -24,6 +24,7 @@ PODS:
   - RFKeyboardToolbar (1.2)
   - SOMessaging (1.0.0)
   - SOMotionDetector (1.0.1)
+  - TOMSMorphingLabel (0.2.2)
   - UIColor+MLPFlatColors (1.0)
 
 DEPENDENCIES:
@@ -34,6 +35,7 @@ DEPENDENCIES:
   - RFKeyboardToolbar (~> 1.2)
   - SOMessaging (~> 1.0.0)
   - SOMotionDetector (~> 1.0.1)
+  - TOMSMorphingLabel (~> 0.2.2)
   - UIColor+MLPFlatColors (~> 1.0)
 
 SPEC CHECKSUMS:
@@ -44,6 +46,7 @@ SPEC CHECKSUMS:
   RFKeyboardToolbar: 1520d2fb04d16797abe3f7bc8b206916e1eca335
   SOMessaging: 040111bede4ae5c48d1d0181ca746a5617a06331
   SOMotionDetector: c9b0f935cfda1a1e7a7b40ecd73dc44c595de6e7
+  TOMSMorphingLabel: b0ef90ad7a660a3a30bdf626cfc23028fa0b67f9
   UIColor+MLPFlatColors: d74d0e59ba8eb8960c0f8136928056d91e208585
 
 COCOAPODS: 0.33.1
