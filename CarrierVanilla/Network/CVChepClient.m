@@ -45,6 +45,9 @@
         }];
     });
     
+    
+
+    
     _sharedClient.dateFormatter = [[NSDateFormatter alloc]init];
     [_sharedClient.dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     //[_sharedClient.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"BST"]];
@@ -53,6 +56,36 @@
 
     return _sharedClient;
 }
+
+#pragma  mark Create Today
+
+-(NSDate*)createDateForThisMorning{
+    NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [cal setTimeZone:[NSTimeZone systemTimeZone]];
+    
+    NSDateComponents * comp = [cal components:( NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
+    
+    [comp setMinute:0];
+    [comp setHour:0];
+    
+    NSDate *startOfToday = [cal dateFromComponents:comp];
+    return startOfToday;
+}
+
+-(NSDate*)createDateForMidnight{
+    NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [cal setTimeZone:[NSTimeZone systemTimeZone]];
+    
+    NSDateComponents * comp = [cal components:( NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
+    
+    [comp setMinute:59];
+    [comp setHour:23];
+    
+    NSDate *startOfToday = [cal dateFromComponents:comp];
+    return startOfToday;
+}
+
+
 
 #define SET_IF_NOT_NULL(TARGET, VAL) if(VAL != [NSNull null]) { TARGET = VAL; }
 
@@ -195,6 +228,11 @@
 -(NSURLSessionDataTask *)getStopsForUser:(NSDictionary *)userinfo completion:(void (^)(NSString *, NSError *))completion{
         [self.operationQueue setSuspended:NO];
     
+    
+    NSLog(@"This Morningin: %@", [self createDateForMidnight]);
+    NSLog(@"Midnight TOinght: %@", [self createDateForMidnight]);
+    
+    
         NSString *username = [userinfo valueForKey:@"carrier"];
         NSString *password =  [userinfo valueForKey:@"password"];
         NSString *vehicle = [userinfo valueForKey:@"vehicle"];
@@ -323,6 +361,7 @@
     
     return task;
 }
+
 
 #pragma mark - Documents Requests
 

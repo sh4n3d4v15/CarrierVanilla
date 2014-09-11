@@ -35,11 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(90, 20, 136.96, 35.2)];
-    imageView.image = [UIImage imageNamed:@"chepnav.png"];
-    
-    [self.navigationController.view addSubview:imageView];
+
     
     _timeWindowformatter = [[NSDateFormatter alloc]init];
     [_timeWindowformatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];

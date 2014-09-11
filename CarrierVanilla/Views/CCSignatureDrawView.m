@@ -9,6 +9,65 @@
 #import "CCSignatureDrawView.h"
 @implementation CCSignatureDrawView
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.signatureBezierPath = [[UIBezierPath alloc]init];
+        self.backgroundColor = UIColorFromRGB(0x3c6ba1);
+        //        self.alpha = 0.5f;
+        self.userInteractionEnabled = YES;
+        
+        
+        
+        UIView *containerView = [[UIView alloc]initWithFrame:self.bounds];
+        
+        
+        CGRect dottedFrame = CGRectMake(10, 10, self.frame.size.width-40, self.frame.size.height-60);
+        
+        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:dottedFrame cornerRadius:3.0];
+        
+        CAShapeLayer *dottedBorder = [CAShapeLayer layer];
+        dottedBorder.frame = dottedFrame;
+        [dottedBorder setStrokeColor:[UIColor whiteColor].CGColor];
+        [dottedBorder setFillColor:[UIColor colorWithWhite:1 alpha:.1].CGColor];
+        [dottedBorder setLineDashPattern:@[[NSNumber numberWithInt:10],[NSNumber numberWithInt:2]]];
+        [dottedBorder setLineJoin:kCALineCapSquare];
+        [dottedBorder setPath:path.CGPath];
+        [containerView.layer addSublayer:dottedBorder];
+        containerView.backgroundColor = [UIColor clearColor];
+        
+        [self addSubview:containerView];
+        
+        CABasicAnimation *strokeEndAnim = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        strokeEndAnim.duration = 0.75f;
+        strokeEndAnim.fromValue = [NSNumber numberWithFloat:0.0f];
+        strokeEndAnim.toValue = [NSNumber numberWithFloat:1.0f];
+        strokeEndAnim.fillMode = kCAFillModeForwards;
+        strokeEndAnim.removedOnCompletion = NO;
+        [dottedBorder addAnimation:strokeEndAnim forKey:nil];
+        
+        UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        doneButton.frame = CGRectMake(self.bounds.size.width-65,self.bounds.size.height-35, 50, 30);
+        [doneButton setTitle:@"Done" forState:UIControlStateNormal];
+        [doneButton setTitleColor:UIColorFromRGB(0x3c6ba1) forState:UIControlStateNormal];
+        [doneButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [doneButton addTarget:self action:@selector(saveImageAndDismissView:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self addSubview:doneButton];
+        
+        UIButton *clearButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        clearButton.frame = CGRectMake(10,self.bounds.size.height-35, 50, 30);
+        [clearButton setTitle:@"Clear" forState:UIControlStateNormal];
+        [clearButton setTitleColor:UIColorFromRGB(0xc0392b) forState:UIControlStateNormal];
+        [clearButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [clearButton addTarget:self action:@selector(removeView) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self addSubview:clearButton];
+    }
+    return self;
+}
+
 - (id)initWithFrame:(CGRect)frame andQuantity:(NSString*)quantity
 {
     self = [super initWithFrame:frame];
@@ -17,7 +76,7 @@
         
         self.signatureBezierPath = [[UIBezierPath alloc]init];
         _quantity = quantity;
-       self.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+        self.backgroundColor = UIColorFromRGB(0x3c6ba1);
 //        self.alpha = 0.5f;
         self.userInteractionEnabled = YES;
         
@@ -26,16 +85,16 @@
         UIView *containerView = [[UIView alloc]initWithFrame:self.bounds];
 
         
-        CGRect dottedFrame = CGRectMake(10, 10, self.bounds.size.width-40, self.bounds.size.height-60);
+        CGRect dottedFrame =CGRectInset(self.frame, 3, 3);
         
-        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:dottedFrame cornerRadius:3.0];
+        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.frame cornerRadius:0];
 
         CAShapeLayer *dottedBorder = [CAShapeLayer layer];
-        dottedBorder.frame = dottedFrame;
-        [dottedBorder setStrokeColor:UIColorFromRGB(0x3c6ba1).CGColor];
-        [dottedBorder setFillColor:[UIColor clearColor].CGColor];
+        dottedBorder.frame = self.frame;
+        [dottedBorder setStrokeColor:[UIColor whiteColor].CGColor];
+        [dottedBorder setFillColor:[UIColor colorWithWhite:1 alpha:1].CGColor];
         [dottedBorder setLineDashPattern:@[[NSNumber numberWithInt:10],[NSNumber numberWithInt:2]]];
-        [dottedBorder setLineJoin:kCALineCapRound];
+        [dottedBorder setLineJoin:kCALineCapSquare];
         [dottedBorder setPath:path.CGPath];
         [containerView.layer addSublayer:dottedBorder];
         containerView.backgroundColor = [UIColor clearColor];
@@ -49,6 +108,7 @@
         strokeEndAnim.fillMode = kCAFillModeForwards;
         strokeEndAnim.removedOnCompletion = NO;
         [dottedBorder addAnimation:strokeEndAnim forKey:nil];
+        
         UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         doneButton.frame = CGRectMake(self.bounds.size.width-65,self.bounds.size.height-35, 50, 30);
         [doneButton setTitle:@"Done" forState:UIControlStateNormal];

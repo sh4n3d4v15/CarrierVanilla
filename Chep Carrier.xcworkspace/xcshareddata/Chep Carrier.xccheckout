@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4B725325-4E9D-479A-A393-8658E31B1A7C</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Chep Carrier</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>33478A2E-72A0-45D1-9DEB-81B486AD7661</key>
+		<string>https://github.com/sh4n3d4v15/CarrierVanilla.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Chep Carrier.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>33478A2E-72A0-45D1-9DEB-81B486AD7661</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/sh4n3d4v15/CarrierVanilla.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>33478A2E-72A0-45D1-9DEB-81B486AD7661</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>33478A2E-72A0-45D1-9DEB-81B486AD7661</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CarrierVanilla</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -6,4 +6,4 @@ pod "UIColor+MLPFlatColors", "~> 1.0"
 pod "MBProgressHUD", "~> 0.8"
 pod "SOMotionDetector", "~> 1.0.1"
 pod "RFKeyboardToolbar", "~> 1.2"
-pod 'Reveal-iOS-SDK'
+pod "TOMSMorphingLabel", "~> 0.2.2"

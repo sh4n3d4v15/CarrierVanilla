@@ -60,12 +60,6 @@
 #define COCOAPODS_VERSION_MINOR_RFKeyboardToolbar 2
 #define COCOAPODS_VERSION_PATCH_RFKeyboardToolbar 0
 
-// Reveal-iOS-SDK
-#define COCOAPODS_POD_AVAILABLE_Reveal_iOS_SDK
-#define COCOAPODS_VERSION_MAJOR_Reveal_iOS_SDK 1
-#define COCOAPODS_VERSION_MINOR_Reveal_iOS_SDK 0
-#define COCOAPODS_VERSION_PATCH_Reveal_iOS_SDK 4
-
 // SOMessaging
 #define COCOAPODS_POD_AVAILABLE_SOMessaging
 #define COCOAPODS_VERSION_MAJOR_SOMessaging 1
@@ -77,6 +71,12 @@
 #define COCOAPODS_VERSION_MAJOR_SOMotionDetector 1
 #define COCOAPODS_VERSION_MINOR_SOMotionDetector 0
 #define COCOAPODS_VERSION_PATCH_SOMotionDetector 1
+
+// TOMSMorphingLabel
+#define COCOAPODS_POD_AVAILABLE_TOMSMorphingLabel
+#define COCOAPODS_VERSION_MAJOR_TOMSMorphingLabel 0
+#define COCOAPODS_VERSION_MINOR_TOMSMorphingLabel 2
+#define COCOAPODS_VERSION_PATCH_TOMSMorphingLabel 2
 
 // UIColor+MLPFlatColors
 #define COCOAPODS_POD_AVAILABLE_UIColor_MLPFlatColors

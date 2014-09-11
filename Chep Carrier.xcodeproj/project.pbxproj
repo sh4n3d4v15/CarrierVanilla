@@ -11,6 +11,7 @@
 		D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A4521195472F400D60990 /* CVUpdateButton.m */; };
 		D0292822195195E70061069F /* CCSignatureDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292821195195E70061069F /* CCSignatureDrawView.m */; };
 		D0292825195197110061069F /* CCPDFWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292824195197110061069F /* CCPDFWriter.m */; };
+		D036487519A9C0F000640FDD /* CVItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D036487419A9C0F000640FDD /* CVItemTableViewCell.m */; };
 		D03B7D58196183ED006AFE53 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = D03B7D54196183ED006AFE53 /* menu.png */; };
 		D03B7D59196183ED006AFE53 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D03B7D55196183ED006AFE53 /* menu@2x.png */; };
 		D03B7D5A196183ED006AFE53 /* topic.png in Resources */ = {isa = PBXBuildFile; fileRef = D03B7D56196183ED006AFE53 /* topic.png */; };
@@ -21,6 +22,8 @@
 		D03B7D6719618BA3006AFE53 /* flag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D03B7D6519618BA3006AFE53 /* flag@2x.png */; };
 		D03B7D6A19619567006AFE53 /* CVMapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = D03B7D6919619567006AFE53 /* CVMapAnnotation.m */; };
 		D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */; };
+		D04FD59619AF366F00F39E6A /* chepc.png in Resources */ = {isa = PBXBuildFile; fileRef = D04FD59419AF366F00F39E6A /* chepc.png */; };
+		D04FD59719AF366F00F39E6A /* chepc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D04FD59519AF366F00F39E6A /* chepc@2x.png */; };
 		D05583B9199BEFCD00CAAEB6 /* steeringwheel.png in Resources */ = {isa = PBXBuildFile; fileRef = D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */; };
 		D05583BA199BEFCD00CAAEB6 /* steeringwheel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D05583B8199BEFCD00CAAEB6 /* steeringwheel@2x.png */; };
 		D09139831941A4C50029AE98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139821941A4C50029AE98 /* Foundation.framework */; };
@@ -51,6 +54,9 @@
 		D0B078F9199372C600CE8DF9 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F8199372C600CE8DF9 /* Stop.m */; };
 		D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078FB1993731100CE8DF9 /* Loadnote.m */; };
 		D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */; };
+		D0BE4C7C19A686DC00CE05F9 /* CVSignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BE4C7B19A686DC00CE05F9 /* CVSignatureViewController.m */; };
+		D0BE4C7F19A73AC500CE05F9 /* SignatureView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BE4C7D19A73AC500CE05F9 /* SignatureView.m */; };
+		D0BE4C8219A74CDF00CE05F9 /* CVShipmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BE4C8119A74CDF00CE05F9 /* CVShipmentView.m */; };
 		D0CB703C199B7031006E2B60 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0CB703B199B7031006E2B60 /* CoreMotion.framework */; };
 		D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */; };
 		D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */; };
@@ -111,6 +117,8 @@
 		D0292821195195E70061069F /* CCSignatureDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSignatureDrawView.m; path = Views/CCSignatureDrawView.m; sourceTree = "<group>"; };
 		D0292823195197110061069F /* CCPDFWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPDFWriter.h; path = Controllers/CCPDFWriter.h; sourceTree = "<group>"; };
 		D0292824195197110061069F /* CCPDFWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPDFWriter.m; path = Controllers/CCPDFWriter.m; sourceTree = "<group>"; };
+		D036487319A9C0F000640FDD /* CVItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVItemTableViewCell.h; sourceTree = "<group>"; };
+		D036487419A9C0F000640FDD /* CVItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVItemTableViewCell.m; sourceTree = "<group>"; };
 		D03B7D54196183ED006AFE53 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = Images/menu.png; sourceTree = "<group>"; };
 		D03B7D55196183ED006AFE53 /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu@2x.png"; path = "Images/menu@2x.png"; sourceTree = "<group>"; };
 		D03B7D56196183ED006AFE53 /* topic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = topic.png; path = Images/topic.png; sourceTree = "<group>"; };
@@ -123,6 +131,8 @@
 		D03B7D6919619567006AFE53 /* CVMapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVMapAnnotation.m; path = Views/CVMapAnnotation.m; sourceTree = "<group>"; };
 		D04C3312194B3D7000BF42C4 /* CVStopDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVStopDetailTableViewController.h; path = Controllers/CVStopDetailTableViewController.h; sourceTree = "<group>"; };
 		D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVStopDetailTableViewController.m; path = Controllers/CVStopDetailTableViewController.m; sourceTree = "<group>"; };
+		D04FD59419AF366F00F39E6A /* chepc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chepc.png; sourceTree = "<group>"; };
+		D04FD59519AF366F00F39E6A /* chepc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chepc@2x.png"; sourceTree = "<group>"; };
 		D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = steeringwheel.png; sourceTree = "<group>"; };
 		D05583B8199BEFCD00CAAEB6 /* steeringwheel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "steeringwheel@2x.png"; sourceTree = "<group>"; };
 		D091397F1941A4C50029AE98 /* Chep Carrier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chep Carrier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +173,12 @@
 		D0B078FA1993731100CE8DF9 /* Loadnote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loadnote.h; sourceTree = "<group>"; };
 		D0B078FB1993731100CE8DF9 /* Loadnote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loadnote.m; sourceTree = "<group>"; };
 		D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVAppDelegate.m; sourceTree = "<group>"; };
+		D0BE4C7A19A686DC00CE05F9 /* CVSignatureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVSignatureViewController.h; sourceTree = "<group>"; };
+		D0BE4C7B19A686DC00CE05F9 /* CVSignatureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVSignatureViewController.m; sourceTree = "<group>"; };
+		D0BE4C7D19A73AC500CE05F9 /* SignatureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureView.m; sourceTree = "<group>"; };
+		D0BE4C7E19A73AC500CE05F9 /* SignatureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureView.h; sourceTree = "<group>"; };
+		D0BE4C8019A74CDF00CE05F9 /* CVShipmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVShipmentView.h; sourceTree = "<group>"; };
+		D0BE4C8119A74CDF00CE05F9 /* CVShipmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVShipmentView.m; sourceTree = "<group>"; };
 		D0CB703B199B7031006E2B60 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		D0D3F35D194E39DE00452C58 /* CCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCLoginViewController.h; path = Controllers/CCLoginViewController.h; sourceTree = "<group>"; };
 		D0D3F35E194E39DE00452C58 /* CCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLoginViewController.m; path = Controllers/CCLoginViewController.m; sourceTree = "<group>"; };
@@ -353,6 +369,8 @@
 				D0ABC8C21944E23E0095E59E /* CVMasterViewController.m */,
 				D0FFEEE91969D79B00581F8F /* CVItemLongPress.h */,
 				D0FFEEEA1969D79B00581F8F /* CVItemLongPress.m */,
+				D0BE4C7A19A686DC00CE05F9 /* CVSignatureViewController.h */,
+				D0BE4C7B19A686DC00CE05F9 /* CVSignatureViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -369,6 +387,10 @@
 		D0ABC8DE1944E3FA0095E59E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D036487319A9C0F000640FDD /* CVItemTableViewCell.h */,
+				D036487419A9C0F000640FDD /* CVItemTableViewCell.m */,
+				D0BE4C7D19A73AC500CE05F9 /* SignatureView.m */,
+				D0BE4C7E19A73AC500CE05F9 /* SignatureView.h */,
 				D0D3F38B1950437D00452C58 /* CVStopTableViewCell.h */,
 				D0D3F38C1950437D00452C58 /* CVStopTableViewCell.m */,
 				D0FFEEEC196BF59900581F8F /* CVItemTextField.h */,
@@ -381,6 +403,8 @@
 				D0D3F364194E3F1900452C58 /* HTAutocompleteTextField.m */,
 				D03B7D6819619566006AFE53 /* CVMapAnnotation.h */,
 				D03B7D6919619567006AFE53 /* CVMapAnnotation.m */,
+				D0BE4C8019A74CDF00CE05F9 /* CVShipmentView.h */,
+				D0BE4C8119A74CDF00CE05F9 /* CVShipmentView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -388,6 +412,8 @@
 		D0D3F370194EFD6000452C58 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D04FD59419AF366F00F39E6A /* chepc.png */,
+				D04FD59519AF366F00F39E6A /* chepc@2x.png */,
 				D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */,
 				D05583B8199BEFCD00CAAEB6 /* steeringwheel@2x.png */,
 				D0AEB4E419991E86003C506F /* chepnav.png */,
@@ -557,6 +583,7 @@
 				D0AEB4E21998F095003C506F /* network.png in Resources */,
 				D05583BA199BEFCD00CAAEB6 /* steeringwheel@2x.png in Resources */,
 				D0D3F381194EFD7E00452C58 /* bubble@2x.png in Resources */,
+				D04FD59619AF366F00F39E6A /* chepc.png in Resources */,
 				D0AEB4E719991E87003C506F /* chepnav@2x.png in Resources */,
 				D0D3F382194EFD7E00452C58 /* bubbleReceive.png in Resources */,
 				D0AEB4E619991E86003C506F /* chepnav.png in Resources */,
@@ -569,6 +596,7 @@
 				D0AAA134196712460044EE87 /* flagwhite@2x.png in Resources */,
 				D0D3F385194EFD7E00452C58 /* inputTextBG.png in Resources */,
 				D03B7D63196189FC006AFE53 /* truck@2x.png in Resources */,
+				D04FD59719AF366F00F39E6A /* chepc@2x.png in Resources */,
 				D0D3F37E194EFD7E00452C58 /* attachment.png in Resources */,
 				D0D3F388194EFD7E00452C58 /* play_button@2x.png in Resources */,
 				D0DDE7EA19A4B0B4005203B7 /* keys.json in Resources */,
@@ -640,6 +668,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0BE4C7F19A73AC500CE05F9 /* SignatureView.m in Sources */,
+				D0BE4C7C19A686DC00CE05F9 /* CVSignatureViewController.m in Sources */,
 				D0D3F39D1950501C00452C58 /* Address.m in Sources */,
 				D0D3F36D194EF8C700452C58 /* CCMessageViewController.m in Sources */,
 				D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */,
@@ -653,11 +683,13 @@
 				D0B078F9199372C600CE8DF9 /* Stop.m in Sources */,
 				D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */,
 				D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */,
+				D0BE4C8219A74CDF00CE05F9 /* CVShipmentView.m in Sources */,
 				D0B078F61993727C00CE8DF9 /* Load.m in Sources */,
 				D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */,
 				D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */,
 				D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */,
 				D0D3F38D1950437D00452C58 /* CVStopTableViewCell.m in Sources */,
+				D036487519A9C0F000640FDD /* CVItemTableViewCell.m in Sources */,
 				D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */,
 				D0292825195197110061069F /* CCPDFWriter.m in Sources */,
 				D0FFEEEB1969D79B00581F8F /* CVItemLongPress.m in Sources */,
