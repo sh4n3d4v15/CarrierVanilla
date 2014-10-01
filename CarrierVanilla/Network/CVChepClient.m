@@ -229,17 +229,17 @@
         [self.operationQueue setSuspended:NO];
     
     
-    NSLog(@"This Morningin: %@", [self createDateForMidnight]);
+    NSLog(@"This Morningin: %@", [self createDateForThisMorning]);
     NSLog(@"Midnight TOinght: %@", [self createDateForMidnight]);
     
-    
+    NSLog(@"Userinfo : %@",userinfo );
         NSString *username = [userinfo valueForKey:@"carrier"];
         NSString *password =  [userinfo valueForKey:@"password"];
         NSString *vehicle = [userinfo valueForKey:@"vehicle"];
     
         NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/uid/%@/pwd/%@/region/eu",username,password];
         NSURLSessionDataTask *task = [self POST:urlString parameters:@{
-                                                                     @"vehicle":vehicle,
+                                                                     @"vehicle":@"",
                                                                      @"res":@"",
                                                                      @"offset":@0,
                                                                      @"limit":@50,
@@ -259,7 +259,7 @@
                                             if (httpResponse.statusCode == 200) {
                                                 dispatch_async(dispatch_get_main_queue(), ^{
                                                     if ([loads count] < 1) {
-                                                        completion(@"No Loads For This Vehicle", nil);
+                                                        completion(@"empty", nil);
                                                     }else{
                                                          [self importArrayOfStopsIntoCoreData:loads];
                                                         completion(@"all is good with 200 in da hood",nil);
@@ -274,11 +274,11 @@
                                         } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                              NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                
+                                                NSLog(@"there was an eroror boss %@", httpResponse);
                                                 if (httpResponse.statusCode == 401) {
-                                                    completion(@"User login not successful", error);
+                                                    completion(NSLocalizedString(@"badLogin",nil), error);
                                                 }else{
-                                                    completion(@"Network connection error", error);
+                                                    completion(NSLocalizedString(@"ConnectionError", nil), error);
                                                 }
 
                                             });
@@ -299,7 +299,23 @@
     }];
     return returnArray;
 }
-
+-(NSURLSessionDataTask *)updateArrivalForStop:(Stop *)stop completion:(void (^)( NSError *))completion{//to be implemented
+    
+    [_dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+    NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
+    NSString *username = [userinfo valueForKey:@"carrier"];
+    NSString *password =  [userinfo valueForKey:@"password"];
+    NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/arrived/%@/uid/%@/pwd/%@/region/eu",stop.load.id,stop.id,stop.actual_arrival,username,password];
+    NSLog(@"Full URL: %@", fullUrl);
+    
+    NSURLSessionDataTask *task = [self GET:fullUrl parameters:nil
+                                   success:^(NSURLSessionDataTask *task, id responseObject) {
+                                       completion(nil);
+                                   } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                       completion(error);
+                                   }];
+    return  task;
+}
 
 -(NSURLSessionDataTask *)updateStop:(Stop *)stop completion:(void (^)( NSError *))completion{
     
@@ -312,11 +328,7 @@
     __unused NSArray *deliveries = [self getQuantitesForStop:stop];
     
 
-   // [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss+00:00"];
     [_dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-//    [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'hh:mm:ssZZZ"];
-  
-    
     
     NSDictionary *updateDict = @{@"actual_arrival_date": [_dateFormatter stringFromDate:stop.actual_arrival],
                                  @"actual_departure_date": [_dateFormatter stringFromDate:stop.actual_departure],

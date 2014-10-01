@@ -26,6 +26,7 @@
 		D04FD59719AF366F00F39E6A /* chepc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D04FD59519AF366F00F39E6A /* chepc@2x.png */; };
 		D05583B9199BEFCD00CAAEB6 /* steeringwheel.png in Resources */ = {isa = PBXBuildFile; fileRef = D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */; };
 		D05583BA199BEFCD00CAAEB6 /* steeringwheel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D05583B8199BEFCD00CAAEB6 /* steeringwheel@2x.png */; };
+		D05DDE7D19D98420001C41C9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D05DDE7F19D98420001C41C9 /* Localizable.strings */; };
 		D09139831941A4C50029AE98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139821941A4C50029AE98 /* Foundation.framework */; };
 		D09139851941A4C50029AE98 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139841941A4C50029AE98 /* CoreGraphics.framework */; };
 		D09139871941A4C50029AE98 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139861941A4C50029AE98 /* UIKit.framework */; };
@@ -135,6 +136,13 @@
 		D04FD59519AF366F00F39E6A /* chepc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chepc@2x.png"; sourceTree = "<group>"; };
 		D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = steeringwheel.png; sourceTree = "<group>"; };
 		D05583B8199BEFCD00CAAEB6 /* steeringwheel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "steeringwheel@2x.png"; sourceTree = "<group>"; };
+		D05DDE7E19D98420001C41C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D05DDE8019D98427001C41C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D05DDE8119D99309001C41C9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		D05DDE8219D99309001C41C9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D05DDE8319D99309001C41C9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D05DDE8419D9930A001C41C9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D05DDE8619D99742001C41C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		D091397F1941A4C50029AE98 /* Chep Carrier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chep Carrier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09139821941A4C50029AE98 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D09139841941A4C50029AE98 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -346,6 +354,7 @@
 		D09139B11941A4C50029AE98 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D05DDE7F19D98420001C41C9 /* Localizable.strings */,
 				D09139B21941A4C50029AE98 /* Chep CarrierTests-Info.plist */,
 				D09139B31941A4C50029AE98 /* InfoPlist.strings */,
 			);
@@ -541,7 +550,7 @@
 				ORGANIZATIONNAME = "shane davis";
 				TargetAttributes = {
 					D091397E1941A4C50029AE98 = {
-						DevelopmentTeam = 4965HJMH5J;
+						DevelopmentTeam = 7SB9SWV5PA;
 					};
 					D09139A71941A4C50029AE98 = {
 						TestTargetID = D091397E1941A4C50029AE98;
@@ -555,6 +564,7 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
 			);
 			mainGroup = D09139761941A4C50029AE98;
 			productRefGroup = D09139801941A4C50029AE98 /* Products */;
@@ -597,6 +607,7 @@
 				D0D3F385194EFD7E00452C58 /* inputTextBG.png in Resources */,
 				D03B7D63196189FC006AFE53 /* truck@2x.png in Resources */,
 				D04FD59719AF366F00F39E6A /* chepc@2x.png in Resources */,
+				D05DDE7D19D98420001C41C9 /* Localizable.strings in Resources */,
 				D0D3F37E194EFD7E00452C58 /* attachment.png in Resources */,
 				D0D3F388194EFD7E00452C58 /* play_button@2x.png in Resources */,
 				D0DDE7EA19A4B0B4005203B7 /* keys.json in Resources */,
@@ -717,10 +728,21 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		D05DDE7F19D98420001C41C9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D05DDE7E19D98420001C41C9 /* Base */,
+				D05DDE8019D98427001C41C9 /* en */,
+				D05DDE8319D99309001C41C9 /* es */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		D091398D1941A4C50029AE98 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D091398E1941A4C50029AE98 /* en */,
+				D05DDE8219D99309001C41C9 /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -729,6 +751,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				D09139971941A4C50029AE98 /* Base */,
+				D05DDE8119D99309001C41C9 /* es */,
+				D05DDE8619D99742001C41C9 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -737,6 +761,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				D09139B41941A4C50029AE98 /* en */,
+				D05DDE8419D9930A001C41C9 /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -820,19 +845,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CarrierVanilla/Chep Carrier-Prefix.pch";
 				INFOPLIST_FILE = "CarrierVanilla/Chep Carrier-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CarrierVanilla",
 				);
 				PRODUCT_NAME = "Chep Carrier";
-				PROVISIONING_PROFILE = "c0037e06-e0e2-4480-b6ec-59f1cffec049";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "a12c1559-6bff-49a5-8d25-994cfab7c987";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -843,19 +868,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CarrierVanilla/Chep Carrier-Prefix.pch";
 				INFOPLIST_FILE = "CarrierVanilla/Chep Carrier-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CarrierVanilla",
 				);
 				PRODUCT_NAME = "Chep Carrier";
-				PROVISIONING_PROFILE = "c0037e06-e0e2-4480-b6ec-59f1cffec049";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "a12c1559-6bff-49a5-8d25-994cfab7c987";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -27,9 +27,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *loginInfoLabel;
 - (IBAction)submitButtonPressed:(id)sender;
 
-@property(nonatomic)UIDynamicAnimator *animator;
-@property(nonatomic)UIGravityBehavior *gravity;
-@property(nonatomic)UICollisionBehavior *collision;
 @end
 
 @implementation CCLoginViewController
@@ -39,8 +36,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-
-
 
     }
     return self;
@@ -53,12 +48,6 @@
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"keys" ofType:@"json"];
     NSString *myJSON = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
     _keys = [NSJSONSerialization JSONObjectWithData:[myJSON dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
-    if(error){
-        NSLog(@"ERROR JSON: %@", error);
-    }else{
-        
-        NSLog(@"KEYS: %@", _keys);
-    }
     
     self.view.backgroundColor = UIColorFromRGB(0x3c6ba1);
     [super viewDidLoad];
@@ -86,14 +75,7 @@
     [self.view addGestureRecognizer:singleTap];
     [super viewDidAppear:animated];
     
-//    _animator = [[UIDynamicAnimator alloc]initWithReferenceView:self.view];
-//    _gravity = [[UIGravityBehavior alloc]initWithItems:@[_carrierTextField]];
-//    [_animator addBehavior:_gravity];
-//    
-//    _collision = [[UICollisionBehavior alloc]initWithItems:@[_carrierTextField]];
-//    _collision.translatesReferenceBoundsIntoBoundary = YES;
-//    
-//    [_animator addBehavior:_collision];
+
     
 }
 
@@ -143,21 +125,25 @@
 
    
     if([name isEqualToString:@""] || [carrierId isEqualToString:@""] || [password isEqualToString:@""]){
-        self.loginInfoLabel.text = @"Credentials Incorrect/Missing";
+        self.loginInfoLabel.text = NSLocalizedString(@"BadCredentials", nil);
     }else{
         
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"Logging In";
+        hud.labelText = NSLocalizedString(@"Loggin message", nil);
    
     NSDictionary *userInfo = @{@"vehicle": name , @"carrier": carrierId, @"password":password};
         [_delegate userDidLoginWithDictionary:userInfo completion:^(NSError *error, NSString *message) {
             NSLog(@"ERRORR:: %@", error);
-            if(error || [message isEqualToString:@"No Loads For This Vehicle"]){
+            if(error){
                 NSLog(@"there was an error logging in - message %@", message);
                 hud.labelText = @"Login error";
                 [hud hide:YES afterDelay:0.5];
                 self.loginInfoLabel.text = message;
-            }else{
+            }else if([message isEqualToString:@"empty"]){
+                hud.labelText = @"Login error";
+                [hud hide:YES afterDelay:0.5];
+                self.loginInfoLabel.text = NSLocalizedString(@"NoLoads", nil);
+            } else{
                 [hud hide:YES];
                 [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userinfo"];
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];

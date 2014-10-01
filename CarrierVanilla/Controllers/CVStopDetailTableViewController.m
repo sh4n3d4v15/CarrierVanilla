@@ -69,7 +69,7 @@
                      completionHandler:^(NSArray *placemarks, NSError *error) {
                          
                          if (error) {
-                             UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"Cannot find on map" message:@"Sorry, this address cannot be found on maps" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+                             UIAlertView *al = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Cannot find on map", nil) message:@"Sorry, this address cannot be found on maps" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
                              [al show];
                          }else{
                              CLPlacemark *placemark = [placemarks objectAtIndex:0];
@@ -125,9 +125,9 @@
     [label setTextColor:UIColorFromRGB(0x3c6ba1)];
     
     if (section == 0) {
-        [label setText:[NSString stringWithFormat:@"%@ %@", [self.stop.type isEqualToString:@"Pick"]? @"COLLECT FROM: " : @"DELIVER TO: ", [NSString stringWithUTF8String:[self.stop.location_name UTF8String]]]];
+        [label setText:[NSString stringWithFormat:@"%@ %@", [self.stop.type isEqualToString:@"Pick"]? NSLocalizedString(@"CollectFrom", nil) : NSLocalizedString(@"DeliverTo", nil), [NSString stringWithUTF8String:[self.stop.location_name UTF8String]]]];
     }else if (section == 2){
-        [label setText:@"SPECIAL INSTRUCTIONS"];
+        [label setText:NSLocalizedString(@"SpecialInst", nil)];
     }else if (section == 3){
         return [UIView new];
     } else{
@@ -135,7 +135,7 @@
         
         Shipment *shipment = shipments[section-1];//*************************************                                       PROBLEM for multistop loads!!!!
         
-        NSString *fullString = [NSString stringWithFormat:@"CUSTOMER REFERENCE  %@", shipment.primary_reference_number];
+        NSString *fullString = [NSString stringWithFormat:@"%@  %@", NSLocalizedString(@"CustomerRef", nil),shipment.primary_reference_number];
         [label setText:fullString];
     }
     [view addSubview:label];
@@ -150,7 +150,7 @@
     if ([indexPath section] == 0 ) {
         return 250;
     }else if ([indexPath section]==2){
-        return ([_shipments count]+1)*40;
+        return ([_shipments count]+1)*50;
     }
     else if ([indexPath section]==3){
         return 100;
@@ -178,23 +178,23 @@
         Address *address = self.stop.address;
         
         UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10,  5, CGRectGetWidth(containerView.bounds)-20, 20)];
-        addressOneLabel.text = [address.address1 length] ? [NSString stringWithFormat:@"STREET: %@", [NSString stringWithUTF8String:[address.address1 UTF8String]]]:@"";
+        addressOneLabel.text = [address.address1 length] ? [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Street", nil), [NSString stringWithUTF8String:[address.address1 UTF8String]]]:@"";
         addressOneLabel.textColor = [UIColor flatDarkGreenColor];
         addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:12];
         
         UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, CGRectGetWidth(containerView.bounds)-20, 20)];
-        cityLabel.text = [address.city length] ? [NSString stringWithFormat:@"CITY: %@", [NSString stringWithUTF8String:[address.city UTF8String]]] : @"";
+        cityLabel.text = [address.city length] ? [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"City", nil), [NSString stringWithUTF8String:[address.city UTF8String]]] : @"";
         cityLabel.textColor = [UIColor flatDarkGreenColor];
         cityLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:12];
         
         
         UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 35, 100, 20)];
-        stateLabel.text = [address.state length] ?[NSString stringWithFormat:@"COUNTY: %@", [NSString stringWithUTF8String:[address.state UTF8String]]] : @"";
+        stateLabel.text = [address.state length] ?[NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"County", nil),[NSString stringWithUTF8String:[address.state UTF8String]]] : @"";
         stateLabel.textColor = [UIColor flatDarkGreenColor];
         stateLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:12];
         
         UILabel *zipLabel = [[UILabel alloc]initWithFrame:CGRectMake(110,  35, 200, 20)];
-        zipLabel.text = [address.zip length] ?  [NSString stringWithFormat:@"POST CODE: %@", [NSString stringWithUTF8String:[address.zip UTF8String]]] : @"";
+        zipLabel.text = [address.zip length] ?  [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"PostCode", nil),[NSString stringWithUTF8String:[address.zip UTF8String]]] : @"";
         zipLabel.textColor = [UIColor flatDarkGreenColor];
         zipLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:12];
 
@@ -209,16 +209,13 @@
         
     }else if ([indexPath section] == 2){
         [[_stop.shipments allObjects]enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger idx, BOOL *stop) {
-            UITextView *commentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, idx*10+10, cell.frame.size.width -20, ([shipment.comments length]/2)+12)];
+            UITextView *commentTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, idx*10+10, cell.frame.size.width -20, 100)];
             commentTextView.textColor = UIColorFromRGB(0x3c6ba1);
             commentTextView.font = [UIFont fontWithName:@"HelveticaNeue-light" size:14];
             commentTextView.editable = NO;
             commentTextView.text = [shipment.comments length] ? shipment.comments : @"...";
             NSLog(@"Comments length: %lu",(unsigned long)[shipment.comments length]);
-//            commentTextView.backgroundColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.05f];
-//            commentTextView.layer.borderColor = [UIColor colorWithRed:60/255.0f green:107/255.0f blue:161/255.0f alpha:0.2f].CGColor;
-//            commentTextView.layer.borderWidth = 1;
-//            commentTextView.layer.cornerRadius = 3;
+
             [cell addSubview:commentTextView];
         }];
     }else if ([indexPath section] == 3){
@@ -363,7 +360,7 @@
 #pragma mark UIAction sheet delegate
 
 -(void)showConfirmAlert{
-    NSString *titleString = [NSString stringWithFormat:@"%@ %@ ?", self.stop.actual_arrival? @"Complete stop " : @"Check-in at", self.stop.location_name];
+    NSString *titleString = [NSString stringWithFormat:@"%@ %@ ?", self.stop.actual_arrival? NSLocalizedString(@"CompleteStop", nil) : NSLocalizedString(@"CheckIn", nil), self.stop.location_name];
             UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
                                                                      delegate:self
                                                             cancelButtonTitle:@"YES"

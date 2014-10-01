@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  Chep Carrier
+
+  Created by shane davis on 29/09/2014.
+  Copyright (c) 2014 shane davis. All rights reserved.
+*/
+
+"HelloKey" = "Hola";
+"Loggin message" = "Iniciar sesión";
+"NoLoads" = "No hay cargas para este vehículo";
+"badLogin" = "Error de inicio de sesion";
+"ConnectionError" = "Error de conexión";
+"BadCredentials" = "Credenciales incorrectas";
+"Type message..." = "mensaje...";
+"Send" = "Enviar";
+"Stops" = "PARADAS";
+"CustomerRef" = "REFERENCIA DEL CLIENTE: ";
+"SpecialInst" = "INSTRUCCIONES ESPECIALES";
+"CollectFrom" = "RECOGER DESDE: ";
+"DeliverTo" = "ENTREGAR A: ";
+
+"Logout" = "Cierre de sesión";
+"Cancel" = "Cancelar";
+
+"Street" = "CALLE";
+"City" = "CIUDAD";
+"County" = "CONDADO";
+"PostCode" = "CÓDIGO POSTAL";
+
+"CompleteStop" = "Finalizada";
+"CheckIn" = "Llegada:";
+
+"Cannot find on map" = "No se puede encontrar las coordenadas de ubicación";

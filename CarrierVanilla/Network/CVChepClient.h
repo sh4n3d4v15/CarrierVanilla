@@ -14,6 +14,7 @@
 #pragma mark - Stop Requests
 - (NSURLSessionDataTask *)getStopsForUser:(NSDictionary *)userinfo completion:( void (^)(NSString *responseMessage, NSError *error) )completion;
 
+-(NSURLSessionDataTask *)updateArrivalForStop:(Stop *)stop completion:(void (^)( NSError *))completion;
 -(NSURLSessionDataTask *)updateStop:(Stop *)stop completion:(void (^)( NSError *))completion;
 
 #pragma mark - Documents Requests

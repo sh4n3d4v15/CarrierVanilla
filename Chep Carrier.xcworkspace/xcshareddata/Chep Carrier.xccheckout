@@ -10,29 +10,29 @@
 	<string>Chep Carrier</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>33478A2E-72A0-45D1-9DEB-81B486AD7661</key>
+		<key>87BAAF8BFAB50B6F16E560D1EA27FF9F0276773D</key>
 		<string>https://github.com/sh4n3d4v15/CarrierVanilla.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Chep Carrier.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>33478A2E-72A0-45D1-9DEB-81B486AD7661</key>
+		<key>87BAAF8BFAB50B6F16E560D1EA27FF9F0276773D</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/sh4n3d4v15/CarrierVanilla.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>33478A2E-72A0-45D1-9DEB-81B486AD7661</string>
+	<string>87BAAF8BFAB50B6F16E560D1EA27FF9F0276773D</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>33478A2E-72A0-45D1-9DEB-81B486AD7661</string>
+			<string>87BAAF8BFAB50B6F16E560D1EA27FF9F0276773D</string>
 			<key>IDESourceControlWCCName</key>
 			<string>CarrierVanilla</string>
 		</dict>

@@ -71,18 +71,18 @@
     [hud hide:YES afterDelay:1.0];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    NSLog(@"View will appear fired");
-    BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"userLoggedIn"];
-    
-    if( !isUserLoggedIn ){
-        [self showLoginViewAnimated:NO];
-    }else{
-       // [self refresh:nil];
-    }
-    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
-
-}
+//-(void)viewWillAppear:(BOOL)animated{
+//    NSLog(@"View will appear fired");
+//    BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"userLoggedIn"];
+//    
+//    if( !isUserLoggedIn ){
+//        [self showLoginViewAnimated:NO];
+//    }else{
+//       // [self refresh:nil];
+//    }
+//    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
+//
+//}
 
 -(void)refresh:(id)sender{
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
@@ -141,16 +141,16 @@
     [view addSubview:stopimageView];
     UILabel *stopCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(159, 2, 100, 18)];
     [stopCountLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [stopCountLabel setText:[NSString stringWithFormat:@"%lu STOPS",(unsigned long)[sectionInfo numberOfObjects]]];
+    [stopCountLabel setText:[NSString stringWithFormat:@"%lu %@",(unsigned long)[sectionInfo numberOfObjects],NSLocalizedString(@"Stops", nil)]  ];
     [stopCountLabel setTextColor:UIColorFromRGB(0x3c6ba1)];
     [view addSubview:stopCountLabel];
     
     
-    UIImageView *networkimageView = [[UIImageView alloc]initWithFrame:CGRectMake(243, 5, 14, 14)];
-    [networkimageView setImage:[UIImage imageNamed:@"network.png"]];
-    [view addSubview:networkimageView];
+//    UIImageView *networkimageView = [[UIImageView alloc]initWithFrame:CGRectMake(243, 5, 14, 14)];
+//    [networkimageView setImage:[UIImage imageNamed:@"network.png"]];
+//    [view addSubview:networkimageView];
     
-    NSString *driver = [NSString stringWithFormat:@"JOB %@",[[[sectionInfo objects]firstObject]valueForKeyPath:@"load.driver"]];
+    NSString *driver = [NSString stringWithFormat:@"# %@",[[[sectionInfo objects]firstObject]valueForKeyPath:@"load.driver"]];
     UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(265, 2, 80, 18)];
     [statusLabel setText:driver];
     [statusLabel setFont:[UIFont boldSystemFontOfSize:14]];
@@ -364,7 +364,7 @@
 
 -(void)showLogin:(id)sender{
     NSLog(@"login button pressed");
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"Switch vehicle or signout carrier" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles: @"Switch Vehicle",nil, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:NSLocalizedString(@"Logout", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Logout", nil) otherButtonTitles:nil];
     [actionSheet showInView:self.view];
 }
 
@@ -372,24 +372,12 @@
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    switch (buttonIndex) {
-        case 0:
-            [self logOutAsCarrier];
-            [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"userLoggedIn"];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-            [self showLoginViewAnimated:YES];
-            break;
-        case 1:
-            [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"userLoggedIn"];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-            [self showLoginViewAnimated:YES];
-            break;
-            
-        default:
-            break;
+    NSLog(@"Button index: %i", buttonIndex);
+    if (buttonIndex == 0) {
+        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"userLoggedIn"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        [self showLoginViewAnimated:YES];
     }
-    
-    
 }
 
 -(void)logOutAsCarrier{

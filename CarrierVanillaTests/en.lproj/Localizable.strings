@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  Chep Carrier
+
+  Created by shane davis on 29/09/2014.
+  Copyright (c) 2014 shane davis. All rights reserved.
+*/
+
+"HelloKey" = "Hello";
+"Loggin message" = "Logging in";
+"NoLoads" = "No Loads for this vehicle";
+"badLogin" = "User login not successful";
+"ConnectionError" = "Network connection error";
+"BadCredentials" = "Credentials Incorrect/Missing";
+"Type message..." = "Type message...";
+"Send" = "Send";
+"Stops" = "STOPS";
+"CustomerRef" = "CUSTOMER REFERENCE: ";
+"SpecialInst" = "SPECIAL INSTRUCTIONS";
+"CollectFrom" = "COLLECT FROM: ";
+"DeliverTo" = "DELIVER TO: ";
+
+"Logout" = "Logout";
+"Cancel" = "Cancel";
+
+"Street" = "STREET";
+"City" = "CITY";
+"County" = "COUNTY";
+"PostCode" = "POSTCODE";
+
+"CompleteStop" = "Complete Stop";
+"CheckIn" = "Check-in at:";
+
+"Cannot find on map" = "Cannot find on map";
