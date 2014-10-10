@@ -15,20 +15,28 @@
 "Type message..." = "mensaje...";
 "Send" = "Enviar";
 "Stops" = "PARADAS";
-"CustomerRef" = "REFERENCIA DEL CLIENTE: ";
-"SpecialInst" = "INSTRUCCIONES ESPECIALES";
-"CollectFrom" = "RECOGER DESDE: ";
+"CustomerRef" = "NÚMERO DE ORDEN: ";
+"SpecialInst" = "INFORMACIÓN PARA EL TRANSPORTITA";
+"CollectFrom" = "RECOGER EN: ";
 "DeliverTo" = "ENTREGAR A: ";
 
 "Logout" = "Cierre de sesión";
 "Cancel" = "Cancelar";
+"Yes" = "SI";
 
 "Street" = "CALLE";
 "City" = "CIUDAD";
-"County" = "CONDADO";
+"County" = "REGIÓN";
 "PostCode" = "CÓDIGO POSTAL";
 
 "CompleteStop" = "Finalizada";
 "CheckIn" = "Llegada:";
+"Checkin button" = "Llegada";
 
 "Cannot find on map" = "No se puede encontrar las coordenadas de ubicación";
+"Problem refreshing" = "problema de actualización";
+
+"Saving Load" = "Guardar la carga";
+"Success" = "Guardado";
+
+"Retrieving Messages" = "Recuperando mensajes";

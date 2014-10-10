@@ -11,6 +11,7 @@
 		D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A4521195472F400D60990 /* CVUpdateButton.m */; };
 		D0292822195195E70061069F /* CCSignatureDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292821195195E70061069F /* CCSignatureDrawView.m */; };
 		D0292825195197110061069F /* CCPDFWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D0292824195197110061069F /* CCPDFWriter.m */; };
+		D02E8B8F19E713F1000C0983 /* CVMultiPDFWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = D02E8B8E19E713F1000C0983 /* CVMultiPDFWriter.m */; };
 		D036487519A9C0F000640FDD /* CVItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D036487419A9C0F000640FDD /* CVItemTableViewCell.m */; };
 		D03B7D58196183ED006AFE53 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = D03B7D54196183ED006AFE53 /* menu.png */; };
 		D03B7D59196183ED006AFE53 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D03B7D55196183ED006AFE53 /* menu@2x.png */; };
@@ -118,6 +119,8 @@
 		D0292821195195E70061069F /* CCSignatureDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSignatureDrawView.m; path = Views/CCSignatureDrawView.m; sourceTree = "<group>"; };
 		D0292823195197110061069F /* CCPDFWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPDFWriter.h; path = Controllers/CCPDFWriter.h; sourceTree = "<group>"; };
 		D0292824195197110061069F /* CCPDFWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPDFWriter.m; path = Controllers/CCPDFWriter.m; sourceTree = "<group>"; };
+		D02E8B8D19E713F1000C0983 /* CVMultiPDFWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVMultiPDFWriter.h; sourceTree = "<group>"; };
+		D02E8B8E19E713F1000C0983 /* CVMultiPDFWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVMultiPDFWriter.m; sourceTree = "<group>"; };
 		D036487319A9C0F000640FDD /* CVItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVItemTableViewCell.h; sourceTree = "<group>"; };
 		D036487419A9C0F000640FDD /* CVItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVItemTableViewCell.m; sourceTree = "<group>"; };
 		D03B7D54196183ED006AFE53 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = Images/menu.png; sourceTree = "<group>"; };
@@ -334,6 +337,7 @@
 		D091398B1941A4C50029AE98 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D05DDE7F19D98420001C41C9 /* Localizable.strings */,
 				D091398C1941A4C50029AE98 /* Chep Carrier-Info.plist */,
 				D091398D1941A4C50029AE98 /* InfoPlist.strings */,
 				D09139901941A4C50029AE98 /* main.m */,
@@ -354,7 +358,6 @@
 		D09139B11941A4C50029AE98 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D05DDE7F19D98420001C41C9 /* Localizable.strings */,
 				D09139B21941A4C50029AE98 /* Chep CarrierTests-Info.plist */,
 				D09139B31941A4C50029AE98 /* InfoPlist.strings */,
 			);
@@ -364,6 +367,8 @@
 		D0ABC8BE1944E1D50095E59E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D02E8B8D19E713F1000C0983 /* CVMultiPDFWriter.h */,
+				D02E8B8E19E713F1000C0983 /* CVMultiPDFWriter.m */,
 				D0292823195197110061069F /* CCPDFWriter.h */,
 				D0292824195197110061069F /* CCPDFWriter.m */,
 				D0D3F36B194EF8C700452C58 /* CCMessageViewController.h */,
@@ -687,6 +692,7 @@
 				D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */,
 				D09139911941A4C50029AE98 /* main.m in Sources */,
 				D0D3F3A21950501C00452C58 /* Shipment.m in Sources */,
+				D02E8B8F19E713F1000C0983 /* CVMultiPDFWriter.m in Sources */,
 				D0D3F3A11950501C00452C58 /* Ref.m in Sources */,
 				D0FFEEEE196BF59900581F8F /* CVItemTextField.m in Sources */,
 				D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */,
@@ -736,7 +742,8 @@
 				D05DDE8319D99309001C41C9 /* es */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
+			path = CarrierVanillaTests;
+			sourceTree = SOURCE_ROOT;
 		};
 		D091398D1941A4C50029AE98 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -801,7 +808,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -833,7 +840,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

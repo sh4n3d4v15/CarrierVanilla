@@ -25,6 +25,8 @@
 #import "CVMapAnnotation.h"
 #import "TOMSMorphingLabel.h"
 
+#import "CVMultiPDFWriter.h"
+
 
 
 @interface CVStopDetailTableViewController ()<MKMapViewDelegate,UIActionSheetDelegate,CCSignatureViewControllerDelegate,UITextFieldDelegate>
@@ -69,7 +71,7 @@
                      completionHandler:^(NSArray *placemarks, NSError *error) {
                          
                          if (error) {
-                             UIAlertView *al = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Cannot find on map", nil) message:@"Sorry, this address cannot be found on maps" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+                             UIAlertView *al = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Cannot find on map", nil) message:NSLocalizedString(@"Cannot find on map", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                              [al show];
                          }else{
                              CLPlacemark *placemark = [placemarks objectAtIndex:0];
@@ -228,7 +230,7 @@
         [_checkInButton addTarget:self action:@selector(checkMeIn:) forControlEvents:UIControlEventTouchUpInside];
         
         
-        NSString *checkInLabelString = self.stop.actual_arrival ? [_df stringFromDate:self.stop.actual_arrival] : @"Check In";
+        NSString *checkInLabelString = self.stop.actual_arrival ? [_df stringFromDate:self.stop.actual_arrival] : NSLocalizedString(@"Checkin button", nil);
         TOMSMorphingLabel *checkInLabel = [[TOMSMorphingLabel alloc]initWithFrame:_checkInButton.bounds];
         checkInLabel.text = checkInLabelString;
         checkInLabel.textAlignment = NSTextAlignmentCenter;
@@ -247,7 +249,7 @@
         [_checkOutButton addTarget:self action:@selector(checkMeOut:) forControlEvents:UIControlEventTouchUpInside];
         
         
-        NSString *checkOutLabelString = self.stop.actual_departure ? [_df stringFromDate:self.stop.actual_departure] : @"Complete Stop";
+        NSString *checkOutLabelString = self.stop.actual_departure ? [_df stringFromDate:self.stop.actual_departure] : NSLocalizedString(@"CompleteStop", nil);
         TOMSMorphingLabel *checkOutLabel = [[TOMSMorphingLabel alloc]initWithFrame:_checkOutButton.bounds];
         
         checkOutLabel.text = checkOutLabelString;
@@ -363,8 +365,8 @@
     NSString *titleString = [NSString stringWithFormat:@"%@ %@ ?", self.stop.actual_arrival? NSLocalizedString(@"CompleteStop", nil) : NSLocalizedString(@"CheckIn", nil), self.stop.location_name];
             UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
                                                                      delegate:self
-                                                            cancelButtonTitle:@"YES"
-                                                       destructiveButtonTitle:@"CANCEL"
+                                                            cancelButtonTitle:NSLocalizedString(@"Yes", nil)
+                                                       destructiveButtonTitle:NSLocalizedString(@"Cancel", nil)
                                                             otherButtonTitles:nil];
             [actionSheet showInView:self.view];
 }
@@ -389,9 +391,11 @@
 
 -(void)cancelSignatureAndStopCompletion{
     
-    [self updateButtonLabel:_checkOutButton withText:@"Complete Stop"];
+    [self updateButtonLabel:_checkOutButton withText:NSLocalizedString(@"CompleteStop", nil)];
 }
 
+
+#pragma mark Modify CCPDFWriter for multistop
 -(void)signatureViewData:(NSData *)signatureData{
     self.stop.signatureSnapshot = signatureData;
     self.stop.actual_departure = [NSDate date];
@@ -399,23 +403,26 @@
 
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"Saving Load";
-    NSString *pdfName = @"pod.pdf";
+    hud.labelText = NSLocalizedString(@"Saving Load", nil);
     
     
-    [CCPDFWriter createPDFfromLoad:self.stop.load forStopType:self.stop.type saveToDocumentsWithFileName:pdfName];
-    [[CVChepClient sharedClient]updateStop:_stop
-                                completion:^( NSError *error) {
-                                    if (error) {
-                                        hud.labelText = @"Error saving";
-                                        [TestFlight passCheckpoint:@"error_saving"];
-                                    }else{
-                                        hud.labelText = @"Success";
-                                        [TestFlight passCheckpoint:@"Stop_Completed"];
-                                    }
-                                    [hud hide:YES afterDelay:0.5];
-                                    [self.delegate saveChangesOnContext];
-                                }];
+//    [CCPDFWriter createPDFfromLoad:self.stop.load forStopType:self.stop.type saveToDocumentsWithFileName:pdfName];
+    
+    [CVMultiPDFWriter createPDFfromStop:_stop];
+    
+    
+//    [[CVChepClient sharedClient]updateStop:_stop
+//                                completion:^( NSError *error) {
+//                                    if (error) {
+//                                        hud.labelText = @"Error";
+//                                        [TestFlight passCheckpoint:@"error_saving"];
+//                                    }else{
+//                                        hud.labelText = NSLocalizedString(@"Success", nil);
+//                                        [TestFlight passCheckpoint:@"Stop_Completed"];
+//                                    }
+//                                    [hud hide:YES afterDelay:0.5];
+//                                    [self.delegate saveChangesOnContext];
+//                                }];
 }
 
 #pragma mark - TextField Delegate Methods

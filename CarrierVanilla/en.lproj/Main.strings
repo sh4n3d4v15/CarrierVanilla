@@ -12,7 +12,7 @@
 "Js7-jp-IP4.placeholder" = "Vehicle ID";
 
 /* Class = "IBUIButton"; normalTitle = "Login"; ObjectID = "SwJ-Ta-BFk"; */
-"SwJ-Ta-BFk.normalTitle" = "gar";
+"SwJ-Ta-BFk.normalTitle" = "Login";
 
 /* Class = "IBUILabel"; text = "0800 to 1400"; ObjectID = "Wk7-ff-Upe"; */
 "Wk7-ff-Upe.text" = "0800 to 1400";

@@ -22,6 +22,7 @@
 
 "Logout" = "Logout";
 "Cancel" = "Cancel";
+"Yes" = "YES";
 
 "Street" = "STREET";
 "City" = "CITY";
@@ -30,5 +31,11 @@
 
 "CompleteStop" = "Complete Stop";
 "CheckIn" = "Check-in at:";
+"Checkin button" = "Check-in";
 
 "Cannot find on map" = "Cannot find on map";
+"Problem refreshing" = "Problem refreshing";
+
+"Saving Load" = "Saving Load";
+"Success" = "Success";
+"Retrieving Messages" = "Retrieving Messages";

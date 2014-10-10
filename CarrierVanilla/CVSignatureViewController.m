@@ -144,9 +144,7 @@
     UILabel *qtyField  = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetWidth(cell.bounds)-60, 20, 50, 30)];
     qtyField.text = [item.updated_pieces stringValue];
     qtyField.layer.borderColor = [UIColor whiteColor].CGColor;
-    
-    NSLog(@"Updaated pieces: %@", item.updated_pieces);
-     NSLog(@"Pieces: %@", item.pieces);
+
     
     if ([item.updated_pieces integerValue] > [item.pieces integerValue]) {
         qtyField.textColor = [UIColor flatDarkGreenColor];
@@ -169,7 +167,6 @@
 
 #pragma mark -IBActions
 - (IBAction)acceptPressed:(id)sender {
-        NSLog(@"Signature data: %@", [self.signatureView signatureData]);
         [self.delegate signatureViewData:[self.signatureView signatureData]];
         [self.navigationController popViewControllerAnimated:YES];
 }
@@ -199,10 +196,6 @@
 
 -(void)onKeyboardShow:(NSNotification *)notification
 {
-    NSLog(@"Hiding keyboard");
-    
-    
-    NSLog(@"Showing keyboard");
     POPSpringAnimation *tableanim = [POPSpringAnimation animationWithPropertyNamed:kPOPViewFrame];
     tableanim.toValue = [NSValue valueWithCGRect:CGRectMake(_talbeView.frame.origin.x, 242, _talbeView.frame.size.width, _talbeView.frame.size.height)];
     [_talbeView pop_addAnimation:tableanim forKey:@"tableview_position"];

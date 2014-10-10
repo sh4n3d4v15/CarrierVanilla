@@ -21,7 +21,7 @@
 "e3h-hd-Wvw.placeholder" = "Transportista ID";
 
 /* Class = "IBUIButton"; normalTitle = "Accept"; ObjectID = "o9y-LV-czE"; */
-"o9y-LV-czE.normalTitle" = "Accept";
+"o9y-LV-czE.normalTitle" = "Aceptar";
 
 /* Class = "IBUITableViewController"; title = "Master"; ObjectID = "pGg-6v-bdr"; */
 "pGg-6v-bdr.title" = "Master";
@@ -33,7 +33,7 @@
 "udx-2g-JOI.text" = "Some street";
 
 /* Class = "IBUIButton"; normalTitle = "Cancel"; ObjectID = "vjp-68-H0V"; */
-"vjp-68-H0V.normalTitle" = "Cancel";
+"vjp-68-H0V.normalTitle" = "Cancelar";
 
 /* Class = "IBUILabel"; text = "Mordor"; ObjectID = "zFi-q3-ex3"; */
 "zFi-q3-ex3.text" = "Mordor";

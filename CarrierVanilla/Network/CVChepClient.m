@@ -59,7 +59,7 @@
 
 #pragma  mark Create Today
 
--(NSDate*)createDateForThisMorning{
+-(NSString*)createDateForThisMorning{
     NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     [cal setTimeZone:[NSTimeZone systemTimeZone]];
     
@@ -69,10 +69,11 @@
     [comp setHour:0];
     
     NSDate *startOfToday = [cal dateFromComponents:comp];
-    return startOfToday;
+
+    return  [_dateFormatter stringFromDate:startOfToday];;
 }
 
--(NSDate*)createDateForMidnight{
+-(NSString*)createDateForMidnight{
     NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     [cal setTimeZone:[NSTimeZone systemTimeZone]];
     
@@ -81,8 +82,8 @@
     [comp setMinute:59];
     [comp setHour:23];
     
-    NSDate *startOfToday = [cal dateFromComponents:comp];
-    return startOfToday;
+    NSDate *endOfToday = [cal dateFromComponents:comp];
+    return [_dateFormatter stringFromDate:endOfToday];;
 }
 
 
@@ -94,6 +95,7 @@
       self.moc = del.managedObjectContext;
     
     NSArray *loadIdsArray = [networkResults valueForKey:@"load_number"];
+    
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityDescription inManagedObjectContext:self.moc];
     [fetchRequest setEntity:entity];
@@ -137,7 +139,6 @@
             SET_IF_NOT_NULL(load.id , [obj valueForKey:@"id"]);
             SET_IF_NOT_NULL(load.load_number, [obj valueForKey:@"load_number"]);
             SET_IF_NOT_NULL(load.status, [obj valueForKey:@"status"]);
-           // SET_IF_NOT_NULL(load.driver, [obj valueForKey:@"driver"]);
             NSString *driver = [obj valueForKey:@"driver"];
             load.driver = driver ?: @"?";
             
@@ -239,7 +240,7 @@
     
         NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/uid/%@/pwd/%@/region/eu",username,password];
         NSURLSessionDataTask *task = [self POST:urlString parameters:@{
-                                                                     @"vehicle":@"",
+                                                                     @"vehicle":vehicle,
                                                                      @"res":@"",
                                                                      @"offset":@0,
                                                                      @"limit":@50,
@@ -475,5 +476,64 @@
    
     return task;
 }
+
+-(Stop*)getPickStopWithShipmentNumber:(NSString*)shipmentNumber{
+    CVAppDelegate *del =  (CVAppDelegate *)[UIApplication sharedApplication].delegate;
+    self.moc = del.managedObjectContext;
+    
+    
+    NSString *predicateString = [NSString stringWithFormat:@"primary_reference_number == $SHIPMENT_NBR"];//if the n-loadnubmer doesnt exist;create
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
+    
+    
+        NSDictionary *variables = @{@"SHIPMENT_NBR": shipmentNumber};
+        NSPredicate *localPredicate = [predicate predicateWithSubstitutionVariables:variables];
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Shipment"];
+        NSError *error;
+        [fetchRequest setPredicate:localPredicate];
+        NSArray *foundShipments = [_moc executeFetchRequest:fetchRequest error:&error];
+    
+    __block Stop *pickStop;
+    if ([foundShipments count]) {
+        [foundShipments enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger idx, BOOL *stop) {
+            if ([shipment.stop.type isEqualToString:@"Pick"]) {
+                pickStop = shipment.stop;
+                *stop = YES;
+            }
+        }];
+    }
+    
+    return pickStop;
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

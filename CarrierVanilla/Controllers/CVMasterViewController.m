@@ -55,40 +55,28 @@
 }
 
 
-
--(void)dateChanged:(id)sender{
-    UISegmentedControl *segmentCtrl =  (UISegmentedControl*)sender;
-    NSLog(@"The day changed to: %@", [segmentCtrl titleForSegmentAtIndex:[segmentCtrl selectedSegmentIndex]]);
-    MBProgressHUD *hud =  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"Loading";
-    
-    [self performSelector:@selector(removeHud:) withObject:hud afterDelay:2.0];
-}
-
-
-
 -(void)removeHud:(MBProgressHUD*)hud{
     [hud hide:YES afterDelay:1.0];
 }
 
-//-(void)viewWillAppear:(BOOL)animated{
-//    NSLog(@"View will appear fired");
-//    BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"userLoggedIn"];
-//    
-//    if( !isUserLoggedIn ){
-//        [self showLoginViewAnimated:NO];
-//    }else{
-//       // [self refresh:nil];
-//    }
-//    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
-//
-//}
+-(void)viewWillAppear:(BOOL)animated{
+    NSLog(@"View will appear fired");
+    BOOL isUserLoggedIn = [[NSUserDefaults standardUserDefaults] boolForKey:@"userLoggedIn"];
+    
+    if( !isUserLoggedIn ){
+        [self showLoginViewAnimated:NO];
+    }else{
+       // [self refresh:nil];
+    }
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:animated];
+
+}
 
 -(void)refresh:(id)sender{
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
     [[CVChepClient sharedClient]getStopsForUser:userinfo completion:^(NSString *responseMessage, NSError *error) {
         if (error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Problem refreshing" message:responseMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Problem refreshing", nil)  message:responseMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
         }
             [(UIRefreshControl*)sender endRefreshing];
@@ -210,19 +198,6 @@
 
 #pragma mark - Fetched results controller
 
--(void)getLoadsForDifferentDate{
-
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type == %@",@"Pick"];
-    [self.fetchedResultsController.fetchRequest setPredicate:predicate];
-    NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error]) {
-
-	}else{
-        NSLog(@"i did the request");
-       [self.tableView reloadData];
-    }
-   
-}
 - (NSFetchedResultsController *)fetchedResultsController
 {
     if (_fetchedResultsController != nil) {
