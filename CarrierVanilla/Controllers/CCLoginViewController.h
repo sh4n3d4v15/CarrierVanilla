@@ -18,5 +18,4 @@
 
 @property id<CCLoginViewDelegate> delegate;
 
-@property(nonatomic)NSDictionary *keys;
 @end

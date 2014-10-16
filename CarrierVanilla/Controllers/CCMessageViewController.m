@@ -224,7 +224,7 @@
     
     [self sendMessage:photoMessage];
 
-    [[CVChepClient sharedClient]uploadPhoto:imageData forStopId:_stop.id withLoadId:_stop.load.id withComment:@"" completion:^(NSDictionary *responseDic, NSError *error) {
+    [[CVChepClient sharedClient]uploadPhoto:imageData ofType:@"image" forStopId:_stop.id withLoadId:_stop.load.id withComment:@"" completion:^(NSDictionary *responseDic, NSError *error) {
         if (error) {
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"ConnectionError", nil) message:NSLocalizedString(@"ConnectionError", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];

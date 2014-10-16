@@ -29,7 +29,7 @@
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     CVMasterViewController *controller = (CVMasterViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
-    [[UINavigationBar appearance]setBarTintColor:UIColorFromRGB(0x3c6ba1)];
+    [[UINavigationBar appearance]setBarTintColor:UIColorFromRGB(0x1070a9)];
     [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
  
@@ -41,7 +41,7 @@
 //    [[SOMotionDetector sharedInstance] startDetection];
 //    
 //    _driverSafeOverlay = [[UIView alloc]initWithFrame:CGRectMake(0, self.window.frame.size.height, self.window.frame.size.width, self.window.frame.size.height)];
-//    _driverSafeOverlay.backgroundColor = UIColorFromRGB(0x3c6ba1);
+//    _driverSafeOverlay.backgroundColor = UIColorFromRGB(0x1070a9);
 //    
 //    NSLog(@"Frame: %@" , NSStringFromCGRect( _driverSafeOverlay.frame) );
 //    

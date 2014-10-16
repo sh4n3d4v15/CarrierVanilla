@@ -28,6 +28,8 @@
 		D05583B9199BEFCD00CAAEB6 /* steeringwheel.png in Resources */ = {isa = PBXBuildFile; fileRef = D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */; };
 		D05583BA199BEFCD00CAAEB6 /* steeringwheel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D05583B8199BEFCD00CAAEB6 /* steeringwheel@2x.png */; };
 		D05DDE7D19D98420001C41C9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D05DDE7F19D98420001C41C9 /* Localizable.strings */; };
+		D074B80C19E8345200DC251B /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D074B80B19E8345200DC251B /* Load.m */; };
+		D074B80E19E8392400DC251B /* chep-logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D074B80D19E8392400DC251B /* chep-logo.jpg */; };
 		D09139831941A4C50029AE98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139821941A4C50029AE98 /* Foundation.framework */; };
 		D09139851941A4C50029AE98 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139841941A4C50029AE98 /* CoreGraphics.framework */; };
 		D09139871941A4C50029AE98 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139861941A4C50029AE98 /* UIKit.framework */; };
@@ -42,6 +44,8 @@
 		D09139AD1941A4C50029AE98 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139881941A4C50029AE98 /* CoreData.framework */; };
 		D09139B51941A4C50029AE98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D09139B31941A4C50029AE98 /* InfoPlist.strings */; };
 		D09139B71941A4C50029AE98 /* CarrierVanillaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */; };
+		D0A89A8719ED410E008A9F9C /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A89A8619ED410E008A9F9C /* Stop.m */; };
+		D0A89A8A19ED54D1008A9F9C /* Pod.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A89A8919ED54D1008A9F9C /* Pod.m */; };
 		D0AAA12E196711760044EE87 /* truckwhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA12D196711760044EE87 /* truckwhite@2x.png */; };
 		D0AAA130196711B30044EE87 /* truckwhite.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA12F196711B30044EE87 /* truckwhite.png */; };
 		D0AAA133196712460044EE87 /* flagwhite.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA131196712460044EE87 /* flagwhite.png */; };
@@ -52,8 +56,6 @@
 		D0AEB4E31998F095003C506F /* network@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AEB4E11998F095003C506F /* network@2x.png */; };
 		D0AEB4E619991E86003C506F /* chepnav.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AEB4E419991E86003C506F /* chepnav.png */; };
 		D0AEB4E719991E87003C506F /* chepnav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AEB4E519991E86003C506F /* chepnav@2x.png */; };
-		D0B078F61993727C00CE8DF9 /* Load.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F51993727C00CE8DF9 /* Load.m */; };
-		D0B078F9199372C600CE8DF9 /* Stop.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078F8199372C600CE8DF9 /* Stop.m */; };
 		D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B078FB1993731100CE8DF9 /* Loadnote.m */; };
 		D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */; };
 		D0BE4C7C19A686DC00CE05F9 /* CVSignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BE4C7B19A686DC00CE05F9 /* CVSignatureViewController.m */; };
@@ -146,6 +148,9 @@
 		D05DDE8319D99309001C41C9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D05DDE8419D9930A001C41C9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D05DDE8619D99742001C41C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		D074B80A19E8345200DC251B /* Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Load.h; sourceTree = "<group>"; };
+		D074B80B19E8345200DC251B /* Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Load.m; sourceTree = "<group>"; };
+		D074B80D19E8392400DC251B /* chep-logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "chep-logo.jpg"; sourceTree = "<group>"; };
 		D091397F1941A4C50029AE98 /* Chep Carrier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chep Carrier.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09139821941A4C50029AE98 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D09139841941A4C50029AE98 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -165,6 +170,10 @@
 		D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarrierVanillaTests.m; sourceTree = "<group>"; };
 		D0A74338198A611F00279C9D /* Item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		D0A74339198A611F00279C9D /* Item.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		D0A89A8519ED410E008A9F9C /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
+		D0A89A8619ED410E008A9F9C /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
+		D0A89A8819ED54D1008A9F9C /* Pod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pod.h; sourceTree = "<group>"; };
+		D0A89A8919ED54D1008A9F9C /* Pod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pod.m; sourceTree = "<group>"; };
 		D0AAA12D196711760044EE87 /* truckwhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "truckwhite@2x.png"; path = "Images/truckwhite@2x.png"; sourceTree = "<group>"; };
 		D0AAA12F196711B30044EE87 /* truckwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = truckwhite.png; path = Images/truckwhite.png; sourceTree = "<group>"; };
 		D0AAA131196712460044EE87 /* flagwhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = flagwhite.png; path = Images/flagwhite.png; sourceTree = "<group>"; };
@@ -177,10 +186,6 @@
 		D0AEB4E11998F095003C506F /* network@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "network@2x.png"; path = "Images/network@2x.png"; sourceTree = "<group>"; };
 		D0AEB4E419991E86003C506F /* chepnav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chepnav.png; path = Images/chepnav.png; sourceTree = "<group>"; };
 		D0AEB4E519991E86003C506F /* chepnav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chepnav@2x.png"; path = "Images/chepnav@2x.png"; sourceTree = "<group>"; };
-		D0B078F41993727C00CE8DF9 /* Load.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Load.h; sourceTree = "<group>"; };
-		D0B078F51993727C00CE8DF9 /* Load.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Load.m; sourceTree = "<group>"; };
-		D0B078F7199372C600CE8DF9 /* Stop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stop.h; sourceTree = "<group>"; };
-		D0B078F8199372C600CE8DF9 /* Stop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stop.m; sourceTree = "<group>"; };
 		D0B078FA1993731100CE8DF9 /* Loadnote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Loadnote.h; sourceTree = "<group>"; };
 		D0B078FB1993731100CE8DF9 /* Loadnote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Loadnote.m; sourceTree = "<group>"; };
 		D0B0E3B21944EF99009CE35C /* CVAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVAppDelegate.m; sourceTree = "<group>"; };
@@ -426,6 +431,7 @@
 		D0D3F370194EFD6000452C58 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D074B80D19E8392400DC251B /* chep-logo.jpg */,
 				D04FD59419AF366F00F39E6A /* chepc.png */,
 				D04FD59519AF366F00F39E6A /* chepc@2x.png */,
 				D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */,
@@ -474,15 +480,17 @@
 		D0D3F38E1950501C00452C58 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D0B078F7199372C600CE8DF9 /* Stop.h */,
-				D0B078F8199372C600CE8DF9 /* Stop.m */,
-				D0B078F41993727C00CE8DF9 /* Load.h */,
-				D0B078F51993727C00CE8DF9 /* Load.m */,
+				D0A89A8819ED54D1008A9F9C /* Pod.h */,
+				D0A89A8919ED54D1008A9F9C /* Pod.m */,
+				D074B80A19E8345200DC251B /* Load.h */,
+				D074B80B19E8345200DC251B /* Load.m */,
 				D0A74338198A611F00279C9D /* Item.h */,
 				D0A74339198A611F00279C9D /* Item.m */,
 				D0D3F38F1950501C00452C58 /* Address.h */,
 				D0D3F3901950501C00452C58 /* Address.m */,
 				D0D3F3951950501C00452C58 /* MobLog.xcdatamodeld */,
+				D0A89A8519ED410E008A9F9C /* Stop.h */,
+				D0A89A8619ED410E008A9F9C /* Stop.m */,
 				D0B078FA1993731100CE8DF9 /* Loadnote.h */,
 				D0B078FB1993731100CE8DF9 /* Loadnote.m */,
 				D0D3F3971950501C00452C58 /* Ref.h */,
@@ -598,6 +606,7 @@
 				D0AEB4E21998F095003C506F /* network.png in Resources */,
 				D05583BA199BEFCD00CAAEB6 /* steeringwheel@2x.png in Resources */,
 				D0D3F381194EFD7E00452C58 /* bubble@2x.png in Resources */,
+				D074B80E19E8392400DC251B /* chep-logo.jpg in Resources */,
 				D04FD59619AF366F00F39E6A /* chepc.png in Resources */,
 				D0AEB4E719991E87003C506F /* chepnav@2x.png in Resources */,
 				D0D3F382194EFD7E00452C58 /* bubbleReceive.png in Resources */,
@@ -691,26 +700,27 @@
 				D0B0E3B31944EF99009CE35C /* CVAppDelegate.m in Sources */,
 				D0D3F365194E3F1900452C58 /* HTAutocompleteTextField.m in Sources */,
 				D09139911941A4C50029AE98 /* main.m in Sources */,
+				D0A89A8A19ED54D1008A9F9C /* Pod.m in Sources */,
 				D0D3F3A21950501C00452C58 /* Shipment.m in Sources */,
 				D02E8B8F19E713F1000C0983 /* CVMultiPDFWriter.m in Sources */,
 				D0D3F3A11950501C00452C58 /* Ref.m in Sources */,
 				D0FFEEEE196BF59900581F8F /* CVItemTextField.m in Sources */,
 				D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */,
 				D0ABC8C41944E23E0095E59E /* CVMasterViewController.m in Sources */,
-				D0B078F9199372C600CE8DF9 /* Stop.m in Sources */,
 				D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */,
 				D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */,
 				D0BE4C8219A74CDF00CE05F9 /* CVShipmentView.m in Sources */,
-				D0B078F61993727C00CE8DF9 /* Load.m in Sources */,
 				D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */,
 				D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */,
 				D0D3F3A01950501C00452C58 /* MobLog.xcdatamodeld in Sources */,
 				D0D3F38D1950437D00452C58 /* CVStopTableViewCell.m in Sources */,
 				D036487519A9C0F000640FDD /* CVItemTableViewCell.m in Sources */,
+				D0A89A8719ED410E008A9F9C /* Stop.m in Sources */,
 				D0ABC8DD1944E3200095E59E /* CVChepClient.m in Sources */,
 				D0292825195197110061069F /* CCPDFWriter.m in Sources */,
 				D0FFEEEB1969D79B00581F8F /* CVItemLongPress.m in Sources */,
 				D03B7D6A19619567006AFE53 /* CVMapAnnotation.m in Sources */,
+				D074B80C19E8345200DC251B /* Load.m in Sources */,
 				D0292822195195E70061069F /* CCSignatureDrawView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

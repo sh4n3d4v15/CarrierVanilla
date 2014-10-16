@@ -70,11 +70,11 @@
     self.signatureView.backgroundLineColor = [UIColor flatDarkBlueColor];
     
     
-    _textField.textColor =  UIColorFromRGB(0x3c6ba1);
+    _textField.textColor =  UIColorFromRGB(0x1070a9);
     _textField.delegate = self;
     _textField.returnKeyType = UIReturnKeyDone;
     
-    _nameField.textColor =  UIColorFromRGB(0x3c6ba1);
+    _nameField.textColor =  UIColorFromRGB(0x1070a9);
     _nameField.delegate = self;
     
     _orginalNameFieldFrame = _nameField.frame;
@@ -151,7 +151,7 @@
     } else if([item.updated_pieces integerValue] < [item.pieces integerValue]) {
         qtyField.textColor = [UIColor flatDarkRedColor];
     }else{
-        qtyField.textColor = UIColorFromRGB(0x3c6ba1);
+        qtyField.textColor = UIColorFromRGB(0x1070a9);
     }
     
     qtyField.font = [UIFont fontWithName:@"HelveticaNeue-light" size:13];

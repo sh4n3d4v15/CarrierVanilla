@@ -17,14 +17,13 @@
 
 
 @interface CCLoginViewController ()
+@property (weak, nonatomic) IBOutlet UIImageView *chepLogo;
 @property (weak, nonatomic) IBOutlet UIButton *submitBtn;
-
 @property (weak, nonatomic) IBOutlet UITextField *carrierTextField;
-
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UILabel *loginInfoLabel;
+@property(nonatomic)NSDictionary *keys;
 - (IBAction)submitButtonPressed:(id)sender;
 
 @end
@@ -37,33 +36,14 @@
     if (self) {
         // Custom initialization
 
+
     }
     return self;
 }
 
 - (void)viewDidLoad
 {
-    
-    NSError *error;
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"keys" ofType:@"json"];
-    NSString *myJSON = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
-    _keys = [NSJSONSerialization JSONObjectWithData:[myJSON dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
-    
-    self.view.backgroundColor = UIColorFromRGB(0x3c6ba1);
-    [super viewDidLoad];
-    [HTAutocompleteTextField setDefaultAutocompleteDataSource:[HTAutocompleteManager sharedManager]];
-
-    if ([[NSUserDefaults standardUserDefaults]valueForKey:@"carrierID"]) {
-        self.carrierTextField.alpha = 0;
-        self.carrierTextField.enabled = NO;
-        
-        POPSpringAnimation *anim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPositionY];
-        anim.toValue = [NSValue valueWithCGPoint:CGPointMake(150, 180)];
-        anim.springBounciness = 10;
-        anim.springSpeed = 2;
-        
-        
-    }
+    self.view.backgroundColor = UIColorFromRGB(0x1070a9);//0x1070a9
     self.passwordTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.nameTextField.borderStyle = UITextBorderStyleRoundedRect;
     self.carrierTextField.borderStyle = UITextBorderStyleRoundedRect;
@@ -71,16 +51,24 @@
 
 }
 -(void)viewDidAppear:(BOOL)animated{
+    
+    NSError *error;
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"keys" ofType:@"json"];
+    NSString *myJSON = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
+    _keys = [NSJSONSerialization JSONObjectWithData:[myJSON dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+    
+    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:singleTap];
     [super viewDidAppear:animated];
     
-
-    
+    POPSpringAnimation *resize = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerScaleXY];
+    resize.toValue = [NSValue valueWithCGSize:CGSizeMake(2, 2)];
+    resize.springBounciness = 10;
+    [self.chepLogo.layer pop_addAnimation:resize forKey:@"scale"];
 }
 
-- (void)handleSingleTap:(UITapGestureRecognizer *)sender
-{
+- (void)handleSingleTap:(UITapGestureRecognizer *)sender{
     [_carrierTextField resignFirstResponder];
     [_nameTextField resignFirstResponder];
     [_passwordTextField resignFirstResponder];
@@ -88,10 +76,8 @@
 
 
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Text Field Delegate

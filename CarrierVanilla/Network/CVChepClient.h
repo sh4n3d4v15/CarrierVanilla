@@ -17,8 +17,11 @@
 -(NSURLSessionDataTask *)updateArrivalForStop:(Stop *)stop completion:(void (^)( NSError *))completion;
 -(NSURLSessionDataTask *)updateStop:(Stop *)stop completion:(void (^)( NSError *))completion;
 
+-(NSURLSessionDataTask *)updateStopArrival:(Stop *)stop completion:(void (^)( NSError *))completion;
+
+-(NSURLSessionDataTask *)updateStopDeparture:(Stop *)stop completion:(void (^)( NSError *))completion;
 #pragma mark - Documents Requests
--(NSURLSessionDataTask*)uploadPhoto:(NSData*)photoData forStopId:(NSString*)stopId withLoadId:(NSString*)loadId withComment:(NSString*)comment completion:(void(^)(NSDictionary *responseDic,NSError *error))completion;
+-(NSURLSessionDataTask*)uploadPhoto:(NSData*)photoData ofType:(NSString*)docType forStopId:(NSString*)stopId withLoadId:(NSString*)loadId withComment:(NSString*)comment completion:(void(^)(NSDictionary *responseDic,NSError *error))completion;
 
 #pragma mark - Load Note Requests
 -(NSURLSessionDataTask*)getLoadNotesForLoad: (NSString*)loadId completion:(void (^)(NSDictionary *results, NSError *error))completion;

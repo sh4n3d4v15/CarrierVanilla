@@ -2,12 +2,13 @@
 //  Load.m
 //  Chep Carrier
 //
-//  Created by shane davis on 07/08/2014.
+//  Created by shane davis on 10/10/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
 #import "Load.h"
 #import "Loadnote.h"
+#import "Pod.h"
 #import "Ref.h"
 #import "Stop.h"
 
@@ -20,9 +21,10 @@
 @dynamic load_number;
 @dynamic podData;
 @dynamic status;
+@dynamic loadNotes;
+@dynamic pods;
 @dynamic refs;
 @dynamic stops;
-@dynamic loadNotes;
 -(BOOL)isCompletedLoad{
     __block BOOL complete = YES;
     
@@ -33,4 +35,5 @@
     }];
     return complete;
 }
+
 @end

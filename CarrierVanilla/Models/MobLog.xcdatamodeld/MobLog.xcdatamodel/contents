@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="14A379a" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Address" representedClassName="Address" syncable="YES">
         <attribute name="address1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,6 +29,7 @@
         <attribute name="podData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="loadNotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Loadnote" inverseName="load" inverseEntity="Loadnote" syncable="YES"/>
+        <relationship name="pods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Pod" inverseName="load" inverseEntity="Pod" syncable="YES"/>
         <relationship name="refs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Ref" inverseName="load" inverseEntity="Ref" syncable="YES"/>
         <relationship name="stops" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Stop" inverseName="load" inverseEntity="Stop" syncable="YES">
             <userInfo>
@@ -48,6 +49,11 @@
         <attribute name="thumbnail" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="load" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Load" inverseName="loadNotes" inverseEntity="Load" syncable="YES"/>
+    </entity>
+    <entity name="Pod" representedClassName="Pod" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="ref" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="load" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Load" inverseName="pods" inverseEntity="Load" syncable="YES"/>
     </entity>
     <entity name="Ref" representedClassName="Ref" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -78,6 +84,7 @@
         <attribute name="pieces" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="planned_end" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="planned_start" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="processed" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="signatureSnapshot" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="volume" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -94,12 +101,13 @@
         </userInfo>
     </entity>
     <elements>
-        <element name="Address" positionX="-10728" positionY="1548" width="128" height="133"/>
+        <element name="Address" positionX="-10809" positionY="1638" width="128" height="133"/>
         <element name="Item" positionX="-10728" positionY="1349" width="128" height="208"/>
-        <element name="Load" positionX="-10215" positionY="1916" width="128" height="178"/>
+        <element name="Load" positionX="-10215" positionY="1916" width="128" height="193"/>
         <element name="Loadnote" positionX="-9947" positionY="1629" width="128" height="163"/>
+        <element name="Pod" positionX="-10541" positionY="1841" width="128" height="88"/>
         <element name="Ref" positionX="-10719" positionY="1872" width="128" height="88"/>
         <element name="Shipment" positionX="-10512" positionY="1422" width="128" height="118"/>
-        <element name="Stop" positionX="-10224" positionY="1467" width="128" height="388"/>
+        <element name="Stop" positionX="-10224" positionY="1467" width="128" height="403"/>
     </elements>
 </model>

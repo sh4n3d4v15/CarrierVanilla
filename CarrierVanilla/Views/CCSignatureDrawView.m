@@ -14,7 +14,7 @@
     self = [super initWithCoder:coder];
     if (self) {
         self.signatureBezierPath = [[UIBezierPath alloc]init];
-        self.backgroundColor = UIColorFromRGB(0x3c6ba1);
+        self.backgroundColor = UIColorFromRGB(0x1070a9);
         //        self.alpha = 0.5f;
         self.userInteractionEnabled = YES;
         
@@ -50,7 +50,7 @@
         UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         doneButton.frame = CGRectMake(self.bounds.size.width-65,self.bounds.size.height-35, 50, 30);
         [doneButton setTitle:@"Done" forState:UIControlStateNormal];
-        [doneButton setTitleColor:UIColorFromRGB(0x3c6ba1) forState:UIControlStateNormal];
+        [doneButton setTitleColor:UIColorFromRGB(0x1070a9) forState:UIControlStateNormal];
         [doneButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [doneButton addTarget:self action:@selector(saveImageAndDismissView:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -76,7 +76,7 @@
         
         self.signatureBezierPath = [[UIBezierPath alloc]init];
         _quantity = quantity;
-        self.backgroundColor = UIColorFromRGB(0x3c6ba1);
+        self.backgroundColor = UIColorFromRGB(0x1070a9);
 //        self.alpha = 0.5f;
         self.userInteractionEnabled = YES;
         
@@ -112,7 +112,7 @@
         UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         doneButton.frame = CGRectMake(self.bounds.size.width-65,self.bounds.size.height-35, 50, 30);
         [doneButton setTitle:@"Done" forState:UIControlStateNormal];
-        [doneButton setTitleColor:UIColorFromRGB(0x3c6ba1) forState:UIControlStateNormal];
+        [doneButton setTitleColor:UIColorFromRGB(0x1070a9) forState:UIControlStateNormal];
         [doneButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [doneButton addTarget:self action:@selector(saveImageAndDismissView:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -163,7 +163,7 @@
     [self.signatureBezierPath addLineToPoint:CGPointMake(lastPoint.x, lastPoint.y)];
     
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-    CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(),  UIColorFromRGB(0x3c6ba1).CGColor);
+    CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(),  UIColorFromRGB(0x1070a9).CGColor);
     CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 2.0f);
     CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 0.0f, 0.0f, 0.0f, 1.0f);
     CGContextSetBlendMode(UIGraphicsGetCurrentContext(), kCGBlendModeNormal);

@@ -14,6 +14,7 @@
 #import "Ref.h"
 #import "Shipment.h"
 #import "Item.h"
+#import "Pod.h"
 
 
 @implementation CVChepClient
@@ -21,9 +22,9 @@
     static CVChepClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-//        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://usorlut27.chep.com:50000"];
-//        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
-        NSURL *ChepBaseUrl = [NSURL URLWithString:@"https://api.chep.com"];
+        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-dev.chep.com"];
+//        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-test.chep.com"];
+//        NSURL *ChepBaseUrl = [NSURL URLWithString:@"https://api.chep.com"];
         _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
         _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
         _sharedClient.requestSerializer.stringEncoding = NSUTF8StringEncoding;
@@ -50,7 +51,6 @@
     
     _sharedClient.dateFormatter = [[NSDateFormatter alloc]init];
     [_sharedClient.dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-    //[_sharedClient.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"BST"]];
     [_sharedClient.dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
 
 
@@ -230,15 +230,15 @@
         [self.operationQueue setSuspended:NO];
     
     
-    NSLog(@"This Morningin: %@", [self createDateForThisMorning]);
-    NSLog(@"Midnight TOinght: %@", [self createDateForMidnight]);
+    NSLog(@"This Morning: %@", [self createDateForThisMorning]);
+    NSLog(@"Midnight Tonight: %@", [self createDateForMidnight]);
     
     NSLog(@"Userinfo : %@",userinfo );
         NSString *username = [userinfo valueForKey:@"carrier"];
         NSString *password =  [userinfo valueForKey:@"password"];
         NSString *vehicle = [userinfo valueForKey:@"vehicle"];
     
-        NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/uid/%@/pwd/%@/region/eu",username,password];
+        NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/uid/%@/pwd/%@/region/eu",@"APITester",@"QVBJVDNzdDNyX3A0c3N3MHJk"];
         NSURLSessionDataTask *task = [self POST:urlString parameters:@{
                                                                      @"vehicle":vehicle,
                                                                      @"res":@"",
@@ -275,7 +275,7 @@
                                         } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                              NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)task.response;
                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                NSLog(@"there was an eroror boss %@", httpResponse);
+                                                NSLog(@"there was an eroror boss %@", error);
                                                 if (httpResponse.statusCode == 401) {
                                                     completion(NSLocalizedString(@"badLogin",nil), error);
                                                 }else{
@@ -323,7 +323,7 @@
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
     NSString *username = [userinfo valueForKey:@"carrier"];
     NSString *password =  [userinfo valueForKey:@"password"];
-    NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/%@/pwd/%@/region/eu",stop.load.id,stop.id,username,password];
+    NSString *fullUrl = [NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/%@/pwd/%@/region/eu",stop.load.id,stop.id,@"APITester",@"QVBJVDNzdDNyX3A0c3N3MHJk"];
     NSLog(@"Full URL: %@", fullUrl);
     
     __unused NSArray *deliveries = [self getQuantitesForStop:stop];
@@ -354,7 +354,10 @@
                        [formData appendPartWithFormData:updateData name:@"update_parameters"];
                        [formData appendPartWithFormData:documentData name:@"document_info"];
 
-                       [formData appendPartWithFileData:stop.load.podData
+                       Pod *firstPod = [[stop.load.pods allObjects]firstObject];
+                       NSLog(@"This is the first POD in the update stop method %@", firstPod.ref);
+                       NSData *podData = firstPod.data;
+                       [formData appendPartWithFileData:podData
                                                    name:@"file"
                                                fileName:@"Proof_signed.pdf"
                                                mimeType:@"application/pdf"];
@@ -376,14 +379,43 @@
 }
 
 
+-(NSURLSessionDataTask *)updateStopArrival:(Stop *)stop completion:(void (^)( NSError *))completion;{
+    NSString *fullurl =[NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/arrived/%@/uid/%@/pwd/%@/region/eu",stop.load.id,stop.id,[_dateFormatter stringFromDate:stop.actual_arrival],@"APITester",@"QVBJVDNzdDNyX3A0c3N3MHJk"];
+    NSURLSessionDataTask *task = [self GET:fullurl parameters:nil
+                               success:^(NSURLSessionDataTask *task, id responseObject) {
+                                   NSLog(@"Update response: %@",responseObject);
+                                   completion(nil);
+                               } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                   completion(error);
+                               }];
+    
+    return task;
+}
+
+-(NSURLSessionDataTask *)updateStopDeparture:(Stop *)stop completion:(void (^)( NSError *))completion;{
+    NSString *fullurl =[NSString stringWithFormat: @"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/departed/%@/uid/%@/pwd/%@/region/eu",stop.load.id,stop.id,[_dateFormatter stringFromDate:stop.actual_departure],@"APITester",@"QVBJVDNzdDNyX3A0c3N3MHJk"];
+    NSURLSessionDataTask *task = [self GET:fullurl parameters:nil
+                                   success:^(NSURLSessionDataTask *task, id responseObject) {
+                                       NSLog(@"Update response: %@",responseObject);
+                                       completion(nil);
+                                   } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                       completion(error);
+                                   }];
+    
+    return task;
+}
+
+
 #pragma mark - Documents Requests
 
--(NSURLSessionDataTask *)uploadPhoto:(NSData *)photoData forStopId:(NSString *)stopId withLoadId:(NSString *)loadId withComment:(NSString *)comment completion:(void (^)(NSDictionary *, NSError *))completion{
+-(NSURLSessionDataTask *)uploadPhoto:(NSData *)photoData ofType:(NSString*)docType forStopId:(NSString *)stopId withLoadId:(NSString *)loadId withComment:(NSString *)comment completion:(void (^)(NSDictionary *, NSError *))completion{
     
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
     NSString *username = [userinfo valueForKey:@"carrier"];
     NSString *password =  [userinfo valueForKey:@"password"];
-    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/upload/uid/%@/pwd/%@/region/eu",loadId,stopId,username,password];
+    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/upload/uid/%@/pwd/%@/region/eu",loadId,stopId,@"APITester",@"QVBJVDNzdDNyX3A0c3N3MHJk"];
+
+//    NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/upload/uid/%@/pwd/%@/region/eu",loadId,stopId,username,password];
     NSDictionary *docInfoDictionay = @{@"document_type_id":@"",
                                        @"document_type_key":@"POD",
                                        @"comments":@"",
@@ -395,22 +427,31 @@
     NSURLSessionDataTask * task = [self POST:queryString
                                   parameters:@{}
                    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                       [formData appendPartWithFileData:photoData name:@"file" fileName:@"photoimage.jpg" mimeType:@"image/jpg"];
+                       if ([docType isEqualToString:@"pod"]) {
+                           [formData appendPartWithFileData:photoData name:@"file" fileName:[NSString stringWithFormat:@"%@.pdf",comment] mimeType:@"application/pdf"];
+                       }else{
+                           [formData appendPartWithFileData:photoData name:@"file" fileName:@"photoimage.jpg" mimeType:@"image/jpg"];
+                       }
                        [formData appendPartWithFormData:jsonData name:@"document_info"];
                    } success:^(NSURLSessionDataTask *task, id responseObject) {
+                       completion(@{},nil);
                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                       completion(@{},error);
                    }];
     return task;
 }
+
 
 #pragma mark - Load Note Requests
 
 -(NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSDictionary *, NSError *))completion{
     
+    [self.operationQueue setSuspended:NO];
+    
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
     NSString *username = [userinfo valueForKey:@"carrier"];
     NSString *password =  [userinfo valueForKey:@"password"];
-    [self.operationQueue setSuspended:NO];
+
     NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/notes/0/0/uid/%@/pwd/%@/region/eu",loadId,username,password];
     NSLog(@"GET LOAD NOTES QUIERY STRING: %@", queryString);
     NSURLSessionDataTask *task = [self GET:queryString parameters:nil
@@ -440,6 +481,8 @@
 }
 
 -(NSURLSessionDataTask *)postLoadNoteForLoad:(NSString *)loadId withNoteType:(NSString *)noteType withStopType:(NSString *)stopType withMessage:(NSString *)message completion:(void (^)(NSDictionary *, NSError *))completion{
+    
+    [self.operationQueue setSuspended:NO];
     
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
     NSString *username = [userinfo valueForKey:@"carrier"];
@@ -480,23 +523,20 @@
 -(Stop*)getPickStopWithShipmentNumber:(NSString*)shipmentNumber{
     CVAppDelegate *del =  (CVAppDelegate *)[UIApplication sharedApplication].delegate;
     self.moc = del.managedObjectContext;
-    
-    
-    NSString *predicateString = [NSString stringWithFormat:@"primary_reference_number == $SHIPMENT_NBR"];//if the n-loadnubmer doesnt exist;create
+    NSString *predicateString = [NSString stringWithFormat:@"primary_reference_number == $SHIPMENT_NBR"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:predicateString];
-    
-    
-        NSDictionary *variables = @{@"SHIPMENT_NBR": shipmentNumber};
-        NSPredicate *localPredicate = [predicate predicateWithSubstitutionVariables:variables];
-        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Shipment"];
-        NSError *error;
-        [fetchRequest setPredicate:localPredicate];
-        NSArray *foundShipments = [_moc executeFetchRequest:fetchRequest error:&error];
+    NSDictionary *variables = @{@"SHIPMENT_NBR": shipmentNumber};
+    NSPredicate *localPredicate = [predicate predicateWithSubstitutionVariables:variables];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Shipment"];
+    NSError *error;
+    [fetchRequest setPredicate:localPredicate];
+    NSArray *foundShipments = [_moc executeFetchRequest:fetchRequest error:&error];
     
     __block Stop *pickStop;
     if ([foundShipments count]) {
         [foundShipments enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger idx, BOOL *stop) {
-            if ([shipment.stop.type isEqualToString:@"Pick"]) {
+            if ([shipment.stop.type isEqualToString:@"Pick"] && [shipment.stop.processed boolValue] == NO) {
+                NSLog(@"*********** This is the stop i will be using: %@", shipment.stop);
                 pickStop = shipment.stop;
                 *stop = YES;
             }

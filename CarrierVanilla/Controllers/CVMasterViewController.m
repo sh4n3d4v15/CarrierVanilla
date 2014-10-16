@@ -120,7 +120,7 @@
     UILabel *shipmentnumberlabel = [[UILabel alloc] initWithFrame:CGRectMake(44, 2, 100, 18)];
     [shipmentnumberlabel setFont:[UIFont boldSystemFontOfSize:14]];
     [shipmentnumberlabel setText:[sectionInfo name]];
-    [shipmentnumberlabel setTextColor: UIColorFromRGB(0x3c6ba1)];
+    [shipmentnumberlabel setTextColor: UIColorFromRGB(0x1070a9)];
     [view addSubview:shipmentnumberlabel];
 
     
@@ -130,7 +130,7 @@
     UILabel *stopCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(159, 2, 100, 18)];
     [stopCountLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [stopCountLabel setText:[NSString stringWithFormat:@"%lu %@",(unsigned long)[sectionInfo numberOfObjects],NSLocalizedString(@"Stops", nil)]  ];
-    [stopCountLabel setTextColor:UIColorFromRGB(0x3c6ba1)];
+    [stopCountLabel setTextColor:UIColorFromRGB(0x1070a9)];
     [view addSubview:stopCountLabel];
     
     
@@ -142,7 +142,7 @@
     UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(265, 2, 80, 18)];
     [statusLabel setText:driver];
     [statusLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [statusLabel setTextColor: UIColorFromRGB(0x3c6ba1)];
+    [statusLabel setTextColor: UIColorFromRGB(0x1070a9)];
     
     
     [view addSubview:statusLabel];
@@ -319,7 +319,7 @@
 {
     Stop *stop = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.locationNameLabel.text = [ NSString stringWithUTF8String:[stop.location_name UTF8String]];;
-    cell.locationNameLabel.textColor = UIColorFromRGB(0x3c6ba1);
+    cell.locationNameLabel.textColor = UIColorFromRGB(0x1070a9);
     cell.addressOneLabel.text = [stop.address.address1 length] ? [NSString stringWithUTF8String:[stop.address.address1 UTF8String]] : @"";
     cell.cityLabel.text = [stop.address.city length] ? [NSString stringWithUTF8String:[stop.address.city UTF8String]] : @"";
     cell.zipLabel.text = [stop.address.zip length] ? [NSString stringWithUTF8String:[stop.address.zip UTF8String]] : @"";

@@ -50,7 +50,7 @@
     
     _productLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, view.bounds.size.width-10, view.bounds.size.height)];
     _productLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:13];
-    _productLabel.textColor =  UIColorFromRGB(0x3c6ba1);
+    _productLabel.textColor =  UIColorFromRGB(0x1070a9);
     
     [view addSubview:_productLabel];
 }
