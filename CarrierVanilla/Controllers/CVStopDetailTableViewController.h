@@ -10,6 +10,8 @@
 #import "Stop.h"
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "CVUpdateButton.h"
+
 
 @protocol stopChangeDelegate
 
@@ -20,10 +22,7 @@
 
 @interface CVStopDetailTableViewController : UITableViewController
 @property (strong, nonatomic) Stop *stop;
-@property(weak,nonatomic) id <stopChangeDelegate> delegate;
 @property(nonatomic)MKMapView *mapView;
-@property(nonatomic)UIButton *checkInButton;
-@property(nonatomic)UIButton *checkOutButton;
-
-@property(nonatomic)NSDateFormatter *df;
+@property(weak,nonatomic) id <stopChangeDelegate> delegate;
+@property(nonatomic)UIView *refreshBackgroundView;
 @end

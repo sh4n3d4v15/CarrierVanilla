@@ -35,7 +35,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(90, 20, 136.96, 35.2)];
+    imageView.image = [UIImage imageNamed:@"chepnav.png"];
+    
+    [self.navigationController.view addSubview:imageView];
     
     _timeWindowformatter = [[NSDateFormatter alloc]init];
     [_timeWindowformatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
@@ -53,6 +57,18 @@
                                                           target:self action:@selector(showLogin:)];
     self.navigationItem.rightBarButtonItem = btn;
 }
+
+
+
+-(void)dateChanged:(id)sender{
+    UISegmentedControl *segmentCtrl =  (UISegmentedControl*)sender;
+    NSLog(@"The day changed to: %@", [segmentCtrl titleForSegmentAtIndex:[segmentCtrl selectedSegmentIndex]]);
+    MBProgressHUD *hud =  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"Loading";
+    
+    [self performSelector:@selector(removeHud:) withObject:hud afterDelay:2.0];
+}
+
 
 
 -(void)removeHud:(MBProgressHUD*)hud{
@@ -76,7 +92,7 @@
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
     [[CVChepClient sharedClient]getStopsForUser:userinfo completion:^(NSString *responseMessage, NSError *error) {
         if (error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Problem refreshing", nil)  message:responseMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Problem refreshing" message:responseMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
         }
             [(UIRefreshControl*)sender endRefreshing];
@@ -120,7 +136,7 @@
     UILabel *shipmentnumberlabel = [[UILabel alloc] initWithFrame:CGRectMake(44, 2, 100, 18)];
     [shipmentnumberlabel setFont:[UIFont boldSystemFontOfSize:14]];
     [shipmentnumberlabel setText:[sectionInfo name]];
-    [shipmentnumberlabel setTextColor: UIColorFromRGB(0x1070a9)];
+    [shipmentnumberlabel setTextColor: UIColorFromRGB(0x3c6ba1)];
     [view addSubview:shipmentnumberlabel];
 
     
@@ -129,20 +145,20 @@
     [view addSubview:stopimageView];
     UILabel *stopCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(159, 2, 100, 18)];
     [stopCountLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [stopCountLabel setText:[NSString stringWithFormat:@"%lu %@",(unsigned long)[sectionInfo numberOfObjects],NSLocalizedString(@"Stops", nil)]  ];
-    [stopCountLabel setTextColor:UIColorFromRGB(0x1070a9)];
+    [stopCountLabel setText:[NSString stringWithFormat:@"%lu STOPS",(unsigned long)[sectionInfo numberOfObjects]]];
+    [stopCountLabel setTextColor:UIColorFromRGB(0x3c6ba1)];
     [view addSubview:stopCountLabel];
     
     
-//    UIImageView *networkimageView = [[UIImageView alloc]initWithFrame:CGRectMake(243, 5, 14, 14)];
-//    [networkimageView setImage:[UIImage imageNamed:@"network.png"]];
-//    [view addSubview:networkimageView];
+    UIImageView *networkimageView = [[UIImageView alloc]initWithFrame:CGRectMake(243, 5, 14, 14)];
+    [networkimageView setImage:[UIImage imageNamed:@"network.png"]];
+    [view addSubview:networkimageView];
     
-    NSString *driver = [NSString stringWithFormat:@"# %@",[[[sectionInfo objects]firstObject]valueForKeyPath:@"load.driver"]];
+    NSString *driver = [NSString stringWithFormat:@"JOB %@",[[[sectionInfo objects]firstObject]valueForKeyPath:@"load.driver"]];
     UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(265, 2, 80, 18)];
     [statusLabel setText:driver];
     [statusLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [statusLabel setTextColor: UIColorFromRGB(0x1070a9)];
+    [statusLabel setTextColor: UIColorFromRGB(0x3c6ba1)];
     
     
     [view addSubview:statusLabel];
@@ -198,6 +214,19 @@
 
 #pragma mark - Fetched results controller
 
+-(void)getLoadsForDifferentDate{
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type == %@",@"Pick"];
+    [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+	if (![self.fetchedResultsController performFetch:&error]) {
+
+	}else{
+        NSLog(@"i did the request");
+       [self.tableView reloadData];
+    }
+   
+}
 - (NSFetchedResultsController *)fetchedResultsController
 {
     if (_fetchedResultsController != nil) {
@@ -319,10 +348,10 @@
 {
     Stop *stop = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.locationNameLabel.text = [ NSString stringWithUTF8String:[stop.location_name UTF8String]];;
-    cell.locationNameLabel.textColor = UIColorFromRGB(0x1070a9);
-    cell.addressOneLabel.text = [stop.address.address1 length] ? [NSString stringWithUTF8String:[stop.address.address1 UTF8String]] : @"";
-    cell.cityLabel.text = [stop.address.city length] ? [NSString stringWithUTF8String:[stop.address.city UTF8String]] : @"";
-    cell.zipLabel.text = [stop.address.zip length] ? [NSString stringWithUTF8String:[stop.address.zip UTF8String]] : @"";
+    cell.locationNameLabel.textColor = UIColorFromRGB(0x3c6ba1);
+    cell.addressOneLabel.text = [ NSString stringWithUTF8String:[stop.address.address1 UTF8String]];
+    cell.cityLabel.text = [NSString stringWithUTF8String:[stop.address.city UTF8String]];
+    cell.zipLabel.text = [NSString stringWithUTF8String:[stop.address.zip UTF8String]];
     cell.typeLabel.text = [NSString stringWithUTF8String:[stop.type UTF8String]];
     cell.timeWindowLabel.text = [NSString stringWithFormat:@"%@ - %@",[_timeWindowformatter stringFromDate:stop.planned_start],[_timeWindowformatter stringFromDate:stop.planned_end]];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -339,7 +368,7 @@
 
 -(void)showLogin:(id)sender{
     NSLog(@"login button pressed");
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:NSLocalizedString(@"Logout", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Logout", nil) otherButtonTitles:nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"Switch vehicle or signout carrier" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles: @"Switch Vehicle",nil, nil];
     [actionSheet showInView:self.view];
 }
 
@@ -347,12 +376,24 @@
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    NSLog(@"Button index: %i", buttonIndex);
-    if (buttonIndex == 0) {
-        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"userLoggedIn"];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-        [self showLoginViewAnimated:YES];
+    switch (buttonIndex) {
+        case 0:
+            [self logOutAsCarrier];
+            [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"userLoggedIn"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [self showLoginViewAnimated:YES];
+            break;
+        case 1:
+            [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"userLoggedIn"];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [self showLoginViewAnimated:YES];
+            break;
+            
+        default:
+            break;
     }
+    
+    
 }
 
 -(void)logOutAsCarrier{

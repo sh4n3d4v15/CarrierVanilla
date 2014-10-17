@@ -7,7 +7,7 @@
 //
 
 #import "CVAppDelegate.h"
-#import "TestFlight.h"
+
 #import "CVMasterViewController.h"
 #import "Pop.h"
 
@@ -23,61 +23,18 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    [TestFlight takeOff:@"9effd5b8-b826-47d0-a85b-44fade06a340"];
-    
-    
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     CVMasterViewController *controller = (CVMasterViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
-    [[UINavigationBar appearance]setBarTintColor:UIColorFromRGB(0x1070a9)];
+    [[UINavigationBar appearance]setBarTintColor:UIColorFromRGB(0x3c6ba1)];
     [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
  
-//    [SOMotionDetector sharedInstance].delegate = self;
-//    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0"))
-//    {
-//        [SOMotionDetector sharedInstance].useM7IfAvailable = YES; //Use M7 chip if available, otherwise use lib's algorithm
-//    }
-//    [[SOMotionDetector sharedInstance] startDetection];
-//    
-//    _driverSafeOverlay = [[UIView alloc]initWithFrame:CGRectMake(0, self.window.frame.size.height, self.window.frame.size.width, self.window.frame.size.height)];
-//    _driverSafeOverlay.backgroundColor = UIColorFromRGB(0x1070a9);
-//    
-//    NSLog(@"Frame: %@" , NSStringFromCGRect( _driverSafeOverlay.frame) );
-//    
-//    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, self.window.frame.size.height/2, self.window.frame.size.width, 30)];
-//    label.textColor = [UIColor whiteColor];
-//    label.font = [UIFont systemFontOfSize:20.0f];
-//    label.text = @"Safe Driving Mode";
-//    label.textAlignment = NSTextAlignmentCenter;
-//    
-//    [_driverSafeOverlay addSubview:label];
-//    
-//    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(85, 100, 150, 150)];
-//    [imageView setImage:[UIImage imageNamed:@"steeringwheel"]];
-//    
-//    [_driverSafeOverlay addSubview:imageView];
+
 
     return YES;
 }
--(void)overlayDriveSafeView{
-    [self.window addSubview:_driverSafeOverlay];
-    POPSpringAnimation *yAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPViewFrame];
-    yAnim.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, self.window.frame.size.width, self.window.frame.size.height)];
-    [_driverSafeOverlay pop_addAnimation:yAnim forKey:@"growHeight"];
-}
--(void)removeDriveSafeView{
-    
-    POPSpringAnimation *yAnim = [POPSpringAnimation animationWithPropertyNamed:kPOPViewFrame];
-    yAnim.toValue = [NSValue valueWithCGRect:CGRectMake(0, self.window.frame.size.height, self.window.frame.size.width, self.window.frame.size.height)];
-    [yAnim setCompletionBlock:^(POPAnimation *anim, BOOL complete) {
-        [_driverSafeOverlay removeFromSuperview];
-    }];
-    [_driverSafeOverlay pop_addAnimation:yAnim forKey:@"shrinkHeight"];
-    
-    
-   
-}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -158,7 +115,7 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"MobLog"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"MobLogQA"];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
@@ -192,37 +149,6 @@
     
     return _persistentStoreCoordinator;
 }
-
-#pragma mark - Motion Delegate Methods
-
-//- (void)motionDetector:(SOMotionDetector *)motionDetector motionTypeChanged:(SOMotionType)motionType
-//{
-//    switch (motionType) {
-//        case MotionTypeNotMoving:
-//            [self removeDriveSafeView];
-//            break;
-//        case MotionTypeWalking:
-//            [self removeDriveSafeView];
-//            break;
-//        case MotionTypeRunning:
-//            [self removeDriveSafeView];
-//            break;
-//        case MotionTypeAutomotive:
-//            [self overlayDriveSafeView];
-//            break;
-//    }
-//}
-//
-//- (void)motionDetector:(SOMotionDetector *)motionDetector locationChanged:(CLLocation *)location
-//{
-//    NSLog(@"Speed: %@ ",[NSString stringWithFormat:@"%.2f km/h",motionDetector.currentSpeed * 3.6f]) ;
-//}
-//
-//- (void)motionDetector:(SOMotionDetector *)motionDetector accelerationChanged:(CMAcceleration)acceleration
-//{
-////    BOOL isShaking = motionDetector.isShaking;
-////    self.isShakingLabel.text = isShaking ? @"shaking":@"not shaking";
-//}
 
 #pragma mark - Application's Documents directory
 

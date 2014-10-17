@@ -309,164 +309,174 @@
 }
 
 
-+(void)createPDFfromStop:(Stop*)stop
++(void)createPDFfromShipment:(Shipment*)shipment;
 {
     
     NSDateFormatter *df = [NSDateFormatter new];
     [df setDateFormat:@"dd-MM-yyyy"];
 
-    
-#pragma mark Page frame
     CGRect frame = CGRectMake(0, 0, 612, 792);
     UIColor* strokeColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
+
+    __block Stop *picStop;
+    __block Stop *stop;
     
-
-
-    
-#pragma mark Dynamic content
-    NSArray * shipments = [stop.shipments allObjects];
-
+    [[shipment.stops allObjects] enumerateObjectsUsingBlock:^(Stop *_stop, NSUInteger outerIndex, BOOL *end_stop) {
+        
+        if ([_stop.type isEqualToString:@"Drop"]) {
+            stop = _stop;
+        }else{
+            picStop = _stop;
+        }
+        
+    }];
     NSString* dropStopState = stop.address.state;
     NSString* dropStopAddress1 = stop.address.address1;
     NSString* dropStopName = stop.location_name;
     UIImage*  dropStopSignature = [UIImage imageWithData:stop.signatureSnapshot];
-
-
-    [shipments enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger outerIndex, BOOL *end_stop) {
-        
-        
-        NSMutableData *pdfData = [NSMutableData data];
-        
-        CGRect pageFrame = CGRectMake(0, 0, 612, 792);
-        UIGraphicsBeginPDFContextToData(pdfData, pageFrame, nil);
-        UIGraphicsBeginPDFPage();
-        
-        
-        [self setUpPageWithFrame:frame strokeColor:strokeColor];
-        [self drawHeadersAndStaticTextWithFrame:frame withStrokeColor:strokeColor];
-        
-        
-        NSString *ref = shipment.primary_reference_number;
-        Stop *picStop =  [[CVChepClient sharedClient]getPickStopWithShipmentNumber:ref];
-        picStop.processed = [NSNumber numberWithBool:YES];
-        
-        NSLog(@"This is the index %lu and the pictop is %@", (unsigned long)outerIndex,picStop.location_name);
-        
-        UIImage* senderSignature = [UIImage imageWithData:picStop.signatureSnapshot];
-        NSString* pickStopName = picStop.location_name;
-        NSString* pickStopAddress1 = picStop.address.address1;
-        NSString* pickStopCity = picStop.address.city;
-        NSString* pickStopState = picStop.address.state;
-
-        CGRect plannedDateBox = CGRectMake(CGRectGetMinX(frame) + 220, CGRectGetMinY(frame) + 261, 101, 15);
-        [strokeColor setFill];
-        [[df stringFromDate:stop.planned_end] drawInRect: plannedDateBox withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
-
-        CGRect loadNumberRect = CGRectMake(CGRectGetMinX(frame) + 402, CGRectGetMinY(frame) + 261, 126, 18);
-        [strokeColor setFill];
-        [stop.load.load_number drawInRect: loadNumberRect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
     
-        CGRect shipmentNumberBox = CGRectMake(CGRectGetMinX(frame) + 401, CGRectGetMinY(frame) + 158, 147, 15);
-        [strokeColor setFill];
-        [shipment.primary_reference_number drawInRect: shipmentNumberBox withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
     
-        CGRect commentsBox = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 528, 374, 15);
-        [strokeColor setFill];
-        [@"** This load was complete through the mobile application" drawInRect: commentsBox withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
-        
-            ///write shipment number
-            NSArray *items = [shipment.items allObjects];
-            [items enumerateObjectsUsingBlock:^(Item *item, NSUInteger innerIndex, BOOL *stop) {
-                
-                
-                CGRect dESCRIPTIONRect1 = CGRectMake(CGRectGetMinX(frame) + 175, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex)  ), 147, 15);
-                [strokeColor setFill];
-                [item.product_description drawInRect: dESCRIPTIONRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 8] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
-                
-                CGRect pLANNEDQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 398, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex)  ), 73, 14);
-                [strokeColor setFill];
-                
-                
-                [[item.pieces stringValue] drawInRect: pLANNEDQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
-                
-                
-                CGRect aCTUALQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 487, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex)  ), 73, 14);
-                [strokeColor setFill];
-                [[item.updated_pieces stringValue] drawInRect: aCTUALQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
-                
-                
-                CGRect pRODUCTRect1 = CGRectMake(CGRectGetMinX(frame) + 86, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex)  ), 73, 14);
-                [strokeColor setFill];
-                [item.product_id drawInRect: pRODUCTRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
-                
-                
-                
-                
-            }];//items enumeration
-
-        CGRect pickStopCityBox = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 321, 160, 16);
-        [strokeColor setFill];
-        [pickStopCity drawInRect: pickStopCityBox withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
     
-        CGRect dropStopStateBox = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 295, 160, 20);
-        [strokeColor setFill];
-        [dropStopState drawInRect: dropStopStateBox withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+    NSMutableData *pdfData = [NSMutableData data];
+    
+    CGRect pageFrame = CGRectMake(0, 0, 612, 792);
+    UIGraphicsBeginPDFContextToData(pdfData, pageFrame, nil);
+    UIGraphicsBeginPDFPage();
+    
+    
+    [self setUpPageWithFrame:frame strokeColor:strokeColor];
+    [self drawHeadersAndStaticTextWithFrame:frame withStrokeColor:strokeColor];
+    
+    
+    NSString *ref = shipment.primary_reference_number;
 
-        CGRect dropStopAddress1Box = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 281, 160, 18);
-        [strokeColor setFill];
-        [dropStopAddress1 drawInRect: dropStopAddress1Box withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
-        
+    UIImage* senderSignature = [UIImage imageWithData:picStop.signatureSnapshot];
+    NSString* pickStopName = picStop.location_name;
+    NSString* pickStopAddress1 = picStop.address.address1;
+    NSString* pickStopCity = picStop.address.city;
+    NSString* pickStopState = picStop.address.state;
 
-        CGRect receiverLocationNameRect = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 261, 160, 21);
-        [strokeColor setFill];
-        [dropStopName drawInRect: receiverLocationNameRect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+    CGRect plannedDateBox = CGRectMake(CGRectGetMinX(frame) + 220, CGRectGetMinY(frame) + 261, 101, 15);
+    [strokeColor setFill];
+    [[df stringFromDate:stop.planned_end] drawInRect: plannedDateBox withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
 
-        CGRect unkown = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 217, 160, 16);
-        [strokeColor setFill];
-        [@"what am i?" drawInRect: unkown withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+    CGRect loadNumberRect = CGRectMake(CGRectGetMinX(frame) + 402, CGRectGetMinY(frame) + 261, 126, 18);
+    [strokeColor setFill];
+    [stop.load.load_number drawInRect: loadNumberRect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
 
-        CGRect pickStopStatebox = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 191, 160, 20);
-        [strokeColor setFill];
-        [pickStopState drawInRect: pickStopStatebox withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
-        
+    CGRect shipmentNumberBox = CGRectMake(CGRectGetMinX(frame) + 401, CGRectGetMinY(frame) + 158, 147, 15);
+    [strokeColor setFill];
+    [shipment.primary_reference_number drawInRect: shipmentNumberBox withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
 
-        CGRect pickStopAddress1Box = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 177, 160, 18);
-        [strokeColor setFill];
-        [pickStopAddress1 drawInRect: pickStopAddress1Box withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+    CGRect commentsBox = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 528, 374, 15);
+    [strokeColor setFill];
+    [shipment.comments drawInRect: commentsBox withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+    
+        ///write shipment number
+        NSArray *items = [shipment.items allObjects];
+        [items enumerateObjectsUsingBlock:^(Item *item, NSUInteger innerIndex, BOOL *stop) {
+            
+            
+            CGRect dESCRIPTIONRect1 = CGRectMake(CGRectGetMinX(frame) + 175, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex)  ), 147, 15);
+            [strokeColor setFill];
+            [item.product_description drawInRect: dESCRIPTIONRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 8] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+            
+            CGRect pLANNEDQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 398, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex)  ), 73, 14);
+            [strokeColor setFill];
+            
+            
+            [[item.pieces stringValue] drawInRect: pLANNEDQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+            
+            
+            CGRect aCTUALQUANTITYRect1 = CGRectMake(CGRectGetMinX(frame) + 487, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex)  ), 73, 14);
+            [strokeColor setFill];
+            [[item.updated_pieces stringValue] drawInRect: aCTUALQUANTITYRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 9] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+            
+            
+            CGRect pRODUCTRect1 = CGRectMake(CGRectGetMinX(frame) + 86, CGRectGetMinY(frame) + ( 375 + (10 * innerIndex)  ), 73, 14);
+            [strokeColor setFill];
+            [item.product_id drawInRect: pRODUCTRect1 withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentCenter];
+            
+            
+            
+            
+        }];//items enumeration
 
-        CGRect pickStopNameBox = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 157, 160, 21);
-        [strokeColor setFill];
-        [pickStopName drawInRect: pickStopNameBox withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+    CGRect pickStopCityBox = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 321, 160, 16);
+    [strokeColor setFill];
+    [pickStopCity drawInRect: pickStopCityBox withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
 
-        
-        
-        //// senderSignatureBox Drawing
-        CGRect senderSignatureBoxRect = CGRectMake(CGRectGetMinX(frame) + 67.5, CGRectGetMinY(frame) + 576.5, 115, 57);
-        [senderSignature drawInRect:senderSignatureBoxRect];
-        
-        //// dropStopSignatureBox Drawing
-        CGRect dropStopSignatureBoxRect = CGRectMake(CGRectGetMinX(frame) + 424.5, CGRectGetMinY(frame) + 567.5, 114, 66);
-        [dropStopSignature drawInRect:dropStopSignatureBoxRect];
-        
-        
-        UIGraphicsEndPDFContext();
-        NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
-        NSString* documentDirectory = [documentDirectories objectAtIndex:0];
-        NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.pdf",ref]];
-        NSLog(@"aFilename will be wrote: %@", documentDirectoryFilename);
-        
-        Pod *pod = [NSEntityDescription insertNewObjectForEntityForName:@"Pod" inManagedObjectContext:[CVChepClient sharedClient].moc];
-        pod.data = pdfData;
-        pod.ref = ref;
-        
-        [stop.load addPodsObject:pod];
+    CGRect dropStopStateBox = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 295, 160, 20);
+    [strokeColor setFill];
+    [dropStopState drawInRect: dropStopStateBox withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
 
-        [[CVChepClient sharedClient].moc save:nil];
-        if (![pdfData writeToFile:documentDirectoryFilename atomically:YES]) {
-            NSLog(@"saving file didnt work");
-        }
-        
+    CGRect dropStopAddress1Box = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 281, 160, 18);
+    [strokeColor setFill];
+    [dropStopAddress1 drawInRect: dropStopAddress1Box withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+    
+
+    CGRect receiverLocationNameRect = CGRectMake(CGRectGetMinX(frame) + 47, CGRectGetMinY(frame) + 261, 160, 21);
+    [strokeColor setFill];
+    [dropStopName drawInRect: receiverLocationNameRect withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+
+    CGRect unkown = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 217, 160, 16);
+    [strokeColor setFill];
+    [@"what am i?" drawInRect: unkown withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+
+    CGRect pickStopStatebox = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 191, 160, 20);
+    [strokeColor setFill];
+    [pickStopState drawInRect: pickStopStatebox withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+    
+
+    CGRect pickStopAddress1Box = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 177, 160, 18);
+    [strokeColor setFill];
+    [pickStopAddress1 drawInRect: pickStopAddress1Box withFont: [UIFont fontWithName: @"Helvetica" size: 10] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+
+    CGRect pickStopNameBox = CGRectMake(CGRectGetMinX(frame) + 44, CGRectGetMinY(frame) + 157, 160, 21);
+    [strokeColor setFill];
+    [pickStopName drawInRect: pickStopNameBox withFont: [UIFont fontWithName: @"Helvetica" size: 12] lineBreakMode: NSLineBreakByWordWrapping alignment: NSTextAlignmentLeft];
+
+    
+    
+    //// senderSignatureBox Drawing
+    CGRect senderSignatureBoxRect = CGRectMake(CGRectGetMinX(frame) + 67.5, CGRectGetMinY(frame) + 576.5, 115, 57);
+    [senderSignature drawInRect:senderSignatureBoxRect];
+    
+    CGRect senderNameBoxRect = CGRectMake(CGRectGetMinX(frame) + 67.5, CGRectGetMinY(frame) + 640, 115, 57);
+    UIFont *font = [UIFont fontWithName:@"Helvetica" size:12];
+    [picStop.customerName drawInRect:senderNameBoxRect withAttributes:@{
+                                                                        NSFontAttributeName:font,
+                                                                        }];
+    
+    
+    
+    
+    //// dropStopSignatureBox Drawing
+    CGRect dropStopSignatureBoxRect = CGRectMake(CGRectGetMinX(frame) + 424.5, CGRectGetMinY(frame) + 567.5, 114, 66);
+    [dropStopSignature drawInRect:dropStopSignatureBoxRect];
+    
+    CGRect dropStopNameBoxRect = CGRectMake(CGRectGetMinX(frame) + 424.5, CGRectGetMinY(frame) + 567.5, 114, 66);
+    [stop.customerName drawInRect:dropStopNameBoxRect withAttributes:@{NSAttachmentAttributeName:font}];
+    
+    
+    UIGraphicsEndPDFContext();
+    NSArray* documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
+    NSString* documentDirectory = [documentDirectories objectAtIndex:0];
+    NSString* documentDirectoryFilename = [documentDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.pdf",ref]];
+    NSLog(@"aFilename will be wrote: %@", documentDirectoryFilename);
+    
+    [[CVChepClient sharedClient]uploadPhoto:[NSData dataWithData:pdfData] ofType:@"pod" forStopId:stop.id withLoadId:stop.load.id withComment:ref completion:^(NSDictionary *responseDic, NSError *error) {
+        NSLog(@"That worked");
     }];
+    if (![pdfData writeToFile:documentDirectoryFilename atomically:YES]) {
+        NSLog(@"saving file didnt work");
+    }
+    
+    
+    
+
+        
+
     
     
 }

@@ -15,5 +15,5 @@
 
 @interface CVSignatureViewController : UIViewController
 @property(nonatomic)id<CCSignatureViewControllerDelegate>delegate;
-@property(nonatomic)NSArray *itemsArray;
+@property(nonatomic)NSDictionary *loadInfo;
 @end

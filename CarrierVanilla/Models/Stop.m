@@ -2,7 +2,7 @@
 //  Stop.m
 //  Chep Carrier
 //
-//  Created by shane davis on 14/10/2014.
+//  Created by shane davis on 07/08/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
@@ -11,6 +11,7 @@
 #import "Load.h"
 #import "Shipment.h"
 #import "Item.h"
+
 
 @implementation Stop
 
@@ -34,7 +35,6 @@
 @dynamic type;
 @dynamic volume;
 @dynamic weight;
-@dynamic processed;
 @dynamic address;
 @dynamic load;
 @dynamic shipments;
@@ -43,7 +43,7 @@
     
     [[self.shipments allObjects]enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger idx, BOOL *stop) {
         [[shipment.items allObjects]enumerateObjectsUsingBlock:^(Item *currentItem, NSUInteger idx, BOOL *stop) {
-            if (![currentItem.finalized boolValue]) {
+            if (!currentItem.finalized) {
                 complete = NO;
             }
         }];

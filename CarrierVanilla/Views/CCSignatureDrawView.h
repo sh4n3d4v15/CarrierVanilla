@@ -10,9 +10,9 @@
 @protocol CCSignatureDrawViewDelegate <NSObject>
 
 -(void)saveSignatureSnapshotAsData:(NSData *)imageData andSignatureBezier:(UIBezierPath*)signatureBezierPath updateQuantity:(NSString*)quantity andDismissView: (UIView*)view;
--(void)cancelActionAndRemoveSignatureView: (UIView*)view;
+
 @end
-@interface CCSignatureDrawView : UIImageView {
+@interface CCSignatureDrawView : UIImageView <UITextFieldDelegate> {
     CGPoint lastPoint;
     BOOL mouseSwiped;
 }

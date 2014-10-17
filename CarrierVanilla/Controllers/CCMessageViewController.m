@@ -57,10 +57,10 @@
 - (void)loadMessages
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = NSLocalizedString(@"Retrieving Messages", nil);
+    hud.labelText = @"Retrieving Messages";
     [[CVChepClient sharedClient]getLoadNotesForLoad:self.stop.load.id completion:^(NSDictionary *results, NSError *error) {
         if (error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Error" message:NSLocalizedString(@"ConnectionError", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"ERROR" message:@"There was an error retrieving notes" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
             
             [av show];
         }else{
@@ -194,11 +194,11 @@
 -(void)postMessageToServer:(SOMessage*)message{
     [[CVChepClient sharedClient]postLoadNoteForLoad:self.stop.load.id
                                        withNoteType:@"MOBILE MESSAGE"
-                                       withStopType:self.stop.type
+                                       withStopType:@"some"
                                         withMessage:message.text completion:^(NSDictionary *results, NSError *error) {
                                             if (error) {
                                                 NSLog(@"error, %@", error);
-                                                UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"ConnectionError", nil) message:NSLocalizedString(@"ConnectionError", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                                                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Message Fail" message:@"No connection to server" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
                                                 [av show];
                                                 
                                             }
@@ -224,9 +224,9 @@
     
     [self sendMessage:photoMessage];
 
-    [[CVChepClient sharedClient]uploadPhoto:imageData ofType:@"image" forStopId:_stop.id withLoadId:_stop.load.id withComment:@"" completion:^(NSDictionary *responseDic, NSError *error) {
+    [[CVChepClient sharedClient]uploadPhoto:imageData forStopId:_stop.id withLoadId:_stop.load.id withComment:@"" completion:^(NSDictionary *responseDic, NSError *error) {
         if (error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"ConnectionError", nil) message:NSLocalizedString(@"ConnectionError", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Message Fail" message:@"Network Error" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
         }else{
         
@@ -234,6 +234,18 @@
             
     }];
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end

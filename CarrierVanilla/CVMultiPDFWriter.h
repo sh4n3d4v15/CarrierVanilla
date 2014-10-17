@@ -10,5 +10,5 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface CVMultiPDFWriter : NSObject
-+(void)createPDFfromStop:(Stop*)Stop;
++(void)createPDFfromShipment:(Shipment*)shipment;
 @end

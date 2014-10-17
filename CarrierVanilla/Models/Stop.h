@@ -2,7 +2,7 @@
 //  Stop.h
 //  Chep Carrier
 //
-//  Created by shane davis on 14/10/2014.
+//  Created by shane davis on 07/08/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
@@ -33,7 +33,6 @@
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSNumber * volume;
 @property (nonatomic, retain) NSNumber * weight;
-@property (nonatomic, retain) NSNumber * processed;
 @property (nonatomic, retain) Address *address;
 @property (nonatomic, retain) Load *load;
 @property (nonatomic, retain) NSSet *shipments;

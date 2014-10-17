@@ -7,7 +7,9 @@
 //
 
 #import "CVSignatureViewController.h"
+#import "Shipment.h"
 #import "Item.h"
+#import "Stop.h"
 #import "SignatureView.h"
 #import "UIColor+MLPFLatColors.h"
 #import "CVItemTableViewCell.h"
@@ -60,7 +62,6 @@
     
     self.talbeView.separatorColor = [UIColor clearColor];
     
-    NSLog(@"Items array: %@", _itemsArray);
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:singleTap];
@@ -107,16 +108,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark -Tableview methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -127,7 +118,7 @@
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [_itemsArray count];
+    return [[_loadInfo valueForKey:@"items"] count];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -136,7 +127,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     CVItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    Item *item = _itemsArray[indexPath.row];
+    Item *item = [_loadInfo valueForKey:@"items"][indexPath.row];
     cell.productLabel.text = [NSString stringWithFormat:@"%@", item.product_description];
     cell.productLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:12];
 
@@ -167,6 +158,9 @@
 
 #pragma mark -IBActions
 - (IBAction)acceptPressed:(id)sender {
+    
+    Stop *stop = [_loadInfo valueForKey:@"stop"];
+    stop.customerName = _nameField.text;
         [self.delegate signatureViewData:[self.signatureView signatureData]];
         [self.navigationController popViewControllerAnimated:YES];
 }
