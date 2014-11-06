@@ -19,6 +19,7 @@
 #import "Shipment.h"
 #import "Item.h"
 #import "MBProgressHUD.h"
+#import "CVCoreDataManager.h"
 
 
 @interface CVMasterViewController ()<stopChangeDelegate,CCLoginViewDelegate,UIActionSheetDelegate>
@@ -90,13 +91,12 @@
 }
 
 -(void)refresh:(id)sender{
-    NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
-    [[CVChepClient sharedClient]getStopsForUser:userinfo completion:^(NSString *responseMessage, NSError *error) {
+    [[CVChepClient sharedClient]getLoadsForUser:nil completion:^(NSArray *loads, NSError *error) {
         if (error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Problem refreshing", nil)  message:responseMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Problem refreshing", nil)  message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
         }
-            [(UIRefreshControl*)sender endRefreshing];
+        [(UIRefreshControl*)sender endRefreshing];
     }];
 }
 
@@ -323,14 +323,16 @@
 
 #pragma mark  -  Delegate methods
 
--(void)userDidLoginWithDictionary:(NSDictionary *)userInfo completion:(void (^)(NSError *, NSString *))completion{
-    _userinfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"userinfo"];
-    [[CVChepClient sharedClient].operationQueue setSuspended:NO];
-    [[CVChepClient sharedClient]getStopsForUser:userInfo completion:^(NSString *responseMessage, NSError *error) {
-        completion(error,responseMessage);
+
+-(void)userLoginWithcredentials:(NSDictionary *)credentials completion:(void (^)(NSError *))completion{
+    
+    [[CVChepClient sharedClient]getLoadsForUser:credentials completion:^(NSArray *loads, NSError *error) {
+        if (!error) {
+            [[CVCoreDataManager sharedClient]importArrayOfStopsIntoCoreData:loads];
+        }
+        completion(error);
     }];
 }
-
 
 -(void)saveChangesOnContext{
     NSError *error;

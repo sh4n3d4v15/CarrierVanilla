@@ -87,6 +87,7 @@
 		D0DE9F43195DFD7E0095BC5A /* pickicondone1.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F3F195DFD7E0095BC5A /* pickicondone1.png */; };
 		D0DE9F44195DFD7E0095BC5A /* pickicondone1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0DE9F40195DFD7E0095BC5A /* pickicondone1@2x.png */; };
 		D0F7FE5F194E0EBA002CCD9F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */; };
+		D0FDBF6D1A0BDCA000090315 /* CVCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FDBF6B1A0BDCA000090315 /* CVCoreDataManager.m */; };
 		D0FFEEEB1969D79B00581F8F /* CVItemLongPress.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FFEEEA1969D79B00581F8F /* CVItemLongPress.m */; };
 		D0FFEEEE196BF59900581F8F /* CVItemTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D0FFEEED196BF59900581F8F /* CVItemTextField.m */; };
 /* End PBXBuildFile section */
@@ -217,6 +218,9 @@
 		D0DE9F40195DFD7E0095BC5A /* pickicondone1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pickicondone1@2x.png"; path = "Images/pickicondone1@2x.png"; sourceTree = "<group>"; };
 		D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D0FDBF691A0BC8EA00090315 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D0FDBF6A1A0BDCA000090315 /* CVCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVCoreDataManager.h; sourceTree = "<group>"; };
+		D0FDBF6B1A0BDCA000090315 /* CVCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVCoreDataManager.m; sourceTree = "<group>"; };
+		D0FDBF6C1A0BDCA000090315 /* MLClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLClient.h; sourceTree = "<group>"; };
 		D0FFEEE91969D79B00581F8F /* CVItemLongPress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVItemLongPress.h; path = Controllers/CVItemLongPress.h; sourceTree = "<group>"; };
 		D0FFEEEA1969D79B00581F8F /* CVItemLongPress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVItemLongPress.m; path = Controllers/CVItemLongPress.m; sourceTree = "<group>"; };
 		D0FFEEEC196BF59900581F8F /* CVItemTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVItemTextField.h; path = Views/CVItemTextField.h; sourceTree = "<group>"; };
@@ -446,6 +450,9 @@
 		D0D3F38E1950501C00452C58 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D0FDBF6A1A0BDCA000090315 /* CVCoreDataManager.h */,
+				D0FDBF6B1A0BDCA000090315 /* CVCoreDataManager.m */,
+				D0FDBF6C1A0BDCA000090315 /* MLClient.h */,
 				D0B078F7199372C600CE8DF9 /* Stop.h */,
 				D0B078F8199372C600CE8DF9 /* Stop.m */,
 				D0B078F41993727C00CE8DF9 /* Load.h */,
@@ -664,6 +671,7 @@
 				D0B078F9199372C600CE8DF9 /* Stop.m in Sources */,
 				D0B078FC1993731100CE8DF9 /* Loadnote.m in Sources */,
 				D01A4522195472F400D60990 /* CVUpdateButton.m in Sources */,
+				D0FDBF6D1A0BDCA000090315 /* CVCoreDataManager.m in Sources */,
 				D0B078F61993727C00CE8DF9 /* Load.m in Sources */,
 				D0D3F368194E3F2F00452C58 /* HTAutocompleteManager.m in Sources */,
 				D0D3F35F194E39DE00452C58 /* CCLoginViewController.m in Sources */,

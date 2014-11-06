@@ -9,8 +9,7 @@
 #import "CVAppDelegate.h"
 
 #import "CVMasterViewController.h"
-#import "Pop.h"
-
+#import "CVCoreDataManager.h"
 @implementation CVAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -26,6 +25,9 @@
     UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
     CVMasterViewController *controller = (CVMasterViewController *)navigationController.topViewController;
     controller.managedObjectContext = self.managedObjectContext;
+    
+    [CVCoreDataManager sharedClient].managedObjectContext = self.managedObjectContext;
+    
     [[UINavigationBar appearance]setBarTintColor:UIColorFromRGB(0x3c6ba1)];
     [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];

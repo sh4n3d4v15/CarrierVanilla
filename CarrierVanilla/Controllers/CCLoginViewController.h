@@ -10,7 +10,7 @@
 
 @protocol CCLoginViewDelegate <NSObject>
 
--(void)userDidLoginWithDictionary:(NSDictionary*)userInfo completion:(void(^)(NSError*,NSString*))completion;
+-(void)userLoginWithcredentials:(NSDictionary*)credentials completion:(void(^)(NSError*))completion;
 
 @end
 

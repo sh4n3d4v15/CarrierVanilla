@@ -1,16 +1,15 @@
 //
-//  MLChepClient.h
+//  MLClient.h
 //  MobileLogistics
 //
-//  Created by shane davis on 05/06/2014.
+//  Created by shane davis on 23/10/2014.
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
 #import "AFHTTPSessionManager.h"
-#import "Stop.h"
-@interface CVChepClient : AFHTTPSessionManager
 
-+(CVChepClient*)sharedClient;
+@interface MLClient : AFHTTPSessionManager
++(MLClient*)sharedClient;
 
 @property(nonatomic)NSString *username;
 @property(nonatomic)NSString *password;

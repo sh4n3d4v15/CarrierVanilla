@@ -108,7 +108,7 @@
         NSDate *messageCreatedDate = [_df dateFromString:message[@"created_date"]];
         NSComparisonResult result = [messageCreatedDate compare:_lastMessageDate];
         NSLog(@"Last message date is : %@", _lastMessageDate);
-        NSLog(@"Comparison result : %d", result);
+        NSLog(@"Comparison result : %ld", result);
         if (result == NSOrderedDescending || _lastMessageDate == NULL )
         {
             
@@ -207,17 +207,14 @@
 }
 
 -(void)postMessageToServer:(SOMessage*)message{
-    [[CVChepClient sharedClient]postLoadNoteForLoad:self.stop.load.id
-                                       withNoteType:@"MOBILE MESSAGE"
-                                       withStopType:self.stop.type
-                                        withMessage:message.text completion:^(NSDictionary *results, NSError *error) {
-                                            if (error) {
-                                                NSLog(@"error, %@", error);
-                                                UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"ConnectionError", nil) message:NSLocalizedString(@"ConnectionError", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                                                [av show];
-                                                
-                                            }
-                                        }];
+    
+    [[CVChepClient sharedClient]postLoadNote:message.text forLoad:_stop.load.id withNoteType:@"" andStopType:_stop.type completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"error, %@", error);
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"ConnectionError", nil) message:NSLocalizedString(@"ConnectionError", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [av show];
+        }
+    }];
     // [self sendMessage:message];
 }
 
@@ -238,15 +235,14 @@
     [_stop.load addLoadNotesObject:ln];
     
     [self sendMessage:photoMessage];
-
-    [[CVChepClient sharedClient]uploadPhoto:imageData forStopId:_stop.id withLoadId:_stop.load.id withComment:@"" completion:^(NSDictionary *responseDic, NSError *error) {
+    
+    [[CVChepClient sharedClient]uploadDocument:imageData ofType:@"image" forStop:_stop.id onLoad:_stop.load.id withComment:@"" completion:^(NSError *error) {
         if (error) {
             UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"ConnectionError", nil) message:NSLocalizedString(@"ConnectionError", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
         }else{
-        
-        }
             
+        }
     }];
 }
 
