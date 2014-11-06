@@ -36,10 +36,11 @@
 {
     [super viewDidLoad];
     
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(90, 20, 136.96, 35.2)];
-    imageView.image = [UIImage imageNamed:@"chepnav.png"];
+    [CVChepClient sharedClient];
     
-    [self.navigationController.view addSubview:imageView];
+//    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(90, 20, 136.96, 35.2)];
+//    imageView.image = [UIImage imageNamed:@"chepnav.png"];
+//    [self.navigationController.view addSubview:imageView];
     
     _timeWindowformatter = [[NSDateFormatter alloc]init];
     [_timeWindowformatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
@@ -92,7 +93,7 @@
     NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
     [[CVChepClient sharedClient]getStopsForUser:userinfo completion:^(NSString *responseMessage, NSError *error) {
         if (error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Problem refreshing" message:responseMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Problem refreshing", nil)  message:responseMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
         }
             [(UIRefreshControl*)sender endRefreshing];
@@ -145,16 +146,12 @@
     [view addSubview:stopimageView];
     UILabel *stopCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(159, 2, 100, 18)];
     [stopCountLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [stopCountLabel setText:[NSString stringWithFormat:@"%lu STOPS",(unsigned long)[sectionInfo numberOfObjects]]];
+    [stopCountLabel setText:[NSString stringWithFormat:@"%lu %@",(unsigned long)[sectionInfo numberOfObjects],NSLocalizedString(@"Stops", nil)]  ];
     [stopCountLabel setTextColor:UIColorFromRGB(0x3c6ba1)];
     [view addSubview:stopCountLabel];
     
     
-    UIImageView *networkimageView = [[UIImageView alloc]initWithFrame:CGRectMake(243, 5, 14, 14)];
-    [networkimageView setImage:[UIImage imageNamed:@"network.png"]];
-    [view addSubview:networkimageView];
-    
-    NSString *driver = [NSString stringWithFormat:@"JOB %@",[[[sectionInfo objects]firstObject]valueForKeyPath:@"load.driver"]];
+    NSString *driver = [NSString stringWithFormat:@"# %@",[[[sectionInfo objects]firstObject]valueForKeyPath:@"load.driver"]];
     UILabel *statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(265, 2, 80, 18)];
     [statusLabel setText:driver];
     [statusLabel setFont:[UIFont boldSystemFontOfSize:14]];
@@ -242,10 +239,10 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.load_number" ascending:YES];
-    NSSortDescriptor *typeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.load_number" ascending:YES];
+//    NSSortDescriptor *typeSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:NO];
     NSSortDescriptor *driverSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"load.driver" ascending:YES];
-    NSArray *sortDescriptors = @[driverSortDescriptor,typeSortDescriptor];
+    NSArray *sortDescriptors = @[sortDescriptor,driverSortDescriptor];
     
     
     
@@ -328,6 +325,7 @@
 
 -(void)userDidLoginWithDictionary:(NSDictionary *)userInfo completion:(void (^)(NSError *, NSString *))completion{
     _userinfo = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"userinfo"];
+    [[CVChepClient sharedClient].operationQueue setSuspended:NO];
     [[CVChepClient sharedClient]getStopsForUser:userInfo completion:^(NSString *responseMessage, NSError *error) {
         completion(error,responseMessage);
     }];
@@ -355,6 +353,8 @@
     cell.typeLabel.text = [NSString stringWithUTF8String:[stop.type UTF8String]];
     cell.timeWindowLabel.text = [NSString stringWithFormat:@"%@ - %@",[_timeWindowformatter stringFromDate:stop.planned_start],[_timeWindowformatter stringFromDate:stop.planned_end]];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    NSLog(@"Part of time window %@", [_timeWindowformatter stringFromDate:stop.planned_start]);
+    NSLog(@"Actual of time window %@", stop.planned_start);
 
     if ([stop.type isEqualToString:@"Drop"]) {
         cell.imageView.image = stop.actual_departure ? [UIImage imageNamed:@"dropicondone1.png"] : [UIImage imageNamed:@"dropicon.png"];
@@ -367,8 +367,7 @@
 }
 
 -(void)showLogin:(id)sender{
-    NSLog(@"login button pressed");
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"Switch vehicle or signout carrier" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Logout" otherButtonTitles: @"Switch Vehicle",nil, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:NSLocalizedString(@"Logout", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:NSLocalizedString(@"Logout", nil) otherButtonTitles:nil];
     [actionSheet showInView:self.view];
 }
 
@@ -376,6 +375,7 @@
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     
+    NSLog(@"Button index: %lu", (unsigned long)buttonIndex);
     switch (buttonIndex) {
         case 0:
             [self logOutAsCarrier];
@@ -383,12 +383,6 @@
             [[NSUserDefaults standardUserDefaults]synchronize];
             [self showLoginViewAnimated:YES];
             break;
-        case 1:
-            [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"userLoggedIn"];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-            [self showLoginViewAnimated:YES];
-            break;
-            
         default:
             break;
     }

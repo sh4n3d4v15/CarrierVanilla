@@ -10,6 +10,8 @@
 	<string>CarrierVanilla</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>87BAAF8BFAB50B6F16E560D1EA27FF9F0276773D</key>
+		<string>https://github.com/sh4n3d4v15/CarrierVanilla.git</string>
 		<key>C8CB9D9C-F383-4D3B-BA98-03B108F759CB</key>
 		<string>https://github.com/sh4n3d4v15/CarrierVanilla.git</string>
 	</dict>
@@ -17,15 +19,17 @@
 	<string>CarrierVanilla.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>C8CB9D9C-F383-4D3B-BA98-03B108F759CB</key>
+		<key>87BAAF8BFAB50B6F16E560D1EA27FF9F0276773D</key>
 		<string>..</string>
+		<key>C8CB9D9C-F383-4D3B-BA98-03B108F759CB</key>
+		<string>../../CarrierVanilla</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/sh4n3d4v15/CarrierVanilla.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>C8CB9D9C-F383-4D3B-BA98-03B108F759CB</string>
+	<string>87BAAF8BFAB50B6F16E560D1EA27FF9F0276773D</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -35,6 +39,14 @@
 			<string>C8CB9D9C-F383-4D3B-BA98-03B108F759CB</string>
 			<key>IDESourceControlWCCName</key>
 			<string>CarrierVanilla</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>87BAAF8BFAB50B6F16E560D1EA27FF9F0276773D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CarrierVanilla%20QA</string>
 		</dict>
 	</array>
 </dict>

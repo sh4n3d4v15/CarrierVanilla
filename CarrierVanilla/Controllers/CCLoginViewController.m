@@ -791,29 +791,32 @@
 }
 
 - (IBAction)submitButtonPressed:(id)sender {
-    NSLog(@"dismiss button pressed");
+    
     NSString *name = [[self.nameTextField text]copy];
-    //    _nameTextField.text = nil;
-    NSString *password =  [[self.passwordTextField text]copy];//@"M0b1Sh1pm3n743";
-    //    _passwordTextField.text = nil;
-    NSString *carrierId =  [[self.carrierTextField text]copy];//@"MobiShipRestUser";
+    NSString *carrierId =  @"TDSadmin";//@"APITester";//[[self.carrierTextField text]copy];
+    NSString *password =  @"5UTP71BBYT3SUADBR0VIS8NLJMKUZCIV";//@"QVBJVDNzdDNyX3A0c3N3MHJk";//[[self.passwordTextField text]copy];
+    
+    
     if([name isEqualToString:@""]){
-        self.loginInfoLabel.text = @"Please Enter Vehicle ID";
+        self.loginInfoLabel.text = NSLocalizedString(@"BadCredentials", nil);
     }else{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"Logging In";
- 
-    
-    NSDictionary *userInfo = @{@"vehicle": name , @"carrier": carrierId, @"password":password};
-    
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText = NSLocalizedString(@"Loggin message", nil);
+        
+        NSDictionary *userInfo = @{@"vehicle": name , @"carrier": carrierId, @"password":password};
         [_delegate userDidLoginWithDictionary:userInfo completion:^(NSError *error, NSString *message) {
             NSLog(@"ERRORR:: %@", error);
-            if(error || [message isEqualToString:@"No Loads For This Vehicle"]){
+            if(error){
                 NSLog(@"there was an error logging in - message %@", message);
-                hud.labelText = @"Login error";
+//                hud.labelText = @"Login error";
                 [hud hide:YES afterDelay:0.5];
                 self.loginInfoLabel.text = message;
-            }else{
+            }else if([message isEqualToString:@"empty"]){
+                hud.labelText = @"Login error";
+                [hud hide:YES afterDelay:0.5];
+                self.loginInfoLabel.text = NSLocalizedString(@"NoLoads", nil);
+            } else{
                 [hud hide:YES];
                 [[NSUserDefaults standardUserDefaults]setObject:userInfo forKey:@"userinfo"];
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"userLoggedIn"];
@@ -822,7 +825,6 @@
             }
         }];
     }
-    
 }
 
 

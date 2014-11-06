@@ -23,6 +23,7 @@
 		D04C3314194B3D7000BF42C4 /* CVStopDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */; };
 		D05583B9199BEFCD00CAAEB6 /* steeringwheel.png in Resources */ = {isa = PBXBuildFile; fileRef = D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */; };
 		D05583BA199BEFCD00CAAEB6 /* steeringwheel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D05583B8199BEFCD00CAAEB6 /* steeringwheel@2x.png */; };
+		D08644B919F16F4D00B91C16 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D08644BB19F16F4D00B91C16 /* Localizable.strings */; };
 		D09139831941A4C50029AE98 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139821941A4C50029AE98 /* Foundation.framework */; };
 		D09139851941A4C50029AE98 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139841941A4C50029AE98 /* CoreGraphics.framework */; };
 		D09139871941A4C50029AE98 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139861941A4C50029AE98 /* UIKit.framework */; };
@@ -36,7 +37,8 @@
 		D09139AC1941A4C50029AE98 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139861941A4C50029AE98 /* UIKit.framework */; };
 		D09139AD1941A4C50029AE98 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09139881941A4C50029AE98 /* CoreData.framework */; };
 		D09139B51941A4C50029AE98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D09139B31941A4C50029AE98 /* InfoPlist.strings */; };
-		D09139B71941A4C50029AE98 /* CarrierVanillaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */; };
+		D09906C419F9302600317A88 /* CVChepClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D09906C319F9302600317A88 /* CVChepClientTest.m */; };
+		D09906C519F933E100317A88 /* CVChepClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D0ABC8DC1944E3200095E59E /* CVChepClient.m */; };
 		D0AAA12E196711760044EE87 /* truckwhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA12D196711760044EE87 /* truckwhite@2x.png */; };
 		D0AAA130196711B30044EE87 /* truckwhite.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA12F196711B30044EE87 /* truckwhite.png */; };
 		D0AAA133196712460044EE87 /* flagwhite.png in Resources */ = {isa = PBXBuildFile; fileRef = D0AAA131196712460044EE87 /* flagwhite.png */; };
@@ -123,6 +125,17 @@
 		D04C3313194B3D7000BF42C4 /* CVStopDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVStopDetailTableViewController.m; path = Controllers/CVStopDetailTableViewController.m; sourceTree = "<group>"; };
 		D05583B7199BEFCD00CAAEB6 /* steeringwheel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = steeringwheel.png; sourceTree = "<group>"; };
 		D05583B8199BEFCD00CAAEB6 /* steeringwheel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "steeringwheel@2x.png"; sourceTree = "<group>"; };
+		D08644AE19F16B0100B91C16 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		D08644AF19F16B0100B91C16 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D08644B019F16B0100B91C16 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D08644B219F16B6800B91C16 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		D08644B319F16B6800B91C16 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D08644B419F16EBB00B91C16 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		D08644B519F16EBB00B91C16 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D08644B619F16EBB00B91C16 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D08644BA19F16F4D00B91C16 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D08644BC19F16F5D00B91C16 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D08644BD19F16F6D00B91C16 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D091397F1941A4C50029AE98 /* Chep Carrier QA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chep Carrier QA.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D09139821941A4C50029AE98 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D09139841941A4C50029AE98 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -139,7 +152,7 @@
 		D09139A91941A4C50029AE98 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D09139B21941A4C50029AE98 /* Chep Carrier QATests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Chep Carrier QATests-Info.plist"; sourceTree = "<group>"; };
 		D09139B41941A4C50029AE98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CarrierVanillaTests.m; sourceTree = "<group>"; };
+		D09906C319F9302600317A88 /* CVChepClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVChepClientTest.m; sourceTree = "<group>"; };
 		D0A74338198A611F00279C9D /* Item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		D0A74339198A611F00279C9D /* Item.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		D0AAA12D196711760044EE87 /* truckwhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "truckwhite@2x.png"; path = "Images/truckwhite@2x.png"; sourceTree = "<group>"; };
@@ -203,6 +216,7 @@
 		D0DE9F3F195DFD7E0095BC5A /* pickicondone1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pickicondone1.png; path = Images/pickicondone1.png; sourceTree = "<group>"; };
 		D0DE9F40195DFD7E0095BC5A /* pickicondone1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pickicondone1@2x.png"; path = "Images/pickicondone1@2x.png"; sourceTree = "<group>"; };
 		D0F7FE5E194E0EBA002CCD9F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		D0FDBF691A0BC8EA00090315 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D0FFEEE91969D79B00581F8F /* CVItemLongPress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVItemLongPress.h; path = Controllers/CVItemLongPress.h; sourceTree = "<group>"; };
 		D0FFEEEA1969D79B00581F8F /* CVItemLongPress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVItemLongPress.m; path = Controllers/CVItemLongPress.m; sourceTree = "<group>"; };
 		D0FFEEEC196BF59900581F8F /* CVItemTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVItemTextField.h; path = Views/CVItemTextField.h; sourceTree = "<group>"; };
@@ -300,6 +314,7 @@
 				D09139961941A4C50029AE98 /* Main.storyboard */,
 				D09139A21941A4C50029AE98 /* Images.xcassets */,
 				D091398B1941A4C50029AE98 /* Supporting Files */,
+				D08644BB19F16F4D00B91C16 /* Localizable.strings */,
 			);
 			path = CarrierVanilla;
 			sourceTree = "<group>";
@@ -318,8 +333,8 @@
 		D09139B01941A4C50029AE98 /* CarrierVanillaTests */ = {
 			isa = PBXGroup;
 			children = (
-				D09139B61941A4C50029AE98 /* CarrierVanillaTests.m */,
 				D09139B11941A4C50029AE98 /* Supporting Files */,
+				D09906C319F9302600317A88 /* CVChepClientTest.m */,
 			);
 			path = CarrierVanillaTests;
 			sourceTree = "<group>";
@@ -522,6 +537,9 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				es,
+				de,
 			);
 			mainGroup = D09139761941A4C50029AE98;
 			productRefGroup = D09139801941A4C50029AE98 /* Products */;
@@ -547,6 +565,7 @@
 				D0D3F384194EFD7E00452C58 /* chep.png in Resources */,
 				D09139A31941A4C50029AE98 /* Images.xcassets in Resources */,
 				D0DE9F34195DFA7F0095BC5A /* pickicon@2x.png in Resources */,
+				D08644B919F16F4D00B91C16 /* Localizable.strings in Resources */,
 				D0AEB4E21998F095003C506F /* network.png in Resources */,
 				D05583BA199BEFCD00CAAEB6 /* steeringwheel@2x.png in Resources */,
 				D0D3F381194EFD7E00452C58 /* bubble@2x.png in Resources */,
@@ -662,7 +681,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D09139B71941A4C50029AE98 /* CarrierVanillaTests.m in Sources */,
+				D09906C419F9302600317A88 /* CVChepClientTest.m in Sources */,
+				D09906C519F933E100317A88 /* CVChepClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,10 +697,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		D08644BB19F16F4D00B91C16 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D08644BA19F16F4D00B91C16 /* es */,
+				D08644BC19F16F5D00B91C16 /* fr */,
+				D08644BD19F16F6D00B91C16 /* en */,
+				D0FDBF691A0BC8EA00090315 /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		D091398D1941A4C50029AE98 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D091398E1941A4C50029AE98 /* en */,
+				D08644AF19F16B0100B91C16 /* fr */,
+				D08644B319F16B6800B91C16 /* es */,
+				D08644B519F16EBB00B91C16 /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -689,6 +723,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				D09139971941A4C50029AE98 /* Base */,
+				D08644AE19F16B0100B91C16 /* fr */,
+				D08644B219F16B6800B91C16 /* es */,
+				D08644B419F16EBB00B91C16 /* de */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -697,6 +734,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				D09139B41941A4C50029AE98 /* en */,
+				D08644B019F16B0100B91C16 /* fr */,
+				D08644B619F16EBB00B91C16 /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

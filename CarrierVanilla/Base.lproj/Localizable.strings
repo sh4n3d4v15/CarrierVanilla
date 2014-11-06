@@ -1,0 +1,47 @@
+/* 
+  Localizable.strings
+  Chep Carrier QA
+
+  Created by shane davis on 17/10/2014.
+  Copyright (c) 2014 shane davis. All rights reserved.
+*/
+
+"HelloKey" = "Hello";
+"Loggin message" = "Logging in";
+"NoLoads" = "No Loads for this vehicle";
+"badLogin" = "User login not successful";
+"ConnectionError" = "No network connection available";
+"BadCredentials" = "Please enter vehicle ID";
+"Type message..." = "Type message...";
+"Send" = "Send";
+"Stops" = "STOPS";
+"CustomerRef" = "CUSTOMER REFERENCE: ";
+"SpecialInst" = "SPECIAL INSTRUCTIONS";
+"CollectFrom" = "COLLECT FROM: ";
+"DeliverTo" = "DELIVER TO: ";
+"arrived at" = "Arrived at:";
+
+"Logout" = "Logout";
+"Cancel" = "Cancel";
+"Yes" = "YES";
+
+"Street" = "STREET";
+"City" = "CITY";
+"County" = "COUNTY";
+"PostCode" = "POSTCODE";
+
+"CompleteStop" = "Complete Stop";
+"CheckIn" = "Check-in at:";
+"Checkin button" = "Check-in";
+"No" = "No";
+
+"Cannot find on map" = "Cannot find on map";
+"Problem refreshing" = "Problem refreshing";
+
+"Saving Load" = "Saving Load";
+"Success" = "Success";
+"Retrieving Messages" = "Retrieving Messages";
+
+
+"Already Checked in!" = "Already Checked in!";
+"Release to Check-In" = "Release to Check-In";

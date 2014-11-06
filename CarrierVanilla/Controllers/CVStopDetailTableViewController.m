@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *msgNavButton;
 @property(nonatomic)CVUpdateButton *updateButton;
 @property(nonatomic)UIButton *checkOutButton;
+@property(nonatomic)CLLocation *location;
+
 
 @end
 
@@ -62,7 +64,7 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     refreshControl.tintColor = [UIColor whiteColor];
     [refreshControl addTarget:self action:@selector(updateStopStatus:) forControlEvents:UIControlEventValueChanged];
-    refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:_stop.actual_arrival ? @"Already Checked in!" : @"Release to Check-In"
+    refreshControl.attributedTitle = [[NSAttributedString alloc]initWithString:_stop.actual_arrival ? NSLocalizedString(@"Already Checked in!", @"Already Checked in!") : NSLocalizedString(@"Release to Check-In", @"Release to Check-In")
                                                                     attributes:@{
                                                                                                                  NSForegroundColorAttributeName: [UIColor whiteColor],
                                                                                                                  NSFontAttributeName:[UIFont systemFontOfSize:20]
@@ -93,49 +95,31 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     [self.view addGestureRecognizer:singleTap];
     
-    if (![_stop.longitude doubleValue]) {
-        
-        CLGeocoder *geocoder = [[CLGeocoder alloc]init];
-        [geocoder geocodeAddressDictionary:@{
-                                             @"City":_stop.address.city,
-                                             @"Zip":_stop.address.zip
-                                             } completionHandler:^(NSArray *placemarks, NSError *error) {
-                                                 
-                                                 if (error) {
-                                                 }else{
-                                                     CLPlacemark *placemark = [placemarks objectAtIndex:0];
-                                                     CLLocation *location = placemark.location;
-                                                     
-                                                     MKCoordinateRegion region;
-                                                     MKCoordinateSpan span;
-                                                     span.latitudeDelta = 0.005;
-                                                     span.longitudeDelta = 0.005;
-                                                     _stop.latitude = [NSNumber numberWithDouble:location.coordinate.latitude];
-                                                     _stop.longitude = [NSNumber numberWithDouble:location.coordinate.longitude];
-                                                     [self.delegate saveChangesOnContext];
-                                                     region.span = span;
-                                                     region.center = location.coordinate;
-                                                    [_mapView setRegion:region animated:YES];
-                                                    [self addAnnotationToMap:location];
-                                                 }
-                                             }];
-        
-    }else{
-        
-        MKCoordinateRegion region;
-        MKCoordinateSpan span;
-        span.latitudeDelta = 0.005;
-        span.longitudeDelta = 0.005;
-        
-        CLLocation *location = [[CLLocation alloc]initWithLatitude:[_stop.latitude doubleValue] longitude:[_stop.longitude doubleValue]];
-        region.span = span;
-        region.center = location.coordinate;
-        [_mapView setRegion:region animated:NO];
-        [self addAnnotationToMap:location];
-
-    }
     
-    
+    CLGeocoder *geocoder = [[CLGeocoder alloc]init];
+    [geocoder geocodeAddressDictionary:@{
+                                         @"City":_stop.address.city,
+                                         @"Zip":_stop.address.zip
+                                         }
+                     completionHandler:^(NSArray *placemarks, NSError *error) {
+                         
+                         
+                         if (error) {
+                                                          UIAlertView *al = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Cannot find on map", nil) message:NSLocalizedString(@"Cannot find on map", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                                                          [al show];
+                         }else{
+                             CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                             _location = placemark.location;
+                             MKCoordinateRegion region;
+                             MKCoordinateSpan span;
+                             span.latitudeDelta = 0.005;
+                             span.longitudeDelta = 0.005;
+                             region.span = span;
+                             region.center = _location.coordinate;
+                             [_mapView setRegion:region animated:YES];
+                             [self addAnnotationToMap:_location];
+                         }
+                     }];
 }
 
 -(void)addAnnotationToMap:(CLLocation*)location{
@@ -179,13 +163,13 @@
     [label setTextColor:UIColorFromRGB(0x3c6ba1)];
     
     if (section == 0) {
-        [label setText:[NSString stringWithFormat:@"%@ %@", [self.stop.type isEqualToString:@"Pick"]? @"COLLECT FROM: " : @"DELIVER TO: ", [NSString stringWithUTF8String:[self.stop.location_name UTF8String]]]];
+        [label setText:[NSString stringWithFormat:@"%@ %@", [self.stop.type isEqualToString:@"Pick"]? NSLocalizedString(@"CollectFrom", nil) : NSLocalizedString(@"DeliverTo", nil), [NSString stringWithUTF8String:[self.stop.location_name UTF8String]]]];
     }else if (section == 2){
-        [label setText:@"SPECIAL INSTRUCTIONS"];
+        [label setText:NSLocalizedString(@"SpecialInst", @"SpecialInst")];
     } else{
         NSArray *shipments = [self.stop.shipments allObjects];
         Shipment *shipment = shipments[section-1];
-        NSString *fullString = [NSString stringWithFormat:@"CUSTOMER REFERENCE  %@", shipment.primary_reference_number];
+        NSString *fullString = [NSString stringWithFormat:@"%@  %@",NSLocalizedString(@"CustomerRef", nil) , shipment.primary_reference_number];
         [label setText:fullString];
     }
     [view addSubview:label];
@@ -224,23 +208,23 @@
         Address *address = self.stop.address;
         
         UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10,  5, CGRectGetWidth(containerView.bounds)-20, 20)];
-        addressOneLabel.text = [NSString stringWithFormat:@"STREET: %@", [NSString stringWithUTF8String:[address.address1 UTF8String]]];
+        addressOneLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Street", @"Street"),[NSString stringWithUTF8String:[address.address1 UTF8String]]];
         addressOneLabel.textColor = [UIColor flatDarkGreenColor];
         addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13];
         
         UILabel *cityLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, CGRectGetWidth(containerView.bounds)-20, 20)];
-        cityLabel.text = [NSString stringWithFormat:@"CITY: %@", [NSString stringWithUTF8String:[address.city UTF8String]]];
+        cityLabel.text = [NSString stringWithFormat:@"%@: %@",NSLocalizedString(@"City", @"City"), [NSString stringWithUTF8String:[address.city UTF8String]]];
         cityLabel.textColor = [UIColor flatDarkGreenColor];
         cityLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
         
         
         UILabel *stateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 35, 100, 20)];
-        stateLabel.text = [NSString stringWithFormat:@"STATE: %@", [NSString stringWithUTF8String:[address.state UTF8String]]];
+        stateLabel.text = [NSString stringWithFormat:@"%@: %@",NSLocalizedString(@"County", nil), [NSString stringWithUTF8String:[address.state UTF8String]]];
         stateLabel.textColor = [UIColor flatDarkGreenColor];
         stateLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
         
         UILabel *zipLabel = [[UILabel alloc]initWithFrame:CGRectMake(110,  35, 200, 20)];
-        zipLabel.text = [NSString stringWithFormat:@"POST CODE: %@", [NSString stringWithUTF8String:[address.zip UTF8String]]];
+        zipLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"PostCode", nil),[NSString stringWithUTF8String:[address.zip UTF8String]]];
         zipLabel.textColor = [UIColor flatDarkGreenColor];
         zipLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
         
@@ -284,10 +268,6 @@
             commentLabel.text = [shipment.comments length] ? shipment.comments : @"...";
             [cell addSubview:commentLabel];
         }];
-        
-        
-        
-        
     }else{
         
         Shipment *shipment = [self.stop.shipments allObjects][indexPath.section-1];
@@ -296,7 +276,7 @@
         UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
         
         UILabel *shipNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, CGRectGetWidth(containerView.bounds)-20, 20)];
-        shipNumLabel.text = [NSString stringWithFormat:@"Customer Reference: %@", shipment.shipment_number];
+        shipNumLabel.text = [NSString stringWithFormat:@"%@: %@",NSLocalizedString(@"CustomerRef", nil) , shipment.shipment_number];
         shipNumLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
         shipNumLabel.textColor = [UIColor colorWithWhite:.333 alpha:1];
 
@@ -434,7 +414,7 @@
     
     UILabel *timestampLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 0, CGRectGetWidth(timestampView.bounds), CGRectGetHeight(timestampView.bounds))];
     
-    timestampLabel.text = [NSString stringWithFormat:@"Arrived at %@",[df stringFromDate:self.stop.actual_arrival]];
+    timestampLabel.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"arrived at", nil),[df stringFromDate:self.stop.actual_arrival]];
     timestampLabel.textColor = [UIColor flatDarkGreenColor];
     
     [timestampView addSubview:timestampLabel];
@@ -467,11 +447,11 @@
 -(void)checkMeIn:(id)sender{
     if (!self.stop.actual_arrival) {
         
-        NSString *titleString = [NSString stringWithFormat:@"Check in at %@ ?", self.stop.location_name];
+        NSString *titleString = [NSString stringWithFormat:@"%@ %@ ?",NSLocalizedString(@"CompleteStop", nil), self.stop.location_name];
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
                                                                  delegate:self
-                                                        cancelButtonTitle:@"YES"
-                                                   destructiveButtonTitle:@"CANCEL"
+                                                        cancelButtonTitle:NSLocalizedString(@"Yes", nil)
+                                                   destructiveButtonTitle:NSLocalizedString(@"No", nil)
                                                         otherButtonTitles:nil];
         [self.refreshControl endRefreshing];
 
@@ -482,7 +462,6 @@
     
 }
 -(void)checkMeOut{
-    NSLog(@"Checking out");
     if (self.stop.actual_arrival) {
         self.stop.actual_departure = [NSDate date];
         [self showSignatureView];
@@ -534,7 +513,7 @@
         [view removeFromSuperview];
 
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.labelText = @"Saving Load";
+            hud.labelText = NSLocalizedString(@"Saving Load", nil);
             NSString *pdfName = @"pod.pdf";
 
             [CCPDFWriter createPDFfromLoad:self.stop.load forStopType:self.stop.type saveToDocumentsWithFileName:pdfName];
@@ -548,7 +527,6 @@
                                                   [hud hide:YES afterDelay:0.5];
                                                   [self addCheckOutTimeStampeViewToView];
                                                   [self.delegate saveChangesOnContext];
-                                                  self.title = @"Departed";
                                               }];
     }];
 }
@@ -591,7 +569,7 @@
     
     UILabel *timestampLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 0, CGRectGetWidth(timestampView.bounds), CGRectGetHeight(timestampView.bounds))];
     
-    timestampLabel.text = [NSString stringWithFormat:@"Departed at %@",[df stringFromDate:self.stop.actual_departure]];
+    timestampLabel.text = [NSString stringWithFormat:@"Departed at: %@",[df stringFromDate:self.stop.actual_departure]];
     timestampLabel.textColor = [UIColor flatBlueColor];
     
     [timestampView addSubview:timestampLabel];

@@ -29,6 +29,7 @@
     self.managedObjectContext = dmgr.managedObjectContext;
     [self addLoadnotesToDataSource];
     self.df = [NSDateFormatter new];
+    [self.df setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
     [self loadMessages];
 }
 
@@ -57,11 +58,12 @@
 - (void)loadMessages
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"Retrieving Messages";
+    hud.labelText = NSLocalizedString(@"Retrieving Messages", nil);
     [[CVChepClient sharedClient]getLoadNotesForLoad:self.stop.load.id completion:^(NSDictionary *results, NSError *error) {
+        NSLog(@"Getting load notes for Load: %@", self.stop.load.id );
         if (error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"ERROR" message:@"There was an error retrieving notes" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Error" message:NSLocalizedString(@"ConnectionError", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            NSLog(@"this is the error: %@", error);
             [av show];
         }else{
             NSArray *notes = [results objectForKey:@"notes"];
@@ -81,37 +83,50 @@
 
 -(void)recursivelyCheckForRepliesAndCreateMessage:(NSArray*)messages{
     
+    NSDictionary *userinfo = [[NSUserDefaults standardUserDefaults]objectForKey:@"userinfo"];
+    NSString *name =  [userinfo valueForKey:@"carrier"];
+    
+    NSLog(@"name == %@", name);
+    
     [_df setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     NSSortDescriptor* sortOrderByCreatedDate = [NSSortDescriptor sortDescriptorWithKey: @"created_date" ascending: YES];
-    messages = [messages sortedArrayUsingDescriptors:@[sortOrderByCreatedDate]];
-    [messages enumerateObjectsUsingBlock:^(id message, NSUInteger idx, BOOL *stop) {
-        
+    
+    NSArray *replies = [[messages valueForKey:@"replies"]firstObject];
+    
+//    NSMutableArray *replies;
+//    [messages enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        NSArray *reply = [obj valueForKey:@"replies"];
+//        NSLog(@"adding reply: %@", reply);
+//        [replies addObject:[reply firstObject]];
+//    }];
+    
+    NSArray *flatMessages = [messages arrayByAddingObjectsFromArray:replies];
+    NSArray *flatMessagesSorted = [flatMessages sortedArrayUsingDescriptors:@[sortOrderByCreatedDate]];
+    NSLog(@"These are the flat sorted messages: %@", flatMessagesSorted);
+    [flatMessagesSorted enumerateObjectsUsingBlock:^(id message, NSUInteger idx, BOOL *stop) {
+
         NSDate *messageCreatedDate = [_df dateFromString:message[@"created_date"]];
         NSComparisonResult result = [messageCreatedDate compare:_lastMessageDate];
+        NSLog(@"Last message date is : %@", _lastMessageDate);
+        NSLog(@"Comparison result : %d", result);
         if (result == NSOrderedDescending || _lastMessageDate == NULL )
         {
+            
+            NSLog(@"I am inside the if condition with message: %@", message);
             SOMessage *soMessage = [[SOMessage alloc]init];
             soMessage.text = message[@"message"];
-            soMessage.fromMe = [[message valueForKey:@"created_by"] isEqualToString:@"APItester"] ? YES : NO;
+            soMessage.fromMe = [[message valueForKey:@"created_by"] isEqualToString:name] ? YES : NO;
             soMessage.type = SOMessageTypeText;
             soMessage.date = [_df dateFromString:message[@"created_date"]];
             
             Loadnote *note = [NSEntityDescription insertNewObjectForEntityForName:@"Loadnote" inManagedObjectContext:_managedObjectContext];
             note.text = message[@"message"];
-            note.fromMe = [[message valueForKey:@"created_by"] isEqualToString:@"APItester"] ? [NSNumber numberWithBool:YES] : [NSNumber numberWithBool:NO];
+            note.fromMe = [[message valueForKey:@"created_by"] isEqualToString:name] ? [NSNumber numberWithBool:YES] : [NSNumber numberWithBool:NO];
             note.type = SOMessageTypeText;
             note.date = [_df dateFromString:message[@"created_date"]];
             
             [_stop.load addLoadNotesObject:note];
-            
             [self.dataSource addObject:soMessage];
-            NSArray *replies = [message valueForKey:@"replies"];
-            if ([replies isKindOfClass:[NSArray class]] && [replies count]) {
-                [self recursivelyCheckForRepliesAndCreateMessage:replies];
-            }else{
-                NSLog(@"HERE IS THE DATA SOURCE: %@", _dataSource);
-            }
-            
         }//end of if
 
     }];
@@ -185,7 +200,7 @@
 {
     NSLog(@"media button pressed");
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum ;//UIImagePickerControllerSourceTypeCamera;
     picker.delegate = self;
     picker.allowsEditing = YES;
     [self presentViewController:picker animated:YES completion:nil];
@@ -194,11 +209,11 @@
 -(void)postMessageToServer:(SOMessage*)message{
     [[CVChepClient sharedClient]postLoadNoteForLoad:self.stop.load.id
                                        withNoteType:@"MOBILE MESSAGE"
-                                       withStopType:@"some"
+                                       withStopType:self.stop.type
                                         withMessage:message.text completion:^(NSDictionary *results, NSError *error) {
                                             if (error) {
                                                 NSLog(@"error, %@", error);
-                                                UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Message Fail" message:@"No connection to server" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                                                UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"ConnectionError", nil) message:NSLocalizedString(@"ConnectionError", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
                                                 [av show];
                                                 
                                             }
@@ -226,7 +241,7 @@
 
     [[CVChepClient sharedClient]uploadPhoto:imageData forStopId:_stop.id withLoadId:_stop.load.id withComment:@"" completion:^(NSDictionary *responseDic, NSError *error) {
         if (error) {
-            UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"Message Fail" message:@"Network Error" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"ConnectionError", nil) message:NSLocalizedString(@"ConnectionError", nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [av show];
         }else{
         

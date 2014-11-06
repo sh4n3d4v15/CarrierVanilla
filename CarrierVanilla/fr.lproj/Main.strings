@@ -1,0 +1,27 @@
+
+/* Class = "IBUILabel"; text = "12 ter Grande Rue"; ObjectID = "JhV-py-oyr"; */
+"JhV-py-oyr.text" = "12 ter Grande Rue";
+
+/* Class = "IBUITextField"; placeholder = "Vehicle ID"; ObjectID = "Js7-jp-IP4"; */
+"Js7-jp-IP4.placeholder" = "Vehicle ID";
+
+/* Class = "IBUIButton"; normalTitle = "Login"; ObjectID = "SwJ-Ta-BFk"; */
+"SwJ-Ta-BFk.normalTitle" = "Login";
+
+/* Class = "IBUILabel"; text = "0800 to 1400"; ObjectID = "Wk7-ff-Upe"; */
+"Wk7-ff-Upe.text" = "0800 to 1400";
+
+/* Class = "IBUITextField"; placeholder = "Carrier ID"; ObjectID = "e3h-hd-Wvw"; */
+"e3h-hd-Wvw.placeholder" = "Carrier ID";
+
+/* Class = "IBUITableViewController"; title = "Master"; ObjectID = "pGg-6v-bdr"; */
+"pGg-6v-bdr.title" = "Master";
+
+/* Class = "IBUITextField"; placeholder = "Password"; ObjectID = "tdd-UT-noX"; */
+"tdd-UT-noX.placeholder" = "Password";
+
+/* Class = "IBUILabel"; text = "Some street"; ObjectID = "udx-2g-JOI"; */
+"udx-2g-JOI.text" = "Some street";
+
+/* Class = "IBUILabel"; text = "Mordor"; ObjectID = "zFi-q3-ex3"; */
+"zFi-q3-ex3.text" = "Mordor";
