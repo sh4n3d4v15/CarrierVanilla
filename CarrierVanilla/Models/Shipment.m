@@ -1,9 +1,9 @@
 //
 //  Shipment.m
-//  
+//  Chep Carrier QA
 //
-//  Created by shane davis on 02/07/2014.
-//
+//  Created by shane davis on 07/11/2014.
+//  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
 #import "Shipment.h"
@@ -14,10 +14,9 @@
 @implementation Shipment
 
 @dynamic comments;
-@dynamic shipment_number;
 @dynamic primary_reference_number;
+@dynamic shipment_number;
 @dynamic items;
-@dynamic stop;
-
+@dynamic stops;
 
 @end

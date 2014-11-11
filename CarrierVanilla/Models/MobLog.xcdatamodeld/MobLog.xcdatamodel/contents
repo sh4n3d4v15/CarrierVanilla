@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A386a" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Address" representedClassName="Address" syncable="YES">
         <attribute name="address1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
@@ -59,7 +59,7 @@
         <attribute name="primary_reference_number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shipment_number" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Item" inverseName="shipment" inverseEntity="Item" syncable="YES"/>
-        <relationship name="stop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stop" inverseName="shipments" inverseEntity="Stop" syncable="YES"/>
+        <relationship name="stops" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stop" inverseName="shipments" inverseEntity="Stop" syncable="YES"/>
     </entity>
     <entity name="Stop" representedClassName="Stop" syncable="YES">
         <attribute name="active" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -88,7 +88,7 @@
                 <entry key="relatedByAttribute" value="id"/>
             </userInfo>
         </relationship>
-        <relationship name="shipments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Shipment" inverseName="stop" inverseEntity="Shipment" syncable="YES"/>
+        <relationship name="shipments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Shipment" inverseName="stops" inverseEntity="Shipment" syncable="YES"/>
         <userInfo>
             <entry key="relatedByAttribute" value="id"/>
         </userInfo>

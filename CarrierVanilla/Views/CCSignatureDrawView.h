@@ -11,6 +11,8 @@
 
 -(void)saveSignatureSnapshotAsData:(NSData *)imageData andSignatureBezier:(UIBezierPath*)signatureBezierPath updateQuantity:(NSString*)quantity andDismissView: (UIView*)view;
 
+-(void)cancelSignatureView:(UIView*)signatureView;
+
 @end
 @interface CCSignatureDrawView : UIImageView <UITextFieldDelegate> {
     CGPoint lastPoint;

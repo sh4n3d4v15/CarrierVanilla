@@ -19,7 +19,7 @@
 -(NSURLSessionDataTask*)getLoadsForUser:(NSDictionary*)userInfo completion: (void (^)(NSArray *loads, NSError *error))completion;
 -(NSURLSessionDataTask*)updateArrivalTime:(NSString*)arrivalTime forLoadWithId:(NSString*)loadId forStopWithId:(NSString*)stopId completion: (void (^)(NSError*error))completion;
 -(NSURLSessionDataTask*)updateDepartureTime:(NSString*)arrivalTime forLoadWithId:(NSString*)loadId forStopWithId:(NSString*)stopId completion: (void (^)(NSError*error))completion;
--(NSURLSessionDataTask*)UploadProofOfDelivery:(NSData*)podData andUpdateArrivalTime:(NSString *)arrivalTime andDepartureTime:(NSString*)departureTime forStop:(NSString *)stopId onLoad: (NSString*)loadId completion:(void(^)(NSError*))completion;
+-(NSURLSessionDataTask*)UploadProofOfDelivery:(NSData*)podData andUpdateArrivalTime:(NSDate *)arrivalTime andDepartureTime:(NSDate*)departureTime forStop:(NSString *)stopId onLoad: (NSString*)loadId completion:(void(^)(NSError*))completion;
 #pragma mark - Loadnote methods
 -(NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSDictionary *messages, NSError *error))completion;
 -(NSURLSessionDataTask*)postLoadNote:(NSString*)message forLoad:(NSString*)loadId withNoteType:(NSString*)noteType andStopType:(NSString*)stopType completion:(void (^)(NSError *error))completion;

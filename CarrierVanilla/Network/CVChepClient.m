@@ -74,16 +74,12 @@
  */
 
 - (NSURLSessionDataTask *)getLoadsForUser:(NSDictionary *)userInfo completion:(void (^)(NSArray *, NSError *))completion {
+    
     if (userInfo) {
         _username = [userInfo valueForKey:@"name"];
         _password = [userInfo valueForKey:@"password"];
         _vehicle = [userInfo valueForKey:@"vehicle"];
     }
-    
-    
-    
-    
-    
     NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/uid/%@/pwd/%@/region/eu", _username, _password];
     
     NSLog(@"URL string for get loads: %@", urlString);
@@ -112,6 +108,7 @@
                                                                        }
                                                                        else {
                                                                            NSArray *loads = [responseObject valueForKey:@"loads"];
+                                                                           NSLog(@"Here are the loads: %@", loads);
                                                                            if ([loads count] == 0) {
                                                                                NSError *error = [NSError errorWithDomain:@"no loads" code:100 userInfo:nil];
                                                                                dispatch_async(dispatch_get_main_queue(), ^{
@@ -227,12 +224,12 @@
  *
  *  @return returns NSURLSessionDataTask
  */
-- (NSURLSessionDataTask *)UploadProofOfDelivery:(NSData *)podData andUpdateArrivalTime:(NSString *)arrivalTime andDepartureTime:(NSString *)departureTime forStop:(NSString *)stopId onLoad:(NSString *)loadId completion:(void (^)(NSError *))completion {
+- (NSURLSessionDataTask *)UploadProofOfDelivery:(NSData *)podData andUpdateArrivalTime:(NSDate *)arrivalTime andDepartureTime:(NSDate *)departureTime forStop:(NSString *)stopId onLoad:(NSString *)loadId completion:(void (^)(NSError *))completion {
     NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/%@/pwd/%@/region/eu", loadId, stopId, @"APITester", @"QVBJVDNzdDNyX3A0c3N3MHJk"];
     
     
-    NSDictionary *updateDict = @{ @"actual_arrival_date": arrivalTime,
-                                  @"actual_departure_date": departureTime,
+    NSDictionary *updateDict = @{ @"actual_arrival_date": [_df stringFromDate: arrivalTime],
+                                  @"actual_departure_date": [_df stringFromDate:departureTime],
                                   @"product_id": @"60",
                                   @"delivery_number": @"",
                                   @"deliveries":@[] };
@@ -295,7 +292,7 @@
         NSLog(@"Response in get load notes %@", responseObject);
         if (responseCode == 401) {
             NSError *error = [NSError errorWithDomain:@"bad credentials"
-                                                 code:401
+                                                 code:404
                                              userInfo:@{}];
             dispatch_async(dispatch_get_main_queue(), ^{
                 completion(nil, error);
@@ -303,9 +300,19 @@
         }
         else {
             NSDictionary *messages = [responseObject valueForKey:@"notes"];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(messages, nil);
-            });
+ 
+            if([messages count]>0){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(messages, nil);
+                });
+            }else{
+                NSError *error = [NSError errorWithDomain:@"No Notes"
+                                                     code:401
+                                                 userInfo:@{}];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(nil, error);
+                });
+            }
         }
     } failure: ^(NSURLSessionDataTask *task, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{

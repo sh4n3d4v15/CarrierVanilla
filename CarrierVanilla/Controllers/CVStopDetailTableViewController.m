@@ -23,7 +23,7 @@
 #import "CVMapAnnotation.h"
 
 @interface CVStopDetailTableViewController ()<MKMapViewDelegate,UIActionSheetDelegate,CCSignatureDrawViewDelegate,UITextFieldDelegate>
-@property(nonatomic)float shipmentCount;
+@property (nonatomic) NSArray *shipments;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *msgNavButton;
 @property(nonatomic)CVUpdateButton *updateButton;
 @property(nonatomic)UIButton *checkOutButton;
@@ -46,9 +46,11 @@
 - (void)setStop:(Stop *)stop
 {
     if (_stop != stop) {
-        NSArray *shipments = [stop.shipments allObjects];
-        _shipmentCount =  [shipments count];
+        _shipments = [stop.shipments allObjects];
+        NSLog(@"Here are this stops shipments: %@", _shipments);
         _stop = stop;
+        _mapView = [MKMapView new];
+        [self addLocationToMapview];
     }
 }
 
@@ -57,6 +59,8 @@
     [super viewDidLoad];
     [self preparePulltoRefresh];
     [self.tableView setTableFooterView:[UIView new]];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    [self.view addGestureRecognizer:singleTap];
 }
 
 
@@ -70,7 +74,6 @@
                                                                                                                  NSFontAttributeName:[UIFont systemFontOfSize:20]
                                                                                                                  }];
     
-    //creating view for extending background color
     CGRect frame = self.tableView.bounds;
     frame.origin.y = -frame.size.height;
     _refreshBackgroundView = [[UIView alloc]initWithFrame:frame];
@@ -87,28 +90,26 @@
     }else{
         [self.refreshControl endRefreshing];
     }
-    
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-    [self.view addGestureRecognizer:singleTap];
-    
-    
+
+
+-(void)addLocationToMapview{
+
     CLGeocoder *geocoder = [[CLGeocoder alloc]init];
     [geocoder geocodeAddressDictionary:@{
                                          @"City":_stop.address.city,
-                                         @"Zip":_stop.address.zip
+                                         @"Street":_stop.address.address1 ?: @""
                                          }
                      completionHandler:^(NSArray *placemarks, NSError *error) {
                          
                          
                          if (error) {
-                                                          UIAlertView *al = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Cannot find on map", nil) message:NSLocalizedString(@"Cannot find on map", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                                                          [al show];
+                             UIAlertView *al = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Cannot find on map", nil) message:NSLocalizedString(@"Cannot find on map", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                             [al show];
                          }else{
-                             CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                             CLPlacemark *placemark = [placemarks firstObject];
+                             NSLog(@"Placemenars %@", placemark.location);
                              _location = placemark.location;
                              MKCoordinateRegion region;
                              MKCoordinateSpan span;
@@ -116,12 +117,11 @@
                              span.longitudeDelta = 0.005;
                              region.span = span;
                              region.center = _location.coordinate;
-                             [_mapView setRegion:region animated:YES];
+                             [_mapView setRegion:region animated:NO];
                              [self addAnnotationToMap:_location];
                          }
                      }];
 }
-
 -(void)addAnnotationToMap:(CLLocation*)location{
     CVMapAnnotation *annotation = [[CVMapAnnotation alloc]init];
     annotation.coordinate = location.coordinate;
@@ -141,7 +141,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return (2+_shipmentCount);
+    return (2+[_shipments count]);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -149,6 +149,7 @@
     return 1;
 
 }
+
 
 
 //primary_reference_number
@@ -167,8 +168,7 @@
     }else if (section == 2){
         [label setText:NSLocalizedString(@"SpecialInst", @"SpecialInst")];
     } else{
-        NSArray *shipments = [self.stop.shipments allObjects];
-        Shipment *shipment = shipments[section-1];
+        Shipment *shipment = _shipments[section-1];
         NSString *fullString = [NSString stringWithFormat:@"%@  %@",NSLocalizedString(@"CustomerRef", nil) , shipment.primary_reference_number];
         [label setText:fullString];
     }
@@ -183,17 +183,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell" forIndexPath:indexPath];
-        // Configure the cell...
-    
-    
-    
-    
+   
+    [cell.contentView.subviews enumerateObjectsUsingBlock: ^(UIView *subview, NSUInteger idx, BOOL *stop) {
+        [subview removeFromSuperview];
+    }];
     if ([indexPath section] == 0) {
         
-        _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
-        _mapView.delegate = self;
+        _mapView.frame = CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20);
         _mapView.layer.borderColor = [UIColor colorWithWhite:.7 alpha:.3].CGColor;
         _mapView.layer.borderWidth = 1;
+        _mapView.delegate = self;
+
         
         UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_mapView.bounds)-60, CGRectGetWidth(_mapView.bounds), 60)];
         containerView.backgroundColor = [UIColor colorWithWhite:1 alpha:.6];
@@ -208,7 +208,7 @@
         Address *address = self.stop.address;
         
         UILabel *addressOneLabel = [[UILabel alloc]initWithFrame:CGRectMake(10,  5, CGRectGetWidth(containerView.bounds)-20, 20)];
-        addressOneLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Street", @"Street"),[NSString stringWithUTF8String:[address.address1 UTF8String]]];
+        addressOneLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Street", @"Street"),address.address1] ?: @"";
         addressOneLabel.textColor = [UIColor flatDarkGreenColor];
         addressOneLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:13];
         
@@ -227,16 +227,11 @@
         zipLabel.text = [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"PostCode", nil),[NSString stringWithUTF8String:[address.zip UTF8String]]];
         zipLabel.textColor = [UIColor flatDarkGreenColor];
         zipLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:12];
-        
-        
-
 
         [containerView addSubview:zipLabel];
         [containerView addSubview:stateLabel];
         [containerView addSubview:cityLabel];
         [containerView addSubview:addressOneLabel];
-
-        
    
         [_mapView addSubview:containerView];
         [_mapView addSubview:self.updateButton];
@@ -245,7 +240,6 @@
         
         if (self.stop.actual_arrival) {
             [self addTimestampViewToView:self.mapView animated:NO];
- 
         }
         if (self.stop.actual_arrival && self.stop.actual_departure) {
             [self addTimestampViewToView:self.mapView animated:NO];
@@ -254,27 +248,20 @@
         
         
         cell.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
-        [cell addSubview:_mapView];
-        
-
-
-        
+        [cell.contentView addSubview:_mapView];
         
     }else if ([indexPath section] == 2){
-        [[_stop.shipments allObjects]enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger idx, BOOL *stop) {
+        [_shipments enumerateObjectsUsingBlock:^(Shipment *shipment, NSUInteger idx, BOOL *stop) {
             UILabel *commentLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, idx*10+10, cell.frame.size.width - 40, 20)];
             commentLabel.textColor = UIColorFromRGB(0xc0392b);
             commentLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:12];
             commentLabel.text = [shipment.comments length] ? shipment.comments : @"...";
-            [cell addSubview:commentLabel];
+            [cell.contentView addSubview:commentLabel];
         }];
     }else{
         
-        Shipment *shipment = [self.stop.shipments allObjects][indexPath.section-1];
-
-
+        Shipment *shipment = _shipments[indexPath.section-1];
         UIView *containerView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, CGRectGetWidth(cell.bounds)-20, CGRectGetHeight(cell.bounds)-20)];
-        
         UILabel *shipNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, CGRectGetWidth(containerView.bounds)-20, 20)];
         shipNumLabel.text = [NSString stringWithFormat:@"%@: %@",NSLocalizedString(@"CustomerRef", nil) , shipment.shipment_number];
         shipNumLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
@@ -315,7 +302,7 @@
             [view addSubview:qtyField];
             [containerView addSubview:view];
         }];
-        [cell addSubview:containerView];
+        [cell.contentView addSubview:containerView];
     }
     
     return cell;
@@ -348,15 +335,8 @@
     }
 }
 
-
-
-- (UITableViewCell *)configueCellForShipments:(UITableViewCell*)cell{
-    return cell;
-}
-
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    Shipment *shipment = [self.stop.shipments allObjects][indexPath.row];
+    Shipment *shipment = _shipments[indexPath.row];
     
     if ([indexPath section] == 0 ) {
         return 250;
@@ -380,13 +360,12 @@
 
 -(void)addTimestampViewToView:(UIView*)view animated:(BOOL)animated{
     
-    
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
     [df setDateFormat:@"HH:mm:ss"];
-    
     CGRect largeFrame = CGRectInset(self.updateButton.layer.frame, 10, 10);
     POPSpringAnimation *banim = [POPSpringAnimation animationWithPropertyNamed:kPOPLayerBounds];
     banim.toValue = [NSValue valueWithCGRect:largeFrame];
+    
     [banim setCompletionBlock:^(POPAnimation *anim, BOOL finished) {
         [self.updateButton setTitle:@"1" forState:UIControlStateNormal];
         self.updateButton.titleLabel.font = [UIFont systemFontOfSize:10];
@@ -517,18 +496,22 @@
             NSString *pdfName = @"pod.pdf";
 
             [CCPDFWriter createPDFfromLoad:self.stop.load forStopType:self.stop.type saveToDocumentsWithFileName:pdfName];
-            [[CVChepClient sharedClient]updateStop:_stop
-                                              completion:^( NSError *error) {
-                                                  if (error) {
-                                                      hud.labelText = @"Error saving";
-                                                  }else{
-                                                      hud.labelText = @"Success";
-                                                  }
-                                                  [hud hide:YES afterDelay:0.5];
-                                                  [self addCheckOutTimeStampeViewToView];
-                                                  [self.delegate saveChangesOnContext];
-                                              }];
+
+        [[CVChepClient sharedClient]UploadProofOfDelivery:imageData andUpdateArrivalTime:_stop.actual_arrival andDepartureTime:_stop.actual_departure forStop:_stop.id onLoad:_stop.load.id completion:^(NSError *error) {
+            if (error) {
+                hud.labelText = NSLocalizedString(@"Saving Load", nil);
+            }else{
+                hud.labelText =  NSLocalizedString(@"Success", nil);
+            }
+            [hud hide:YES afterDelay:0.5];
+            [self addCheckOutTimeStampeViewToView];
+            [self.delegate saveChangesOnContext];
+        }];
     }];
+}
+
+-(void)cancelSignatureView:(UIView *)signatureView{
+    [signatureView removeFromSuperview];
 }
 
 -(void)addCheckOutTimeStampeViewToView{

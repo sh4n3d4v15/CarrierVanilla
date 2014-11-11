@@ -96,9 +96,9 @@
 	            SET_IF_NOT_NULL(_stop.type, [stopobj valueForKey:@"type"]);
 	            ///do we get values returned without dates?
 
-	            NSString *startdatestring = [[stopobj valueForKey:@"planned_start"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"planned_start"] length] - 6)];
-	            NSString *enddatestring = [[stopobj valueForKey:@"planned_end"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"planned_end"] length] - 6)];
-	            _stop.planned_start =  [_dateFormatter dateFromString:startdatestring];
+	            NSString *startdatestring = [[stopobj valueForKey:@"planned_start"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"planned_start"] length] - 0)];
+	            NSString *enddatestring = [[stopobj valueForKey:@"planned_end"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"planned_end"] length] - 0)];
+                _stop.planned_start =  [_dateFormatter dateFromString:startdatestring];
 	            _stop.planned_end =  [_dateFormatter dateFromString:enddatestring];
 
 	            SET_IF_NOT_NULL(_stop.weight, [stopobj valueForKey:@"weight"]);
@@ -134,7 +134,10 @@
 
 	                Shipment *shipment;
 	                if ([existingshipments count] == 1) {
+                        NSLog(@"Existing shipments %@",existingshipments);
 	                    shipment =  [existingshipments firstObject];
+                        NSLog(@"I dont need to create another shipment as I have just found this one: %@",shipment);
+
 					}
 	                else {
 	                    shipment = [NSEntityDescription insertNewObjectForEntityForName:@"Shipment" inManagedObjectContext:_managedObjectContext];
