@@ -56,7 +56,8 @@
 - (void)loadMessages {
 	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 	hud.labelText = NSLocalizedString(@"Retrieving Messages", nil);
-	[[CVChepClient sharedClient]getLoadNotesForLoad:self.stop.load.id completion: ^(NSDictionary *results, NSError *error) {
+	[[CVChepClient sharedClient]getLoadNotesForLoad:self.stop.load.id completion: ^(NSArray *results, NSError *error) {
+        NSLog(@"RESULTS OBJECT IN MESSAGECONTROLLER: %@",results);
 	    NSLog(@"Getting load notes for Load: %@", self.stop.load.id);
 	    if (error) {
             if(error.code == 401){
@@ -70,10 +71,9 @@
 
 		}
 	    else {
-	        NSArray *notes = [results objectForKey:@"notes"];
 	        NSSortDescriptor *orderByDate = [[NSSortDescriptor alloc] initWithKey:@"created_date"
 	                                                                    ascending:YES];
-	        NSArray *messages = [notes sortedArrayUsingDescriptors:@[orderByDate]];
+	        NSArray *messages = [results sortedArrayUsingDescriptors:@[orderByDate]];
 	        [self recursivelyCheckForRepliesAndCreateMessage:messages];
 		}
 	    [hud hide:YES afterDelay:0.5];
@@ -190,7 +190,7 @@
 - (void)messageInputViewDidSelectMediaButton:(SOMessageInputView *)inputView {
 	NSLog(@"media button pressed");
 	UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-	picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum; //UIImagePickerControllerSourceTypeCamera;
+	picker.sourceType = UIImagePickerControllerSourceTypeCamera;
 	picker.delegate = self;
 	picker.allowsEditing = YES;
 	[self presentViewController:picker animated:YES completion:nil];

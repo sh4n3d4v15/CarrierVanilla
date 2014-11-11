@@ -8,6 +8,7 @@
 
 #import "CVChepClient.h"
 #import "CVAppDelegate.h"
+#import "CVCoreDataManager.h"
 
 #import "Load.h"
 #import "Address.h"
@@ -26,10 +27,10 @@
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 	    NSLog(@"Initialzing CVChepClient singleton");
-//	    NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-dev.chep.com"];
+	    NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-dev.chep.com"];
 //        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://usorlut27.chep.com:50000"];
 //        NSURL *ChepBaseUrl = [NSURL URLWithString:@"http://bl-con.chep.com"];
-        NSURL *ChepBaseUrl = [NSURL URLWithString:@"https://api.chep.com"];
+      //  NSURL *ChepBaseUrl = [NSURL URLWithString:@"https://api.chep.com"];
 	    _sharedClient = [[CVChepClient alloc]initWithBaseURL:ChepBaseUrl];
 	    _sharedClient.requestSerializer = [AFJSONRequestSerializer serializer];
 	    _sharedClient.requestSerializer.stringEncoding = NSUTF8StringEncoding;
@@ -109,6 +110,9 @@
                                                                        else {
                                                                            NSArray *loads = [responseObject valueForKey:@"loads"];
                                                                            NSLog(@"Here are the loads: %@", loads);
+                                                                           
+                                                                           [[CVCoreDataManager sharedClient]importArrayOfStopsIntoCoreData:loads];
+                                                                           
                                                                            if ([loads count] == 0) {
                                                                                NSError *error = [NSError errorWithDomain:@"no loads" code:100 userInfo:nil];
                                                                                dispatch_async(dispatch_get_main_queue(), ^{
@@ -141,7 +145,7 @@
  *  @return returns NSURLSessionTask
  */
 - (NSURLSessionDataTask *)updateArrivalTime:(NSString *)arrivalTime forLoadWithId:(NSString *)loadId forStopWithId:(NSString *)stopId completion:(void (^)(NSError *))completion {
-    NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/arrived/%@/uid/%@/pwd/%@/region/eu", loadId, stopId, arrivalTime, @"APITester", @"QVBJVDNzdDNyX3A0c3N3MHJk"];
+    NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/arrived/%@/uid/%@/pwd/%@/region/eu", loadId, stopId, arrivalTime, _username, _password];
     
     NSURLSessionDataTask *task = [self GET:urlString parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"Update arrial response object: %@", responseObject);
@@ -185,7 +189,7 @@
  *  @return returns NSURLSessionTask
  */
 - (NSURLSessionDataTask *)updateDepartureTime:(NSString *)departureTime forLoadWithId:(NSString *)loadId forStopWithId:(NSString *)stopId completion:(void (^)(NSError *))completion {
-    NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/departed/%@/uid/%@/pwd/%@/region/eu", loadId, stopId, departureTime, @"APITester", @"QVBJVDNzdDNyX3A0c3N3MHJk"];
+    NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/departed/%@/uid/%@/pwd/%@/region/eu", loadId, stopId, departureTime, _username, _password];
     
     NSLog(@"DEPARTURE DATE: %@", departureTime);
     NSURLSessionDataTask *task = [self GET:urlString parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
@@ -225,9 +229,9 @@
  *  @return returns NSURLSessionDataTask
  */
 - (NSURLSessionDataTask *)UploadProofOfDelivery:(NSData *)podData andUpdateArrivalTime:(NSDate *)arrivalTime andDepartureTime:(NSDate *)departureTime forStop:(NSString *)stopId onLoad:(NSString *)loadId completion:(void (^)(NSError *))completion {
-    NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/%@/pwd/%@/region/eu", loadId, stopId, @"APITester", @"QVBJVDNzdDNyX3A0c3N3MHJk"];
+    NSString *urlString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/stop/%@/pod/uid/%@/pwd/%@/region/eu", loadId, stopId, _username, _password];
     
-    
+    [_df setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
     NSDictionary *updateDict = @{ @"actual_arrival_date": [_df stringFromDate: arrivalTime],
                                   @"actual_departure_date": [_df stringFromDate:departureTime],
                                   @"product_id": @"60",
@@ -252,6 +256,7 @@
                                 fileName:@"Proof_signed.pdf"
                                 mimeType:@"application/pdf"];
     } success: ^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"Response Object for update in cvchepclient %@", responseObject);
         int responseCode = [[responseObject valueForKeyPath:@"error.code"]intValue];
         NSLog(@"INT CODE %lu", (unsigned long)responseCode);
         if (responseCode == 401) {
@@ -284,7 +289,7 @@
  *
  *  @return returns NSURLSessionDataTask
  */
-- (NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSDictionary *, NSError *))completion {
+- (NSURLSessionDataTask *)getLoadNotesForLoad:(NSString *)loadId completion:(void (^)(NSArray *, NSError *))completion {
     NSString *queryString = [NSString stringWithFormat:@"/shipment_tracking_rest/jsonp/loads/%@/notes/0/0/uid/%@/pwd/%@/region/eu", loadId, _username, _password];
     
     NSURLSessionDataTask *task = [self GET:queryString parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
@@ -299,7 +304,7 @@
             });
         }
         else {
-            NSDictionary *messages = [responseObject valueForKey:@"notes"];
+            NSArray *messages = [responseObject valueForKey:@"notes"];
  
             if([messages count]>0){
                 dispatch_async(dispatch_get_main_queue(), ^{

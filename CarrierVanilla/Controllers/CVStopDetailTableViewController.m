@@ -6,10 +6,15 @@
 //  Copyright (c) 2014 shane davis. All rights reserved.
 //
 
-#import "CVStopDetailTableViewController.h"
-#import "Address.h"
+//Models
 #import "Shipment.h"
+#import "Load.h"
 #import "Item.h"
+#import "Address.h"
+
+#import "CVStopDetailTableViewController.h"
+
+
 #import "UIColor+MLPFLatColors.h"
 #import "CCMessageViewController.h"
 #import "CVChepClient.h"
@@ -426,7 +431,7 @@
 -(void)checkMeIn:(id)sender{
     if (!self.stop.actual_arrival) {
         
-        NSString *titleString = [NSString stringWithFormat:@"%@ %@ ?",NSLocalizedString(@"CompleteStop", nil), self.stop.location_name];
+        NSString *titleString = [NSString stringWithFormat:@"%@ %@ ?",NSLocalizedString(@"CheckIn", nil), self.stop.location_name];
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:titleString
                                                                  delegate:self
                                                         cancelButtonTitle:NSLocalizedString(@"Yes", nil)
@@ -497,8 +502,9 @@
 
             [CCPDFWriter createPDFfromLoad:self.stop.load forStopType:self.stop.type saveToDocumentsWithFileName:pdfName];
 
-        [[CVChepClient sharedClient]UploadProofOfDelivery:imageData andUpdateArrivalTime:_stop.actual_arrival andDepartureTime:_stop.actual_departure forStop:_stop.id onLoad:_stop.load.id completion:^(NSError *error) {
+        [[CVChepClient sharedClient]UploadProofOfDelivery:_stop.load.podData andUpdateArrivalTime:_stop.actual_arrival andDepartureTime:_stop.actual_departure forStop:_stop.id onLoad:_stop.load.id completion:^(NSError *error) {
             if (error) {
+                NSLog(@"Erorr with updateing load %@", error);
                 hud.labelText = NSLocalizedString(@"Saving Load", nil);
             }else{
                 hud.labelText =  NSLocalizedString(@"Success", nil);

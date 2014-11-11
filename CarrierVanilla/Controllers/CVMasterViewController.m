@@ -69,7 +69,7 @@
 
 - (void)refresh:(id)sender {
 	[[CVChepClient sharedClient]getLoadsForUser:nil completion: ^(NSArray *loads, NSError *error) {
-	    if (error) {
+	    if (error && error.code != 100) {
 	        UIAlertView *av = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Problem refreshing", nil)  message:@"" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 	        [av show];
 		}
@@ -267,6 +267,7 @@
 
 
 - (void)userLoginWithcredentials:(NSDictionary *)credentials completion:(void (^)(NSError *))completion {
+    [CVChepClient sharedClient].operationQueue.suspended = NO;
 	[[CVChepClient sharedClient]getLoadsForUser:credentials completion: ^(NSArray *loads, NSError *error) {
 	    if (!error) {
 	        [[CVCoreDataManager sharedClient]importArrayOfStopsIntoCoreData:loads];

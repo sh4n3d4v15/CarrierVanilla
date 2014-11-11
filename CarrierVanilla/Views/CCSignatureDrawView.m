@@ -57,8 +57,8 @@
 //        CGRect destinationFrame = CGRectMake(210.0f,454.0f, 90, 30);
         UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
         doneButton.frame = CGRectMake(self.bounds.size.width-65,self.bounds.size.height-35, 50, 30);
-        doneButton.titleLabel.font = [UIFont systemFontOfSize:10];
-        [doneButton setTitle:@"OK" forState:UIControlStateNormal];
+        doneButton.titleLabel.font = [UIFont systemFontOfSize:12];
+        [doneButton setTitle:@"Done" forState:UIControlStateNormal];
         [doneButton setTitleColor:UIColorFromRGB(0x3c6ba1) forState:UIControlStateNormal];
         [doneButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [doneButton addTarget:self action:@selector(saveImageAndDismissView:) forControlEvents:UIControlEventTouchUpInside];
@@ -67,8 +67,8 @@
         
         UIButton *clearButton = [UIButton buttonWithType:UIButtonTypeCustom];
         clearButton.frame = CGRectMake(10,self.bounds.size.height-35, 100, 30);
-        clearButton.titleLabel.font = [UIFont systemFontOfSize:10];
-        [clearButton setTitle:@"CLEAR" forState:UIControlStateNormal];
+        clearButton.titleLabel.font = [UIFont systemFontOfSize:12];
+        [clearButton setTitle:@"Clear" forState:UIControlStateNormal];
         [clearButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [clearButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [clearButton addTarget:self action:@selector(clearButtonPressed:) forControlEvents:UIControlEventTouchUpInside];

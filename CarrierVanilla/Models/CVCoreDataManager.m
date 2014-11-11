@@ -43,6 +43,8 @@
 }
 
 - (void)deleteAllCompletedLocalCompletedAndDeassignedLoads:(NSArray *)networkResults  {
+    
+    
 	NSArray *loadIdsArray = [networkResults valueForKey:@"load_number"];
 	NSArray *loads = [self allLoads];
 
@@ -98,7 +100,7 @@
 
 	            NSString *startdatestring = [[stopobj valueForKey:@"planned_start"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"planned_start"] length] - 0)];
 	            NSString *enddatestring = [[stopobj valueForKey:@"planned_end"] substringWithRange:NSMakeRange(0, [[stopobj valueForKey:@"planned_end"] length] - 0)];
-                _stop.planned_start =  [_dateFormatter dateFromString:startdatestring];
+	            _stop.planned_start =  [_dateFormatter dateFromString:startdatestring];
 	            _stop.planned_end =  [_dateFormatter dateFromString:enddatestring];
 
 	            SET_IF_NOT_NULL(_stop.weight, [stopobj valueForKey:@"weight"]);
@@ -120,47 +122,27 @@
 	            NSArray *shipments = [stopobj valueForKey:@"shipments"];
 
 	            [shipments enumerateObjectsUsingBlock: ^(id shipmentObj, NSUInteger idx, BOOL *stop) {
-	                NSString *shipmentNumber = shipmentObj[@"primary_reference_number"];
+	                Shipment *shipment = [NSEntityDescription insertNewObjectForEntityForName:@"Shipment" inManagedObjectContext:_managedObjectContext];
+	                SET_IF_NOT_NULL(shipment.shipment_number,  shipmentObj[@"shipment_number"]);
+	                SET_IF_NOT_NULL(shipment.comments, shipmentObj[@"comments"]);
+	                SET_IF_NOT_NULL(shipment.primary_reference_number, shipmentObj[@"primary_reference_number"]);
 
-	                NSEntityDescription *entity = [NSEntityDescription entityForName:@"Shipment" inManagedObjectContext:_managedObjectContext];
-	                NSPredicate *shipmentPredicate = [NSPredicate predicateWithFormat:@"primary_reference_number == %@", shipmentNumber];
-	                NSFetchRequest *shipmentFetchRequest = [[NSFetchRequest alloc] init];
-	                [shipmentFetchRequest setPredicate:shipmentPredicate];
+	                NSArray *items = [shipmentObj valueForKey:@"items"];
+	                [items enumerateObjectsUsingBlock: ^(id itemObj, NSUInteger idx, BOOL *stop) {
+	                    Item *item = [NSEntityDescription insertNewObjectForEntityForName:@"Item" inManagedObjectContext:_managedObjectContext];
+	                    SET_IF_NOT_NULL(item.line, [itemObj valueForKey:@"line"]);
+	                    SET_IF_NOT_NULL(item.product_id,  [itemObj valueForKey:@"product_id"]);
+	                    SET_IF_NOT_NULL(item.product_description, [itemObj valueForKey:@"product_description"]);
+	                    SET_IF_NOT_NULL(item.commodity, [itemObj valueForKey:@"commodity"]);
+	                    SET_IF_NOT_NULL(item.weight, [itemObj valueForKey:@"weight"]);
+	                    SET_IF_NOT_NULL(item.volume, [itemObj valueForKey:@"volume"]);
+	                    SET_IF_NOT_NULL(item.pieces, [itemObj valueForKey:@"pieces"]);
+	                    SET_IF_NOT_NULL(item.updated_pieces, [itemObj valueForKey:@"pieces"]);
+	                    SET_IF_NOT_NULL(item.lading, [itemObj valueForKey:@"lading"]);
 
-	                [shipmentFetchRequest setEntity:entity];
+	                    [shipment addItemsObject:item];
+					}];     ///ITEMS LOOP
 
-	                NSError *error;
-	                NSArray *existingshipments = [_managedObjectContext executeFetchRequest:shipmentFetchRequest error:&error];
-
-	                Shipment *shipment;
-	                if ([existingshipments count] == 1) {
-                        NSLog(@"Existing shipments %@",existingshipments);
-	                    shipment =  [existingshipments firstObject];
-                        NSLog(@"I dont need to create another shipment as I have just found this one: %@",shipment);
-
-					}
-	                else {
-	                    shipment = [NSEntityDescription insertNewObjectForEntityForName:@"Shipment" inManagedObjectContext:_managedObjectContext];
-	                    SET_IF_NOT_NULL(shipment.shipment_number,  shipmentObj[@"shipment_number"]);
-	                    SET_IF_NOT_NULL(shipment.comments, shipmentObj[@"comments"]);
-	                    SET_IF_NOT_NULL(shipment.primary_reference_number, shipmentObj[@"primary_reference_number"]);
-
-	                    NSArray *items = [shipmentObj valueForKey:@"items"];
-	                    [items enumerateObjectsUsingBlock: ^(id itemObj, NSUInteger idx, BOOL *stop) {
-	                        Item *item = [NSEntityDescription insertNewObjectForEntityForName:@"Item" inManagedObjectContext:_managedObjectContext];
-	                        SET_IF_NOT_NULL(item.line, [itemObj valueForKey:@"line"]);
-	                        SET_IF_NOT_NULL(item.product_id,  [itemObj valueForKey:@"product_id"]);
-	                        SET_IF_NOT_NULL(item.product_description, [itemObj valueForKey:@"product_description"]);
-	                        SET_IF_NOT_NULL(item.commodity, [itemObj valueForKey:@"commodity"]);
-	                        SET_IF_NOT_NULL(item.weight, [itemObj valueForKey:@"weight"]);
-	                        SET_IF_NOT_NULL(item.volume, [itemObj valueForKey:@"volume"]);
-	                        SET_IF_NOT_NULL(item.pieces, [itemObj valueForKey:@"pieces"]);
-	                        SET_IF_NOT_NULL(item.updated_pieces, [itemObj valueForKey:@"pieces"]);
-	                        SET_IF_NOT_NULL(item.lading, [itemObj valueForKey:@"lading"]);
-
-	                        [shipment addItemsObject:item];
-						}]; ///ITEMS LOOP
-					}
 	                [_stop addShipmentsObject:shipment];
 	                //                    [load addStopsObject:_stop];
 				}]; // end of shipment enumberation

@@ -15,7 +15,7 @@
 
 #import "CVChepClient.h"
 
-
+//3622910364
 @interface CCLoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *submitBtn;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *loginInfoLabel;
 - (IBAction)submitButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *logoView;
-
+@property (nonatomic)BOOL devMode;
 @end
 
 @implementation CCLoginViewController
@@ -41,7 +41,7 @@
 
 - (void)viewDidLoad
 {
-    
+    _devMode = NO;
     self.view.backgroundColor = UIColorFromRGB(0x3c6ba1);
     [super viewDidLoad];
     [HTAutocompleteTextField setDefaultAutocompleteDataSource:[HTAutocompleteManager sharedManager]];
@@ -128,9 +128,9 @@
     
     _loginInfoLabel.text = @"";
     
-    NSString *name      = @"TDSadmin";//[_carrierTextField.text copy];
+    NSString *name      =  _devMode ? @"TDSadmin" : [_carrierTextField.text copy];
     NSString *vehicle   = [_nameTextField.text copy];
-    NSString *password  = @"5UTP71BBYT3SUADBR0VIS8NLJMKUZCIV";//[_passwordTextField.text copy];
+    NSString *password  = _devMode ? @"5UTP71BBYT3SUADBR0VIS8NLJMKUZCIV": [_passwordTextField.text copy];
     
     if ( [vehicle isEqualToString:@""] ) {
         _loginInfoLabel.text = NSLocalizedString(@"BadCredentials", nil);
@@ -146,18 +146,18 @@
             if (error) {
                 switch (error.code) {
                     case 100:
-                        _loginInfoLabel.text = NSLocalizedString(@"No loads for user", @"No loads for user");
+                        _loginInfoLabel.text = NSLocalizedString(@"NoLoads", nil);
                         break;
                         
                     case 401:
-                        _loginInfoLabel.text = NSLocalizedString(@"Incorrect credentials", @"Incorrect credentials");
+                        _loginInfoLabel.text = NSLocalizedString(@"badLogin", nil);
                         break;
                         
                     case -1009:
-                        _loginInfoLabel.text = NSLocalizedString(@"Network connection error", @"Network connection error");
+                        _loginInfoLabel.text = NSLocalizedString(@"ConnectionError", nil);
                         break;
                     case -1003:
-                        _loginInfoLabel.text = NSLocalizedString(@"Network connection error", @"Network connection error");
+                        _loginInfoLabel.text = NSLocalizedString(@"ConnectionError", nil);
                     default:
                         break;
                 }
